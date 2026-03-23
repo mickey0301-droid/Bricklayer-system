@@ -35,6 +35,8 @@ import requests
 import xml.etree.ElementTree as ET
 from urllib.parse import quote
 from datetime import datetime
+from bs4 import BeautifulSoup
+
 
 from utils.loaders import load_sources
 
@@ -112,6 +114,79 @@ def _parse_rss(xml_text):
     return items
 
 
+def _fetch_article_content(url, max_chars=8000):
+    """
+    Fetch full article text from a single article URL.
+    Best-effort generic extractor using common containers + paragraph fallback.
+    """
+    if not url:
+        return ""
+
+    try:
+        r = requests.get(
+            url,
+            headers={"User-Agent": USER_AGENT},
+            timeout=15,
+        )
+        r.raise_for_status()
+    except Exception as e:
+        print(f"[Briefings] Article fetch failed for {url}: {e}")
+        return ""
+
+    try:
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        # 去掉常見雜訊
+        for tag in soup(["script", "style", "noscript", "iframe", "header", "footer", "nav", "aside"]):
+            tag.decompose()
+
+        candidates = []
+
+        # 優先找比較像正文的區塊
+        selectors = [
+            "article",
+            "[role='article']",
+            ".article-body",
+            ".article-content",
+            ".post-content",
+            ".entry-content",
+            ".story-body",
+            ".news-content",
+            ".article__content",
+            ".main-content",
+        ]
+
+        for selector in selectors:
+            try:
+                nodes = soup.select(selector)
+                for node in nodes:
+                    paragraphs = [p.get_text(" ", strip=True) for p in node.find_all("p")]
+                    text = "\n".join([p for p in paragraphs if p])
+                    if len(text) > 300:
+                        candidates.append(text)
+            except Exception:
+                pass
+
+        # 如果沒抓到合格正文，就退回全頁 paragraph
+        if not candidates:
+            paragraphs = [p.get_text(" ", strip=True) for p in soup.find_all("p")]
+            text = "\n".join([p for p in paragraphs if p])
+            candidates.append(text)
+
+        # 取最長的那個
+        content = max(candidates, key=len) if candidates else ""
+        content = content.strip()
+
+        if len(content) > max_chars:
+            content = content[:max_chars]
+
+        return content
+
+    except Exception as e:
+        print(f"[Briefings] Article parse failed for {url}: {e}")
+        return ""
+
+
 def _fetch_rss_items(rss_url, source_name, limit=20):
     try:
         r = requests.get(
@@ -130,6 +205,9 @@ def _fetch_rss_items(rss_url, source_name, limit=20):
         raw_url = item.get("url", "")
         resolved_url = _resolve_google_news_url(raw_url)
 
+        # 這一步才是真正抓文章正文
+        article_content = _fetch_article_content(resolved_url)
+
         output.append({
             "title": item.get("title", "").strip(),
             "url": raw_url,
@@ -137,6 +215,7 @@ def _fetch_rss_items(rss_url, source_name, limit=20):
             "source": source_name,
             "published": item.get("published", ""),
             "summary": item.get("summary", ""),
+            "content": article_content,
             "source_type": "rss",
         })
     return output
@@ -736,6 +815,7 @@ def _format_item_block(label, items):
         title = _safe_text(item.get("title"))
         source = _safe_text(item.get("source"))
         summary = _safe_text(item.get("summary"))
+        content = _safe_text(item.get("content"))
         url = _safe_text(item.get("original_url") or item.get("url"))
         region = _safe_text(item.get("source_region"))
 
@@ -746,6 +826,12 @@ def _format_item_block(label, items):
             lines.append(f"   區域: {region}")
         if summary:
             lines.append(f"   摘要: {summary}")
+
+        # 新增：把正文節錄也提供給 AI
+        if content:
+            preview = content[:2000]
+            lines.append(f"   內文: {preview}")
+
         if url:
             lines.append(f"   連結: {url}")
 
