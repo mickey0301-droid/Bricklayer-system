@@ -1,0 +1,45 @@
+{
+  "default_template": "strategic_briefing",
+  "templates": [
+    {
+      "id": "strategic_briefing",
+      "name": "Strategic Briefing",
+      "description": "以情報簡報方式整理重點，強調戰略脈絡、趨勢、風險與影響。",
+      "tone": "專業、精煉、清楚、偏情報分析風格",
+      "style_prompt": "請以情報簡報風格撰寫，重點整理事件脈絡、戰略意涵、風險、後續觀察方向。",
+      "sections": [
+        "執行摘要",
+        "重點發展",
+        "戰略意涵",
+        "風險與觀察"
+      ]
+    },
+    {
+      "id": "policy_memo",
+      "name": "Policy Memo",
+      "description": "以政策備忘錄方式整理，強調政策問題、可行選項與建議。",
+      "tone": "政策導向、實務導向、條理清楚",
+      "style_prompt": "請以政策備忘錄風格撰寫，聚焦問題定義、政策選項、利弊分析與建議方向。",
+      "sections": [
+        "摘要",
+        "問題界定",
+        "政策選項",
+        "建議"
+      ]
+    },
+    {
+      "id": "academic_analysis",
+      "name": "Academic Analysis",
+      "description": "以學術分析方式整理，強調概念界定、分析架構與論證。",
+      "tone": "正式、分析性強、偏研究寫作",
+      "style_prompt": "請以學術分析風格撰寫，重視概念界定、分析架構、證據與論證過程。",
+      "sections": [
+        "摘要",
+        "問題背景",
+        "分析框架",
+        "分析",
+        "結論"
+      ]
+    }
+  ]
+}

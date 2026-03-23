@@ -1,0 +1,26 @@
+[
+  {
+    "id": "reuters_world",
+    "name": "Reuters World",
+    "category": ["國際媒體"],
+    "type": "rss",
+    "url": "https://www.reutersagency.com/feed/?best-topics=world&post_type=best",
+    "enabled": true
+  },
+  {
+    "id": "bbc_world",
+    "name": "BBC World",
+    "category": ["國際媒體"],
+    "type": "rss",
+    "url": "http://feeds.bbci.co.uk/news/world/rss.xml",
+    "enabled": true
+  },
+  {
+    "id": "nyt_world",
+    "name": "NYT World",
+    "category": ["國際媒體"],
+    "type": "rss",
+    "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+    "enabled": true
+  }
+]

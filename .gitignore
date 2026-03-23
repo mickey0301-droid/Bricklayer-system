@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.env
+.streamlit/secrets.toml
+credentials.json
+**/credentials.json
+token.json
+**/token.json
+token.pickle
+**/token.pickle
+service_account.json
+**/service_account.json
+*.pem
+*.key
+*.log
+.DS_Store
+Claude/

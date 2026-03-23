@@ -1,0 +1,11 @@
+{
+  "default": {
+    "font_family": "Arial",
+    "title_font_size": 16,
+    "heading_font_size": 14,
+    "body_font_size": 12,
+    "citation_style": "footnote",
+    "link_style": "inline",
+    "chinese_variant": "traditional"
+  }
+}
