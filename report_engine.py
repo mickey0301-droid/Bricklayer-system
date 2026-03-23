@@ -305,6 +305,50 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
 
     return all_items
 
+from email.utils import parsedate_to_datetime
+
+def _parse_published_datetime(value):
+    if not value:
+        return None
+
+    if isinstance(value, datetime):
+        return value
+
+    try:
+        return parsedate_to_datetime(str(value))
+    except Exception:
+        pass
+
+    try:
+        return datetime.fromisoformat(str(value))
+    except Exception:
+        return None
+
+
+def _filter_items_by_time_range(items, start_time, end_time):
+    if not start_time or not end_time:
+        return items
+
+    filtered = []
+
+    for item in items:
+        published_dt = _parse_published_datetime(item.get("published"))
+
+        if not published_dt:
+            continue
+
+        # 如果 published 有 timezone，但 start/end 沒有，可先去掉 timezone
+        try:
+            if published_dt.tzinfo is not None:
+                published_dt = published_dt.replace(tzinfo=None)
+        except Exception:
+            pass
+
+        if start_time <= published_dt <= end_time:
+            filtered.append(item)
+
+    return filtered
+
 # =====================================================
 # Load format settings
 # =====================================================
@@ -886,6 +930,8 @@ def generate_report(
         all_sources=sources,
         limit_per_source=20
     )
+
+    items = _filter_items_by_time_range(items, start_time, end_time)
 
     items = filter_items_by_topic(items, topic)
 
