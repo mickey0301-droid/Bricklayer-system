@@ -1064,13 +1064,15 @@ Requirements:
 1. Write in formal report style with coherent paragraphs.
 2. Do NOT place URLs anywhere in the body text.
 3. Do NOT write the string 【連結】 anywhere.
-4. Use ONLY the provided news items as source material.
-5. Strategic Context is analyst guidance only. Do NOT cite it as evidence.
-6. Synthesize multiple news items into broader analysis instead of summarizing one article at a time.
-7. When making a factual claim based on a source, append source markers like [S1], [S2].
-8. You may cite multiple sources together, for example [S1][S3].
-9. Only use source markers that exist in the provided News data.
-10. Keep citations light and readable. Do not attach a citation to every single sentence unless necessary.
+4. Do NOT write source names in brackets such as [DW.com], [Reuters.com], [BBC]. Only use [S1], [S2] style markers.
+5. Use ONLY the provided news items as source material.
+6. Strategic Context is analyst guidance only. Do NOT cite it as evidence.
+7. Synthesize multiple news items into broader analysis instead of summarizing one article at a time.
+8. When making a factual claim based on a source, append source markers like [S1], [S2].
+9. You may cite multiple sources together, for example [S1][S3].
+10. Only use source markers that exist in the provided News data.
+11. Keep citations light and readable. Do not attach a citation to every single sentence unless necessary.
+12. When mentioning specific individuals by name, write their name in the format 中文名（English Name）if both are known. If only English name is known, write（English Name）.
 
 Output structure:
 【戰略情報簡報】
@@ -1087,30 +1089,34 @@ Output structure:
 
 六、區域情勢
 （一）亞太地區
-1. 區域要聞
-2. 台灣與中國相關要聞
+1. 區域要聞（僅在有亞太地區相關新聞時撰寫，否則省略）
+2. 台灣與中國相關要聞（僅在有亞太地區涉台涉中新聞時撰寫，否則省略）
 
 （二）亞西地區
-1. 區域要聞
-2. 台灣與中國相關要聞
+1. 區域要聞（僅在有亞西地區相關新聞時撰寫，否則省略）
+2. 台灣與中國相關要聞（僅在有亞西地區涉台涉中新聞時撰寫，否則省略）
 
 （三）北美地區
-1. 區域要聞
-2. 台灣與中國相關要聞
+1. 區域要聞（僅在有北美地區相關新聞時撰寫，否則省略）
+2. 台灣與中國相關要聞（僅在有北美地區涉台涉中新聞時撰寫，否則省略）
 
 （四）拉丁美洲及加勒比海
-1. 區域要聞
-2. 台灣與中國相關要聞
+1. 區域要聞（僅在有拉丁美洲相關新聞時撰寫，否則省略）
+2. 台灣與中國相關要聞（僅在有拉丁美洲涉台涉中新聞時撰寫，否則省略）
 
 （五）歐洲地區
-1. 區域要聞
-2. 台灣與中國相關要聞
+1. 區域要聞（僅在有歐洲地區相關新聞時撰寫，否則省略）
+2. 台灣與中國相關要聞（僅在有歐洲地區涉台涉中新聞時撰寫，否則省略）
 
 （六）非洲地區
-1. 區域要聞
-2. 台灣與中國相關要聞
+1. 區域要聞（僅在有非洲地區相關新聞時撰寫，否則省略）
+2. 台灣與中國相關要聞（僅在有非洲地區涉台涉中新聞時撰寫，否則省略）
 
-七、研析
+七、專家研析
+1. 國際情勢解讀
+2. 台美中情勢解讀
+
+八、研析
 
 Writing guidance:
 - 「摘要」請用一小段說明本期最重要判斷。
@@ -1118,7 +1124,8 @@ Writing guidance:
 - 「台美中要聞」聚焦台灣、美國、中國三角互動及其戰略意涵。
 - 「台灣國安要聞」聚焦軍事、灰帶、資安、國防、國安治理等。
 - 「中國要聞」聚焦中國政治、外交、軍事、經濟、對外作為。
-- 「區域情勢」請按各區域分寫，每區一定要有兩個子段。
+- 「區域情勢」各區域的子段只在有明確對應新聞時才撰寫，若無相關新聞請直接省略，不要寫「無相關新聞」。
+- 「專家研析」請從戰略分析師視角，分別就國際情勢與台美中三角關係提出深度解讀，可包含趨勢研判與風險評估。
 - 「研析」請提出跨章節的整體判斷、風險、趨勢、可能後續觀察重點。
 
 Strategic Context:
@@ -1136,6 +1143,10 @@ News data:
     )
 
     report = response.output_text
+
+    # 清除 AI 可能生成的 [DW.com] / [BBC] 等來源標籤（非 [Sx] 格式）
+    report = re.sub(r'\[(?!S\d+\])([A-Za-z][^\]]{0,40})\]', '', report)
+    report = re.sub(r'[ \t]+', ' ', report)
 
     # 建立 citation source map
     source_map = _build_citation_source_map(items, max_sources=12)
