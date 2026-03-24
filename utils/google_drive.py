@@ -1,7 +1,8 @@
 import os
 
 try:
-    from google.oauth2 import service_account
+    from google.oauth2.credentials import Credentials
+    from google.auth.transport.requests import Request
     from googleapiclient.discovery import build
     from googleapiclient.http import MediaFileUpload
     DRIVE_AVAILABLE = True
@@ -17,13 +18,29 @@ def get_drive_service():
         return None
 
     try:
-        # 嘗試從 Streamlit secrets 讀取（Streamlit Cloud 環境）
         import streamlit as st
+
+        # 優先使用 OAuth（一般 Gmail 帳號）
+        if "oauth_refresh_token" in st.secrets:
+            creds = Credentials(
+                token=None,
+                refresh_token=st.secrets["oauth_refresh_token"],
+                token_uri="https://oauth2.googleapis.com/token",
+                client_id=st.secrets["oauth_client_id"],
+                client_secret=st.secrets["oauth_client_secret"],
+                scopes=SCOPES,
+            )
+            creds.refresh(Request())
+            return build("drive", "v3", credentials=creds)
+
+        # 備用：Service Account
+        from google.oauth2 import service_account
         creds_info = dict(st.secrets["gcp_service_account"])
         creds = service_account.Credentials.from_service_account_info(
             creds_info, scopes=SCOPES
         )
         return build("drive", "v3", credentials=creds)
+
     except Exception:
         return None
 
@@ -41,7 +58,6 @@ def upload_to_drive(file_path: str, file_name: str, folder_id: str | None = None
         return None
 
     mimetype = "application/octet-stream"
-
     lower_name = file_name.lower()
     if lower_name.endswith(".docx"):
         mimetype = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
