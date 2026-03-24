@@ -1597,7 +1597,7 @@ with tab_automation:
             if mode == "once":
                 s["once_datetime"] = st.text_input(
                     "指定時間（YYYY-MM-DD HH:MM）",
-                    value=s.get("once_datetime", now_tw().strftime("%Y-%m-%d %H:%M")),
+                    value=s.get("once_datetime") or now_tw().strftime("%Y-%m-%d %H:%M"),
                     key=f"once_{selected_idx}",
                 )
 
