@@ -1590,14 +1590,19 @@ def _generate_multiphase_synthesis(
             _cb("stage", f"⬜ 子報告 {done}/{total_g}：{group_name_zh}（本期無資料）")
             continue
 
-        # 在群組內選出最多來源報導的 4 個不同議題（每議題取 2 篇），
-        # 確保子報告涵蓋多元話題而非集中於同一事件
-        diverse_items = _select_diverse_topics(group_items, n_topics=4, articles_per_topic=2)
+        # 子報告需填八個章節（含六大區域），文章要分配到各章，
+        # 所以要提供足夠多樣的文章：選 6 個不同議題，每題最多 3 篇 = 最多 18 篇。
+        # 讓 AI 按文章內容自行歸類，而非按來源群組的地理標籤限制。
+        diverse_items = _select_diverse_topics(group_items, n_topics=6, articles_per_topic=3)
         # Build structured news block WITH [Sx] codes so citations survive synthesis
         news_block = _format_item_block(group_name_zh, diverse_items, item_to_sx)
 
         sub_prompt = (
-            f"以下是來自【{group_name_zh}】的新聞條目（每條已標注引用代碼 [S1][S2]... 請在報告中保留這些代碼）：\n\n"
+            f"以下是來自【{group_name_zh}】媒體來源的新聞條目。"
+            f"【{group_name_zh}】是這些媒體的出身地，不代表報導話題的限制——"
+            f"這些媒體可能報導全球任何地區的新聞。"
+            f"請依照每篇文章的內容，分別填入報告的對應章節（八章全部都要寫）。"
+            f"每條已標注引用代碼 [S1][S2]... 請在報告中完整保留這些代碼：\n\n"
             + news_block
         )
 
