@@ -514,10 +514,12 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
             return fetched
 
         # 其他來源：若 url 是真正的 RSS feed（以 http 開頭），直接抓；
-        # 否則以 site:{domain} 向 Google News RSS 查詢。
+        # 否則用「(關鍵字) site:domain」格式查 Google News RSS。
+        # 關鍵字必須放在 site: 前面，放後面 Google News RSS 會回傳 0 結果。
         url_field = src.get("url", "")
+        kw_str = category_keywords.get(cat, "")
         if url_field.startswith("http"):
-            # 直接抓 RSS feed
+            # 直接抓 RSS feed（之後仍做 client 端關鍵字過濾）
             rss_url = url_field
         else:
             domain = (src.get("domain") or src.get("site")
@@ -525,15 +527,18 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
             if not domain:
                 return []
             domain = domain.lower().replace("www.", "")
-            q = f"site:{domain}"
+            if kw_str:
+                # 關鍵字在前，site: 在後
+                q = f"({kw_str}) site:{domain}"
+            else:
+                q = f"site:{domain}"
             if when_str:
                 q += f" {when_str}"
             rss_url = f"https://news.google.com/rss/search?q={quote(q)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
 
         fetched = _fetch_rss_items(rss_url, src_name, limit=limit_per_source)
 
-        # Client 端關鍵字過濾
-        kw_str = category_keywords.get(cat, "")
+        # Client 端關鍵字過濾（直接 RSS feed 的情況仍需過濾）
         matched = []
         for item in fetched:
             if _kw_matches(item, kw_str):
