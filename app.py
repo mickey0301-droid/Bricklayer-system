@@ -797,133 +797,200 @@ with tab_insights:
 with tab_sources:
     st.subheader("Sources 管理")
 
-    with st.expander("單筆新增來源", expanded=False):
-        c1, c2 = st.columns(2)
-        with c1:
-            src_name = st.text_input("name", key="single_src_name")
-            src_type = st.selectbox("type", options=["rss", "domain"], key="single_src_type")
-            src_url = st.text_input("url", key="single_src_url")
-            src_category = st.text_input("category（可輸入多個，以逗號分隔）", key="single_src_category")
-        with c2:
-            src_region = st.text_input("region", key="single_src_region")
-            src_enabled = st.checkbox("enabled", value=True, key="single_src_enabled")
-            src_description = st.text_area("description", key="single_src_description", height=120)
+    src_tab_add, src_tab_tw, src_tab_intl, src_tab_global, src_tab_cn = st.tabs([
+        "新增來源", "自訂台灣媒體", "自訂國際媒體", "全球媒體", "中國媒體"
+    ])
 
-        if st.button("新增來源", key="add_single_source"):
-            new_item = editor_row_to_source(
-                {
+    tw_sources = [s for s in editable_sources if "自訂台灣媒體" in (s.get("category") or [])]
+    intl_sources = [s for s in editable_sources if "自訂國際媒體" in (s.get("category") or [])]
+    global_sources_ui = [s for s in all_sources if "全球媒體" in (s.get("category") or [])]
+
+    # ── 新增來源 ──────────────────────────────────────────────────────────────
+    with src_tab_add:
+        target_cat = st.selectbox(
+            "加入至媒體分類",
+            options=["自訂台灣媒體", "自訂國際媒體"],
+            key="src_add_target_cat",
+        )
+
+        with st.expander("單筆新增來源", expanded=False):
+            c1, c2 = st.columns(2)
+            with c1:
+                src_name = st.text_input("name", key="single_src_name")
+                src_type = st.selectbox("type", options=["rss", "domain"], key="single_src_type")
+                src_url = st.text_input("url", key="single_src_url")
+            with c2:
+                src_region = st.text_input("region", key="single_src_region")
+                src_enabled = st.checkbox("enabled", value=True, key="single_src_enabled")
+                src_description = st.text_area("description", key="single_src_description", height=120)
+
+            if st.button("新增來源", key="add_single_source"):
+                new_item = editor_row_to_source({
                     "name": src_name,
                     "type": src_type,
                     "url": src_url,
-                    "category": src_category,
+                    "category": target_cat,
                     "region": src_region,
                     "enabled": src_enabled,
                     "description": src_description,
-                }
-            )
-            current = load_sources(editable_only=True)
-            if not new_item["name"]:
-                st.error("來源名稱不可空白。")
+                })
+                current = load_sources(editable_only=True)
+                if not new_item["name"]:
+                    st.error("來源名稱不可空白。")
+                else:
+                    current.append(new_item)
+                    save_sources(current)
+                    st.success(f"已新增來源至「{target_cat}」。")
+                    st.rerun()
+
+        st.markdown("### 批次貼上新增來源")
+        st.caption(f"複製多列資料貼到下表，再按「批次加入」，category 將自動設為「{target_cat}」。")
+
+        _batch_cols = ["name", "type", "url", "region", "enabled", "description"]
+        _src_batch_default = pd.DataFrame([{c: "" for c in _batch_cols} for _ in range(8)])
+        _src_batch_default["enabled"] = True
+
+        source_batch_df = st.data_editor(
+            _src_batch_default,
+            num_rows="dynamic",
+            use_container_width=True,
+            height=280,
+            key="source_batch_editor",
+            column_config={
+                "name": st.column_config.TextColumn("name"),
+                "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
+                "url": st.column_config.TextColumn("url"),
+                "region": st.column_config.TextColumn("region"),
+                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+                "description": st.column_config.TextColumn("description"),
+            },
+        )
+
+        if st.button("批次加入來源", key="batch_add_sources"):
+            rows = _clean_batch_df(source_batch_df)
+            if not rows:
+                st.warning("沒有可加入的來源資料。")
             else:
-                current.append(new_item)
+                current = load_sources(editable_only=True)
+                name_set = {x.get("name", "").strip() for x in current}
+                added = 0
+                for row in rows:
+                    row["category"] = target_cat
+                    item = editor_row_to_source(row)
+                    if not item["name"]:
+                        continue
+                    if item["name"] in name_set:
+                        current = [x for x in current if x.get("name") != item["name"]]
+                    current.append(item)
+                    name_set.add(item["name"])
+                    added += 1
                 save_sources(current)
-                st.success("已新增來源。")
+                st.success(f"已批次加入 {added} 筆來源至「{target_cat}」。")
                 st.rerun()
 
-    st.markdown("### 表格式批次貼上新增來源")
-    st.caption("可直接從外部複製多列資料貼到下表，再按「批次加入來源」。")
+    # ── 自訂台灣媒體 ──────────────────────────────────────────────────────────
+    with src_tab_tw:
+        st.caption(f"共 {len(tw_sources)} 筆")
+        tw_df = _build_source_editor_df(tw_sources, blank_rows=5)
+        edited_tw_df = st.data_editor(
+            tw_df,
+            num_rows="dynamic",
+            use_container_width=True,
+            height=420,
+            key="tw_sources_editor",
+            column_config={
+                "name": st.column_config.TextColumn("name"),
+                "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
+                "url": st.column_config.TextColumn("url"),
+                "category": st.column_config.TextColumn("category"),
+                "region": st.column_config.TextColumn("region"),
+                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+                "description": st.column_config.TextColumn("description"),
+            },
+        )
+        c1, c2 = st.columns(2)
+        with c1:
+            if st.button("儲存台灣媒體編輯", key="save_tw_sources", use_container_width=True):
+                rows = _clean_batch_df(edited_tw_df)
+                current = load_sources(editable_only=True)
+                non_tw = [s for s in current if "自訂台灣媒體" not in (s.get("category") or [])]
+                new_tw = []
+                for row in rows:
+                    item = editor_row_to_source(row)
+                    if item["name"]:
+                        if "自訂台灣媒體" not in (item.get("category") or []):
+                            item["category"] = ["自訂台灣媒體"]
+                        new_tw.append(item)
+                save_sources(non_tw + new_tw)
+                st.success("台灣媒體清單已儲存。")
+                st.rerun()
+        with c2:
+            del_tw = st.multiselect("刪除來源", options=[s["name"] for s in tw_sources], key="delete_tw_names")
+            if st.button("刪除選取", key="delete_tw_btn", use_container_width=True):
+                current = load_sources(editable_only=True)
+                current = [x for x in current if x.get("name") not in del_tw]
+                save_sources(current)
+                st.success(f"已刪除 {len(del_tw)} 筆。")
+                st.rerun()
 
-    source_batch_columns = ["name", "type", "url", "category", "region", "enabled", "description"]
-    source_batch_default = pd.DataFrame([{c: "" for c in source_batch_columns} for _ in range(8)])
-    source_batch_default["enabled"] = True
+    # ── 自訂國際媒體 ──────────────────────────────────────────────────────────
+    with src_tab_intl:
+        st.caption(f"共 {len(intl_sources)} 筆")
+        intl_df = _build_source_editor_df(intl_sources, blank_rows=5)
+        edited_intl_df = st.data_editor(
+            intl_df,
+            num_rows="dynamic",
+            use_container_width=True,
+            height=420,
+            key="intl_sources_editor",
+            column_config={
+                "name": st.column_config.TextColumn("name"),
+                "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
+                "url": st.column_config.TextColumn("url"),
+                "category": st.column_config.TextColumn("category"),
+                "region": st.column_config.TextColumn("region"),
+                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+                "description": st.column_config.TextColumn("description"),
+            },
+        )
+        c1, c2 = st.columns(2)
+        with c1:
+            if st.button("儲存國際媒體編輯", key="save_intl_sources", use_container_width=True):
+                rows = _clean_batch_df(edited_intl_df)
+                current = load_sources(editable_only=True)
+                non_intl = [s for s in current if "自訂國際媒體" not in (s.get("category") or [])]
+                new_intl = []
+                for row in rows:
+                    item = editor_row_to_source(row)
+                    if item["name"]:
+                        if "自訂國際媒體" not in (item.get("category") or []):
+                            item["category"] = ["自訂國際媒體"]
+                        new_intl.append(item)
+                save_sources(non_intl + new_intl)
+                st.success("國際媒體清單已儲存。")
+                st.rerun()
+        with c2:
+            del_intl = st.multiselect("刪除來源", options=[s["name"] for s in intl_sources], key="delete_intl_names")
+            if st.button("刪除選取", key="delete_intl_btn", use_container_width=True):
+                current = load_sources(editable_only=True)
+                current = [x for x in current if x.get("name") not in del_intl]
+                save_sources(current)
+                st.success(f"已刪除 {len(del_intl)} 筆。")
+                st.rerun()
 
-    source_batch_df = st.data_editor(
-        source_batch_default,
-        num_rows="dynamic",
-        use_container_width=True,
-        height=280,
-        key="source_batch_editor",
-        column_config={
-            "name": st.column_config.TextColumn("name"),
-            "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
-            "url": st.column_config.TextColumn("url"),
-            "category": st.column_config.TextColumn("category"),
-            "region": st.column_config.TextColumn("region"),
-            "enabled": st.column_config.CheckboxColumn("enabled", default=True),
-            "description": st.column_config.TextColumn("description"),
-        },
-    )
+    # ── 全球媒體 ──────────────────────────────────────────────────────────────
+    with src_tab_global:
+        st.caption(f"共 {len(global_sources_ui)} 筆（唯讀）")
+        _global_rows = [source_to_editor_row(x) for x in global_sources_ui]
+        _global_df = pd.DataFrame(_global_rows) if _global_rows else pd.DataFrame(columns=["name", "url", "region", "enabled"])
+        st.dataframe(_global_df[["name", "url", "region", "enabled"]], use_container_width=True, hide_index=True)
 
-    if st.button("批次加入來源", key="batch_add_sources"):
-        rows = _clean_batch_df(source_batch_df)
-        if not rows:
-            st.warning("沒有可加入的來源資料。")
-        else:
-            current = load_sources(editable_only=True)
-            name_set = {x.get("name", "").strip() for x in current}
-            added = 0
-            for row in rows:
-                item = editor_row_to_source(row)
-                if not item["name"]:
-                    continue
-                if item["name"] in name_set:
-                    current = [x for x in current if x.get("name") != item["name"]]
-                current.append(item)
-                name_set.add(item["name"])
-                added += 1
-            save_sources(current)
-            st.success(f"已批次加入 / 更新 {added} 筆來源。")
-            st.rerun()
-
-    st.markdown("### 既有可編輯來源清單")
-    st.caption("這裡也可以直接貼上多列資料、修改既有資料、增加新列，再按儲存。")
-
-    editable_source_df = _build_source_editor_df(editable_sources, blank_rows=10)
-
-    edited_sources_df = st.data_editor(
-        editable_source_df,
-        num_rows="dynamic",
-        use_container_width=True,
-        height=420,
-        key="editable_sources_editor",
-        column_config={
-            "name": st.column_config.TextColumn("name"),
-            "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
-            "url": st.column_config.TextColumn("url"),
-            "category": st.column_config.TextColumn("category"),
-            "region": st.column_config.TextColumn("region"),
-            "enabled": st.column_config.CheckboxColumn("enabled", default=True),
-            "description": st.column_config.TextColumn("description"),
-        },
-    )
-
-    c1, c2 = st.columns(2)
-    with c1:
-        if st.button("儲存來源清單編輯", key="save_sources_table", use_container_width=True):
-            rows = _clean_batch_df(edited_sources_df)
-            cleaned = []
-            for row in rows:
-                item = editor_row_to_source(row)
-                if item["name"]:
-                    cleaned.append(item)
-            save_sources(cleaned)
-            st.success("來源清單已儲存。")
-            st.rerun()
-
-    with c2:
-        source_delete_options = [s["name"] for s in editable_sources]
-        delete_source_names = st.multiselect("刪除來源", options=source_delete_options, key="delete_source_names")
-        if st.button("刪除選取來源", key="delete_sources_btn", use_container_width=True):
-            current = load_sources(editable_only=True)
-            current = [x for x in current if x.get("name") not in delete_source_names]
-            save_sources(current)
-            st.success(f"已刪除 {len(delete_source_names)} 筆來源。")
-            st.rerun()
-
-    st.markdown("### 固定中共官媒來源（唯讀）")
-    fixed_rows = [source_to_editor_row(x) for x in fixed_sources]
-    fixed_df = pd.DataFrame(fixed_rows) if fixed_rows else pd.DataFrame(columns=source_batch_columns)
-    st.dataframe(fixed_df, use_container_width=True, hide_index=True)
+    # ── 中國媒體 ──────────────────────────────────────────────────────────────
+    with src_tab_cn:
+        st.caption(f"共 {len(fixed_sources)} 筆（唯讀）")
+        _cn_rows = [source_to_editor_row(x) for x in fixed_sources]
+        _cn_df = pd.DataFrame(_cn_rows) if _cn_rows else pd.DataFrame(columns=["name", "category", "description"])
+        st.dataframe(_cn_df[["name", "category", "description"]], use_container_width=True, hide_index=True)
 
     st.markdown("---")
     st.subheader("Experts 管理（仍在 Sources 頁下方）")
