@@ -3,7 +3,7 @@
     "name": "Associated Press",
     "subsource": "",
     "type": "rss",
-    "url": "apnews.com",
+    "url": "https://feeds.apnews.com/rss/apf-topnews",
     "category": [
       "自訂國際媒體"
     ],
@@ -59,7 +59,7 @@
     "name": "Radio Free Asia",
     "subsource": "",
     "type": "rss",
-    "url": "rfa.org",
+    "url": "https://www.rfa.org/english/rss2.xml",
     "category": [
       "自訂國際媒體"
     ],
@@ -73,7 +73,7 @@
     "name": "New York Times",
     "subsource": "",
     "type": "rss",
-    "url": "nytimes.com",
+    "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
     "category": [
       "自訂國際媒體"
     ],
@@ -199,7 +199,7 @@
     "name": "Reuters",
     "subsource": "",
     "type": "rss",
-    "url": "reuters.com",
+    "url": "https://feeds.reuters.com/reuters/topNews",
     "category": [
       "自訂國際媒體"
     ],
@@ -213,7 +213,7 @@
     "name": "BBC",
     "subsource": "",
     "type": "rss",
-    "url": "bbc.co.uk",
+    "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
     "category": [
       "自訂國際媒體"
     ],
@@ -227,7 +227,7 @@
     "name": "The Guardian",
     "subsource": "",
     "type": "rss",
-    "url": "theguardian.com",
+    "url": "https://www.theguardian.com/world/rss",
     "category": [
       "自訂國際媒體"
     ],
@@ -283,7 +283,7 @@
     "name": "Deutsche Welle",
     "subsource": "",
     "type": "rss",
-    "url": "dw.com",
+    "url": "https://rss.dw.com/xml/rss-en-world",
     "category": [
       "自訂國際媒體"
     ],
@@ -311,7 +311,7 @@
     "name": "Nikkei Asia",
     "subsource": "",
     "type": "rss",
-    "url": "asia.nikkei.com",
+    "url": "https://asia.nikkei.com/rss/feed/nar",
     "category": [
       "自訂國際媒體"
     ],
@@ -339,7 +339,7 @@
     "name": "Al Jazeera",
     "subsource": "",
     "type": "rss",
-    "url": "aljazeera.com",
+    "url": "https://www.aljazeera.com/xml/rss/all.xml",
     "category": [
       "自訂國際媒體"
     ],
@@ -367,7 +367,7 @@
     "name": "中央通訊社",
     "subsource": "",
     "type": "rss",
-    "url": "cna.com.tw",
+    "url": "https://www.cna.com.tw/rss/aall.aspx",
     "category": [
       "自訂台灣媒體"
     ],
@@ -381,7 +381,7 @@
     "name": "自由時報",
     "subsource": "",
     "type": "rss",
-    "url": "ltn.com.tw",
+    "url": "https://news.ltn.com.tw/rss/all.xml",
     "category": [
       "自訂台灣媒體"
     ],
@@ -395,7 +395,7 @@
     "name": "聯合報",
     "subsource": "",
     "type": "rss",
-    "url": "udn.com",
+    "url": "https://udn.com/rssfeed/news/2/6638?ch=news",
     "category": [
       "自訂台灣媒體"
     ],
@@ -437,7 +437,7 @@
     "name": "風傳媒",
     "subsource": "",
     "type": "rss",
-    "url": "storm.mg",
+    "url": "https://www.storm.mg/rss.xml",
     "category": [
       "自訂台灣媒體"
     ],
@@ -465,7 +465,7 @@
     "name": "新頭殼",
     "subsource": "",
     "type": "rss",
-    "url": "newtalk.tw",
+    "url": "https://newtalk.tw/rss/index",
     "category": [
       "自訂台灣媒體"
     ],
@@ -507,7 +507,7 @@
     "name": "關鍵評論網",
     "subsource": "",
     "type": "rss",
-    "url": "thenewslens.com",
+    "url": "https://www.thenewslens.com/rss",
     "category": [
       "自訂台灣媒體"
     ],
