@@ -65,6 +65,35 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 
 st.set_page_config(page_title="公情綜整報告", layout="wide")
 
+# 禁止手機瀏覽器的下拉重新整理（pull-to-refresh）
+st.markdown(
+    """
+    <style>
+    html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
+        overscroll-behavior-y: contain;
+        overscroll-behavior: contain;
+    }
+    </style>
+    <script>
+    // 攔截 touchstart → touchmove，當頁面已在頂部時阻止原生下拉重整
+    (function() {
+        var startY = 0;
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+        document.addEventListener('touchmove', function(e) {
+            var el = e.target;
+            // 向上捲動（往下拉）且已在頁面頂部
+            if (e.touches[0].clientY > startY && window.scrollY === 0) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    })();
+    </script>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 # =========================================================
 # Helpers
