@@ -539,12 +539,48 @@ if selected_page == "Briefings":
             default=default_output_targets,
             key="briefings_output_targets",
         )
-    with c6:
         local_folder = st.text_input(
             "Local 輸出資料夾",
             value=default_local_folder,
             key="briefings_local_folder",
         )
+    with c6:
+        # Google Drive 資料夾選擇（同 Schedule 頁面邏輯）
+        _df_list = auto_export_cfg.get("drive_folders", [])
+        _df_names = [f.get("name", "") or f.get("folder_id", "") for f in _df_list]
+        _cur_fid = default_drive_folder
+        _cur_idx = next(
+            (i for i, f in enumerate(_df_list) if f.get("folder_id") == _cur_fid),
+            None,
+        )
+        if _df_names:
+            _options = ["（手動輸入）"] + _df_names
+            _sel = st.selectbox(
+                "Google Drive 資料夾",
+                options=_options,
+                index=(_cur_idx + 1) if _cur_idx is not None else 0,
+                key="briefings_gdrive_sel",
+            )
+            if _sel == "（手動輸入）":
+                google_drive_folder_id = st.text_input(
+                    "Folder ID（手動輸入）",
+                    value=_cur_fid,
+                    key="briefings_gdrive_manual",
+                )
+            else:
+                _chosen = next(
+                    (f for f in _df_list if (f.get("name") or f.get("folder_id")) == _sel),
+                    None,
+                )
+                google_drive_folder_id = _chosen.get("folder_id", "") if _chosen else ""
+                st.caption(f"Folder ID：`{google_drive_folder_id}`")
+        else:
+            google_drive_folder_id = st.text_input(
+                "Google Drive Folder ID",
+                value=_cur_fid,
+                key="briefings_gdrive",
+                help="先在 Schedule 頁面的「Google Drive 資料夾」區塊新增資料夾，之後可在此選擇。",
+            )
 
     extra_insights = st.text_area(
         "本次補充 insights",
