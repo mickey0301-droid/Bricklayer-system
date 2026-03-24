@@ -348,13 +348,37 @@ def _fetch_article_content(url, max_chars=8000):
         return ""
 
 
+def _get_gnews_session() -> requests.Session:
+    """
+    建立帶有 Google News Cookie 的 Session。
+    先訪問 news.google.com 首頁取得 Cookie，再用同一個 Session 抓 RSS，
+    避免被 Google 的 bot 偵測擋掉（回傳 HTML Sorry... 頁面）。
+    Session 物件快取在 module 層級，同一執行期只建一次。
+    """
+    if not hasattr(_get_gnews_session, "_session"):
+        sess = requests.Session()
+        try:
+            sess.get(
+                "https://news.google.com/",
+                headers=_REQUEST_HEADERS,
+                timeout=10,
+            )
+        except Exception:
+            pass
+        _get_gnews_session._session = sess
+    return _get_gnews_session._session
+
+
 def _fetch_rss_items(rss_url, source_name, limit=20):
+    # Google News RSS：使用帶 Cookie 的 Session 避免 bot 偵測
+    if "news.google.com" in rss_url:
+        sess = _get_gnews_session()
+        fetch = lambda u, h, t: sess.get(u, headers=h, timeout=t)
+    else:
+        fetch = lambda u, h, t: requests.get(u, headers=h, timeout=t)
+
     try:
-        r = requests.get(
-            rss_url,
-            headers=_REQUEST_HEADERS,
-            timeout=10,
-        )
+        r = fetch(rss_url, _REQUEST_HEADERS, 10)
         r.raise_for_status()
         parsed = _parse_rss(r.text)
         print(f"[RSS] {source_name}: HTTP {r.status_code}, "
