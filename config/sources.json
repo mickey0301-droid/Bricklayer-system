@@ -544,5 +544,579 @@
     "description": "",
     "readonly": false,
     "fixed": false
+  },
+  {
+    "name": "The Australian",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.theaustralian.com.au/feed",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Oceania",
+    "enabled": true,
+    "description": "澳洲人報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Australian Financial Review",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.afr.com/rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Oceania",
+    "enabled": true,
+    "description": "澳洲金融評論報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Sydney Morning Herald",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.smh.com.au/rss/feed.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Oceania",
+    "enabled": true,
+    "description": "雪梨晨鋒報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "ABC (Australian Broadcasting Corporation)",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.abc.net.au/news/feed/45910/rss.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Oceania",
+    "enabled": true,
+    "description": "澳洲廣播公司",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "New Zealand Herald",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/nz-news/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Oceania",
+    "enabled": true,
+    "description": "紐西蘭先驅報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Hindu",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.thehindu.com/feeder/default.rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Asia",
+    "enabled": true,
+    "description": "印度教徒報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Times of India",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Asia",
+    "enabled": true,
+    "description": "印度時報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Hindustan Times",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Asia",
+    "enabled": true,
+    "description": "印度斯坦時報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "NDTV",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://feeds.feedburner.com/ndtvnews-top-stories",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Asia",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Straits Times",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.straitstimes.com/news/singapore/rss.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Southeast Asia",
+    "enabled": true,
+    "description": "海峽時報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Bangkok Post",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.bangkokpost.com/rss/data/topstories.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Southeast Asia",
+    "enabled": true,
+    "description": "曼谷郵報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Philippine Daily Inquirer",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://newsinfo.inquirer.net/feed",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Southeast Asia",
+    "enabled": true,
+    "description": "菲律賓每日詢問者報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Jakarta Post",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.thejakartapost.com/feed",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Southeast Asia",
+    "enabled": true,
+    "description": "雅加達郵報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Vietnam News",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://vietnamnews.vn/rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Southeast Asia",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "NHK",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www3.nhk.or.jp/rss/news/cat0.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Japan",
+    "enabled": true,
+    "description": "日本廣播協會",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Yomiuri Shimbun",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.yomiuri.co.jp/rss/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Japan",
+    "enabled": true,
+    "description": "讀賣新聞",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Asahi Shimbun",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.asahi.com/rss/asahi/newsheadlines.rdf",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Japan",
+    "enabled": true,
+    "description": "朝日新聞",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Mainichi Shimbun",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://mainichi.jp/rss/etc/english.rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Japan",
+    "enabled": true,
+    "description": "每日新聞",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Korea Herald",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.koreaherald.com/rss_3_00.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Korea",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Korea Times",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.koreatimes.co.kr/www/rss/rss.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Korea",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Arirang TV",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.arirang.com/rss/News.rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Korea",
+    "enabled": true,
+    "description": "阿里郎電視台",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Chosun Ilbo",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.chosun.com/arc/outboundfeeds/rss/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "South Korea",
+    "enabled": true,
+    "description": "朝鮮日報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "France 24",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.france24.com/en/rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "AFP (Agence France-Presse)",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.afp.com/en/latest-news/feed",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "法新社",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Der Spiegel",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.spiegel.de/international/index.rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "明鏡週刊",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Süddeutsche Zeitung",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://rss.sueddeutsche.de/rss/TopThemen",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "南德日報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Le Monde",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.lemonde.fr/rss/une.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "世界報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Le Figaro",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.lefigaro.fr/rss/figaro_actualites.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "費加洛報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Kyiv Post",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.kyivpost.com/rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "基輔郵報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Ukrinform",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.ukrinform.net/rss/block-lastnews",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Europe",
+    "enabled": true,
+    "description": "烏克蘭中央通訊社",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Arab News",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.arabnews.com/rss.xml",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Middle East",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Haaretz",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.haaretz.com/cmlink/1.628765",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Middle East",
+    "enabled": true,
+    "description": "國土報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Tehran Times",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.tehrantimes.com/rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Middle East",
+    "enabled": true,
+    "description": "德黑蘭時報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "IRNA (Islamic Republic News Agency)",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://en.irna.ir/rss",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Middle East",
+    "enabled": true,
+    "description": "伊朗伊斯蘭共和國通訊社",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Al-Ahram",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://english.ahram.org.eg/RSSFeeds/1.aspx",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Africa",
+    "enabled": true,
+    "description": "金字塔報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Daily Nation",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://nation.africa/feed",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Africa",
+    "enabled": true,
+    "description": "國家日報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "Daily Graphic",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.graphic.com.gh/feed/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Africa",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Reporter Ethiopia",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.thereporterethiopia.com/feed/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "Africa",
+    "enabled": true,
+    "description": "",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "The Globe and Mail",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.theglobeandmail.com/arc/outboundfeeds/rss/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "North America",
+    "enabled": true,
+    "description": "環球郵報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "National Post",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://nationalpost.com/feed/",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "North America",
+    "enabled": true,
+    "description": "國家郵報",
+    "readonly": false,
+    "fixed": false
+  },
+  {
+    "name": "CBC (Canadian Broadcasting Corporation)",
+    "subsource": "",
+    "type": "rss",
+    "url": "https://www.cbc.ca/cmlink/rss-topstories",
+    "category": [
+      "自訂國際媒體"
+    ],
+    "region": "North America",
+    "enabled": true,
+    "description": "加拿大國家廣播公司",
+    "readonly": false,
+    "fixed": false
   }
 ]
