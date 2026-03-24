@@ -814,8 +814,12 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
                 _tag_items(p1_items, kw_match=True)
                 for item in p1_items:
                     key = (item.get("original_url") or item.get("url") or "").lower().strip()
-                    if key and key not in seen_urls:
-                        seen_urls.add(key)
+                    if key:
+                        if key not in seen_urls:
+                            seen_urls.add(key)
+                            all_phase.append(item)
+                    else:
+                        # 無 URL 的條目仍保留（不用 key 做去重）
                         all_phase.append(item)
 
             # Phase 2：直接 RSS（一般新聞），不做關鍵字過濾
@@ -830,8 +834,12 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
                 _tag_items(p2_items, kw_match=False)
                 for item in p2_items:
                     key = (item.get("original_url") or item.get("url") or "").lower().strip()
-                    if key and key not in seen_urls:
-                        seen_urls.add(key)
+                    if key:
+                        if key not in seen_urls:
+                            seen_urls.add(key)
+                            all_phase.append(item)
+                    else:
+                        # 無 URL 的條目仍保留
                         all_phase.append(item)
 
             return all_phase
@@ -991,6 +999,9 @@ def _filter_items_by_time_range(items, start_time, end_time):
         published_dt = _parse_published_datetime(item.get("published"))
 
         if not published_dt:
+            # 無法解析日期（小型媒體常見，日期格式非標準）→ 預設保留
+            # 避免直接 RSS Phase 2 的文章因日期缺失而全被丟棄
+            filtered.append(item)
             continue
 
         # 如果 published 有 timezone，但 start/end 沒有，可先去掉 timezone
