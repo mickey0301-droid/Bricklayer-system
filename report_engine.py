@@ -402,12 +402,17 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
             or src.get("feed_url")
         )
 
+        # type="rss" 時，若沒有專屬的 rss_url 欄位，直接把 url 當 RSS feed 使用
+        if not rss_url and src.get("type") == "rss":
+            rss_url = src.get("url") or None
+
         domain = (
             src.get("domain")
             or src.get("site")
         )
 
-        if not domain and src.get("url"):
+        # type="domain" 或沒有 rss_url 才從 url 提取 domain
+        if not domain and not rss_url and src.get("url"):
             try:
                 domain = src.get("url").replace("http://", "").replace("https://", "").split("/")[0]
             except:
