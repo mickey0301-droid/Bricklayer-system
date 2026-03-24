@@ -63,7 +63,8 @@ def upload_to_drive(file_path: str, file_name: str, folder_id: str | None = None
     created = service.files().create(
         body=file_metadata,
         media_body=media,
-        fields="id, webViewLink"
+        fields="id, webViewLink",
+        supportsAllDrives=True,
     ).execute()
 
     return created
