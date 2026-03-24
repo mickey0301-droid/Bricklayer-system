@@ -1552,20 +1552,43 @@ def _generate_multiphase_synthesis(
         key = _get_item_source_group(item)
         all_groups.setdefault(key, []).append(item)
 
-    # If caller specified groups, filter; empty list = all groups
+    # 使用者明確選取的群組全部列入，沒有文章的群組補空 list，
+    # 確保 N 個選定群組 → N 份子報告（不因無資料而被靜默跳過）
     if multiphase_groups:
-        selected_groups = {k: v for k, v in all_groups.items() if k in multiphase_groups}
+        selected_groups = {k: all_groups.get(k, []) for k in multiphase_groups}
     else:
         selected_groups = all_groups
 
     # ── 2. Generate sub-reports ─────────────────────────────────────────
     sub_reports: list[tuple[str, str]] = []
-    eligible = [(k, v) for k, v in selected_groups.items() if len(v) >= 1]
+    eligible = list(selected_groups.items())   # 全部群組，含空群組
     total_g = len(eligible)
+
+    _EMPTY_SUBREPORT_TEMPLATE = (
+        "一、摘要\n本期【{name}】無相關新聞。\n\n"
+        "二、國際要聞\n本期無相關新聞。\n\n"
+        "三、台美中要聞\n本期無相關新聞。\n\n"
+        "四、台灣國安要聞\n本期無相關新聞。\n\n"
+        "五、中國要聞\n本期無相關新聞。\n\n"
+        "六、區域情勢\n（一）亞太地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
+        "（二）亞西地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
+        "（三）北美地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
+        "（四）拉丁美洲及加勒比海\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
+        "（五）歐洲地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
+        "（六）非洲地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n\n"
+        "七、專家研析\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n\n"
+        "八、研析\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。"
+    )
 
     for done, (group_key, group_items) in enumerate(eligible, 1):
         group_name_zh = _MULTIPHASE_GROUP_ZH.get(group_key, group_key)
         _cb("stage", f"📝 子報告 {done}/{total_g}：{group_name_zh}（{len(group_items)} 篇）…")
+
+        # 若該群組本期無任何文章，直接插入固定空白子報告，不消耗 AI token
+        if not group_items:
+            sub_reports.append((group_name_zh, _EMPTY_SUBREPORT_TEMPLATE.format(name=group_name_zh)))
+            _cb("stage", f"⬜ 子報告 {done}/{total_g}：{group_name_zh}（本期無資料）")
+            continue
 
         # 在群組內選出最多來源報導的 4 個不同議題（每議題取 2 篇），
         # 確保子報告涵蓋多元話題而非集中於同一事件
@@ -1586,6 +1609,7 @@ def _generate_multiphase_synthesis(
             _cb("stage", f"✅ 子報告完成 {done}/{total_g}：{group_name_zh}")
         except Exception as e:
             print(f"[Multiphase] Sub-report failed for {group_name_zh}: {e}")
+            sub_reports.append((group_name_zh, _EMPTY_SUBREPORT_TEMPLATE.format(name=group_name_zh)))
 
     if not sub_reports:
         return "No news items found.", []
