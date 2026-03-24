@@ -42,6 +42,82 @@ _CN_SUBSOURCE_MAP = {
     "taiwan_affairs_office": "gwytb",
 }
 
+# ── 台灣／中國相關關鍵字（中英文） ──────────────────────────────────────
+_KEYWORDS_TW_CN = [
+    # 繁體中文
+    "台灣", "台海", "兩岸", "台獨", "台美", "台中", "台日",
+    "解放軍", "共軍", "共產黨", "中共", "習近平", "賴清德",
+    "民進黨", "國民黨", "蔡英文", "馬英九", "陳水扁",
+    "台積電", "半導體", "印太", "東海", "南海", "第一島鏈",
+    "統一", "九二共識", "一個中國", "金門", "馬祖",
+    # 簡體中文
+    "台湾", "两岸", "台独", "解放军", "习近平", "赖清德",
+    "民进党", "国民党", "台积电", "半导体", "印太",
+    # 英文
+    "taiwan", "cross-strait", "pla ", "chinese military",
+    "tsmc", "semiconductor", "indo-pacific", "strait",
+    "xi jinping", "ccp", "beijing", "one china",
+]
+
+# 全球媒體類別名稱（用來判斷是否走「熱度排名」邏輯）
+_GLOBAL_MEDIA_CATEGORIES = {"全球媒體"}
+
+
+def _matches_tw_cn(item: dict) -> bool:
+    """判斷文章是否與台灣／中國議題相關（看標題＋摘要）。"""
+    text = (
+        (item.get("title") or "") + " " + (item.get("summary") or "")
+    ).lower()
+    return any(kw.lower() in text for kw in _KEYWORDS_TW_CN)
+
+
+def _rank_by_coverage(items: list, top_n: int = 30) -> list:
+    """
+    國際要聞熱度排名：找出被最多來源同時報導的新聞。
+    做法：把標題切成詞（≥3 字元），找出詞頻最高的詞組合，
+    相同詞組代表同一則新聞，依來源數量排序後取 top_n。
+    """
+    import re
+    from collections import defaultdict
+
+    # 英文停用詞（不計入聚合鍵）
+    _STOP = {
+        "the","a","an","in","on","at","to","for","of","and","or",
+        "is","are","was","were","be","been","has","have","had",
+        "it","its","this","that","with","as","by","from","about",
+        "after","before","over","says","say","said","will","would",
+        "could","his","her","their","our","we","he","she","they",
+        "not","no","new","more","one","two","three","also","than",
+    }
+
+    def _key(title: str) -> frozenset:
+        words = re.findall(r"[a-zA-Z\u4e00-\u9fff]{3,}", title.lower())
+        return frozenset(w for w in words if w not in _STOP)
+
+    groups: dict[frozenset, list] = defaultdict(list)
+    for item in items:
+        k = _key(item.get("title", ""))
+        if k:
+            groups[k].append(item)
+
+    # 按各組的文章數（即有多少來源報導）降序排列
+    ranked_groups = sorted(groups.values(), key=len, reverse=True)
+
+    result = []
+    seen_urls: set = set()
+    for group in ranked_groups:
+        if len(result) >= top_n:
+            break
+        # 每組取一篇代表（選來源最多那組的第一篇）
+        for art in group:
+            url = art.get("url") or art.get("original_url") or ""
+            if url not in seen_urls:
+                seen_urls.add(url)
+                result.append(art)
+                break
+
+    return result
+
 import requests
 import xml.etree.ElementTree as ET
 from urllib.parse import quote
@@ -1062,14 +1138,44 @@ def generate_report(
     items = filter_items_by_topic(items, topic)
 
     # -------------------------------------------------
-    # 全文補抓：只針對篩選後剩下的前 50 篇文章
-    # 先用 RSS summary 快速找出相關文章，再補抓全文，避免對所有來源都抓
+    # 兩段式過濾 + 全文補抓
+    #
+    # 路徑 A（台灣／中國議題）：
+    #   關鍵字過濾 → 命中者補抓全文（最多 40 篇）
+    #
+    # 路徑 B（國際要聞 / 全球媒體）：
+    #   熱度排名（被最多來源同時報導） → 取 top 20 代表篇 → 補抓全文
     # -------------------------------------------------
+
+    # 分流：依來源類別區分
+    tw_cn_items = []   # 路徑 A：台灣／中國
+    global_items = []  # 路徑 B：全球媒體
+    other_items  = []  # 其他（cn_official 等已有全文）
+
+    for it in items:
+        cats = set(it.get("source_category") or [])
+        if it.get("source_type") == "cn_official" or it.get("content"):
+            other_items.append(it)
+        elif cats & _GLOBAL_MEDIA_CATEGORIES:
+            global_items.append(it)
+        else:
+            tw_cn_items.append(it)
+
+    # 路徑 A：關鍵字過濾
+    tw_cn_matched = [i for i in tw_cn_items if _matches_tw_cn(i)]
+    print(f"[Briefings] 台灣/中國關鍵字命中：{len(tw_cn_matched)} / {len(tw_cn_items)}")
+
+    # 路徑 B：熱度排名
+    global_top = _rank_by_coverage(global_items, top_n=20)
+    print(f"[Briefings] 國際要聞熱度篩選：{len(global_top)} / {len(global_items)}")
+
+    # 合併待補全文清單（上限 60 篇，避免過多 HTTP 請求）
+    to_enrich = (tw_cn_matched[:40] + global_top[:20])
+
     def _enrich_one(item):
         url = item.get("original_url") or item.get("url") or ""
         if not url or item.get("content"):
             return item
-        # Google News 重定向 URL 先解析成原始網址
         resolved = _resolve_google_news_url(url)
         content = _fetch_article_content(resolved)
         enriched = dict(item)
@@ -1078,13 +1184,12 @@ def generate_report(
         return enriched
 
     try:
-        enrich_targets = items[:50]
-        rest = items[50:]
         with ThreadPoolExecutor(max_workers=10) as enrich_ex:
-            enriched = list(enrich_ex.map(_enrich_one, enrich_targets, timeout=60))
-        items = enriched + rest
+            enriched = list(enrich_ex.map(_enrich_one, to_enrich, timeout=90))
+        items = enriched + other_items
     except Exception as e:
         print(f"[Briefings] Article enrichment failed (using summaries): {e}")
+        items = to_enrich + other_items
 
     # -------------------------------------------------
     # Expert Monitoring
