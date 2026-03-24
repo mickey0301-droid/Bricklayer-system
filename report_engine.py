@@ -872,6 +872,18 @@ def _build_citation_source_map(items, max_sources=12):
         title = (item.get("title") or "").strip()
         source = (item.get("source") or "").strip()
 
+        # Normalise published date → "Month Day, Year" string
+        raw_pub = item.get("published")
+        published_str = ""
+        if raw_pub:
+            try:
+                if isinstance(raw_pub, str):
+                    from dateutil import parser as _dp
+                    raw_pub = _dp.parse(raw_pub)
+                published_str = raw_pub.strftime("%B %-d, %Y")
+            except Exception:
+                published_str = str(raw_pub)[:10]
+
         key = (url or title).lower().strip()
         if not key:
             continue
@@ -883,7 +895,8 @@ def _build_citation_source_map(items, max_sources=12):
         ordered.append({
             "title": title,
             "source": source,
-            "url": url
+            "url": url,
+            "published_at": published_str,
         })
 
         if len(ordered) >= max_sources:
@@ -915,22 +928,36 @@ def _to_superscript(n: int) -> str:
 
 def _format_chicago_note(idx: int, src: dict) -> str:
     """
-    Chicago Notes & Bibliography style:
-    ¹ "Title," Source Name, Date. URL.
+    Chicago Notes & Bibliography – Web page format:
+    Author Last, First. "Title of Web Page." Website Name. Organization, Month Day, Year. URL.
+    When no individual author is available, the source name acts as the publisher.
     """
     title = src.get("title", "").strip()
     source = src.get("source", "").strip()
     published_at = src.get("published_at", "").strip()
     url = src.get("url", "").strip()
+    author = src.get("author", "").strip()  # optional field; usually absent for RSS
 
     sup = _to_superscript(idx)
     parts = []
+
+    # Author (Last, First) – only if present
+    if author:
+        parts.append(author + ".")
+
+    # Title of web page in double quotes
     if title:
-        parts.append(f'"{title},"')
+        parts.append(f'"{title}."')
+
+    # Website / publication name (italics not possible in plain text; omit italics)
     if source:
-        parts.append(source + ("," if published_at else "."))
+        parts.append(source + ".")
+
+    # Publication date
     if published_at:
         parts.append(published_at + ".")
+
+    # URL
     if url:
         parts.append(url + ".")
 
@@ -1481,17 +1508,16 @@ def _generate_multiphase_synthesis(
                     expert_data_lines.append(f"     {s[:300]}")
     expert_data_block = "\n".join(expert_data_lines)
 
-    expert_section = "\n七、研析"
-    expert_guidance = "- 本期無專家資料，請省略「專家研析」章節。"
     if has_expert_data:
-        expert_section = (
-            "\n七、專家研析\n1. 國際情勢解讀\n2. 台美中情勢解讀\n\n八、研析"
-        )
         expert_guidance = (
-            f"- 「專家研析」必須引用 Expert Analysis Data 中具名專家"
-            f"（{', '.join(expert_names)}）的實際觀點，並標注是哪位專家的看法。"
-            "若某專家無明確觀點可引用，請省略該專家。勿憑空虛構專家言論。"
+            f"- 「七、專家研析」必須根據 Expert Analysis Data 撰寫，引用具名專家"
+            f"（{', '.join(expert_names)}）的實際觀點並標注姓名。"
+            "若某小節無明確觀點可引用，請寫「本期無相關專家意見。」。勿憑空虛構。"
         )
+        expert_guidance_note = "若本期有專家資料，依上述 expert_guidance 引用；若無，請寫「本期無相關專家意見。」。"
+    else:
+        expert_guidance = ""
+        expert_guidance_note = "本期無專家資料，請在兩個小節各寫「本期無專家資料。」。"
 
     sub_reports_block = "\n\n".join(
         f"═══ {name} ═══\n{text}" for name, text in sub_reports
@@ -1515,9 +1541,9 @@ Requirements:
 3. Do NOT write source names in brackets such as [DW.com], [Reuters.com], [BBC].
 4. Synthesize information across sub-reports into broader strategic analysis.
 5. Identify cross-regional patterns, escalating trends, and strategic implications.
-6. Whenever you mention a media outlet, always name it specifically — never use vague terms like "歐洲媒體", "西方媒體", "美國媒體". Write the actual outlet name with both Chinese and English on first mention, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）.
-7. Whenever you mention a person, always include their specific title or role immediately before their name. Use conventionally established Chinese name forms. Follow with the person's full English name in parentheses on first mention. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄（Fumio Kishida）.
-8. Whenever you mention a non-media organization for the first time, include both its Chinese and English names in parentheses, e.g. 北大西洋公約組織（NATO）、歐盟委員會（European Commission）.
+6. MANDATORY — Media outlets: NEVER use vague collective terms such as "歐洲媒體", "西方媒體", "美國媒體", "外媒". Always write the specific outlet name. On first mention, provide both Chinese and English, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）、《紐約時報》（New York Times）. This rule has NO exceptions.
+7. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form: Western figures use surname only (e.g., 川普、拜登、馬克宏、梅洛尼、奧斯汀); East Asian figures use the full name (e.g., 岸田文雄、尹錫悅、習近平、賴清德). On first mention, follow with the full English name in parentheses. Format: [Title][Chinese name]（Full English Name）. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄（Fumio Kishida）、韓國總統尹錫悅（Yoon Suk-yeol）、中華民國總統賴清德（Lai Ching-te）. This rule has NO exceptions.
+8. MANDATORY — Organizations and institutions: On first mention, always provide both Chinese and English names. Format: Chinese name（English Name）. Examples: 北大西洋公約組織（NATO）、美國國務院（U.S. Department of State）、歐盟委員會（European Commission）、美國在台協會（American Institute in Taiwan, AIT）. This rule has NO exceptions.
 
 Output structure:
 【戰略情報簡報】
@@ -1534,29 +1560,36 @@ Output structure:
 
 六、區域情勢
 （一）亞太地區
-1. 區域要聞（僅在有亞太地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有亞太地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無亞太地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無亞太地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （二）亞西地區
-1. 區域要聞（僅在有亞西地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有亞西地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無亞西地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無亞西地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （三）北美地區
-1. 區域要聞（僅在有北美地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有北美地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無北美地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無北美地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （四）拉丁美洲及加勒比海
-1. 區域要聞（僅在有拉丁美洲相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有拉丁美洲涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無拉丁美洲相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無拉丁美洲涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （五）歐洲地區
-1. 區域要聞（僅在有歐洲地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有歐洲地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無歐洲地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無歐洲地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （六）非洲地區
-1. 區域要聞（僅在有非洲地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有非洲地區涉台涉中新聞時撰寫，否則省略）
-{expert_section}
+1. 國際要聞研析（若本期無非洲地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無非洲地區涉台涉中新聞，請寫：「本期無相關新聞。」）
+
+七、專家研析
+1. 國際要聞研析
+2. 台美中要聞研析
+
+八、研析
+1. 國際要聞研析
+2. 台美中要聞研析
 
 Writing guidance:
 - 「摘要」請用一小段說明本期最重要判斷。
@@ -1564,9 +1597,10 @@ Writing guidance:
 - 「台美中要聞」聚焦台灣、美國、中國三角互動及其戰略意涵。
 - 「台灣國安要聞」聚焦軍事、灰帶、資安、國防、國安治理等。
 - 「中國要聞」聚焦中國政治、外交、軍事、經濟、對外作為。
-- 「區域情勢」各區域的子段只在有明確對應新聞時才撰寫，若無相關新聞請直接省略，不要寫「無相關新聞」。
+- 「區域情勢」六大區域必須全部列出，不得省略任何一個。每個區域各有兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。若某區域本期無相關新聞，請在該小節寫「本期無相關新聞。」，絕不可完全省略任何區域或小節。
 {expert_guidance}
-- 「研析」請提出跨章節的整體判斷、風險、趨勢、可能後續觀察重點。
+- 「七、專家研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。{expert_guidance_note}
+- 「八、研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」，請提出跨章節的整體判斷、風險、趨勢、可能後續觀察重點。
 
 Strategic Context:
 {insights_block or "None"}
@@ -1582,6 +1616,10 @@ Sub-reports from regional analyst teams:
 
     report = re.sub(r'\[\s*(?!S\d+\s*\])([A-Za-z][^\]]{0,40})\]', '', report)
     report = re.sub(r'[ \t]+', ' ', report)
+
+    # Build citation source map from all items and render citations
+    source_map = _build_citation_source_map(items, max_sources=12)
+    report = _render_citations(report, source_map, format_options)
 
     return report, items
 
@@ -1803,22 +1841,16 @@ def generate_report(
                     expert_data_lines.append(f"     {s[:300]}")
     expert_data_block = "\n".join(expert_data_lines)
 
-    expert_section = ""
     if has_expert_data:
-        expert_section = """
-七、專家研析
-1. 國際情勢解讀
-2. 台美中情勢解讀
-
-八、研析"""
+        expert_guidance = (
+            f"- 「七、專家研析」必須根據 Expert Analysis Data 撰寫，引用具名專家"
+            f"（{', '.join(expert_names)}）的實際觀點並標注姓名。"
+            "若某小節無明確觀點可引用，請寫「本期無相關專家意見。」。勿憑空虛構。"
+        )
+        expert_guidance_note = "若本期有專家資料，依上述 expert_guidance 引用；若無，請寫「本期無相關專家意見。」。"
     else:
-        expert_section = "\n七、研析"
-
-    expert_guidance = ""
-    if has_expert_data:
-        expert_guidance = f"""- 「專家研析」必須引用 Expert Analysis Data 中具名專家（{', '.join(expert_names)}）的實際觀點，並標注是哪位專家的看法。若某專家無明確觀點可引用，請省略該專家。勿憑空虛構專家言論。"""
-    else:
-        expert_guidance = "- 本期無專家資料，請省略「專家研析」章節。"
+        expert_guidance = ""
+        expert_guidance_note = "本期無專家資料，請在兩個小節各寫「本期無專家資料。」。"
 
     prompt = f"""
 You are a senior strategic intelligence analyst.
@@ -1838,9 +1870,9 @@ Requirements:
 9. You may cite multiple sources together, for example [S1][S3].
 10. Only use source markers that exist in the provided News data.
 11. Keep citations light and readable. Do not attach a citation to every single sentence unless necessary.
-12. Whenever you mention a media outlet, always name it specifically — never use vague terms like "歐洲媒體", "西方媒體", "美國媒體". Write the actual outlet name with both Chinese and English on first mention, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）. For widely recognized outlets where one name is dominant, you may use just that name, e.g. CNN、BBC、紐約時報（New York Times）.
-13. Whenever you mention a person, always include their specific title or role immediately before their name. For the Chinese name, use only the conventionally established form: for Western figures use surname only (e.g., 川普、拜登、奧斯汀、馬克宏、梅洛尼); for Japanese, Korean, or other East Asian figures use the full name in Chinese characters (e.g., 岸田文雄、尹錫悅、習近平、普廷). Always follow with the person's full English name in parentheses on first mention. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄（Fumio Kishida）、韓國總統尹錫悅（Yoon Suk-yeol）、國防部長奧斯汀（Lloyd Austin）.
-14. Whenever you mention a non-media organization or institution for the first time, always include both its Chinese name and English name in parentheses, e.g. 北大西洋公約組織（NATO）、美國國務院（U.S. Department of State）、歐盟委員會（European Commission）.
+12. MANDATORY — Media outlets: NEVER use vague collective terms such as "歐洲媒體", "西方媒體", "美國媒體", "外媒". Always write the specific outlet name. On first mention, provide both Chinese and English, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）、《紐約時報》（New York Times）. This rule has NO exceptions.
+13. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form: Western figures use surname only (e.g., 川普、拜登、馬克宏、梅洛尼、奧斯汀); East Asian figures use the full name (e.g., 岸田文雄、尹錫悅、習近平、賴清德). On first mention, follow with the full English name in parentheses. Format: [Title][Chinese name]（Full English Name）. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄（Fumio Kishida）、韓國總統尹錫悅（Yoon Suk-yeol）、美國國防部長奧斯汀（Lloyd Austin）、中華民國總統賴清德（Lai Ching-te）. This rule has NO exceptions.
+14. MANDATORY — Organizations and institutions: On first mention, always provide both Chinese and English names. Format: Chinese name（English Name）. Examples: 北大西洋公約組織（NATO）、美國國務院（U.S. Department of State）、歐盟委員會（European Commission）、美國在台協會（American Institute in Taiwan, AIT）、中華民國國防部（Ministry of National Defense, ROC）. This rule has NO exceptions.
 
 Output structure:
 【戰略情報簡報】
@@ -1857,29 +1889,36 @@ Output structure:
 
 六、區域情勢
 （一）亞太地區
-1. 區域要聞（僅在有亞太地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有亞太地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無亞太地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無亞太地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （二）亞西地區
-1. 區域要聞（僅在有亞西地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有亞西地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無亞西地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無亞西地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （三）北美地區
-1. 區域要聞（僅在有北美地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有北美地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無北美地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無北美地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （四）拉丁美洲及加勒比海
-1. 區域要聞（僅在有拉丁美洲相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有拉丁美洲涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無拉丁美洲相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無拉丁美洲涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （五）歐洲地區
-1. 區域要聞（僅在有歐洲地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有歐洲地區涉台涉中新聞時撰寫，否則省略）
+1. 國際要聞研析（若本期無歐洲地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無歐洲地區涉台涉中新聞，請寫：「本期無相關新聞。」）
 
 （六）非洲地區
-1. 區域要聞（僅在有非洲地區相關新聞時撰寫，否則省略）
-2. 台灣與中國相關要聞（僅在有非洲地區涉台涉中新聞時撰寫，否則省略）
-{expert_section}
+1. 國際要聞研析（若本期無非洲地區相關新聞，請寫：「本期無相關新聞。」）
+2. 台美中要聞研析（若本期無非洲地區涉台涉中新聞，請寫：「本期無相關新聞。」）
+
+七、專家研析
+1. 國際要聞研析
+2. 台美中要聞研析
+
+八、研析
+1. 國際要聞研析
+2. 台美中要聞研析
 
 Writing guidance:
 - 「摘要」請用一小段說明本期最重要判斷。
@@ -1887,9 +1926,10 @@ Writing guidance:
 - 「台美中要聞」聚焦台灣、美國、中國三角互動及其戰略意涵。
 - 「台灣國安要聞」聚焦軍事、灰帶、資安、國防、國安治理等。
 - 「中國要聞」聚焦中國政治、外交、軍事、經濟、對外作為。
-- 「區域情勢」各區域的子段只在有明確對應新聞時才撰寫，若無相關新聞請直接省略，不要寫「無相關新聞」。
+- 「區域情勢」六大區域必須全部列出，不得省略任何一個。每個區域各有兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。若某區域本期無相關新聞，請在該小節寫「本期無相關新聞。」，絕不可完全省略任何區域或小節。
 {expert_guidance}
-- 「研析」請提出跨章節的整體判斷、風險、趨勢、可能後續觀察重點。
+- 「七、專家研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。{expert_guidance_note}
+- 「八、研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」，請提出跨章節的整體判斷、風險、趨勢、可能後續觀察重點。
 
 Strategic Context:
 {insights_block or "None"}
