@@ -132,7 +132,18 @@ from bs4 import BeautifulSoup
 
 from utils.loaders import load_sources
 
-USER_AGENT = "Mozilla/5.0 (Briefings Local Research Tool)"
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/123.0.0.0 Safari/537.36"
+)
+_REQUEST_HEADERS = {
+    "User-Agent": USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Cache-Control": "no-cache",
+}
 
 def _normalize_selected_sources(selected_sources, all_sources=None):
     """
@@ -190,7 +201,7 @@ def _resolve_google_news_url(url):
     try:
         r = requests.get(
             url,
-            headers={"User-Agent": USER_AGENT},
+            headers=_REQUEST_HEADERS,
             timeout=10,
             allow_redirects=True,
         )
@@ -275,7 +286,7 @@ def _fetch_article_content(url, max_chars=8000):
     try:
         r = requests.get(
             url,
-            headers={"User-Agent": USER_AGENT},
+            headers=_REQUEST_HEADERS,
             timeout=8,
         )
         r.raise_for_status()
@@ -341,7 +352,7 @@ def _fetch_rss_items(rss_url, source_name, limit=20):
     try:
         r = requests.get(
             rss_url,
-            headers={"User-Agent": USER_AGENT},
+            headers=_REQUEST_HEADERS,
             timeout=10,
         )
         r.raise_for_status()
@@ -644,7 +655,7 @@ def debug_fetch_source(src: dict, start_time=None, end_time=None) -> dict:
     }
 
     try:
-        r = requests.get(rss_url, headers={"User-Agent": USER_AGENT}, timeout=12)
+        r = requests.get(rss_url, headers=_REQUEST_HEADERS, timeout=12)
         result["http_status"]    = r.status_code
         result["content_type"]   = r.headers.get("content-type", "?")
         result["response_len"]   = len(r.text)
