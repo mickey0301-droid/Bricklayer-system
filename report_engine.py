@@ -340,6 +340,43 @@ def _fetch_rss_items(rss_url, source_name, limit=20):
     return output
 
 
+_FEED_SERVICE_DOMAINS = {
+    "feedburner.com", "feedblitz.com", "feedpress.me",
+    "feeds.feedburner.com",
+}
+
+_FEED_SUBDOMAIN_RE = re.compile(r'^(feeds?\.|rss\.|feed\.)', re.IGNORECASE)
+
+
+def _extract_news_domain(url: str) -> str | None:
+    """
+    從 URL 萃取可供 Google News site: 搜尋的新聞網站 domain。
+
+    處理常見情況：
+    - https://feeds.udn.com/rss/...  → udn.com
+    - https://rss.cna.com.tw/...     → cna.com.tw
+    - https://udn.com/rss/...        → udn.com
+    - https://apnews.com             → apnews.com
+    Feedburner 等第三方 feed 服務無法反推原始 domain，直接回傳 None。
+    """
+    if not url:
+        return None
+    try:
+        raw = url.replace("https://", "").replace("http://", "")
+        domain = raw.split("/")[0].lower()
+    except Exception:
+        return None
+
+    # 第三方 feed 服務無法反推原始來源
+    for svc in _FEED_SERVICE_DOMAINS:
+        if svc in domain:
+            return None
+
+    # 移除 feeds. / rss. / feed. 子網域前綴，還原新聞網站本體
+    domain = _FEED_SUBDOMAIN_RE.sub("", domain)
+    return domain or None
+
+
 def _build_google_news_rss_for_domain(domain, start_time=None, end_time=None, keywords=None):
     """
     建立 Google News RSS 查詢 URL。
@@ -406,16 +443,17 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
         if src.get("type") == "cn_official":
             return name, []
 
-        # 從 url 欄位取 domain（適用於 rss / domain 所有類型）
+        # 從 url 欄位萃取 Google News 可用的 domain
+        # _extract_news_domain 會自動去除 feeds./rss. 等 feed 服務前綴
         url = src.get("url", "")
-        domain = src.get("domain") or src.get("site")
-        if not domain and url:
-            try:
-                domain = url.replace("http://", "").replace("https://", "").split("/")[0]
-            except Exception:
-                domain = None
+        domain = src.get("domain") or src.get("site") or _extract_news_domain(url)
 
         if not domain:
+            # feedburner 等第三方 feed 服務無法取得原始 domain，改直接抓 RSS
+            if url and src.get("type") == "rss":
+                print(f"[Briefings] {name}: 無法取得 domain（可能是第三方 feed），改直接抓 RSS")
+                items_fallback = _fetch_rss_items(url, name, limit=limit_per_source)
+                return name, items_fallback
             print(f"[Briefings] Source skipped (no domain): {name}")
             return name, []
 
@@ -1229,10 +1267,10 @@ def generate_report(
     try:
         with ThreadPoolExecutor(max_workers=10) as enrich_ex:
             enriched = list(enrich_ex.map(_enrich_one, to_enrich, timeout=90))
-        items = enriched + other_items
+        items = enriched + cn_items
     except Exception as e:
         print(f"[Briefings] Article enrichment failed (using summaries): {e}")
-        items = to_enrich + other_items
+        items = to_enrich + cn_items
 
     with_content = sum(1 for i in items if i.get("content"))
     _cb("stage", f"✅ 全文補抓完成：{with_content} / {len(items)} 篇有全文")
