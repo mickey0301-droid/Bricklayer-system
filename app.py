@@ -1476,6 +1476,14 @@ with tab_automation:
             "delete": False,
         }]
 
+    # 加入「下次執行」欄位
+    for i, row in enumerate(table_rows):
+        if i < len(schedules):
+            _next = compute_next_runs(schedules[i], 1, now=now_tw())
+            row["next_run"] = _next[0].strftime("%m/%d %H:%M") if _next else "—（已過期）"
+        else:
+            row["next_run"] = "—"
+
     table_df = pd.DataFrame(table_rows)
 
     edited_df = st.data_editor(
@@ -1504,6 +1512,7 @@ with tab_automation:
             "output_formats": st.column_config.TextColumn("格式"),
             "output_targets": st.column_config.TextColumn("輸出位置"),
             "coverage_hours": st.column_config.NumberColumn("涵蓋小時", min_value=1, step=1),
+            "next_run": st.column_config.TextColumn("下次執行", disabled=True),
             "delete": st.column_config.CheckboxColumn("刪除"),
         },
         key="automation_schedule_editor",
@@ -1788,31 +1797,6 @@ with tab_automation:
                 save_auto_export(config)
                 st.session_state.automation_selected_index = max(0, selected_idx - 1)
                 st.rerun()
-
-    # -------------------------
-    # Next Runs Preview
-    # -------------------------
-    st.markdown("### Next Runs Preview")
-
-    preview_schedules = config.get("schedules", [])
-    if not preview_schedules:
-        st.info("目前沒有排程可預覽。")
-    else:
-        for _pi, _ps in enumerate(preview_schedules):
-            _runs = compute_next_runs(_ps, 5, now=now_tw())
-            _runs_str = "、".join([dt.strftime("%m/%d %H:%M") for dt in _runs]) if _runs else "—"
-            _mode = _ps.get("schedule_mode", "")
-            _pname = _ps.get("name", f"排程 {_pi+1}")
-
-            _pc1, _pc2 = st.columns([5, 1])
-            with _pc1:
-                st.markdown(f"**{_pname}**　`{_mode}`")
-                st.caption(f"接下來：{_runs_str}")
-            with _pc2:
-                if st.button("✏️ 編輯", key=f"preview_edit_{_pi}", use_container_width=True):
-                    st.session_state.automation_selected_index = _pi
-                    st.rerun()
-            st.divider()
 
     # -------------------------
     # 執行狀態與歷史
