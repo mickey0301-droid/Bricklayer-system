@@ -259,7 +259,10 @@ def fetch_gwytb(target_date: datetime) -> list[dict]:
 
 
 def fetch_official_media_for_day(target_date: datetime, requested_subsources: list[str] | None = None) -> dict[str, list[dict]]:
-    requested = set(requested_subsources or ["rmrb", "xwlb", "jfjb", "xhs", "fmprc", "mod", "gwytb"])
+    # None → 預設抓全部；空 list [] → 明確表示什麼都不抓，直接回傳空結果
+    if requested_subsources is not None and len(requested_subsources) == 0:
+        return {"rmrb": [], "xwlb": [], "jfjb": [], "xhs": [], "fmprc": [], "mod": [], "gwytb": []}
+    requested = set(requested_subsources) if requested_subsources is not None else {"rmrb", "xwlb", "jfjb", "xhs", "fmprc", "mod", "gwytb"}
 
     result = {
         "rmrb": [],

@@ -140,10 +140,20 @@ def _filter_sources_by_selection(sources, selected_categories, selected_names):
         if not s.get("enabled", True):
             continue
         cats = s.get("category", []) or []
-        if selected_categories and not any(c in selected_categories for c in cats):
-            continue
-        if selected_names and s.get("name") not in selected_names:
-            continue
+
+        # 中共官媒是「主動選取」（opt-in）：只有在使用者明確選了「中共官媒」類別
+        # 或明確點選了該來源名稱時，才納入抓取範圍。
+        if s.get("type") == "cn_official":
+            by_cat  = bool(selected_categories and any(c in selected_categories for c in cats))
+            by_name = bool(selected_names and s.get("name") in selected_names)
+            if not by_cat and not by_name:
+                continue
+        else:
+            if selected_categories and not any(c in selected_categories for c in cats):
+                continue
+            if selected_names and s.get("name") not in selected_names:
+                continue
+
         filtered.append(s)
     return filtered
 
