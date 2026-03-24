@@ -678,9 +678,8 @@ def run_schedule_job(schedule):
         report_text = try_generate_report_via_report_engine(schedule, context)
 
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe_name = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in schedule["name"])
-        base_name = f"{timestamp}_{safe_name}"
+        timestamp = _now_tw().strftime("%Y%m%d_%H%M%S")
+        base_name = f"公情綜整簡報 {timestamp}"
         files = []
 
         drive_results = []
