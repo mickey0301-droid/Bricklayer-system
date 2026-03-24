@@ -22,7 +22,7 @@ def _ensure_gemini_configured():
 
     genai.configure(api_key=api_key)
 
-from utils.loaders import load_sources, load_experts, load_formats, load_insights
+from utils.loaders import load_sources, load_experts, load_formats, load_insights, load_category_keywords
 from utils.expert_loader import fetch_expert_items
 
 try:
@@ -61,6 +61,11 @@ _KEYWORDS_TW_CN = [
 
 # 全球媒體類別名稱（用來判斷是否走「熱度排名」邏輯）
 _GLOBAL_MEDIA_CATEGORIES = {"全球媒體"}
+
+# 各來源類別對應的 Google News RSS 查詢關鍵字
+# 實際值由 load_category_keywords() 動態讀取（使用者可在 Sources 頁面自訂並儲存）
+# 此處僅保留做為 import 路徑別名，實際預設值定義在 utils/loaders.py
+from utils.loaders import DEFAULT_CATEGORY_KEYWORDS as _CATEGORY_KEYWORDS
 
 
 def _matches_tw_cn(item: dict) -> bool:
@@ -335,13 +340,17 @@ def _fetch_rss_items(rss_url, source_name, limit=20):
     return output
 
 
-def _build_google_news_rss_for_domain(domain, start_time=None, end_time=None):
+def _build_google_news_rss_for_domain(domain, start_time=None, end_time=None, keywords=None):
     """
     建立 Google News RSS 查詢 URL。
-    若傳入 start_time / end_time，會加上 after:/before: 日期篩選，
-    確保只抓取指定時間範圍內的報導（台灣媒體等 domain 來源尤為重要）。
+    若傳入 start_time / end_time，會加上 after:/before: 日期篩選。
+    若傳入 keywords（字串），會以 (keywords) 附加在 site: 後，
+    讓 Google 直接在 RSS 層篩選相關報導，避免抓到大量無關文章。
+    全球媒體（熱度排名邏輯）不傳 keywords，以免遺漏重大國際新聞。
     """
     query = f"site:{domain}"
+    if keywords:
+        query += f" ({keywords})"
     if start_time:
         query += f" after:{start_time.strftime('%Y/%m/%d')}"
     if end_time:
@@ -350,8 +359,10 @@ def _build_google_news_rss_for_domain(domain, start_time=None, end_time=None):
     return f"https://news.google.com/rss/search?q={query_encoded}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
 
 
-def _fetch_domain_items(domain, source_name, limit=20, start_time=None, end_time=None):
-    rss_url = _build_google_news_rss_for_domain(domain, start_time=start_time, end_time=end_time)
+def _fetch_domain_items(domain, source_name, limit=20, start_time=None, end_time=None, keywords=None):
+    rss_url = _build_google_news_rss_for_domain(
+        domain, start_time=start_time, end_time=end_time, keywords=keywords
+    )
     items = _fetch_rss_items(rss_url, source_name, limit=limit)
 
     for item in items:
@@ -376,6 +387,9 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
     normalized_sources = _normalize_selected_sources(selected_sources, all_sources=all_sources)
     total = len(normalized_sources)
     all_items = []
+
+    # 每次抓取時動態載入關鍵字設定，讓使用者在 UI 修改後立即生效
+    category_keywords = load_category_keywords()
 
     def fetch_single(src):
 
@@ -405,9 +419,21 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
             source_items = _fetch_rss_items(rss_url, name, limit=limit_per_source)
 
         elif domain:
+            # 依來源類別選擇對應的關鍵字組，讓 Google News 在 RSS 層預先篩選。
+            # 關鍵字由使用者在 Sources 頁面設定，儲存後立即生效（category_keywords 已在此次呼叫開始時載入）。
+            # 若來源無對應類別，則不加關鍵字（抓全部，由後段邏輯過濾）。
+            cats = src.get("category", []) or []
+            if isinstance(cats, str):
+                cats = [cats]
+            domain_keywords = None
+            for cat in cats:
+                if cat in category_keywords:
+                    domain_keywords = category_keywords[cat]
+                    break
             source_items = _fetch_domain_items(
                 domain, name, limit=limit_per_source,
                 start_time=start_time, end_time=end_time,
+                keywords=domain_keywords,
             )
 
         else:

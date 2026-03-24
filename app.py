@@ -39,6 +39,9 @@ from utils.loaders import (
     expert_to_editor_row,
     editor_row_to_expert,
     display_expert_name,
+    load_category_keywords,
+    save_category_keywords,
+    DEFAULT_CATEGORY_KEYWORDS,
 )
 import os
 import google.generativeai as genai
@@ -428,13 +431,37 @@ enabled_expert_names = [display_expert_name(e) for e in experts if e.get("enable
 # =========================================================
 # Sidebar Navigation
 # =========================================================
+
+_NAV_PAGES = [
+    ("📋", "Briefings",  "簡報生成"),
+    ("💡", "Insights",   "研析方向"),
+    ("📰", "Sources",    "來源管理"),
+    ("📄", "Formats",    "格式設定"),
+    ("⏰", "Schedule",   "排程"),
+    ("📊", "Reports",    "報告記錄"),
+]
+
+if "selected_page" not in st.session_state:
+    st.session_state.selected_page = "Briefings"
+
 with st.sidebar:
-    st.markdown("### 選擇頁面")
-    selected_page = st.radio(
-        "選擇頁面",
-        ["Briefings", "Insights", "Sources", "Formats", "Schedule", "Reports"],
-        label_visibility="collapsed",
+    st.markdown(
+        "<h2 style='margin-bottom:0.2rem;font-size:1.25rem;'>公情綜整報告</h2>"
+        "<hr style='margin:0.4rem 0 1rem 0;border-color:#e0e0e0;'>",
+        unsafe_allow_html=True,
     )
+    for _icon, _key, _label in _NAV_PAGES:
+        _btn_type = "primary" if st.session_state.selected_page == _key else "secondary"
+        if st.button(
+            f"{_icon}　{_label}",
+            key=f"nav_{_key}",
+            use_container_width=True,
+            type=_btn_type,
+        ):
+            st.session_state.selected_page = _key
+            st.rerun()
+
+selected_page = st.session_state.selected_page
 
 
 # =========================================================
@@ -865,6 +892,9 @@ elif selected_page == "Insights":
 elif selected_page == "Sources":
     st.subheader("Sources 管理")
 
+    # 載入關鍵字設定（每次頁面渲染時讀取，儲存後下次 rerun 即生效）
+    _cat_kw = load_category_keywords()
+
     src_tab_add, src_tab_tw, src_tab_intl, src_tab_experts, src_tab_global, src_tab_cn = st.tabs([
         "新增來源", "自訂台灣媒體", "自訂國際媒體", "自訂專家", "全球媒體", "中國媒體"
     ])
@@ -958,6 +988,20 @@ elif selected_page == "Sources":
 
     # ── 自訂台灣媒體 ──────────────────────────────────────────────────────────
     with src_tab_tw:
+        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
+            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。")
+            _kw_tw = st.text_area(
+                "自訂台灣媒體 關鍵字",
+                value=_cat_kw.get("自訂台灣媒體", DEFAULT_CATEGORY_KEYWORDS.get("自訂台灣媒體", "")),
+                height=80,
+                key="kw_editor_tw",
+                label_visibility="collapsed",
+            )
+            if st.button("儲存關鍵字", key="save_kw_tw", use_container_width=True):
+                _cat_kw["自訂台灣媒體"] = _kw_tw.strip()
+                save_category_keywords(_cat_kw)
+                st.success("關鍵字已儲存。")
+                st.rerun()
         st.caption(f"共 {len(tw_sources)} 筆")
         tw_df = _build_source_editor_df(tw_sources, blank_rows=5)
         edited_tw_df = st.data_editor(
@@ -1003,6 +1047,20 @@ elif selected_page == "Sources":
 
     # ── 自訂國際媒體 ──────────────────────────────────────────────────────────
     with src_tab_intl:
+        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
+            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。")
+            _kw_intl = st.text_area(
+                "自訂國際媒體 關鍵字",
+                value=_cat_kw.get("自訂國際媒體", DEFAULT_CATEGORY_KEYWORDS.get("自訂國際媒體", "")),
+                height=80,
+                key="kw_editor_intl",
+                label_visibility="collapsed",
+            )
+            if st.button("儲存關鍵字", key="save_kw_intl", use_container_width=True):
+                _cat_kw["自訂國際媒體"] = _kw_intl.strip()
+                save_category_keywords(_cat_kw)
+                st.success("關鍵字已儲存。")
+                st.rerun()
         st.caption(f"共 {len(intl_sources)} 筆")
         intl_df = _build_source_editor_df(intl_sources, blank_rows=5)
         edited_intl_df = st.data_editor(
@@ -1048,6 +1106,21 @@ elif selected_page == "Sources":
 
     # ── 自訂專家 ──────────────────────────────────────────────────────────────
     with src_tab_experts:
+
+        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
+            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。")
+            _kw_experts = st.text_area(
+                "自訂專家 關鍵字",
+                value=_cat_kw.get("自訂專家", DEFAULT_CATEGORY_KEYWORDS.get("自訂專家", "")),
+                height=80,
+                key="kw_editor_experts",
+                label_visibility="collapsed",
+            )
+            if st.button("儲存關鍵字", key="save_kw_experts", use_container_width=True):
+                _cat_kw["自訂專家"] = _kw_experts.strip()
+                save_category_keywords(_cat_kw)
+                st.success("關鍵字已儲存。")
+                st.rerun()
 
         with st.expander("單筆新增專家", expanded=False):
             c1, c2 = st.columns(2)
@@ -1201,6 +1274,20 @@ elif selected_page == "Sources":
 
     # ── 全球媒體 ──────────────────────────────────────────────────────────────
     with src_tab_global:
+        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
+            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。後段仍依覆蓋熱度排名。")
+            _kw_global = st.text_area(
+                "全球媒體 關鍵字",
+                value=_cat_kw.get("全球媒體", DEFAULT_CATEGORY_KEYWORDS.get("全球媒體", "")),
+                height=80,
+                key="kw_editor_global",
+                label_visibility="collapsed",
+            )
+            if st.button("儲存關鍵字", key="save_kw_global", use_container_width=True):
+                _cat_kw["全球媒體"] = _kw_global.strip()
+                save_category_keywords(_cat_kw)
+                st.success("關鍵字已儲存。")
+                st.rerun()
         st.caption(f"共 {len(global_sources_ui)} 筆（唯讀）")
         _global_rows = [source_to_editor_row(x) for x in global_sources_ui]
         _global_df = pd.DataFrame(_global_rows) if _global_rows else pd.DataFrame(columns=["name", "url", "region", "enabled"])
@@ -1208,6 +1295,20 @@ elif selected_page == "Sources":
 
     # ── 中國媒體 ──────────────────────────────────────────────────────────────
     with src_tab_cn:
+        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
+            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。")
+            _kw_cn = st.text_area(
+                "中國媒體 關鍵字",
+                value=_cat_kw.get("中國媒體", DEFAULT_CATEGORY_KEYWORDS.get("中國媒體", "")),
+                height=80,
+                key="kw_editor_cn",
+                label_visibility="collapsed",
+            )
+            if st.button("儲存關鍵字", key="save_kw_cn", use_container_width=True):
+                _cat_kw["中國媒體"] = _kw_cn.strip()
+                save_category_keywords(_cat_kw)
+                st.success("關鍵字已儲存。")
+                st.rerun()
         st.caption(f"共 {len(fixed_sources)} 筆（唯讀）")
         _cn_rows = [source_to_editor_row(x) for x in fixed_sources]
         _cn_df = pd.DataFrame(_cn_rows) if _cn_rows else pd.DataFrame(columns=["name", "category", "description"])

@@ -612,6 +612,68 @@ def save_auto_export_state(data: dict):
     write_json(AUTO_EXPORT_STATE_PATH, data or {"last_runs": {}})
 
 
+# ── 各類別 Google News RSS 關鍵字 ────────────────────────────────────────────
+
+_CATEGORY_KEYWORDS_USER_PATH = CONFIG_DIR / "category_keywords_user.json"
+
+# 預設關鍵字（code-level fallback，不會被 git pull 覆蓋使用者設定）
+DEFAULT_CATEGORY_KEYWORDS: dict = {
+    "自訂台灣媒體": (
+        "中國 OR 中共 OR 解放軍 OR 共軍 OR 習近平 OR 兩岸 OR 台海 OR 北京 OR "
+        "台積電 OR 半導體 OR 印太 OR 南海 OR 東海 OR 美中 OR 中美"
+    ),
+    "自訂國際媒體": (
+        "taiwan OR 台灣 OR china OR 中國 OR \"cross-strait\" OR 兩岸 OR "
+        "\"xi jinping\" OR 習近平 OR tsmc OR 台積電 OR \"chinese military\" OR 解放軍 OR "
+        "\"indo-pacific\" OR 印太 OR \"south china sea\" OR \"taiwan strait\" OR ccp OR 中共"
+    ),
+    "自訂專家": (
+        "taiwan OR 台灣 OR china OR 中國 OR \"cross-strait\" OR 兩岸 OR "
+        "\"xi jinping\" OR 習近平 OR tsmc OR 台積電 OR \"chinese military\" OR 解放軍 OR "
+        "\"indo-pacific\" OR 印太 OR \"south china sea\" OR \"taiwan strait\" OR ccp OR 中共"
+    ),
+    "全球媒體": (
+        "taiwan OR 台灣 OR china OR 中國 OR \"cross-strait\" OR 兩岸 OR "
+        "\"xi jinping\" OR 習近平 OR tsmc OR 台積電 OR \"chinese military\" OR 解放軍 OR "
+        "\"indo-pacific\" OR 印太 OR \"south china sea\" OR \"taiwan strait\" OR ccp OR 中共"
+    ),
+    "中國媒體": (
+        "台湾 OR 台独 OR 台岛 OR 两岸 OR 台海 OR 涉台 OR \"一中原则\" OR \"一中政策\" OR "
+        "\"一个中国原则\" OR \"一个中国政策\" OR 国民党 OR 民进党 OR 台企 OR 台胞 OR "
+        "宝岛 OR 陈水扁 OR 马英九 OR 蔡英文 OR 赖清德"
+    ),
+}
+
+
+def load_category_keywords() -> dict:
+    """
+    載入各類別 Google News RSS 關鍵字設定。
+    優先讀取使用者自訂檔（category_keywords_user.json），
+    不存在時回傳 DEFAULT_CATEGORY_KEYWORDS 的副本。
+    """
+    if _CATEGORY_KEYWORDS_USER_PATH.exists():
+        try:
+            with open(_CATEGORY_KEYWORDS_USER_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict) and data:
+                # 以預設值補齊缺少的類別
+                merged = dict(DEFAULT_CATEGORY_KEYWORDS)
+                merged.update(data)
+                return merged
+        except Exception:
+            pass
+    return dict(DEFAULT_CATEGORY_KEYWORDS)
+
+
+def save_category_keywords(keywords: dict):
+    """
+    儲存各類別關鍵字設定至使用者自訂檔（不受 git pull 影響）。
+    """
+    ensure_config_dir()
+    with open(_CATEGORY_KEYWORDS_USER_PATH, "w", encoding="utf-8") as f:
+        json.dump(keywords, f, ensure_ascii=False, indent=2)
+
+
 def get_source_categories(sources=None):
     sources = sources if sources is not None else load_sources()
     cats = []
