@@ -526,30 +526,27 @@ def export_text_to_pdf(text, output_path: Path, title="Briefing Report"):
 
 
 def upload_to_google_drive_if_needed(file_path, schedule):
+    """
+    嘗試上傳檔案到 Google Drive。
+    回傳 (result_or_None, error_message_or_None)。
+    """
     targets = schedule.get("output_targets", [])
-    if "drive" not in targets:
-        return None
+    # 同時相容 "google_drive" 和舊版 "drive"
+    if "google_drive" not in targets and "drive" not in targets:
+        return None, None
 
     folder_id = schedule.get("google_drive_folder_id", "")
     try:
-        from utils.google_drive import upload_file_to_drive
-    except Exception:
-        try:
-            from utils.google_drive import upload_to_google_drive as upload_file_to_drive
-        except Exception:
-            return None
+        from utils.google_drive import upload_to_drive as upload_file_to_drive
+    except Exception as e:
+        return None, f"google_drive 模組載入失敗：{e}"
 
     try:
-        if folder_id:
-            return upload_file_to_drive(file_path, folder_id)
-        return upload_file_to_drive(file_path)
-    except TypeError:
-        try:
-            return upload_file_to_drive(file_path)
-        except Exception:
-            return None
-    except Exception:
-        return None
+        file_name = Path(file_path).name
+        result = upload_file_to_drive(file_path, file_name, folder_id or None)
+        return result, None
+    except Exception as e:
+        return None, str(e)
 
 
 # =========================================================
@@ -578,8 +575,11 @@ def try_generate_report_via_report_engine(schedule, context):
         "selected_source_names": schedule.get("selected_source_names", []),
         "selected_expert_categories": schedule.get("selected_expert_categories", []),
         "selected_expert_names": schedule.get("selected_expert_names", []),
+        # 同時用 sources / selected_sources 兩種命名，相容不同版本的 generate_report
         "sources": context["filtered_sources"],
+        "selected_sources": context["filtered_sources"] if context["filtered_sources"] else context["all_sources"],
         "experts": context["filtered_experts"],
+        "selected_experts": context["filtered_experts"] if context["filtered_experts"] else context["all_experts"],
         "all_sources": context["all_sources"],
         "all_experts": context["all_experts"],
         "profiles": context["profiles"],
@@ -655,20 +655,39 @@ def run_schedule_job(schedule):
         base_name = f"{timestamp}_{safe_name}"
         files = []
 
+        drive_results = []
+        drive_errors = []
+
         if "docx" in schedule.get("output_formats", []):
             docx_path = OUTPUT_DIR / f"{base_name}.docx"
             files.append(export_text_to_docx(report_text, docx_path, title=schedule["name"]))
-            upload_to_google_drive_if_needed(str(docx_path), schedule)
+            dr, de = upload_to_google_drive_if_needed(str(docx_path), schedule)
+            if dr:
+                drive_results.append(dr.get("webViewLink", "已上傳"))
+            if de:
+                drive_errors.append(f"docx：{de}")
 
         if "pdf" in schedule.get("output_formats", []):
             pdf_path = OUTPUT_DIR / f"{base_name}.pdf"
             files.append(export_text_to_pdf(report_text, pdf_path, title=schedule["name"]))
-            upload_to_google_drive_if_needed(str(pdf_path), schedule)
+            dr, de = upload_to_google_drive_if_needed(str(pdf_path), schedule)
+            if dr:
+                drive_results.append(dr.get("webViewLink", "已上傳"))
+            if de:
+                drive_errors.append(f"pdf：{de}")
+
+        msg_parts = [f"完成：{schedule['name']}"]
+        if drive_results:
+            msg_parts.append(f"Drive 上傳成功：{len(drive_results)} 個檔案")
+        if drive_errors:
+            msg_parts.append(f"Drive 上傳失敗：{'; '.join(drive_errors)}")
 
         return {
             "ok": True,
             "files": files,
-            "message": f"完成：{schedule['name']}",
+            "message": "｜".join(msg_parts),
+            "drive_links": drive_results,
+            "drive_errors": drive_errors,
             "report_text": report_text,
         }
 

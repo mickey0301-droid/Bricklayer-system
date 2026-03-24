@@ -1720,7 +1720,7 @@ with tab_automation:
         st.info("目前沒有排程可預覽。")
     else:
         for _pi, _ps in enumerate(preview_schedules):
-            _runs = compute_next_runs(_ps, 5)
+            _runs = compute_next_runs(_ps, 5, now=now_tw())
             _runs_str = "、".join([dt.strftime("%m/%d %H:%M") for dt in _runs]) if _runs else "—"
             _mode = _ps.get("schedule_mode", "")
             _pname = _ps.get("name", f"排程 {_pi+1}")
