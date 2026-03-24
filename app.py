@@ -419,8 +419,8 @@ enabled_expert_names = [display_expert_name(e) for e in experts if e.get("enable
 # =========================================================
 # Tabs
 # =========================================================
-tab_briefings, tab_insights, tab_sources, tab_formats, tab_automation = st.tabs(
-    ["Briefings", "Insights", "Sources", "Formats", "Automation"]
+tab_briefings, tab_insights, tab_sources, tab_formats, tab_automation, tab_reports = st.tabs(
+    ["Briefings", "Insights", "Sources", "Formats", "Automation", "Reports"]
 )
 
 
@@ -1720,3 +1720,57 @@ with tab_automation:
         st.dataframe(pd.DataFrame(preview_rows), use_container_width=True)
     else:
         st.info("目前沒有排程可預覽。")
+
+
+# =========================================================
+# Reports
+# =========================================================
+with tab_reports:
+    st.subheader("已儲存的報告")
+
+    report_files = sorted(OUTPUT_DIR.glob("*"), key=lambda f: f.stat().st_mtime, reverse=True)
+    report_files = [f for f in report_files if f.is_file()]
+
+    if not report_files:
+        st.info("目前沒有已儲存的報告。生成報告後會自動出現在這裡。")
+    else:
+        st.caption(f"共 {len(report_files)} 個檔案，儲存於 outputs 資料夾")
+        st.markdown("---")
+
+        _reports_drive_folder_id = auto_export_cfg.get("default_drive_folder_id", "")
+
+        for _rf in report_files:
+            _stat = _rf.stat()
+            _size_kb = _stat.st_size / 1024
+            _mtime = datetime.fromtimestamp(_stat.st_mtime).strftime("%Y-%m-%d %H:%M")
+
+            col_name, col_dl, col_drive, col_del = st.columns([5, 1, 1, 1])
+
+            with col_name:
+                st.write(f"**{_rf.name}**")
+                st.caption(f"{_mtime} · {_size_kb:.1f} KB")
+
+            with col_dl:
+                with open(_rf, "rb") as _fp:
+                    st.download_button(
+                        "⬇ 下載",
+                        data=_fp.read(),
+                        file_name=_rf.name,
+                        key=f"dl_{_rf.name}",
+                        use_container_width=True,
+                    )
+
+            with col_drive:
+                if st.button("☁ Drive", key=f"drive_{_rf.name}", use_container_width=True):
+                    _uploaded, _err = _try_upload_to_drive(str(_rf), _reports_drive_folder_id)
+                    if _err:
+                        st.error(f"上傳失敗：{_err}")
+                    else:
+                        st.success(f"已上傳！")
+
+            with col_del:
+                if st.button("🗑 刪除", key=f"del_{_rf.name}", use_container_width=True):
+                    _rf.unlink()
+                    st.rerun()
+
+            st.markdown("---")
