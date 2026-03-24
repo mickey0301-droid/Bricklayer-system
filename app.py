@@ -1734,6 +1734,10 @@ elif selected_page == "Schedule":
     if "automation_selected_index" not in st.session_state:
         st.session_state.automation_selected_index = 0
 
+    # 版本計數器：每次新增/刪除排程後加一，強制 data_editor 重置為最新資料，
+    # 防止 session_state 舊狀態覆蓋掉剛新增的排程。
+    _sch_v = st.session_state.get("_sch_version", 0)
+
     # -------------------------
     # 啟用開關
     # -------------------------
@@ -1747,6 +1751,7 @@ elif selected_page == "Schedule":
             config["schedules"].append(_new_schedule())
             save_auto_export(config)
             st.session_state.automation_selected_index = max(0, len(config["schedules"]) - 1)
+            st.session_state["_sch_version"] = _sch_v + 1
             st.rerun()
 
     with top_c3:
@@ -1813,7 +1818,7 @@ elif selected_page == "Schedule":
             "next_run": st.column_config.TextColumn("下次執行", disabled=True),
             "delete": st.column_config.CheckboxColumn("刪除"),
         },
-        key="automation_schedule_editor",
+        key=f"automation_schedule_editor_{_sch_v}",
     )
 
     if len(schedules) > 0:
@@ -1823,6 +1828,14 @@ elif selected_page == "Schedule":
                 continue
             base_schedule = schedules[i] if i < len(schedules) else _new_schedule()
             rebuilt.append(_table_row_to_schedule(dict(row), base_schedule))
+
+        # 安全網：若 data_editor 的 session state 是舊的（列數少於 schedules），
+        # 保留那些未顯示在 editor 裡的排程，避免它們被靜默覆蓋。
+        editor_row_count = len(edited_df)
+        if editor_row_count < len(schedules):
+            for extra_i in range(editor_row_count, len(schedules)):
+                rebuilt.append(schedules[extra_i])
+
         config["schedules"] = rebuilt
         schedules = config["schedules"]
 
