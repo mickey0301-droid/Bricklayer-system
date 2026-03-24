@@ -1062,6 +1062,31 @@ def generate_report(
     items = filter_items_by_topic(items, topic)
 
     # -------------------------------------------------
+    # 全文補抓：只針對篩選後剩下的前 50 篇文章
+    # 先用 RSS summary 快速找出相關文章，再補抓全文，避免對所有來源都抓
+    # -------------------------------------------------
+    def _enrich_one(item):
+        url = item.get("original_url") or item.get("url") or ""
+        if not url or item.get("content"):
+            return item
+        # Google News 重定向 URL 先解析成原始網址
+        resolved = _resolve_google_news_url(url)
+        content = _fetch_article_content(resolved)
+        enriched = dict(item)
+        enriched["original_url"] = resolved
+        enriched["content"] = content
+        return enriched
+
+    try:
+        enrich_targets = items[:50]
+        rest = items[50:]
+        with ThreadPoolExecutor(max_workers=10) as enrich_ex:
+            enriched = list(enrich_ex.map(_enrich_one, enrich_targets, timeout=60))
+        items = enriched + rest
+    except Exception as e:
+        print(f"[Briefings] Article enrichment failed (using summaries): {e}")
+
+    # -------------------------------------------------
     # Expert Monitoring
     # -------------------------------------------------
     expert_items = []
