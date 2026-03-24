@@ -970,6 +970,11 @@ elif selected_page == "Sources":
     # 載入關鍵字設定（每次頁面渲染時讀取，儲存後下次 rerun 即生效）
     _cat_kw = load_category_keywords()
 
+    # ── 版本計數器：每次來源儲存後加一，強制 data_editor 重置為最新資料 ────────
+    # 防止 Streamlit data_editor 的 session_state 沿用舊狀態，
+    # 導致新增來源在後續「儲存XX媒體編輯」時被覆蓋消失。
+    _src_v = st.session_state.get("_src_version", 0)
+
     src_tab_add, src_tab_tw, src_tab_intl, src_tab_experts, src_tab_global, src_tab_cn = st.tabs([
         "新增來源", "自訂台灣媒體", "自訂國際媒體", "自訂專家", "全球媒體", "中國媒體"
     ])
@@ -1014,6 +1019,7 @@ elif selected_page == "Sources":
                     current.append(new_item)
                     save_sources(current)
                     st.success(f"已新增來源至「{target_cat}」。")
+                    st.session_state["_src_version"] = _src_v + 1
                     st.rerun()
 
         st.markdown("### 批次貼上新增來源")
@@ -1028,7 +1034,7 @@ elif selected_page == "Sources":
             num_rows="dynamic",
             use_container_width=True,
             height=280,
-            key="source_batch_editor",
+            key=f"source_batch_editor_{_src_v}",
             column_config={
                 "name": st.column_config.TextColumn("name"),
                 "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
@@ -1059,6 +1065,7 @@ elif selected_page == "Sources":
                     added += 1
                 save_sources(current)
                 st.success(f"已批次加入 {added} 筆來源至「{target_cat}」。")
+                st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
 
     # ── 自訂台灣媒體 ──────────────────────────────────────────────────────────
@@ -1084,7 +1091,7 @@ elif selected_page == "Sources":
             num_rows="dynamic",
             use_container_width=True,
             height=420,
-            key="tw_sources_editor",
+            key=f"tw_sources_editor_{_src_v}",
             column_config={
                 "name": st.column_config.TextColumn("name"),
                 "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
@@ -1110,6 +1117,7 @@ elif selected_page == "Sources":
                         new_tw.append(item)
                 save_sources(non_tw + new_tw)
                 st.success("台灣媒體清單已儲存。")
+                st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
         with c2:
             del_tw = st.multiselect("刪除來源", options=[s["name"] for s in tw_sources], key="delete_tw_names")
@@ -1118,6 +1126,7 @@ elif selected_page == "Sources":
                 current = [x for x in current if x.get("name") not in del_tw]
                 save_sources(current)
                 st.success(f"已刪除 {len(del_tw)} 筆。")
+                st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
         with c3:
             if st.button("🔬 測試抓取", key="test_tw_fetch", use_container_width=True):
@@ -1175,7 +1184,7 @@ elif selected_page == "Sources":
             num_rows="dynamic",
             use_container_width=True,
             height=420,
-            key="intl_sources_editor",
+            key=f"intl_sources_editor_{_src_v}",
             column_config={
                 "name": st.column_config.TextColumn("name"),
                 "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
@@ -1201,6 +1210,7 @@ elif selected_page == "Sources":
                         new_intl.append(item)
                 save_sources(non_intl + new_intl)
                 st.success("國際媒體清單已儲存。")
+                st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
         with c2:
             del_intl = st.multiselect("刪除來源", options=[s["name"] for s in intl_sources], key="delete_intl_names")
@@ -1209,6 +1219,7 @@ elif selected_page == "Sources":
                 current = [x for x in current if x.get("name") not in del_intl]
                 save_sources(current)
                 st.success(f"已刪除 {len(del_intl)} 筆。")
+                st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
 
     # ── 自訂專家 ──────────────────────────────────────────────────────────────
