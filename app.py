@@ -425,17 +425,21 @@ enabled_expert_names = [display_expert_name(e) for e in experts if e.get("enable
 
 
 # =========================================================
-# Tabs
+# Sidebar Navigation
 # =========================================================
-tab_briefings, tab_insights, tab_sources, tab_formats, tab_automation, tab_reports = st.tabs(
-    ["Briefings", "Insights", "Sources", "Formats", "Schedule", "Reports"]
-)
+with st.sidebar:
+    st.markdown("### 選擇頁面")
+    selected_page = st.radio(
+        "選擇頁面",
+        ["Briefings", "Insights", "Sources", "Formats", "Schedule", "Reports"],
+        label_visibility="collapsed",
+    )
 
 
 # =========================================================
 # Briefings
 # =========================================================
-with tab_briefings:
+if selected_page == "Briefings":
     st.subheader("手動生成與一鍵輸出")
 
     now = now_tw()
@@ -700,7 +704,7 @@ with tab_briefings:
 # =========================================================
 # Insights
 # =========================================================
-with tab_insights:
+elif selected_page == "Insights":
 
     st.subheader("Insights Editor")
     st.caption("Strategic guidance used by AI when generating reports. These will NOT be cited.")
@@ -794,7 +798,7 @@ with tab_insights:
 # =========================================================
 # Sources
 # =========================================================
-with tab_sources:
+elif selected_page == "Sources":
     st.subheader("Sources 管理")
 
     src_tab_add, src_tab_tw, src_tab_intl, src_tab_experts, src_tab_global, src_tab_cn = st.tabs([
@@ -1149,7 +1153,7 @@ with tab_sources:
 # =========================================================
 # Formats
 # =========================================================
-with tab_formats:
+elif selected_page == "Formats":
     st.subheader("Report Formats")
 
     formats = load_formats()
@@ -1256,7 +1260,7 @@ with tab_formats:
 # =========================================================
 # Automation
 # =========================================================
-with tab_automation:
+elif selected_page == "Schedule":
     import pandas as pd
     from datetime import datetime
     from utils.auto_export import compute_next_runs
@@ -1897,7 +1901,7 @@ with tab_automation:
 # =========================================================
 # Reports
 # =========================================================
-with tab_reports:
+elif selected_page == "Reports":
     st.subheader("已儲存的報告")
 
     report_files = sorted(OUTPUT_DIR.glob("*"), key=lambda f: f.stat().st_mtime, reverse=True)
