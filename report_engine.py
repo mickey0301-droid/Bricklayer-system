@@ -414,18 +414,37 @@ def _extract_news_domain(url: str) -> str | None:
 def _build_google_news_rss_for_domain(domain, start_time=None, end_time=None, keywords=None):
     """
     建立 Google News RSS 查詢 URL。
-    after: 使用 start_time 日期；before: 使用 end_time + 1 天
-    （Google News before: 排除該日期本身，不加 1 天會漏掉當天所有文章）。
-    精確時間截斷由 _filter_items_by_time_range 在 client 端補做。
+
+    重要：Google News RSS 的 site: operator 單獨使用時回傳 0 結果。
+    必須在 site: 前面加上關鍵字才能正常運作，格式：
+        (kw1 OR kw2) site:domain when:Xd
+    時間精確過濾由 _filter_items_by_time_range 在 client 端補做。
     """
-    from datetime import timedelta
-    query = f"site:{domain}"
-    if start_time:
-        query += f" after:{start_time.strftime('%Y/%m/%d')}"
-    if end_time:
-        before_date = end_time + timedelta(days=1)
-        query += f" before:{before_date.strftime('%Y/%m/%d')}"
-    query_encoded = quote(query)
+    # 計算 when: 參數
+    when_str = "when:3d"   # 預設抓最近 3 天
+    if start_time and end_time:
+        hours = max(1, int((end_time - start_time).total_seconds() / 3600))
+        if hours <= 6:
+            when_str = "when:6h"
+        elif hours <= 24:
+            when_str = "when:1d"
+        elif hours <= 72:
+            when_str = "when:3d"
+        elif hours <= 168:
+            when_str = "when:7d"
+        else:
+            when_str = ""
+
+    if keywords:
+        query = f"({keywords}) site:{domain}"
+    else:
+        # 沒關鍵字時用最基本的台灣相關詞，確保 Google News RSS 能回傳結果
+        query = f"台灣 OR Taiwan site:{domain}"
+    if when_str:
+        query += f" {when_str}"
+
+    # 用 safe=':/' 確保 site: 的冒號不被編碼（編碼後 Google 不識別為 operator）
+    query_encoded = quote(query, safe=':/')
     return f"https://news.google.com/rss/search?q={query_encoded}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
 
 
@@ -472,13 +491,15 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
     """
     抓取流程（與舊版 daily_report 一致）：
     - 直接 RSS URL：優先使用 url/rss/rss_url/feed/feed_url 欄位裡的 http 網址
-    - domain 來源：用 site:{domain} after:YYYY/MM/DD before:YYYY/MM/DD 查 Google News RSS
-    - 不在查詢加關鍵字，關鍵字過濾由 generate_report() 統一處理
+    - domain 來源：用「(keywords) site:domain when:Xd」查 Google News RSS
+      （site: 單獨使用時 Google News RSS 回傳 0，必須搭配關鍵字）
+    - 關鍵字來自各類別的 category_keywords 設定
     - 自訂專家：用 "{name}" 關鍵字直接查 Google News RSS
     - cn_official：由 generate_report() 專屬爬蟲處理，此處跳過
     """
 
     normalized_sources = _normalize_selected_sources(selected_sources, all_sources=all_sources)
+    category_keywords = load_category_keywords()
 
     src_list = [s for s in normalized_sources if s.get("type") != "cn_official"]
     all_items = []
@@ -527,14 +548,15 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
                 rss_url = url_field
 
         if not rss_url:
-            # domain 或沒有直接 feed URL → Google News site: 查詢
+            # domain 或沒有直接 feed URL → Google News site: 查詢（帶關鍵字）
             domain = (src.get("domain") or src.get("site")
                       or _extract_news_domain(url_field) or url_field)
             if not domain:
                 return []
             domain = domain.lower().replace("www.", "")
+            cat_kw = category_keywords.get(cat, "")
             rss_url = _build_google_news_rss_for_domain(
-                domain, start_time=start_time, end_time=end_time
+                domain, start_time=start_time, end_time=end_time, keywords=cat_kw
             )
 
         fetched = _fetch_rss_items(rss_url, src_name, limit=limit_per_source)

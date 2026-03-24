@@ -1065,10 +1065,8 @@ elif selected_page == "Sources":
                     if not _rss:
                         from urllib.parse import quote as _q
                         _dom = _url.lower().replace("www.", "")
-                        from datetime import timedelta as _td
-                        _after = (_now - _td(days=1)).strftime("%Y/%m/%d")
-                        _before = (_now + _td(days=1)).strftime("%Y/%m/%d")
-                        _rss = f"https://news.google.com/rss/search?q=site:{_dom}%20after:{_after}%20before:{_before}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+                        _q_str = f"(台灣 OR 中國 OR 中共) site:{_dom} when:1d"
+                        _rss = f"https://news.google.com/rss/search?q={_q(_q_str, safe=':/')}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
                     _items = _re._fetch_rss_items(_rss, _src["name"], limit=5)
                     _results.append((_src["name"], _rss, _items))
             st.markdown("**抓取測試結果（前 5 個來源）：**")
