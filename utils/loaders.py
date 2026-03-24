@@ -353,15 +353,24 @@ def normalize_global_media_source(item: dict) -> dict:
     country = str(item.get("country", "")).strip()
     language = str(item.get("language", "")).strip()
     media_type = str(item.get("type", "")).strip()
+    rss = str(item.get("rss", "")).strip()
 
     if not name or not domain:
         return {}
 
+    # 有 RSS 就直接用 RSS feed，否則退回 domain 查詢
+    if rss:
+        src_type = "rss"
+        url = rss
+    else:
+        src_type = "domain"
+        url = domain
+
     return {
         "name": name,
         "subsource": name,
-        "type": "domain",
-        "url": domain,
+        "type": src_type,
+        "url": url,
         "category": ["全球媒體", continent] if continent else ["全球媒體"],
         "region": country or continent,
         "enabled": True,

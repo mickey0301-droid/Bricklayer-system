@@ -1347,8 +1347,9 @@ elif selected_page == "Sources":
                 save_category_keywords(_cat_kw)
                 st.success("關鍵字已儲存。")
                 st.rerun()
-        st.caption(f"共 {len(fixed_sources)} 筆（唯讀）")
-        _cn_rows = [source_to_editor_row(x) for x in fixed_sources]
+        cn_official_sources = [s for s in fixed_sources if s.get("type") == "cn_official"]
+        st.caption(f"共 {len(cn_official_sources)} 筆（唯讀）")
+        _cn_rows = [source_to_editor_row(x) for x in cn_official_sources]
         _cn_df = pd.DataFrame(_cn_rows) if _cn_rows else pd.DataFrame(columns=["name", "category", "description"])
         st.dataframe(_cn_df[["name", "category", "description"]], use_container_width=True, hide_index=True)
 
