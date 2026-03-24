@@ -1225,6 +1225,67 @@ def _is_china_news(item):
     return _contains_any(text, keywords)
 
 
+def _is_china_external(item):
+    """中國對外情勢：涉及中國外交、軍事行動、對外投資、對他國關係的報導。"""
+    if not _is_china_news(item):
+        return False
+    text = _item_text(item)
+    external_keywords = [
+        # 外交
+        "外交", "diplomacy", "diplomatic", "foreign policy", "外交部", "外長",
+        "王毅", "外交關係", "雙邊", "多邊", "外交部長",
+        # 軍事對外
+        "解放軍", "pla", "軍事演習", "軍演", "演習", "武器", "飛彈", "導彈",
+        "aircraft carrier", "航空母艦", "naval", "海軍", "warship", "軍艦",
+        "air force", "空軍", "missile", "軍備",
+        # 貿易/投資/制裁
+        "trade", "貿易", "tariff", "關稅", "sanction", "制裁",
+        "export", "import", "出口", "進口", "investment", "投資",
+        "belt and road", "一帶一路", "bri",
+        # 對台對美關係
+        "taiwan strait", "台海", "taiwan", "台灣", "一中", "one china",
+        "south china sea", "南海", "east china sea", "東海",
+        # 國際組織
+        "united nations", "聯合國", "un ", "brics", "金磚", "g20", "g7",
+        "apec", "asean", "東盟", "東協",
+        # 對外聲明
+        "spokesperson", "發言人", "statement", "聲明",
+    ]
+    return _contains_any(text, external_keywords)
+
+
+def _is_china_domestic(item):
+    """中國內部情勢：涉及中國黨政、內政、經濟、社會、人權的報導。"""
+    if not _is_china_news(item):
+        return False
+    text = _item_text(item)
+    domestic_keywords = [
+        # 黨政
+        "ccp", "共產黨", "communist party", "中央", "習近平", "xi jinping",
+        "politburo", "政治局", "national people's congress", "全國人民代表大會",
+        "npc", "人大", "cppcc", "政協", "中央委員會",
+        # 內政/治理
+        "domestic", "內政", "governance", "治理", "regulation", "監管",
+        "censorship", "審查", "crackdown", "鎮壓", "anti-corruption", "反腐",
+        "propaganda", "宣傳",
+        # 經濟
+        "gdp", "economy", "經濟", "inflation", "通膨", "通脹", "deflation",
+        "unemployment", "失業", "housing", "房地產", "real estate", "債務", "debt",
+        "yuan", "人民幣", "renminbi", "pboc", "人民銀行",
+        # 社會
+        "protest", "抗議", "riot", "暴亂", "social unrest", "社會動盪",
+        "human rights", "人權", "civil society", "公民社會",
+        "xinjiang", "新疆", "tibet", "西藏", "hong kong", "香港",
+        "uyghur", "維吾爾", "uighur",
+        # 人口/科技
+        "population", "人口", "birth rate", "出生率", "tech", "科技",
+        "ai ", "artificial intelligence", "人工智慧",
+    ]
+    # 排除純外交/軍事對外的文章（避免與 external 重複），
+    # 但如果文章同時有內政關鍵字，仍歸入 domestic
+    return _contains_any(text, domestic_keywords)
+
+
 def _detect_region_for_item(item):
     text = _item_text(item)
     region = _safe_text(item.get("source_region")).lower()
@@ -1327,6 +1388,8 @@ def _group_items_for_report(items):
         "台美中要聞": [],
         "台灣國安要聞": [],
         "中國要聞": [],
+        "中國對外情勢": [],
+        "中國內部情勢": [],
         "區域情勢": {
             region: {
                 "區域要聞": [],
@@ -1340,7 +1403,6 @@ def _group_items_for_report(items):
         if not isinstance(item, dict):
             continue
 
-        text = _item_text(item)
         region = _detect_region_for_item(item)
 
         groups["國際要聞"].append(item)
@@ -1353,18 +1415,30 @@ def _group_items_for_report(items):
 
         if _is_china_news(item):
             groups["中國要聞"].append(item)
+            # 子節分類（一篇可同時歸入兩個子節）
+            if _is_china_external(item):
+                groups["中國對外情勢"].append(item)
+            if _is_china_domestic(item):
+                groups["中國內部情勢"].append(item)
+            # 若兩個子節都沒命中，歸入外部情勢（預設）
+            if not _is_china_external(item) and not _is_china_domestic(item):
+                groups["中國對外情勢"].append(item)
 
         if _is_taiwan_china_related(item):
             groups["區域情勢"][region]["台灣與中國相關要聞"].append(item)
         else:
             groups["區域情勢"][region]["區域要聞"].append(item)
 
-    # 各章節：選出被最多來源報導的前 4 個不同議題，每議題取 2 篇
-    # → 每章最多 8 篇，但涵蓋至少 3-4 個獨立話題
-    groups["國際要聞"]   = _select_diverse_topics(groups["國際要聞"],   n_topics=4, articles_per_topic=2)
-    groups["台美中要聞"] = _select_diverse_topics(groups["台美中要聞"], n_topics=4, articles_per_topic=2)
-    groups["台灣國安要聞"] = _select_diverse_topics(groups["台灣國安要聞"], n_topics=4, articles_per_topic=2)
-    groups["中國要聞"]   = _select_diverse_topics(groups["中國要聞"],   n_topics=4, articles_per_topic=2)
+    # 各章節：選出被最多來源報導的前 5 個不同議題，每議題取 2 篇
+    # → 每章最多 10 篇，涵蓋 4-5 個獨立話題，確保各章有足夠素材
+    groups["國際要聞"]     = _select_diverse_topics(groups["國際要聞"],     n_topics=5, articles_per_topic=2)
+    groups["台美中要聞"]   = _select_diverse_topics(groups["台美中要聞"],   n_topics=5, articles_per_topic=2)
+    groups["台灣國安要聞"] = _select_diverse_topics(groups["台灣國安要聞"], n_topics=5, articles_per_topic=2)
+    # 第五章：兩個子節各取 5 個議題 × 2 篇 = 各 10 篇
+    groups["中國對外情勢"] = _select_diverse_topics(groups["中國對外情勢"], n_topics=5, articles_per_topic=2)
+    groups["中國內部情勢"] = _select_diverse_topics(groups["中國內部情勢"], n_topics=5, articles_per_topic=2)
+    # 整體中國要聞仍保留（供舊版 fallback 使用）
+    groups["中國要聞"]     = _select_diverse_topics(groups["中國要聞"],     n_topics=5, articles_per_topic=2)
 
     for region in REGION_ORDER:
         # 區域情勢：各子節選 3 個議題，每議題 1 篇（資料較少，保持精簡）
@@ -1430,7 +1504,9 @@ def _build_news_data_block(groups, source_map=None):
     blocks.append(_format_item_block("國際要聞", groups["國際要聞"], item_to_sx))
     blocks.append(_format_item_block("台美中要聞", groups["台美中要聞"], item_to_sx))
     blocks.append(_format_item_block("台灣國安要聞", groups["台灣國安要聞"], item_to_sx))
-    blocks.append(_format_item_block("中國要聞", groups["中國要聞"], item_to_sx))
+    # 第五章：中國要聞分兩個子節
+    blocks.append(_format_item_block("中國要聞｜（一）中國對外情勢", groups.get("中國對外情勢", []), item_to_sx))
+    blocks.append(_format_item_block("中國要聞｜（二）中國內部情勢", groups.get("中國內部情勢", []), item_to_sx))
 
     for region in REGION_ORDER:
         region_block = groups["區域情勢"][region]
@@ -1569,7 +1645,7 @@ def _generate_multiphase_synthesis(
         "二、國際要聞\n本期無相關新聞。\n\n"
         "三、台美中要聞\n本期無相關新聞。\n\n"
         "四、台灣國安要聞\n本期無相關新聞。\n\n"
-        "五、中國要聞\n本期無相關新聞。\n\n"
+        "五、中國要聞\n（一）中國對外情勢\n本期無相關新聞。\n（二）中國內部情勢\n本期無相關新聞。\n\n"
         "六、區域情勢\n（一）亞太地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
         "（二）亞西地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
         "（三）北美地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
@@ -1590,10 +1666,10 @@ def _generate_multiphase_synthesis(
             _cb("stage", f"⬜ 子報告 {done}/{total_g}：{group_name_zh}（本期無資料）")
             continue
 
-        # 子報告需填八個章節（含六大區域），文章要分配到各章，
-        # 所以要提供足夠多樣的文章：選 6 個不同議題，每題最多 3 篇 = 最多 18 篇。
+        # 子報告需填八個章節（含兩個中國子節及六大區域），文章要分配到各章，
+        # 所以要提供足夠多樣的文章：選 8 個不同議題，每題最多 3 篇 = 最多 24 篇。
         # 讓 AI 按文章內容自行歸類，而非按來源群組的地理標籤限制。
-        diverse_items = _select_diverse_topics(group_items, n_topics=6, articles_per_topic=3)
+        diverse_items = _select_diverse_topics(group_items, n_topics=8, articles_per_topic=3)
         # Build structured news block WITH [Sx] codes so citations survive synthesis
         news_block = _format_item_block(group_name_zh, diverse_items, item_to_sx)
 
@@ -1691,6 +1767,9 @@ Output structure:
 四、台灣國安要聞
 
 五、中國要聞
+（一）中國對外情勢
+
+（二）中國內部情勢
 
 六、區域情勢
 （一）亞太地區
@@ -1730,7 +1809,7 @@ Writing guidance:
 - 「國際要聞」聚焦全球戰略層次的重要發展。
 - 「台美中要聞」聚焦台灣、美國、中國三角互動及其戰略意涵。
 - 「台灣國安要聞」聚焦軍事、灰帶、資安、國防、國安治理等。
-- 「中國要聞」聚焦中國政治、外交、軍事、經濟、對外作為。
+- 「五、中國要聞」必須包含兩個子節：「（一）中國對外情勢」聚焦中國外交、軍事對外、對外貿易與制裁、涉外聲明等；「（二）中國內部情勢」聚焦中國黨政內鬥、國內經濟、社會民情、人權、新疆西藏香港等內部議題。若某子節本期無相關新聞，請寫「本期無相關新聞。」，但兩個子節都不可省略。
 - 「區域情勢」六大區域必須全部列出，不得省略任何一個。每個區域各有兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。若某區域本期無相關新聞，請在該小節寫「本期無相關新聞。」，絕不可完全省略任何區域或小節。
 {expert_guidance}
 - 「七、專家研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。{expert_guidance_note}
@@ -1790,7 +1869,7 @@ def generate_report(
     items = fetch_items_from_sources(
         selected_sources=selected_sources,
         all_sources=sources,
-        limit_per_source=20,
+        limit_per_source=30,
         start_time=start_time,
         end_time=end_time,
         status_callback=status_callback,
@@ -1849,15 +1928,17 @@ def generate_report(
     # 全文補抓
     # Google News RSS 已在查詢層完成關鍵字＋時間篩選，
     # 此處直接對所有文章補抓全文。
-    # cn_official / 已有全文的文章直接保留，其餘按時間排序取前 60 篇。
+    # cn_official / 已有全文的文章直接保留，其餘按時間排序取前 150 篇補抓全文；
+    # 150 篇以後的文章仍保留在 items 中（僅有標題/摘要），確保不遺失。
     # -------------------------------------------------
 
     cn_items  = [i for i in items if i.get("source_type") == "cn_official" or i.get("content")]
     web_items = [i for i in items if i.get("source_type") != "cn_official" and not i.get("content")]
 
-    # 按發佈時間排序（新 → 舊），最多補抓 60 篇
+    # 按發佈時間排序（新 → 舊），最多補抓 150 篇
     web_items.sort(key=lambda x: x.get("published") or "", reverse=True)
-    to_enrich = web_items[:60]
+    to_enrich = web_items[:150]
+    leftover = web_items[150:]   # 超過 150 篇的部分：保留標題/摘要，不補全文
     _cb("stage", f"📄 補抓 {len(to_enrich)} 篇全文（共 {len(web_items)} 篇候選，10 個並行連線）…")
 
     def _enrich_one(item):
@@ -1874,10 +1955,10 @@ def generate_report(
     try:
         with ThreadPoolExecutor(max_workers=10) as enrich_ex:
             enriched = list(enrich_ex.map(_enrich_one, to_enrich, timeout=90))
-        items = enriched + cn_items
+        items = enriched + leftover + cn_items
     except Exception as e:
         print(f"[Briefings] Article enrichment failed (using summaries): {e}")
-        items = to_enrich + cn_items
+        items = to_enrich + leftover + cn_items
 
     with_content = sum(1 for i in items if i.get("content"))
     _cb("stage", f"✅ 全文補抓完成：{with_content} / {len(items)} 篇有全文")
@@ -2020,6 +2101,9 @@ Output structure:
 四、台灣國安要聞
 
 五、中國要聞
+（一）中國對外情勢
+
+（二）中國內部情勢
 
 六、區域情勢
 （一）亞太地區
@@ -2059,7 +2143,7 @@ Writing guidance:
 - 「國際要聞」聚焦全球戰略層次的重要發展。
 - 「台美中要聞」聚焦台灣、美國、中國三角互動及其戰略意涵。
 - 「台灣國安要聞」聚焦軍事、灰帶、資安、國防、國安治理等。
-- 「中國要聞」聚焦中國政治、外交、軍事、經濟、對外作為。
+- 「五、中國要聞」必須包含兩個子節：「（一）中國對外情勢」聚焦中國外交、軍事對外、對外貿易與制裁、涉外聲明等；「（二）中國內部情勢」聚焦中國黨政內鬥、國內經濟、社會民情、人權、新疆西藏香港等內部議題。若某子節本期無相關新聞，請寫「本期無相關新聞。」，但兩個子節都不可省略。
 - 「區域情勢」六大區域必須全部列出，不得省略任何一個。每個區域各有兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。若某區域本期無相關新聞，請在該小節寫「本期無相關新聞。」，絕不可完全省略任何區域或小節。
 {expert_guidance}
 - 「七、專家研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。{expert_guidance_note}

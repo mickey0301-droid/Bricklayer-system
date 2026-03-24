@@ -67,7 +67,7 @@ Every article in the input must be used somewhere in the report.
 
 Requirements:
 1. Write in {language}, in formal analytical prose (NOT bullet points).
-2. ALL eight chapters are REQUIRED. For each chapter or sub-section, write the content based on what the provided articles actually report. Only write "本期無相關新聞。" if truly no article in the input addresses that topic at all.
+2. ALL eight chapters are REQUIRED. 五、中國要聞 MUST contain TWO sub-sections: （一）中國對外情勢 and （二）中國內部情勢 — both always present; write「本期無相關新聞。」only if truly no article addresses that sub-topic. For all other chapters or sub-sections, write the content based on what the provided articles actually report. Only write "本期無相關新聞。" if truly no article in the input addresses that topic at all.
 3. CRITICAL — Citation preservation: Each input article has a citation code [S1], [S2], etc. When you state a fact from that article, append the code right after the sentence, e.g. "...路透社（Reuters）報導。[S3]". NEVER drop, renumber, merge, or invent [Sx] codes. These are the only link to the source bibliography.
 4. Do NOT place raw URLs anywhere in the body text.
 5. MANDATORY — People: full official title + Chinese name on first mention, followed by English/romanised name in parentheses. For Japanese, Korean, and Vietnamese names, add romanised form in square brackets: e.g. 日本首相岸田文雄[Kishida Fumio]（Fumio Kishida）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）. Western figures: surname only, e.g. 美國總統川普（Donald Trump）.
@@ -88,6 +88,10 @@ Output structure (all eight chapters REQUIRED; distribute articles by content, n
 四、台灣國安要聞
 
 五、中國要聞
+（一）中國對外情勢
+（聚焦中國外交、軍事對外、對外貿易與制裁、涉外聲明、對台對美對他國關係；若本期無相關新聞，寫「本期無相關新聞。」）
+（二）中國內部情勢
+（聚焦中國黨政內鬥、國內經濟、社會民情、人權、新疆西藏香港等內部議題；若本期無相關新聞，寫「本期無相關新聞。」）
 
 六、區域情勢
 （依各文章所報導的地理區域分子節，六大區域全部列出；若某區域確實無任何文章涉及，寫「本期無相關新聞。」）
