@@ -69,14 +69,32 @@ def _normalize_selected_sources(selected_sources, all_sources=None):
 def _resolve_google_news_url(url):
     """
     Best-effort: convert Google News redirect URLs back to original article URLs.
-    If resolution fails, return the original URL.
+    Tries multiple methods; falls back to original URL if all fail.
     """
-    if not url:
+    if not url or "news.google.com" not in url:
         return url
 
-    if "news.google.com" not in url:
-        return url
+    # 方法一：嘗試 base64 解碼 Google News article ID
+    try:
+        import base64
+        path = url.split("?")[0]
+        article_id = path.rstrip("/").split("/")[-1]
+        if article_id.startswith("CBMi"):
+            padded = article_id + "=" * (-len(article_id) % 4)
+            decoded = base64.urlsafe_b64decode(padded).decode("latin-1")
+            http_start = decoded.find("http")
+            if http_start != -1:
+                candidate = ""
+                for ch in decoded[http_start:]:
+                    if ord(ch) < 32 or ord(ch) > 126:
+                        break
+                    candidate += ch
+                if candidate.startswith("http") and "google.com" not in candidate:
+                    return candidate
+    except Exception:
+        pass
 
+    # 方法二：HTTP redirect 跟隨
     try:
         r = requests.get(
             url,
@@ -84,8 +102,20 @@ def _resolve_google_news_url(url):
             timeout=10,
             allow_redirects=True,
         )
-        if r.url:
-            return r.url
+        final_url = r.url or ""
+        if final_url and "news.google.com" not in final_url:
+            return final_url
+        # 方法三：從 HTML 內容找 canonical / og:url
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(r.text, "html.parser")
+        for tag in [
+            soup.find("link", rel="canonical"),
+            soup.find("meta", property="og:url"),
+        ]:
+            if tag:
+                href = tag.get("href") or tag.get("content") or ""
+                if href.startswith("http") and "news.google.com" not in href:
+                    return href
     except Exception:
         pass
 
@@ -534,15 +564,48 @@ def _strip_ai_link_markers(report_text):
     return text
 
 
+_SUPERSCRIPT_TABLE = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
+
+
+def _to_superscript(n: int) -> str:
+    return str(n).translate(_SUPERSCRIPT_TABLE)
+
+
+def _format_chicago_note(idx: int, src: dict) -> str:
+    """
+    Chicago Notes & Bibliography style:
+    ¹ "Title," Source Name, Date. URL.
+    """
+    title = src.get("title", "").strip()
+    source = src.get("source", "").strip()
+    published_at = src.get("published_at", "").strip()
+    url = src.get("url", "").strip()
+
+    sup = _to_superscript(idx)
+    parts = []
+    if title:
+        parts.append(f'"{title},"')
+    if source:
+        parts.append(source + ("," if published_at else "."))
+    if published_at:
+        parts.append(published_at + ".")
+    if url:
+        parts.append(url + ".")
+
+    return sup + " " + " ".join(parts) if parts else sup
+
+
 def _render_citations(report_text, source_map, format_options):
 
     notes_style = format_options.get("notes", {}).get("style", "endnote")
     link_mode = format_options.get("links", {}).get("placement", "none")
 
-    if notes_style == "none" and link_mode == "none":
-        return _strip_ai_link_markers(report_text)
-
     text = _strip_ai_link_markers(report_text)
+
+    # 無論任何模式，都把 [Sx] 清掉或換成上標
+    if notes_style == "none" and link_mode == "none":
+        text = re.sub(r'\[S\d+\]', '', text)
+        return text
 
     used_codes = []
 
@@ -550,50 +613,28 @@ def _render_citations(report_text, source_map, format_options):
         code = match.group(1)
         if code not in source_map:
             return ""
-
         if code not in used_codes:
             used_codes.append(code)
-
         idx = used_codes.index(code) + 1
-
-        if notes_style == "footnote":
-            return f"{idx}"
-        return f"[{idx}]"
+        return _to_superscript(idx)
 
     text = re.sub(r'\[(S\d+)\]', replace_code, text)
 
-    # 把重複空白整理一下
+    # 清理多餘空白
     text = re.sub(r'[ \t]+', ' ', text)
     text = re.sub(r'\n{3,}', '\n\n', text).strip()
 
     if not used_codes:
         return text
 
-    if notes_style == "footnote":
-        lines = ["", "", "Footnotes", ""]
-        for idx, code in enumerate(used_codes, start=1):
-            src = source_map[code]
-            url = src.get("url", "")
-            if url:
-                lines.append(f"{idx}. {url}")
-        return text + "\n" + "\n".join(lines)
+    # Chicago 腳註（footnote 或 endnote 都用同一格式）
+    section_title = "Notes" if notes_style == "footnote" else "Sources"
+    lines = ["", "", section_title, ""]
+    for idx, code in enumerate(used_codes, start=1):
+        src = source_map[code]
+        lines.append(_format_chicago_note(idx, src))
 
-    if notes_style == "endnote":
-        lines = ["", "", "Sources", ""]
-        for idx, code in enumerate(used_codes, start=1):
-            src = source_map[code]
-            title = src.get("title", "")
-            source = src.get("source", "")
-            url = src.get("url", "")
-
-            if title and source and url:
-                lines.append(f"[{idx}] {title} | {source} | {url}")
-            elif url:
-                lines.append(f"[{idx}] {url}")
-
-        return text + "\n" + "\n".join(lines)
-
-    return text
+    return text + "\n" + "\n".join(lines)
 
 
 # =====================================================
