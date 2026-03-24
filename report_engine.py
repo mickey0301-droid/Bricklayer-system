@@ -392,57 +392,60 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
     category_keywords = load_category_keywords()
 
     def fetch_single(src):
+        """
+        所有來源統一走 Google News RSS 搜尋：
+          site:{domain} ({keywords}) after:{date} before:{date}
 
+        - 自訂專家：關鍵字 = "專家名稱" AND (類別關鍵字)
+        - 其他類別：關鍵字 = 類別關鍵字（由使用者在 Sources 頁面設定）
+        - cn_official：由 generate_report() 中的專屬爬蟲處理，此處略過
+        """
         name = src.get("name", "Unknown Source")
 
-        rss_url = (
-            src.get("rss")
-            or src.get("rss_url")
-            or src.get("feed")
-            or src.get("feed_url")
-        )
+        # cn_official 不走 Google News
+        if src.get("type") == "cn_official":
+            return name, []
 
-        # type="rss" 時，若沒有專屬的 rss_url 欄位，直接把 url 當 RSS feed 使用
-        if not rss_url and src.get("type") == "rss":
-            rss_url = src.get("url") or None
-
-        domain = (
-            src.get("domain")
-            or src.get("site")
-        )
-
-        # type="domain" 或沒有 rss_url 才從 url 提取 domain
-        if not domain and not rss_url and src.get("url"):
+        # 從 url 欄位取 domain（適用於 rss / domain 所有類型）
+        url = src.get("url", "")
+        domain = src.get("domain") or src.get("site")
+        if not domain and url:
             try:
-                domain = src.get("url").replace("http://", "").replace("https://", "").split("/")[0]
-            except:
+                domain = url.replace("http://", "").replace("https://", "").split("/")[0]
+            except Exception:
                 domain = None
 
-        source_items = []
+        if not domain:
+            print(f"[Briefings] Source skipped (no domain): {name}")
+            return name, []
 
-        if rss_url:
-            source_items = _fetch_rss_items(rss_url, name, limit=limit_per_source)
+        # 決定關鍵字
+        cats = src.get("category", []) or []
+        if isinstance(cats, str):
+            cats = [cats]
 
-        elif domain:
-            # 依來源類別選擇對應的關鍵字組，讓 Google News 在 RSS 層預先篩選。
-            # 關鍵字由使用者在 Sources 頁面設定，儲存後立即生效（category_keywords 已在此次呼叫開始時載入）。
-            # 若來源無對應類別，則不加關鍵字（抓全部，由後段邏輯過濾）。
-            cats = src.get("category", []) or []
-            if isinstance(cats, str):
-                cats = [cats]
-            domain_keywords = None
-            for cat in cats:
-                if cat in category_keywords:
-                    domain_keywords = category_keywords[cat]
-                    break
-            source_items = _fetch_domain_items(
-                domain, name, limit=limit_per_source,
-                start_time=start_time, end_time=end_time,
-                keywords=domain_keywords,
-            )
+        domain_keywords = None
+        for cat in cats:
+            cat_kw = category_keywords.get(cat, "")
+            if cat == "自訂專家":
+                # 專家名稱本身為主關鍵字，搭配類別關鍵字
+                expert_name = name.strip()
+                if expert_name and cat_kw:
+                    domain_keywords = f'"{expert_name}" AND ({cat_kw})'
+                elif expert_name:
+                    domain_keywords = f'"{expert_name}"'
+                else:
+                    domain_keywords = cat_kw or None
+                break
+            elif cat_kw:
+                domain_keywords = cat_kw
+                break
 
-        else:
-            print(f"[Briefings] Source skipped: {name}")
+        source_items = _fetch_domain_items(
+            domain, name, limit=limit_per_source,
+            start_time=start_time, end_time=end_time,
+            keywords=domain_keywords,
+        )
 
         enriched_items = []
         for item in source_items:
@@ -1198,32 +1201,19 @@ def generate_report(
     items = filter_items_by_topic(items, topic)
 
     # -------------------------------------------------
-    # 兩段式過濾 + 全文補抓
-    # 路徑 A（台灣／中國議題）：關鍵字過濾 → 補抓全文（最多 40 篇）
-    # 路徑 B（國際要聞 / 全球媒體）：熱度排名 → 取 top 20 → 補抓全文
+    # 全文補抓
+    # Google News RSS 已在查詢層完成關鍵字＋時間篩選，
+    # 此處直接對所有文章補抓全文。
+    # cn_official / 已有全文的文章直接保留，其餘按時間排序取前 60 篇。
     # -------------------------------------------------
 
-    tw_cn_items = []
-    global_items = []
-    other_items  = []
+    cn_items  = [i for i in items if i.get("source_type") == "cn_official" or i.get("content")]
+    web_items = [i for i in items if i.get("source_type") != "cn_official" and not i.get("content")]
 
-    for it in items:
-        cats = set(it.get("source_category") or [])
-        if it.get("source_type") == "cn_official" or it.get("content"):
-            other_items.append(it)
-        elif cats & _GLOBAL_MEDIA_CATEGORIES:
-            global_items.append(it)
-        else:
-            tw_cn_items.append(it)
-
-    tw_cn_matched = [i for i in tw_cn_items if _matches_tw_cn(i)]
-    _cb("stage", f"🔍 台灣/中國關鍵字命中：{len(tw_cn_matched)} / {len(tw_cn_items)} 篇")
-
-    global_top = _rank_by_coverage(global_items, top_n=20)
-    _cb("stage", f"🌍 國際熱點排名：取前 {len(global_top)} / {len(global_items)} 篇最多來源報導")
-
-    to_enrich = tw_cn_matched[:40] + global_top[:20]
-    _cb("stage", f"📄 補抓 {len(to_enrich)} 篇全文（10 個並行連線）…")
+    # 按發佈時間排序（新 → 舊），最多補抓 60 篇
+    web_items.sort(key=lambda x: x.get("published") or "", reverse=True)
+    to_enrich = web_items[:60]
+    _cb("stage", f"📄 補抓 {len(to_enrich)} 篇全文（共 {len(web_items)} 篇候選，10 個並行連線）…")
 
     def _enrich_one(item):
         url = item.get("original_url") or item.get("url") or ""
