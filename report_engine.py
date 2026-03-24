@@ -391,28 +391,14 @@ def _extract_news_domain(url: str) -> str | None:
 def _build_google_news_rss_for_domain(domain, start_time=None, end_time=None, keywords=None):
     """
     建立 Google News RSS 查詢 URL。
-
-    - 關鍵字直接附在 site: 後，不加括號（括號會導致 Google News RSS 回傳 0 結果）
-    - 時間範圍改用 when:Xh / when:Xd（比 after:/before: 更穩定），
-      精確時間過濾由 _filter_items_by_time_range 在 client 端補做
+    使用 after:YYYY/MM/DD before:YYYY/MM/DD 格式（斜線，非連字號）做時間篩選。
+    不在查詢中加入關鍵字，關鍵字過濾留到 generate_report() 處理。
     """
     query = f"site:{domain}"
-    if keywords:
-        query += f" {keywords}"   # 不加括號
-
-    # 用 when: 取代 after:/before:，Google News RSS 對此支援較佳
-    if start_time and end_time:
-        hours = max(1, int((end_time - start_time).total_seconds() / 3600))
-        if hours <= 6:
-            query += " when:6h"
-        elif hours <= 24:
-            query += " when:1d"
-        elif hours <= 72:
-            query += " when:3d"
-        elif hours <= 168:
-            query += " when:7d"
-        # 超過 7 天不加 when:，靠 client 端時間過濾
-
+    if start_time:
+        query += f" after:{start_time.strftime('%Y/%m/%d')}"
+    if end_time:
+        query += f" before:{end_time.strftime('%Y/%m/%d')}"
     query_encoded = quote(query)
     return f"https://news.google.com/rss/search?q={query_encoded}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
 
@@ -458,28 +444,15 @@ def _kw_matches(item: dict, keywords_str: str) -> bool:
 def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_source=20,
                               start_time=None, end_time=None, status_callback=None):
     """
-    抓取流程（per-source site: 查詢 + client 端關鍵字過濾）：
-    1. 每個來源獨立查詢 Google News RSS：site:{domain}（不加關鍵字）
-    2. Client 端用類別關鍵字（OR 比對 title+summary）過濾結果
-    自訂專家：改用 "{expert_name}" 關鍵字查詢（任何來源）。
-    cn_official：由 generate_report() 專屬爬蟲處理，此處跳過。
+    抓取流程（與舊版 daily_report 一致）：
+    - 直接 RSS URL：優先使用 url/rss/rss_url/feed/feed_url 欄位裡的 http 網址
+    - domain 來源：用 site:{domain} after:YYYY/MM/DD before:YYYY/MM/DD 查 Google News RSS
+    - 不在查詢加關鍵字，關鍵字過濾由 generate_report() 統一處理
+    - 自訂專家：用 "{name}" 關鍵字直接查 Google News RSS
+    - cn_official：由 generate_report() 專屬爬蟲處理，此處跳過
     """
 
     normalized_sources = _normalize_selected_sources(selected_sources, all_sources=all_sources)
-    category_keywords = load_category_keywords()
-
-    # 計算時間範圍對應的 when: 參數
-    when_str = ""
-    if start_time and end_time:
-        hours = max(1, int((end_time - start_time).total_seconds() / 3600))
-        if hours <= 6:
-            when_str = "when:6h"
-        elif hours <= 24:
-            when_str = "when:1d"
-        elif hours <= 72:
-            when_str = "when:3d"
-        elif hours <= 168:
-            when_str = "when:7d"
 
     src_list = [s for s in normalized_sources if s.get("type") != "cn_official"]
     all_items = []
@@ -493,17 +466,16 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
         cat = cats[0] if cats else ""
         src_name = src.get("name", "")
 
-        # 自訂專家：用名字 + 類別關鍵字組成查詢詞，不限定 site:
+        # 自訂專家：用名字查詢，不限定 site:
         if cat == "自訂專家":
             expert_name = src_name.strip()
             if not expert_name:
                 return []
             kw = f'"{expert_name}"'
-            base_kw = category_keywords.get(cat, "")
-            if base_kw:
-                kw += f" {base_kw}"
-            if when_str:
-                kw += f" {when_str}"
+            if start_time:
+                kw += f" after:{start_time.strftime('%Y/%m/%d')}"
+            if end_time:
+                kw += f" before:{end_time.strftime('%Y/%m/%d')}"
             rss_url = f"https://news.google.com/rss/search?q={quote(kw)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
             fetched = _fetch_rss_items(rss_url, expert_name, limit=limit_per_source)
             for item in fetched:
@@ -513,41 +485,33 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
                 item["source_type"] = "gnews"
             return fetched
 
-        # 其他來源：若 url 是真正的 RSS feed（以 http 開頭），直接抓；
-        # 否則用「(關鍵字) site:domain」格式查 Google News RSS。
-        # 關鍵字必須放在 site: 前面，放後面 Google News RSS 會回傳 0 結果。
+        # 優先找直接 RSS feed URL（支援多個欄位名稱）
+        rss_url = (
+            src.get("rss") or src.get("rss_url") or src.get("feed") or src.get("feed_url")
+        )
         url_field = src.get("url", "")
-        kw_str = category_keywords.get(cat, "")
-        if url_field.startswith("http"):
-            # 直接抓 RSS feed（之後仍做 client 端關鍵字過濾）
+        if not rss_url and url_field.startswith("http"):
             rss_url = url_field
-        else:
+
+        # 沒有直接 RSS URL → 從 url/domain/site 欄位取 domain，查 Google News RSS
+        if not rss_url:
             domain = (src.get("domain") or src.get("site")
                       or _extract_news_domain(url_field) or url_field)
             if not domain:
                 return []
             domain = domain.lower().replace("www.", "")
-            if kw_str:
-                # 關鍵字在前，site: 在後
-                q = f"({kw_str}) site:{domain}"
-            else:
-                q = f"site:{domain}"
-            if when_str:
-                q += f" {when_str}"
-            rss_url = f"https://news.google.com/rss/search?q={quote(q)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+            rss_url = _build_google_news_rss_for_domain(
+                domain, start_time=start_time, end_time=end_time
+            )
 
         fetched = _fetch_rss_items(rss_url, src_name, limit=limit_per_source)
 
-        # Client 端關鍵字過濾（直接 RSS feed 的情況仍需過濾）
-        matched = []
         for item in fetched:
-            if _kw_matches(item, kw_str):
-                item["source"] = src_name
-                item["source_category"] = cats
-                item["source_region"] = src.get("region", "")
-                item["source_type"] = "gnews"
-                matched.append(item)
-        return matched
+            item["source"] = src_name
+            item["source_category"] = cats
+            item["source_region"] = src.get("region", "")
+            item["source_type"] = src.get("type", "rss")
+        return fetched
 
     with ThreadPoolExecutor(max_workers=8) as executor:
         futures = {executor.submit(fetch_single, src): src for src in src_list}
