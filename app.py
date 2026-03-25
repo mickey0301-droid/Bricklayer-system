@@ -222,7 +222,7 @@ def _call_generate_report(
     return result, []
 
 
-def _fallback_save_docx(report_text: str, output_path: Path, format_config=None):
+def _fallback_save_docx(report_text: str, output_path: Path, format_config=None, doc_title: str = ""):
     from docx import Document
     from docx.shared import Pt
     from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -245,20 +245,30 @@ def _fallback_save_docx(report_text: str, output_path: Path, format_config=None)
 
     lines = (report_text or "").splitlines()
 
+    def _add_title(text_val):
+        p = doc.add_paragraph()
+        run = p.add_run(text_val)
+        run.bold = title_bold
+        run.font.size = Pt(title_size)
+        if title_align == "center":
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        elif title_align == "right":
+            p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        else:
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    # 若外部傳入 doc_title，以其作為文件標題（不從正文首行取標題）
+    if doc_title:
+        _add_title(doc_title)
+        start_idx = 0  # 正文從第一行開始，不跳過
+    else:
+        start_idx = None  # 沿用舊邏輯：第一行作標題
+
     for idx, line in enumerate(lines):
         text = line.strip()
 
-        if idx == 0 and text:
-            p = doc.add_paragraph()
-            run = p.add_run(text)
-            run.bold = title_bold
-            run.font.size = Pt(title_size)
-            if title_align == "center":
-                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            elif title_align == "right":
-                p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-            else:
-                p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        if start_idx is None and idx == 0 and text:
+            _add_title(text)
             continue
 
         if text.startswith("## ") or text.startswith("### "):
@@ -277,10 +287,12 @@ def _fallback_save_docx(report_text: str, output_path: Path, format_config=None)
     return str(output_path)
 
 
-def _call_save_report_docx(report_text: str, items: list, output_path: Path, format_config=None):
+def _call_save_report_docx(report_text: str, items: list, output_path: Path,
+                            format_config=None, doc_title: str = "Briefings"):
     fn = getattr(report_engine, "save_report_docx", None)
     if fn is None:
-        return _fallback_save_docx(report_text, output_path, format_config=format_config)
+        return _fallback_save_docx(report_text, output_path,
+                                   format_config=format_config, doc_title=doc_title)
 
     sig = inspect.signature(fn)
     params = list(sig.parameters.keys())
@@ -294,7 +306,8 @@ def _call_save_report_docx(report_text: str, items: list, output_path: Path, for
             return fn(report_text, items, str(output_path), format_config)
         return fn(report_text, str(output_path))
     except Exception:
-        return _fallback_save_docx(report_text, output_path, format_config=format_config)
+        return _fallback_save_docx(report_text, output_path,
+                                   format_config=format_config, doc_title=doc_title)
 
 
 def _save_pdf_from_docx(docx_path: Path, pdf_path: Path):
@@ -2317,7 +2330,7 @@ elif selected_page == "Reports":
         for _rf in report_files:
             _stat = _rf.stat()
             _size_kb = _stat.st_size / 1024
-            _mtime = datetime.fromtimestamp(_stat.st_mtime).strftime("%Y-%m-%d %H:%M")
+            _mtime = datetime.fromtimestamp(_stat.st_mtime, tz=TW_TZ).strftime("%Y-%m-%d %H:%M")
 
             col_name, col_dl, col_drive, col_del = st.columns([5, 1, 1, 1])
 

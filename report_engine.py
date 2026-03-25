@@ -2307,6 +2307,8 @@ def generate_segmented_report(
     # Insert section mini-reports as complete chapter structure
     for label, text in section_mini_reports:
         report_lines.append(f"{'─' * 60}")
+        report_lines.append(label)          # 章節標題
+        report_lines.append("")
         report_lines.append(text)
         report_lines.append("")
 
