@@ -63,7 +63,7 @@ APP_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = APP_DIR / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-st.set_page_config(page_title="Briefings", layout="wide")
+st.set_page_config(page_title="公情綜整報告", layout="wide")
 
 # 禁止手機瀏覽器的下拉重新整理（pull-to-refresh）
 st.markdown(
@@ -304,7 +304,7 @@ def _fallback_save_docx(report_text: str, output_path: Path, format_config=None,
 
 
 def _call_save_report_docx(report_text: str, items: list, output_path: Path,
-                            format_config=None, doc_title: str = "Briefings"):
+                            format_config=None, doc_title: str = "公情綜整報告"):
     fn = getattr(report_engine, "save_report_docx", None)
     if fn is None:
         return _fallback_save_docx(report_text, output_path,
@@ -459,7 +459,7 @@ def _build_source_editor_df(source_items, blank_rows=8):
 
 
 def _build_expert_editor_df(expert_items, blank_rows=8):
-    columns = ["name_zh", "name_en", "aliases", "category", "affiliation", "region", "enabled", "description"]
+    columns = ["name_zh", "name_en", "aliases", "category", "affiliation", "region", "enabled", "description", "rss_url"]
     rows = [expert_to_editor_row(x) for x in expert_items]
     df = pd.DataFrame(rows, columns=columns) if rows else pd.DataFrame(columns=columns)
     df = _append_blank_rows(df, blank_rows=blank_rows)
@@ -515,7 +515,7 @@ if "selected_page" not in st.session_state:
 
 with st.sidebar:
     st.markdown(
-        "<h1 style='margin-bottom:0.2rem;font-size:1.6rem;font-weight:700;'>Briefings</h1>"
+        "<h1 style='margin-bottom:0.2rem;font-size:1.6rem;font-weight:700;'>公情綜整報告</h1>"
         "<hr style='margin:0.4rem 0 1rem 0;border-color:#e0e0e0;'>",
         unsafe_allow_html=True,
     )
@@ -1305,7 +1305,8 @@ elif selected_page == "Sources":
                 exp_affiliation = st.text_input("affiliation", key="single_exp_affiliation")
                 exp_region = st.text_input("region", key="single_exp_region")
                 exp_enabled = st.checkbox("enabled", value=True, key="single_exp_enabled")
-                exp_description = st.text_area("description", key="single_exp_description", height=120)
+                exp_description = st.text_area("description", key="single_exp_description", height=80)
+            exp_rss_url = st.text_input("RSS URL（可留空；填入後系統將直接從此 URL 抓取文章）", key="single_exp_rss_url")
 
             if st.button("新增專家", key="add_single_expert"):
                 new_item = editor_row_to_expert(
@@ -1318,6 +1319,7 @@ elif selected_page == "Sources":
                         "region": exp_region,
                         "enabled": exp_enabled,
                         "description": exp_description,
+                        "rss_url": exp_rss_url,
                     }
                 )
                 current = load_experts()
@@ -1333,7 +1335,7 @@ elif selected_page == "Sources":
         st.markdown("### 表格式批次貼上新增專家")
         st.caption("可直接從外部複製多列資料貼到下表，再按「批次加入專家」。")
 
-        expert_batch_columns = ["name_zh", "name_en", "aliases", "category", "affiliation", "region", "enabled", "description"]
+        expert_batch_columns = ["name_zh", "name_en", "aliases", "category", "affiliation", "region", "enabled", "description", "rss_url"]
         expert_batch_default = pd.DataFrame([{c: "" for c in expert_batch_columns} for _ in range(8)])
         expert_batch_default["enabled"] = True
 
@@ -1352,6 +1354,7 @@ elif selected_page == "Sources":
                 "region": st.column_config.TextColumn("region"),
                 "enabled": st.column_config.CheckboxColumn("enabled", default=True),
                 "description": st.column_config.TextColumn("description"),
+                "rss_url": st.column_config.TextColumn("rss_url（RSS URL）"),
             },
         )
 
@@ -1397,6 +1400,7 @@ elif selected_page == "Sources":
                 "region": st.column_config.TextColumn("region"),
                 "enabled": st.column_config.CheckboxColumn("enabled", default=True),
                 "description": st.column_config.TextColumn("description"),
+                "rss_url": st.column_config.TextColumn("rss_url（RSS URL）"),
             },
         )
 

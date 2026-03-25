@@ -338,6 +338,7 @@ def normalize_expert(item: dict) -> dict:
         "region": (item.get("region") or "").strip(),
         "enabled": bool(item.get("enabled", True)),
         "description": (item.get("description") or "").strip(),
+        "rss_url": (item.get("rss_url") or "").strip(),  # 專家自訂 RSS URL（儲存於 experts.json）
     }
     normalized["name"] = display_expert_name(normalized)
     normalized["search_names"] = build_expert_search_names(normalized)
@@ -741,6 +742,7 @@ def expert_to_editor_row(expert: dict):
         "region": expert.get("region", ""),
         "enabled": bool(expert.get("enabled", True)),
         "description": expert.get("description", ""),
+        "rss_url": expert.get("rss_url", ""),
     }
 
 
@@ -755,5 +757,6 @@ def editor_row_to_expert(row: dict):
             "region": row.get("region", ""),
             "enabled": row.get("enabled", True),
             "description": row.get("description", ""),
+            "rss_url": row.get("rss_url", ""),
         }
     )

@@ -2450,7 +2450,7 @@ def generate_segmented_report(
 
     # ── 5. 組裝最終報告 ────────────────────────────────────────────────────
     _cb("stage", "📄 組裝完整分段報告…")
-    report_lines = ["【戰略情報簡報】（分段報告）", ""]
+    report_lines = ["公情綜整報告", ""]
 
     # Extract 一、摘要 / 八、研析 from synthesis
     summary_text = ""
@@ -2521,7 +2521,10 @@ def generate_segmented_report(
     final_report = "\n".join(report_lines)
 
     # ── 6. 套用來源引用渲染（同 generate_report / _generate_multiphase_synthesis）
+    # 先清除 AI 可能自行寫入的 [文字] 標記（字母開頭），再清除純數字括號如 [1] [12]
+    # （純數字括號是 AI 自行編號而非合法 [Sx] 代碼，若保留會與尾註編號對不上）
     final_report = re.sub(r'\[\s*(?!S\d+\s*\])([A-Za-z][^\]]{0,40})\]', '', final_report)
+    final_report = re.sub(r'\[(\d{1,3})\]', '', final_report)   # strip AI-written [1] [2]…[999]
     final_report = re.sub(r'[ \t]+', ' ', final_report)
     final_report = _render_citations(final_report, source_map, format_options)
 
@@ -2529,9 +2532,9 @@ def generate_segmented_report(
     # 先判斷 _render_citations 是否已加入 Notes/Sources；若已加入則不重複
     if source_map and "## Notes" not in final_report and "## Sources" not in final_report:
         endnote_lines = ["", "## 尾註", ""]
-        for sx, info in source_map.items():
-            idx = int(sx[1:])  # "S1" → 1
-            endnote_lines.append(_format_chicago_note(idx, info))
+        # 使用循序編號 1, 2, 3… 而非原始 S-number（S1=1, S5=5 等無意義映射）
+        for seq_idx, (_sx, info) in enumerate(source_map.items(), start=1):
+            endnote_lines.append(_format_chicago_note(seq_idx, info))
         final_report = final_report + "\n" + "\n".join(endnote_lines)
 
     return final_report, all_items
