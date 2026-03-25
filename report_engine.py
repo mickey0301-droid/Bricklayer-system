@@ -757,17 +757,25 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
                 return []
             direct_rss = (src.get("url") or "").strip()
             if direct_rss and direct_rss.startswith("http"):
-                # 直接從自訂 RSS URL 抓取
+                # 直接從自訂 RSS URL 抓取；時間過濾在 client 端由 _filter_items_by_time_range 完成
                 fetched = _fetch_rss_items(direct_rss, expert_name, limit=limit_per_source)
             else:
-                # 沒有 RSS URL → 用名字查 Google News
+                # 沒有 RSS URL → 根據名字語系自動選擇 locale 並查 Google News
+                # 判斷是否純 ASCII（英文名）→ 用 en-US；否則用 zh-TW
+                _is_ascii_name = all(ord(c) < 128 for c in expert_name.replace(" ", ""))
+                if _is_ascii_name:
+                    _gnews_params = "hl=en-US&gl=US&ceid=US:en"
+                else:
+                    _gnews_params = "hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
                 kw = f'"{expert_name}"'
                 if start_time:
                     kw += f" after:{start_time.strftime('%Y/%m/%d')}"
                 if end_time:
                     kw += f" before:{end_time.strftime('%Y/%m/%d')}"
-                gnews_url = f"https://news.google.com/rss/search?q={quote(kw)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+                gnews_url = f"https://news.google.com/rss/search?q={quote(kw)}&{_gnews_params}"
                 fetched = _fetch_rss_items(gnews_url, expert_name, limit=limit_per_source)
+            # 時間過濾（補足 direct RSS 無法在 URL 帶時間的情況）
+            fetched = _filter_items_by_time_range(fetched, start_time, end_time)
             for item in fetched:
                 item["source"] = expert_name   # 來源標籤統一顯示專家名字
                 item["source_category"] = cats
@@ -2394,7 +2402,11 @@ def generate_segmented_report(
         except Exception as _e:
             print(f"[Segmented] Expert fetch failed: {_e}")
 
-    # ── 1b. 建立全局 source_map（同 _generate_multiphase_synthesis 做法）──
+    # ── 1b. 時間區間過濾（對 direct RSS 來源補做，Google News 搜尋已在 URL 帶時間）──
+    all_items = _filter_items_by_time_range(all_items, start_time, end_time)
+    _cb("stage", f"🕐 時間過濾後剩 {len(all_items)} 篇")
+
+    # ── 1c. 建立全局 source_map（同 _generate_multiphase_synthesis 做法）──
     #   先建 source_map，再傳給 _format_item_block，讓 AI 能使用 [Sx] 引用
     source_map = _build_citation_source_map(all_items, max_sources=30)
     item_to_sx: dict[str, str] = {}

@@ -1429,16 +1429,24 @@ elif selected_page == "Sources":
                 st.rerun()
 
         st.markdown("### 專家搜尋名稱預覽")
+        st.caption("若「rss_url」欄位為空，系統會依下表「自動生成 RSS URL」向 Google News 搜尋。英文名用 en-US，中文名用 zh-TW。可直接複製連結貼入 rss_url 欄位以自訂。")
         preview_rows = []
         for e in load_experts():
+            name = display_expert_name(e)
+            rss_url = (e.get("rss_url") or "").strip()
+            if not rss_url:
+                import urllib.parse as _up
+                _is_ascii = all(ord(c) < 128 for c in name.replace(" ", ""))
+                _params = "hl=en-US&gl=US&ceid=US:en" if _is_ascii else "hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+                auto_url = f'https://news.google.com/rss/search?q={_up.quote(chr(34) + name + chr(34))}&{_params}'
+            else:
+                auto_url = "（已設自訂 rss_url）"
             preview_rows.append(
                 {
-                    "display_name": display_expert_name(e),
+                    "display_name": name,
+                    "自動生成 RSS URL（rss_url 空白時使用）": auto_url,
                     "search_names": ", ".join(e.get("search_names", [])),
-                    "aliases": ", ".join(e.get("aliases", [])),
                     "category": ", ".join(e.get("category", [])),
-                    "affiliation": e.get("affiliation", ""),
-                    "region": e.get("region", ""),
                     "enabled": e.get("enabled", True),
                 }
             )
