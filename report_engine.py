@@ -1812,10 +1812,14 @@ MULTIPHASE_GROUP_OPTIONS = [
 # Each section independently searches Google News with topic-specific keywords.
 # kw_zh = primary Chinese-language query; kw_en = secondary English-language query.
 _SEGMENTED_SECTIONS = [
+    # ── Standalone sections (no parent hierarchy) ────────────────────────────
     {
         "id": "intl_news",
         "label": "二、國際要聞",
         "section_path": "二、國際要聞",
+        "display_parent": None,   # standalone → emit ## label directly
+        "display_sub": None,
+        "display_leaf": None,
         "kw_zh": "國際局勢 OR 全球外交 OR 聯合國 OR 地緣政治 OR 國際安全 OR 戰爭 OR 武裝衝突",
         "kw_en": "\"international affairs\" OR \"global politics\" OR diplomacy OR \"United Nations\" OR geopolitics OR war OR conflict OR sanctions",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1825,6 +1829,9 @@ _SEGMENTED_SECTIONS = [
         "id": "tw_us_cn",
         "label": "三、台美中要聞",
         "section_path": "三、台美中要聞",
+        "display_parent": None,
+        "display_sub": None,
+        "display_leaf": None,
         "kw_zh": "台灣 OR 台海 OR 兩岸 OR 台美關係 OR 美中關係 OR 中共 OR 台美中",
         "kw_en": "Taiwan OR \"Taiwan strait\" OR \"cross-strait\" OR \"US-China\" OR \"US-Taiwan\" OR CCP OR \"Sino-American\"",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1834,15 +1841,22 @@ _SEGMENTED_SECTIONS = [
         "id": "tw_security",
         "label": "四、台灣國安要聞",
         "section_path": "四、台灣國安要聞",
+        "display_parent": None,
+        "display_sub": None,
+        "display_leaf": None,
         "kw_zh": "台灣 AND (國安 OR 國防 OR 解放軍 OR 軍演 OR 灰色地帶 OR 資安 OR 飛彈 OR 網路攻擊)",
         "kw_en": "Taiwan AND (security OR defense OR PLA OR military OR \"gray zone\" OR cyber OR missile OR drills)",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
         "lp_en": {"hl": "en-US", "gl": "US", "ceid": "US:en"},
     },
+    # ── 五、中國要聞 (parent → sub, no leaf) ────────────────────────────────
     {
         "id": "cn_external",
         "label": "五（一）中國對外情勢",
         "section_path": "五、中國要聞｜（一）中國對外情勢",
+        "display_parent": "五、中國要聞",
+        "display_sub": "（一）中國對外情勢",
+        "display_leaf": None,
         "kw_zh": "中國 AND (外交 OR 軍事 OR 南海 OR 東海 OR 台海 OR 制裁 OR 對外政策 OR 王毅 OR 軍演)",
         "kw_en": "China AND (diplomacy OR military OR \"South China Sea\" OR \"East China Sea\" OR Taiwan OR sanctions OR \"foreign policy\" OR PLA OR \"belt and road\")",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1852,15 +1866,22 @@ _SEGMENTED_SECTIONS = [
         "id": "cn_domestic",
         "label": "五（二）中國內部情勢",
         "section_path": "五、中國要聞｜（二）中國內部情勢",
+        "display_parent": "五、中國要聞",
+        "display_sub": "（二）中國內部情勢",
+        "display_leaf": None,
         "kw_zh": "中國 AND (習近平 OR 共產黨 OR 國內經濟 OR 人權 OR 新疆 OR 香港 OR 西藏 OR 房地產 OR 政治局)",
         "kw_en": "China AND (\"Xi Jinping\" OR CCP OR economy OR \"human rights\" OR Xinjiang OR \"Hong Kong\" OR Tibet OR \"real estate\" OR Politburo OR crackdown)",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
         "lp_en": {"hl": "en-US", "gl": "US", "ceid": "US:en"},
     },
+    # ── 六、區域情勢 (parent → sub → leaf) ──────────────────────────────────
     {
         "id": "asia_pacific_intl",
         "label": "六（一）亞太地區－國際要聞",
         "section_path": "六、區域情勢｜（一）亞太地區｜1. 國際要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（一）亞太地區",
+        "display_leaf": "1. 國際要聞",
         "kw_zh": "亞太 OR 日本 OR 韓國 OR 澳洲 OR 印度 OR 東南亞 OR 東協 OR 印太 OR 菲律賓 OR 越南 OR 印尼",
         "kw_en": "Asia-Pacific OR Japan OR Korea OR Australia OR India OR \"Southeast Asia\" OR ASEAN OR \"Indo-Pacific\" OR Philippines OR Vietnam OR Indonesia",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1870,6 +1891,9 @@ _SEGMENTED_SECTIONS = [
         "id": "asia_pacific_twcn",
         "label": "六（一）亞太地區－台美中要聞",
         "section_path": "六、區域情勢｜（一）亞太地區｜2. 台美中要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（一）亞太地區",
+        "display_leaf": "2. 台美中要聞",
         "kw_zh": "(日本 OR 韓國 OR 澳洲 OR 印度 OR 東南亞 OR 菲律賓 OR 越南) AND (台灣 OR 中國 OR 美國 OR 兩岸)",
         "kw_en": "(Japan OR Korea OR Australia OR India OR \"Southeast Asia\" OR Philippines OR Vietnam) AND (Taiwan OR China OR \"United States\" OR \"cross-strait\")",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1879,6 +1903,9 @@ _SEGMENTED_SECTIONS = [
         "id": "west_asia_intl",
         "label": "六（二）亞西地區－國際要聞",
         "section_path": "六、區域情勢｜（二）亞西地區｜1. 國際要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（二）亞西地區",
+        "display_leaf": "1. 國際要聞",
         "kw_zh": "中東 OR 以色列 OR 伊朗 OR 沙烏地阿拉伯 OR 加薩 OR 伊拉克 OR 敘利亞 OR 土耳其 OR 葉門",
         "kw_en": "\"Middle East\" OR Israel OR Iran OR Saudi OR Gaza OR Iraq OR Syria OR Turkey OR Yemen OR Lebanon OR Palestine",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1888,6 +1915,9 @@ _SEGMENTED_SECTIONS = [
         "id": "west_asia_twcn",
         "label": "六（二）亞西地區－台美中要聞",
         "section_path": "六、區域情勢｜（二）亞西地區｜2. 台美中要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（二）亞西地區",
+        "display_leaf": "2. 台美中要聞",
         "kw_zh": "(中東 OR 以色列 OR 伊朗 OR 沙烏地 OR 土耳其) AND (台灣 OR 中國 OR 美國)",
         "kw_en": "(\"Middle East\" OR Israel OR Iran OR Saudi OR Turkey OR Gulf) AND (Taiwan OR China OR \"United States\")",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1897,6 +1927,9 @@ _SEGMENTED_SECTIONS = [
         "id": "north_am_intl",
         "label": "六（三）北美地區－國際要聞",
         "section_path": "六、區域情勢｜（三）北美地區｜1. 國際要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（三）北美地區",
+        "display_leaf": "1. 國際要聞",
         "kw_zh": "美國 OR 加拿大 OR 川普 OR 白宮 OR 美國國會 OR 美國外交",
         "kw_en": "\"United States\" OR Canada OR Trump OR \"White House\" OR Congress OR Pentagon OR \"State Department\" OR Washington",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1906,6 +1939,9 @@ _SEGMENTED_SECTIONS = [
         "id": "north_am_twcn",
         "label": "六（三）北美地區－台美中要聞",
         "section_path": "六、區域情勢｜（三）北美地區｜2. 台美中要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（三）北美地區",
+        "display_leaf": "2. 台美中要聞",
         "kw_zh": "(美國 OR 加拿大) AND (台灣 OR 中國 OR 台海 OR 兩岸)",
         "kw_en": "(\"United States\" OR Canada) AND (Taiwan OR China OR \"Taiwan Strait\" OR \"cross-strait\" OR CCP)",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1915,6 +1951,9 @@ _SEGMENTED_SECTIONS = [
         "id": "latin_am_intl",
         "label": "六（四）拉丁美洲及加勒比海－國際要聞",
         "section_path": "六、區域情勢｜（四）拉丁美洲及加勒比海｜1. 國際要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（四）拉丁美洲及加勒比海",
+        "display_leaf": "1. 國際要聞",
         "kw_zh": "拉丁美洲 OR 巴西 OR 阿根廷 OR 哥倫比亞 OR 委內瑞拉 OR 古巴 OR 加勒比海 OR 智利 OR 秘魯",
         "kw_en": "\"Latin America\" OR Brazil OR Argentina OR Colombia OR Venezuela OR Cuba OR Caribbean OR Chile OR Peru OR Mexico",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1924,6 +1963,9 @@ _SEGMENTED_SECTIONS = [
         "id": "latin_am_twcn",
         "label": "六（四）拉丁美洲及加勒比海－台美中要聞",
         "section_path": "六、區域情勢｜（四）拉丁美洲及加勒比海｜2. 台美中要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（四）拉丁美洲及加勒比海",
+        "display_leaf": "2. 台美中要聞",
         "kw_zh": "(拉丁美洲 OR 巴西 OR 阿根廷 OR 哥倫比亞 OR 智利) AND (台灣 OR 中國 OR 美國)",
         "kw_en": "(\"Latin America\" OR Brazil OR Argentina OR Chile OR Colombia OR Peru) AND (Taiwan OR China OR \"United States\")",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1933,6 +1975,9 @@ _SEGMENTED_SECTIONS = [
         "id": "europe_intl",
         "label": "六（五）歐洲地區－國際要聞",
         "section_path": "六、區域情勢｜（五）歐洲地區｜1. 國際要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（五）歐洲地區",
+        "display_leaf": "1. 國際要聞",
         "kw_zh": "歐洲 OR 歐盟 OR 北約 OR 烏克蘭 OR 俄羅斯 OR 英國 OR 德國 OR 法國 OR 波蘭",
         "kw_en": "Europe OR EU OR NATO OR Ukraine OR Russia OR UK OR Germany OR France OR Poland OR Macron OR Scholz OR Zelensky",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1942,6 +1987,9 @@ _SEGMENTED_SECTIONS = [
         "id": "europe_twcn",
         "label": "六（五）歐洲地區－台美中要聞",
         "section_path": "六、區域情勢｜（五）歐洲地區｜2. 台美中要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（五）歐洲地區",
+        "display_leaf": "2. 台美中要聞",
         "kw_zh": "(歐洲 OR 歐盟 OR 北約 OR 英國 OR 德國 OR 法國 OR 烏克蘭) AND (台灣 OR 中國)",
         "kw_en": "(Europe OR EU OR NATO OR UK OR Germany OR France OR Poland OR Ukraine) AND (Taiwan OR China)",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1951,6 +1999,9 @@ _SEGMENTED_SECTIONS = [
         "id": "africa_intl",
         "label": "六（六）非洲地區－國際要聞",
         "section_path": "六、區域情勢｜（六）非洲地區｜1. 國際要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（六）非洲地區",
+        "display_leaf": "1. 國際要聞",
         "kw_zh": "非洲 OR 奈及利亞 OR 南非 OR 肯亞 OR 衣索比亞 OR 埃及 OR 蘇丹 OR 剛果",
         "kw_en": "Africa OR Nigeria OR \"South Africa\" OR Kenya OR Ethiopia OR Egypt OR Sudan OR Congo OR Ghana OR Tanzania OR Sahel",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1960,15 +2011,22 @@ _SEGMENTED_SECTIONS = [
         "id": "africa_twcn",
         "label": "六（六）非洲地區－台美中要聞",
         "section_path": "六、區域情勢｜（六）非洲地區｜2. 台美中要聞研析",
+        "display_parent": "六、區域情勢",
+        "display_sub": "（六）非洲地區",
+        "display_leaf": "2. 台美中要聞",
         "kw_zh": "(非洲 OR 奈及利亞 OR 南非 OR 肯亞 OR 埃及 OR 衣索比亞) AND (台灣 OR 中國 OR 美國)",
         "kw_en": "(Africa OR Nigeria OR \"South Africa\" OR Kenya OR Egypt OR Ethiopia OR Sudan) AND (Taiwan OR China OR \"United States\")",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
         "lp_en": {"hl": "en-US", "gl": "US", "ceid": "US:en"},
     },
+    # ── 七、專家研析 (parent → sub, no leaf) ────────────────────────────────
     {
         "id": "expert_intl",
         "label": "七（一）專家研析－國際要聞",
         "section_path": "七、專家研析｜1. 國際要聞研析",
+        "display_parent": "七、專家研析",
+        "display_sub": "1. 國際要聞研析",
+        "display_leaf": None,
         "kw_zh": "(智庫 OR 研析 OR 學者 OR 評論員) AND (國際 OR 全球 OR 安全 OR 外交 OR 地緣政治)",
         "kw_en": "(\"think tank\" OR analysis OR scholar OR commentary OR expert OR analyst) AND (international OR global OR security OR diplomacy OR geopolitics)",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -1978,6 +2036,9 @@ _SEGMENTED_SECTIONS = [
         "id": "expert_twcn",
         "label": "七（二）專家研析－台美中要聞",
         "section_path": "七、專家研析｜2. 台美中要聞研析",
+        "display_parent": "七、專家研析",
+        "display_sub": "2. 台美中要聞研析",
+        "display_leaf": None,
         "kw_zh": "(智庫 OR 研析 OR 學者 OR 評論員) AND (台灣 OR 中國 OR 台海 OR 兩岸 OR 美中)",
         "kw_en": "(\"think tank\" OR analysis OR expert OR scholar OR commentary) AND (Taiwan OR China OR \"Taiwan strait\" OR \"cross-strait\" OR \"US-China\")",
         "lp_zh": {"hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"},
@@ -2087,8 +2148,13 @@ Your task is to write ONLY the following three parts (do NOT re-write the other 
 
 1. 一、摘要（1-2 paragraphs: most important strategic judgements of this issue）
 2. 八、研析
-   1. 國際要聞研析（cross-chapter analysis of international developments）
-   2. 台美中要聞研析（cross-chapter strategic analysis of Taiwan-US-China dynamics）
+   1. 國際要聞研析 — Analyse international developments EXCLUDING Taiwan-US-China (台美中) dynamics.
+      Cover: global multilateral affairs, regional flashpoints (Europe, Middle East, Asia-Pacific, Americas,
+      Africa), major-power competition among parties other than the Taiwan-US-China triangle.
+      Do NOT discuss Taiwan independence/sovereignty, cross-strait relations, or US-China rivalry here.
+   2. 台美中要聞研析 — Analyse ONLY Taiwan-US-China strategic dynamics:
+      cross-strait relations, US-Taiwan ties, US-China rivalry, PRC military posture toward Taiwan,
+      Taiwan's national security environment. Do NOT repeat content already in 國際要聞研析.
 
 Write in {language_label}, in formal analytical prose (NOT bullet points).
 Do NOT repeat the content of the 19 section reports — synthesize and elevate.
@@ -2346,6 +2412,8 @@ def generate_segmented_report(
     # ── 3. 各章節生成小報告 ────────────────────────────────────────────────
     _cb("stage", f"📰 分段報告：共 {total_sections} 個章節，各自生成小報告…")
 
+    section_mini_secs: list = []   # parallel list of section dicts (for assembly hierarchy)
+
     for idx, sec in enumerate(_SEGMENTED_SECTIONS, 1):
         label = sec["label"]
         items = selected_per_section.get(sec["id"], [])
@@ -2369,6 +2437,7 @@ def generate_segmented_report(
             mini_text = f"本期資料不足，無法生成{label}小報告。"
 
         section_mini_reports.append((label, mini_text))
+        section_mini_secs.append(sec)
         _cb("stage", f"✅ [{idx}/{total_sections}] 完成：{label}")
 
     # ── 4. AI 撰寫「一、摘要」和「八、研析」 ─────────────────────────────
@@ -2406,9 +2475,39 @@ def generate_segmented_report(
     report_lines.append(summary_text)
     report_lines.append("")
 
-    # Insert section mini-reports — prefix label with "## " for heading formatting
-    for label, text in section_mini_reports:
-        report_lines.append(f"## {label}")   # "## " → section heading in docx formatter
+    # Insert section mini-reports with hierarchy-aware headings
+    # display_parent → "## " (14pt bold, emitted once per unique parent)
+    # display_sub    → "### " (13pt bold, emitted once per unique sub within a parent)
+    # display_leaf   → "#### " (12pt bold italic, always emitted)
+    # standalone (display_parent is None) → "## label"
+    _last_parent: str | None = "__UNSET__"
+    _last_sub: str | None = "__UNSET__"
+    for sec, (label, text) in zip(section_mini_secs, section_mini_reports):
+        dp = sec.get("display_parent")
+        ds = sec.get("display_sub")
+        dl = sec.get("display_leaf")
+
+        if dp is None:
+            # Standalone section — emit ## label heading, reset hierarchy tracking
+            report_lines.append(f"## {label}")
+            _last_parent = None
+            _last_sub = None
+        else:
+            # Emit parent heading if it changed
+            if dp != _last_parent:
+                report_lines.append(f"## {dp}")
+                report_lines.append("")
+                _last_parent = dp
+                _last_sub = "__UNSET__"  # reset sub when parent changes
+            # Emit sub heading if present and changed
+            if ds and ds != _last_sub:
+                report_lines.append(f"### {ds}")
+                report_lines.append("")
+                _last_sub = ds
+            # Emit leaf heading if present
+            if dl:
+                report_lines.append(f"#### {dl}")
+
         report_lines.append("")
         report_lines.append(text)
         report_lines.append("")

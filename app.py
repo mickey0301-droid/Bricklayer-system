@@ -63,7 +63,7 @@ APP_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = APP_DIR / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-st.set_page_config(page_title="公情綜整報告", layout="wide")
+st.set_page_config(page_title="Briefings", layout="wide")
 
 # 禁止手機瀏覽器的下拉重新整理（pull-to-refresh）
 st.markdown(
@@ -271,11 +271,27 @@ def _fallback_save_docx(report_text: str, output_path: Path, format_config=None,
             _add_title(text)
             continue
 
-        if text.startswith("## ") or text.startswith("### "):
+        if text.startswith("## "):
+            # Level-1 section heading (e.g. ## 六、區域情勢)
             p = doc.add_paragraph()
-            run = p.add_run(text.replace("## ", "").replace("### ", ""))
+            run = p.add_run(text[3:])
             run.bold = section_bold
-            run.font.size = Pt(section_size)
+            run.font.size = Pt(section_size)          # 14pt
+            p.paragraph_format.line_spacing = line_spacing
+        elif text.startswith("### "):
+            # Level-2 sub-section heading (e.g. ### （一）亞太地區)
+            p = doc.add_paragraph()
+            run = p.add_run(text[4:])
+            run.bold = True
+            run.font.size = Pt(section_size - 1)      # 13pt
+            p.paragraph_format.line_spacing = line_spacing
+        elif text.startswith("#### "):
+            # Level-3 leaf label (e.g. #### 1. 國際要聞研析)
+            p = doc.add_paragraph()
+            run = p.add_run(text[5:])
+            run.bold = True
+            run.italic = True
+            run.font.size = Pt(body_size)              # 12pt italic bold
             p.paragraph_format.line_spacing = line_spacing
         else:
             p = doc.add_paragraph(text)
@@ -499,7 +515,7 @@ if "selected_page" not in st.session_state:
 
 with st.sidebar:
     st.markdown(
-        "<h1 style='margin-bottom:0.2rem;font-size:1.6rem;font-weight:700;'>公情綜整報告</h1>"
+        "<h1 style='margin-bottom:0.2rem;font-size:1.6rem;font-weight:700;'>Briefings</h1>"
         "<hr style='margin:0.4rem 0 1rem 0;border-color:#e0e0e0;'>",
         unsafe_allow_html=True,
     )
