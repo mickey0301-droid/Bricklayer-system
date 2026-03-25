@@ -1274,7 +1274,7 @@ def _render_citations(report_text, source_map, format_options):
 
     # Chicago 腳註（footnote 或 endnote 都用同一格式）
     section_title = "Notes" if notes_style == "footnote" else "Sources"
-    lines = ["", "", section_title, ""]
+    lines = ["", "", f"## {section_title}", ""]
     for idx, code in enumerate(used_codes, start=1):
         src = source_map[code]
         lines.append(_format_chicago_note(idx, src))
@@ -2317,7 +2317,7 @@ def generate_segmented_report(
     _cb("stage", "📄 組裝完整分段報告…")
     report_lines = ["【戰略情報簡報】（分段報告）", ""]
 
-    # Extract 一、摘要 from synthesis
+    # Extract 一、摘要 / 八、研析 from synthesis
     summary_text = ""
     analysis_text = ""
     if "八、研析" in synthesis_text:
@@ -2328,6 +2328,15 @@ def generate_segmented_report(
         summary_text = synthesis_text.strip()
         analysis_text = "八、研析\n1. 國際要聞研析\n本期無相關分析。\n\n2. 台美中要聞研析\n本期無相關分析。"
 
+    # Strip AI's own "一、摘要" header (if present) to avoid duplication with our ## heading
+    for _prefix in ("一、摘要\n\n", "一、摘要\n", "一、摘要"):
+        if summary_text.startswith(_prefix):
+            summary_text = summary_text[len(_prefix):].strip()
+            break
+
+    # 一、摘要 with explicit ## heading
+    report_lines.append("## 一、摘要")
+    report_lines.append("")
     report_lines.append(summary_text)
     report_lines.append("")
 
@@ -2352,6 +2361,15 @@ def generate_segmented_report(
     final_report = re.sub(r'\[\s*(?!S\d+\s*\])([A-Za-z][^\]]{0,40})\]', '', final_report)
     final_report = re.sub(r'[ \t]+', ' ', final_report)
     final_report = _render_citations(final_report, source_map, format_options)
+
+    # ── 7. 強制補上尾註（確保即使 AI 未引用 [Sx]，仍在報告末附上來源清單）──
+    # 先判斷 _render_citations 是否已加入 Notes/Sources；若已加入則不重複
+    if source_map and "## Notes" not in final_report and "## Sources" not in final_report:
+        endnote_lines = ["", f"{'─' * 60}", "## 尾註", ""]
+        for sx, info in source_map.items():
+            idx = int(sx[1:])  # "S1" → 1
+            endnote_lines.append(_format_chicago_note(idx, info))
+        final_report = final_report + "\n" + "\n".join(endnote_lines)
 
     return final_report, all_items
 
