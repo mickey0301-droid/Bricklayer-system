@@ -750,23 +750,29 @@ def fetch_items_from_sources(selected_sources, all_sources=None, limit_per_sourc
         cat = cats[0] if cats else ""
         src_name = src.get("name", "")
 
-        # 自訂專家：用名字查詢，不限定 site:
+        # 自訂專家：若有 rss_url 直接抓 RSS；否則用名字查 Google News
         if cat == "自訂專家":
             expert_name = src_name.strip()
             if not expert_name:
                 return []
-            kw = f'"{expert_name}"'
-            if start_time:
-                kw += f" after:{start_time.strftime('%Y/%m/%d')}"
-            if end_time:
-                kw += f" before:{end_time.strftime('%Y/%m/%d')}"
-            rss_url = f"https://news.google.com/rss/search?q={quote(kw)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
-            fetched = _fetch_rss_items(rss_url, expert_name, limit=limit_per_source)
+            direct_rss = (src.get("url") or "").strip()
+            if direct_rss and direct_rss.startswith("http"):
+                # 直接從自訂 RSS URL 抓取
+                fetched = _fetch_rss_items(direct_rss, expert_name, limit=limit_per_source)
+            else:
+                # 沒有 RSS URL → 用名字查 Google News
+                kw = f'"{expert_name}"'
+                if start_time:
+                    kw += f" after:{start_time.strftime('%Y/%m/%d')}"
+                if end_time:
+                    kw += f" before:{end_time.strftime('%Y/%m/%d')}"
+                gnews_url = f"https://news.google.com/rss/search?q={quote(kw)}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant"
+                fetched = _fetch_rss_items(gnews_url, expert_name, limit=limit_per_source)
             for item in fetched:
-                item["source"] = expert_name
+                item["source"] = expert_name   # 來源標籤統一顯示專家名字
                 item["source_category"] = cats
                 item["source_region"] = src.get("region", "")
-                item["source_type"] = "gnews"
+                item["source_type"] = "expert"
             return fetched
 
         src_type  = src.get("type", "rss")

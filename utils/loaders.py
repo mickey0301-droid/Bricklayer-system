@@ -425,10 +425,13 @@ def load_sources(editable_only=False):
 
     global_sources = load_global_media_sources()
 
-    if editable_only:
-        return editable + global_sources
+    # 把專家清單注入為 '自訂專家' 類別的來源條目（readonly，不會被寫回）
+    expert_srcs = experts_as_sources()
 
-    all_sources = editable + global_sources + deepcopy(FIXED_CN_OFFICIAL_SOURCES)
+    if editable_only:
+        return editable + global_sources + expert_srcs
+
+    all_sources = editable + global_sources + deepcopy(FIXED_CN_OFFICIAL_SOURCES) + expert_srcs
 
     return all_sources
 
@@ -449,6 +452,38 @@ def load_experts():
     if not isinstance(data, list):
         data = []
     return [normalize_expert(item) for item in data]
+
+
+def experts_as_sources() -> list:
+    """
+    Convert enabled experts into synthetic source-like dicts so they appear
+    in the source selection UI under the '自訂專家' category.
+
+    - If the expert has rss_url → type='rss', url=rss_url (direct fetch)
+    - Otherwise                 → type='domain', url='' (Google News name search)
+    These entries are marked readonly=True so they are never written to sources.json.
+    """
+    experts = load_experts()
+    sources = []
+    for e in experts:
+        if not e.get("enabled", True):
+            continue
+        name = (e.get("name") or e.get("name_zh") or e.get("name_en") or "").strip()
+        if not name:
+            continue
+        rss_url = (e.get("rss_url") or "").strip()
+        sources.append({
+            "name": name,
+            "type": "rss" if rss_url else "domain",
+            "url": rss_url,
+            "category": ["自訂專家"],
+            "region": (e.get("region") or "").strip(),
+            "enabled": True,
+            "description": (e.get("description") or "").strip(),
+            "readonly": True,       # prevent save_sources from writing these back
+            "from_expert": True,    # marker so UI can identify them
+        })
+    return sources
 
 
 def save_experts(experts):
