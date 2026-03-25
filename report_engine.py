@@ -2185,18 +2185,35 @@ def _classify_items_to_sections(all_items: list, sections: list) -> dict:
     """
     Classify items into section buckets by matching kw_zh / kw_en queries
     against each item's title + summary.  An item may appear in multiple sections.
+    Title-matched items are sorted first within each bucket so that the most
+    directly relevant articles lead each section.
     Returns: {section_id: [item, ...]}
     """
-    buckets: dict = {sec["id"]: [] for sec in sections}
+    # Each bucket entry is (title_matched: bool, item)
+    raw_buckets: dict = {sec["id"]: [] for sec in sections}
     for item in all_items:
-        title   = item.get("title")   or ""
-        summary = item.get("summary") or ""
-        text    = f"{title} {summary}"
+        title     = item.get("title")   or ""
+        summary   = item.get("summary") or ""
+        full_text = f"{title} {summary}"
         for sec in sections:
-            if (_eval_section_query(text, sec.get("kw_zh", ""))
-                    or _eval_section_query(text, sec.get("kw_en", ""))):
-                buckets[sec["id"]].append(item)
-    return buckets
+            kw_zh = sec.get("kw_zh", "")
+            kw_en = sec.get("kw_en", "")
+            # Only add if full text (title+summary) matches
+            if (_eval_section_query(full_text, kw_zh)
+                    or _eval_section_query(full_text, kw_en)):
+                # Title-only match = higher priority
+                title_match = bool(
+                    _eval_section_query(title, kw_zh)
+                    or _eval_section_query(title, kw_en)
+                )
+                raw_buckets[sec["id"]].append((title_match, item))
+
+    # Sort: title-matched items first (sort key 0), summary-only matches second (sort key 1)
+    result: dict = {}
+    for sec_id, entries in raw_buckets.items():
+        entries.sort(key=lambda x: 0 if x[0] else 1)
+        result[sec_id] = [item for _, item in entries]
+    return result
 
 
 def generate_segmented_report(
@@ -2226,6 +2243,7 @@ def generate_segmented_report(
     insights_block = insights_text or ""
     total_sections = len(_SEGMENTED_SECTIONS)
     section_mini_reports: list = []  # [(label, text), ...]
+    format_options = format_options or _load_format_options()
 
     # ── 1. 從 RSS 來源抓取所有文章（與 generate_report 相同流程） ───────────
     sources = load_sources()
@@ -2243,7 +2261,16 @@ def generate_segmented_report(
     )
     _cb("stage", f"✅ RSS 抓取完成，共取得 {len(all_items)} 篇文章")
 
-    # ── 2. 按章節關鍵字分類 ────────────────────────────────────────────────
+    # ── 1b. 建立全局 source_map（同 _generate_multiphase_synthesis 做法）──
+    #   先建 source_map，再傳給 _format_item_block，讓 AI 能使用 [Sx] 引用
+    source_map = _build_citation_source_map(all_items, max_sources=30)
+    item_to_sx: dict[str, str] = {}
+    for sx, info in source_map.items():
+        key = (info.get("url") or info.get("title") or "").lower().strip()
+        if key:
+            item_to_sx[key] = sx
+
+    # ── 2. 按章節關鍵字分類（標題命中優先） ──────────────────────────────
     _cb("stage", "📂 按章節關鍵字分類文章…")
     section_buckets = _classify_items_to_sections(all_items, _SEGMENTED_SECTIONS)
     classified = sum(1 for item in all_items
@@ -2259,8 +2286,8 @@ def generate_segmented_report(
 
         _cb("rss", f"{label}：{len(items)} 篇", idx, total_sections, len(items))
 
-        # Build news block for this section
-        news_block = _format_item_block(label, items, None)
+        # Build news block for this section — pass item_to_sx so AI gets [Sx] codes
+        news_block = _format_item_block(label, items, item_to_sx)
 
         # Generate mini-report for this section
         _cb("stage", f"✍️  [{idx}/{total_sections}] AI 撰寫：{label}…")
@@ -2278,7 +2305,7 @@ def generate_segmented_report(
         section_mini_reports.append((label, mini_text))
         _cb("stage", f"✅ [{idx}/{total_sections}] 完成：{label}")
 
-    # 5. AI writes 一、摘要 and 八、研析
+    # ── 4. AI 撰寫「一、摘要」和「八、研析」 ─────────────────────────────
     synthesis_text = _generate_segmented_final_report(
         section_mini_reports=section_mini_reports,
         language_label=language_label,
@@ -2286,7 +2313,7 @@ def generate_segmented_report(
         status_callback=status_callback,
     )
 
-    # 6. Assemble final report
+    # ── 5. 組裝最終報告 ────────────────────────────────────────────────────
     _cb("stage", "📄 組裝完整分段報告…")
     report_lines = ["【戰略情報簡報】（分段報告）", ""]
 
@@ -2304,19 +2331,29 @@ def generate_segmented_report(
     report_lines.append(summary_text)
     report_lines.append("")
 
-    # Insert section mini-reports as complete chapter structure
+    # Insert section mini-reports — prefix label with "## " for heading formatting
     for label, text in section_mini_reports:
         report_lines.append(f"{'─' * 60}")
-        report_lines.append(label)          # 章節標題
+        report_lines.append(f"## {label}")   # "## " → section heading in docx formatter
         report_lines.append("")
         report_lines.append(text)
         report_lines.append("")
 
     report_lines.append(f"{'─' * 60}")
-    report_lines.append(analysis_text)
+    report_lines.append(f"## 八、研析")
+    report_lines.append("")
+    # analysis_text already starts with "八、研析\n..." so strip that prefix to avoid duplication
+    analysis_body = analysis_text.replace("八、研析\n", "", 1).strip()
+    report_lines.append(analysis_body)
 
     final_report = "\n".join(report_lines)
-    return final_report, []
+
+    # ── 6. 套用來源引用渲染（同 generate_report / _generate_multiphase_synthesis）
+    final_report = re.sub(r'\[\s*(?!S\d+\s*\])([A-Za-z][^\]]{0,40})\]', '', final_report)
+    final_report = re.sub(r'[ \t]+', ' ', final_report)
+    final_report = _render_citations(final_report, source_map, format_options)
+
+    return final_report, all_items
 
 
 def _get_item_source_group(item: dict) -> str:
@@ -2510,7 +2547,7 @@ Requirements:
 6. CRITICAL — Citation codes [S1][S2][S3]... are embedded in the sub-reports. You MUST preserve every [Sx] code exactly as it appears — do NOT renumber, merge, drop, or invent any [Sx] marker. When you incorporate a fact from a sub-report that has a citation code, carry that exact code into the synthesis text. These codes are the only link to the source bibliography and must NOT be lost.
 7. MANDATORY — Media outlets: NEVER use vague collective terms such as "歐洲媒體", "西方媒體", "美國媒體", "外媒". Always write the specific outlet name. On first mention, provide both Chinese and English, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）、《紐約時報》（New York Times）. This rule has NO exceptions.
 7a. MANDATORY — Media country attribution: When citing a non-Chinese / non-English language media outlet, you MUST note which country it is from on first mention. Format: 「[媒體名稱]（[國家名稱]）」. Examples: 《朝日新聞》（日本）、《韓聯社》（韓國）、《明鏡週刊》（德國）、《費加羅報》（法國）。For articles that carry a language tag such as [日文], [韓文], [德文] etc. in their title, treat them as coming from the corresponding country. This rule has NO exceptions.
-8. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form: Western figures use surname only (e.g., 川普、拜登、馬克宏、梅洛尼、奧斯汀); East Asian figures use the full name in Chinese characters (e.g., 岸田文雄、尹錫悅、習近平、賴清德). On first mention, follow with the full English/romanised name in parentheses. ADDITIONAL RULE for Japanese, Korean, and Vietnamese names: after the Chinese characters, add the romanised form in square brackets, e.g. 岸田文雄[Kishida Fumio]、尹錫悅[Yoon Suk-yeol]、阮富仲[Nguyễn Phú Trọng]. Format: [Title][Chinese name][Romanised]（Full English Name）. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄[Kishida Fumio]（Fumio Kishida）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）、越南國家主席阮富仲[Nguyễn Phú Trọng]（Nguyễn Phú Trọng）、中華民國總統賴清德（Lai Ching-te）. CRITICAL — English names for Taiwan/ROC officials MUST be the person's OFFICIAL English name that they use in public life, NEVER a phonetic transliteration. Reference list of confirmed official English names (mandatory to follow exactly): 賴清德 = William Lai (Lai Ching-te)、蕭美琴 = Bi-khim Hsiao、顧立雄 = Wellington Koo、林佳龍 = Lin Chia-lung、卓榮泰 = Cho Jung-tai、韓國瑜 = Han Kuo-yu、游錫堃 = Yu Shyi-kun、陳建仁 = Chen Chien-jen、蔡英文 = Tsai Ing-wen、馬英九 = Ma Ying-jeou、陳水扁 = Chen Shui-bian、吳釗燮 = Joseph Wu、邱國正 = Chiu Kuo-cheng. This rule has NO exceptions.
+8. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form: Western figures use surname only (e.g., 川普、拜登、馬克宏、梅洛尼、奧斯汀); East Asian figures use the full name in Chinese characters (e.g., 岸田文雄、尹錫悅、習近平、賴清德). On first mention, follow with the full English/romanised name in parentheses. ADDITIONAL RULE for Japanese, Korean, and Vietnamese names: after the Chinese characters, add the romanised form in square brackets, e.g. 岸田文雄[Kishida Fumio]、尹錫悅[Yoon Suk-yeol]、阮富仲[Nguyễn Phú Trọng]. Format: [Title][Chinese name][Romanised]（Full English Name）. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄[Kishida Fumio]（Fumio Kishida）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）、越南國家主席阮富仲[Nguyễn Phú Trọng]（Nguyễn Phú Trọng）、中華民國總統賴清德（Lai Ching-te）. CRITICAL — English names for Taiwan/ROC officials MUST be the person's OFFICIAL English name that they use in public life, NEVER a phonetic transliteration. Reference list of confirmed official English names (mandatory to follow exactly): 賴清德 = William Lai (Lai Ching-te)、蕭美琴 = Bi-khim Hsiao、顧立雄 = Wellington Koo、林佳龍 = Lin Chia-lung、卓榮泰 = Cho Jung-tai、韓國瑜 = Han Kuo-yu、游錫堃 = Yu Shyi-kun、陳建仁 = Chen Chien-jen、蔡英文 = Tsai Ing-wen、馬英九 = Ma Ying-jeou、陳水扁 = Chen Shui-bian、吳釗燮 = Joseph Wu、邱國正 = Chiu Kuo-cheng. CRITICAL — The name inside the parentheses （...） must contain ONLY the person's English name — NO titles, honorifics, or roles (correct: 川普（Donald Trump）; WRONG: 川普（President Donald Trump）). This rule has NO exceptions.
 9a. MANDATORY — Expert names: whenever an expert or analyst is cited in 七、專家研析, render their name in bold (**Name**) and include their full title and affiliation on first mention. E.g. **美國智庫戰略與國際研究中心（CSIS）資深研究員王大維（David Wang）**。
 9. MANDATORY — Organizations and institutions: On first mention, always provide both Chinese and English names. Format: Chinese name（English Name）. Examples: 北大西洋公約組織（NATO）、美國國務院（U.S. Department of State）、歐盟委員會（European Commission）、美國在台協會（American Institute in Taiwan, AIT）. This rule has NO exceptions.
 
@@ -2845,7 +2882,7 @@ Requirements:
 11. Keep citations light and readable. Do not attach a citation to every single sentence unless necessary.
 12. MANDATORY — Media outlets: NEVER use vague collective terms such as "歐洲媒體", "西方媒體", "美國媒體", "外媒". Always write the specific outlet name. On first mention, provide both Chinese and English, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）、《紐約時報》（New York Times）. This rule has NO exceptions.
 12a. MANDATORY — Media country attribution: When citing a non-Chinese / non-English language media outlet, you MUST note which country it is from on first mention. Format: 「[媒體名稱]（[國家名稱]）」. Examples: 《朝日新聞》（日本）、《韓聯社》（韓國）、《明鏡週刊》（德國）、《費加羅報》（法國）。For articles that carry a language tag such as [日文], [韓文], [德文] etc. in their title, treat them as coming from the corresponding country. The news data also includes "來源" with a country in parentheses — use that country when provided. This rule has NO exceptions.
-13. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form: Western figures use surname only (e.g., 川普、拜登、馬克宏、梅洛尼、奧斯汀); East Asian figures use the full name in Chinese characters (e.g., 岸田文雄、尹錫悅、習近平、賴清德). On first mention, follow with the full English/romanised name in parentheses. ADDITIONAL RULE for Japanese, Korean, and Vietnamese names: after the Chinese characters, add the romanised form in square brackets, e.g. 岸田文雄[Kishida Fumio]、尹錫悅[Yoon Suk-yeol]、阮富仲[Nguyễn Phú Trọng]. Format: [Title][Chinese name][Romanised]（Full English Name）. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄[Kishida Fumio]（Fumio Kishida）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）、越南國家主席阮富仲[Nguyễn Phú Trọng]（Nguyễn Phú Trọng）、中華民國總統賴清德（Lai Ching-te）. CRITICAL — English names for Taiwan/ROC officials MUST be the person's OFFICIAL English name that they use in public life, NEVER a phonetic transliteration. Reference list of confirmed official English names (mandatory to follow exactly): 賴清德 = William Lai (Lai Ching-te)、蕭美琴 = Bi-khim Hsiao、顧立雄 = Wellington Koo、林佳龍 = Lin Chia-lung、卓榮泰 = Cho Jung-tai、韓國瑜 = Han Kuo-yu、游錫堃 = Yu Shyi-kun、陳建仁 = Chen Chien-jen、蔡英文 = Tsai Ing-wen、馬英九 = Ma Ying-jeou、陳水扁 = Chen Shui-bian、吳釗燮 = Joseph Wu、邱國正 = Chiu Kuo-cheng. This rule has NO exceptions.
+13. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form: Western figures use surname only (e.g., 川普、拜登、馬克宏、梅洛尼、奧斯汀); East Asian figures use the full name in Chinese characters (e.g., 岸田文雄、尹錫悅、習近平、賴清德). On first mention, follow with the full English/romanised name in parentheses. ADDITIONAL RULE for Japanese, Korean, and Vietnamese names: after the Chinese characters, add the romanised form in square brackets, e.g. 岸田文雄[Kishida Fumio]、尹錫悅[Yoon Suk-yeol]、阮富仲[Nguyễn Phú Trọng]. Format: [Title][Chinese name][Romanised]（Full English Name）. Examples: 美國總統川普（Donald Trump）、日本首相岸田文雄[Kishida Fumio]（Fumio Kishida）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）、越南國家主席阮富仲[Nguyễn Phú Trọng]（Nguyễn Phú Trọng）、中華民國總統賴清德（Lai Ching-te）. CRITICAL — English names for Taiwan/ROC officials MUST be the person's OFFICIAL English name that they use in public life, NEVER a phonetic transliteration. Reference list of confirmed official English names (mandatory to follow exactly): 賴清德 = William Lai (Lai Ching-te)、蕭美琴 = Bi-khim Hsiao、顧立雄 = Wellington Koo、林佳龍 = Lin Chia-lung、卓榮泰 = Cho Jung-tai、韓國瑜 = Han Kuo-yu、游錫堃 = Yu Shyi-kun、陳建仁 = Chen Chien-jen、蔡英文 = Tsai Ing-wen、馬英九 = Ma Ying-jeou、陳水扁 = Chen Shui-bian、吳釗燮 = Joseph Wu、邱國正 = Chiu Kuo-cheng. CRITICAL — The name inside the parentheses （...） must contain ONLY the person's English name — NO titles, honorifics, or roles (correct: 川普（Donald Trump）; WRONG: 川普（President Donald Trump）). This rule has NO exceptions.
 13a. MANDATORY — Expert names: whenever an expert or analyst is cited in 七、專家研析, render their name in bold (**Name**) and include their full title and affiliation on first mention. E.g. **美國智庫戰略與國際研究中心（CSIS）資深研究員王大維（David Wang）**。
 14. MANDATORY — Organizations and institutions: On first mention, always provide both Chinese and English names. Format: Chinese name（English Name）. Examples: 北大西洋公約組織（NATO）、美國國務院（U.S. Department of State）、歐盟委員會（European Commission）、美國在台協會（American Institute in Taiwan, AIT）、中華民國國防部（Ministry of National Defense, ROC）. This rule has NO exceptions.
 
