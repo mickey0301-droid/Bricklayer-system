@@ -2217,6 +2217,51 @@ def _classify_items_to_sections(all_items: list, sections: list) -> dict:
     return result
 
 
+def _cap_items_per_source(items: list, max_per_source: int = 3,
+                           max_total: int = 12) -> list:
+    """
+    Select up to max_total items from a sorted list, ensuring no single source
+    contributes more than max_per_source items.  The input order (title-match
+    first) is preserved so the best items are kept.
+    """
+    source_counts: dict = {}
+    result: list = []
+    for item in items:
+        src = (item.get("source") or "").strip().lower()
+        count = source_counts.get(src, 0)
+        if count >= max_per_source:
+            continue
+        source_counts[src] = count + 1
+        result.append(item)
+        if len(result) >= max_total:
+            break
+    return result
+
+
+def _enrich_items_with_content(items: list, max_workers: int = 12) -> None:
+    """
+    Fetch full article text for every item that lacks content, in parallel.
+    Updates each item dict in-place with "content".  Network failures are
+    silently swallowed — the item retains its RSS summary as fallback.
+    """
+    to_fetch = [
+        item for item in items
+        if not item.get("content")
+        and (item.get("original_url") or item.get("url"))
+    ]
+    if not to_fetch:
+        return
+
+    def _one(item):
+        url = (item.get("original_url") or item.get("url") or "").strip()
+        content = _fetch_article_content(url, max_chars=6000)
+        if content:
+            item["content"] = content
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        list(executor.map(_one, to_fetch))
+
+
 def generate_segmented_report(
     start_time,
     end_time,
@@ -2278,12 +2323,32 @@ def generate_segmented_report(
                      if any(item in section_buckets[s["id"]] for s in _SEGMENTED_SECTIONS))
     _cb("stage", f"📂 分類完成：{classified}/{len(all_items)} 篇分入各章節")
 
+    # ── 2b. 每章節套用來源多樣性上限（每來源最多 3 篇），收集所有入選文章 ──
+    selected_per_section: dict = {}
+    all_selected_unique: list = []
+    _seen_selected_urls: set = set()
+    for _sec in _SEGMENTED_SECTIONS:
+        _raw = section_buckets.get(_sec["id"], [])
+        _chosen = _cap_items_per_source(_raw, max_per_source=3, max_total=12)
+        selected_per_section[_sec["id"]] = _chosen
+        for _item in _chosen:
+            _url = (_item.get("original_url") or _item.get("url") or "").lower().strip()
+            if _url and _url not in _seen_selected_urls:
+                _seen_selected_urls.add(_url)
+                all_selected_unique.append(_item)
+
+    # ── 2c. 並行抓取所有入選文章的全文（Title-first → 全文 pipeline）──────
+    _cb("stage", f"📄 並行抓取 {len(all_selected_unique)} 篇入選文章全文…")
+    _enrich_items_with_content(all_selected_unique, max_workers=12)
+    _with_content = sum(1 for i in all_selected_unique if i.get("content"))
+    _cb("stage", f"✅ 全文取得：{_with_content}/{len(all_selected_unique)} 篇有全文，其餘用摘要")
+
     # ── 3. 各章節生成小報告 ────────────────────────────────────────────────
     _cb("stage", f"📰 分段報告：共 {total_sections} 個章節，各自生成小報告…")
 
     for idx, sec in enumerate(_SEGMENTED_SECTIONS, 1):
         label = sec["label"]
-        items = section_buckets.get(sec["id"], [])[:12]
+        items = selected_per_section.get(sec["id"], [])
 
         _cb("rss", f"{label}：{len(items)} 篇", idx, total_sections, len(items))
 
