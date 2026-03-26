@@ -99,6 +99,31 @@ def fetch_people_daily(target_date: datetime) -> list[dict]:
     return items
 
 
+def _split_xinwenlianbo_page(soup: BeautifulSoup, page_url: str, target_date: datetime) -> list[dict]:
+    """整頁無法分 URL 時，把 <p> 段落各自編號成獨立則數。"""
+    items = []
+    body = (soup.find("article")
+            or soup.find("div", class_=re.compile(r"content|article|body|main", re.I))
+            or soup.body)
+    if not body:
+        return items
+
+    paragraphs = [p.get_text(" ", strip=True) for p in body.find_all("p")]
+    paragraphs = [p for p in paragraphs if len(p) > 15]
+
+    for idx, para in enumerate(paragraphs, 1):
+        hint = para[:40].rstrip("，。：: ") + ("…" if len(para) > 40 else "")
+        items.append(_make_item(
+            source_name="新聞聯播",
+            title=f"新聞聯播 第{idx}則：{hint}",
+            link=page_url,
+            published=target_date,
+            summary=para[:280],
+            content=para[:1200],
+        ))
+    return items
+
+
 def fetch_xinwen_lianbo(target_date: datetime) -> list[dict]:
     items = []
     yyyymmdd = target_date.strftime("%Y%m%d")
@@ -110,24 +135,52 @@ def fetch_xinwen_lianbo(target_date: datetime) -> list[dict]:
             return items
 
         soup = BeautifulSoup(r.text, "html.parser")
-        links = [a for a in soup.find_all("a", href=True) if f"/xinwenlianbo/{yyyymmdd}/" in a["href"]]
 
-        for a in links:
-            item_url = "https://cn.govopendata.com" + a["href"]
-            title = a.get_text(strip=True)
-            try:
-                item_r = requests.get(item_url, headers=HEADERS, timeout=10)
-                text = BeautifulSoup(item_r.text, "html.parser").get_text(" ", strip=True)
-                items.append(_make_item(
-                    source_name="新聞聯播",
-                    title=title,
-                    link=item_url,
-                    published=target_date,
-                    summary=text[:280],
-                    content=text[:1200],
-                ))
-            except Exception:
-                continue
+        # 找個別文章連結，例如 /xinwenlianbo/20260326/001/
+        hrefs = sorted(set(
+            a["href"] for a in soup.find_all("a", href=True)
+            if re.search(rf"/xinwenlianbo/{yyyymmdd}/\d+", a["href"])
+        ))
+
+        if hrefs:
+            # 每個子頁獨立抓取，編號命名
+            for idx, href in enumerate(hrefs, 1):
+                item_url = ("https://cn.govopendata.com" + href
+                            if href.startswith("/") else href)
+                try:
+                    item_r = requests.get(item_url, headers=HEADERS, timeout=10)
+                    item_r.encoding = "utf-8"
+                    item_soup = BeautifulSoup(item_r.text, "html.parser")
+
+                    # 取標題：heading > <title> > 首段前40字
+                    heading = item_soup.find(["h1", "h2", "h3"])
+                    if heading and heading.get_text(strip=True):
+                        title_text = heading.get_text(strip=True)
+                    else:
+                        tag = item_soup.find("title")
+                        title_text = tag.get_text(strip=True) if tag else ""
+
+                    if not title_text:
+                        paras = [p.get_text(strip=True) for p in item_soup.find_all("p") if p.get_text(strip=True)]
+                        title_text = (paras[0][:40].rstrip("，。：: ") + "…") if paras else f"第{idx}則"
+
+                    title = f"新聞聯播 第{idx}則：{title_text}"
+                    text = item_soup.get_text(" ", strip=True)
+
+                    items.append(_make_item(
+                        source_name="新聞聯播",
+                        title=title,
+                        link=item_url,
+                        published=target_date,
+                        summary=text[:280],
+                        content=text[:1200],
+                    ))
+                except Exception:
+                    continue
+        else:
+            # 無子頁連結 → 整頁按 <p> 分段
+            items = _split_xinwenlianbo_page(soup, xl_url, target_date)
+
     except Exception:
         pass
 
