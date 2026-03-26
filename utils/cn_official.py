@@ -99,32 +99,12 @@ def fetch_people_daily(target_date: datetime) -> list[dict]:
     return items
 
 
-def _split_xinwenlianbo_page(soup: BeautifulSoup, page_url: str, target_date: datetime) -> list[dict]:
-    """整頁無法分 URL 時，把 <p> 段落各自編號成獨立則數。"""
-    items = []
-    body = (soup.find("article")
-            or soup.find("div", class_=re.compile(r"content|article|body|main", re.I))
-            or soup.body)
-    if not body:
-        return items
-
-    paragraphs = [p.get_text(" ", strip=True) for p in body.find_all("p")]
-    paragraphs = [p for p in paragraphs if len(p) > 15]
-
-    for idx, para in enumerate(paragraphs, 1):
-        hint = para[:40].rstrip("，。：: ") + ("…" if len(para) > 40 else "")
-        items.append(_make_item(
-            source_name="新聞聯播",
-            title=f"新聞聯播 第{idx}則：{hint}",
-            link=page_url,
-            published=target_date,
-            summary=para[:280],
-            content=para[:1200],
-        ))
-    return items
-
-
 def fetch_xinwen_lianbo(target_date: datetime) -> list[dict]:
+    """
+    cn.govopendata.com/xinwenlianbo/{yyyymmdd}/ 是單一頁面。
+    每則新聞以 h2 或 h3 標題開頭（有左側裝飾邊框），後接若干 <p> 段落。
+    按標題為單位切割，每則獨立成一筆 item。
+    """
     items = []
     yyyymmdd = target_date.strftime("%Y%m%d")
     xl_url = f"https://cn.govopendata.com/xinwenlianbo/{yyyymmdd}/"
@@ -133,57 +113,50 @@ def fetch_xinwen_lianbo(target_date: datetime) -> list[dict]:
         r = requests.get(xl_url, headers=HEADERS, timeout=15)
         if r.status_code != 200:
             return items
+        r.encoding = "utf-8"
 
         soup = BeautifulSoup(r.text, "html.parser")
 
-        # 索引頁上的各則連結，例如 /xinwenlianbo/20260325/1/
-        # 保序（不用 set）：連結在頁面中的排列順序就是播出順序
-        seen_hrefs: set[str] = set()
-        article_links: list[tuple[str, str]] = []  # (href, title_from_link_text)
-        for a in soup.find_all("a", href=True):
-            href = a["href"]
-            if not re.search(rf"/xinwenlianbo/{yyyymmdd}/\d+", href):
-                continue
-            if href in seen_hrefs:
-                continue
-            seen_hrefs.add(href)
-            link_title = a.get_text(strip=True)
-            article_links.append((href, link_title))
+        # 每則標題是 h2 或 h3；過濾掉導覽列等極短文字
+        headings = [h for h in soup.find_all(["h2", "h3"])
+                    if len(h.get_text(strip=True)) > 4]
 
-        if article_links:
-            # 索引頁的連結文字即是標題，直接用；子頁只取正文
-            for idx, (href, link_title) in enumerate(article_links, 1):
-                item_url = ("https://cn.govopendata.com" + href
-                            if href.startswith("/") else href)
-                try:
-                    item_r = requests.get(item_url, headers=HEADERS, timeout=10)
-                    item_r.encoding = "utf-8"
-                    item_soup = BeautifulSoup(item_r.text, "html.parser")
-                    text = item_soup.get_text(" ", strip=True)
+        if headings:
+            for idx, h in enumerate(headings, 1):
+                title_text = h.get_text(strip=True)
 
-                    # 若連結文字為空（純數字編號等），改取子頁 h1/h2 或首段
-                    title_text = link_title
-                    if not title_text or title_text.isdigit():
-                        h = item_soup.find(["h1", "h2", "h3"])
-                        if h and h.get_text(strip=True):
-                            title_text = h.get_text(strip=True)
-                        else:
-                            paras = [p.get_text(strip=True) for p in item_soup.find_all("p") if p.get_text(strip=True)]
-                            title_text = (paras[0][:50].rstrip("，。：: ") + "…") if paras else f"第{idx}則"
+                # 收集這個標題之後、下一個標題之前的所有文字段落
+                content_parts = []
+                for sibling in h.find_next_siblings():
+                    if sibling.name in ("h2", "h3"):
+                        break
+                    text = sibling.get_text(" ", strip=True)
+                    if text:
+                        content_parts.append(text)
 
-                    items.append(_make_item(
-                        source_name="新聞聯播",
-                        title=f"新聞聯播 第{idx}則：{title_text}",
-                        link=item_url,
-                        published=target_date,
-                        summary=text[:280],
-                        content=text[:1200],
-                    ))
-                except Exception:
-                    continue
+                content = "\n".join(content_parts)
+                items.append(_make_item(
+                    source_name="新聞聯播",
+                    title=f"新聞聯播 第{idx}則：{title_text}",
+                    link=xl_url,
+                    published=target_date,
+                    summary=content[:280],
+                    content=content[:1200],
+                ))
         else:
-            # 無子頁連結 → 整頁按 <p> 分段
-            items = _split_xinwenlianbo_page(soup, xl_url, target_date)
+            # fallback：頁面結構特殊，改抓所有 <p> 段落，每段編一則
+            paras = [p.get_text(" ", strip=True) for p in soup.find_all("p")
+                     if len(p.get_text(strip=True)) > 15]
+            for idx, para in enumerate(paras, 1):
+                hint = para[:50].rstrip("，。：: ") + ("…" if len(para) > 50 else "")
+                items.append(_make_item(
+                    source_name="新聞聯播",
+                    title=f"新聞聯播 第{idx}則：{hint}",
+                    link=xl_url,
+                    published=target_date,
+                    summary=para[:280],
+                    content=para[:1200],
+                ))
 
     except Exception:
         pass
