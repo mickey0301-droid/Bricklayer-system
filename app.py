@@ -42,6 +42,7 @@ from utils.loaders import (
     load_category_keywords,
     save_category_keywords,
     DEFAULT_CATEGORY_KEYWORDS,
+    tw_to_simplified,
 )
 import os
 import google.generativeai as genai
@@ -583,6 +584,275 @@ def _build_expert_editor_df(expert_items, blank_rows=8):
     df = pd.DataFrame(rows, columns=columns) if rows else pd.DataFrame(columns=columns)
     df = _append_blank_rows(df, blank_rows=blank_rows)
     return df
+
+
+def _render_expert_tab(
+    tab_key: str,
+    category_label: str,
+    filtered_experts: list,
+    _cat_kw: dict,
+    is_cn: bool = False,
+    default_region: str = "",
+):
+    """Renders add / edit / delete / preview UI for one expert category sub-tab."""
+    from utils.loaders import expert_gnews_urls as _expert_gnews_urls
+
+    # ── 關鍵字篩選 ──────────────────────────────────────────────────────────
+    with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
+        st.caption(
+            "此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。"
+            "用 OR 分隔多個關鍵字，留空代表不篩選。"
+        )
+        _kw_default = _cat_kw.get(
+            category_label,
+            _cat_kw.get("自訂專家", DEFAULT_CATEGORY_KEYWORDS.get(category_label, "")),
+        )
+        _kw_val = st.text_area(
+            f"{category_label} 關鍵字",
+            value=_kw_default,
+            height=80,
+            key=f"kw_editor_{tab_key}",
+            label_visibility="collapsed",
+        )
+        if st.button("儲存關鍵字", key=f"save_kw_{tab_key}", use_container_width=True):
+            _cat_kw[category_label] = _kw_val.strip()
+            save_category_keywords(_cat_kw)
+            st.success("關鍵字已儲存。")
+            st.rerun()
+
+    # ── 單筆新增 ────────────────────────────────────────────────────────────
+    with st.expander("單筆新增專家", expanded=False):
+        if is_cn:
+            st.caption(
+                "💡 中文名（繁體）填入後，系統會自動轉換為簡體搜尋 Google News zh-CN。"
+                "如需覆蓋，可在「簡體字名」欄手動填入。"
+            )
+        c1, c2 = st.columns(2)
+        with c1:
+            _exp_name_zh = st.text_input(
+                "中文名 name_zh（繁體）", key=f"single_exp_name_zh_{tab_key}"
+            )
+            if is_cn:
+                if _exp_name_zh:
+                    _sc_preview = tw_to_simplified(_exp_name_zh)
+                    if _sc_preview and _sc_preview != _exp_name_zh:
+                        st.caption(f"🔄 自動轉簡體：{_sc_preview}")
+                _exp_name_sc = st.text_input(
+                    "簡體字名 name_sc（留空自動轉換）",
+                    key=f"single_exp_name_sc_{tab_key}",
+                    help="留空時系統自動由繁體中文名轉換；填入則直接使用此名稱搜尋 Google News zh-CN。",
+                )
+            else:
+                _exp_name_sc = ""
+            _exp_name_en = st.text_input(
+                "英文名 name_en", key=f"single_exp_name_en_{tab_key}"
+            )
+            _exp_aliases = st.text_input(
+                "aliases（逗號分隔）", key=f"single_exp_aliases_{tab_key}"
+            )
+        with c2:
+            _exp_affiliation = st.text_input(
+                "affiliation", key=f"single_exp_affiliation_{tab_key}"
+            )
+            _exp_region = st.text_input(
+                "region", value=default_region, key=f"single_exp_region_{tab_key}"
+            )
+            _exp_enabled = st.checkbox(
+                "enabled", value=True, key=f"single_exp_enabled_{tab_key}"
+            )
+            _exp_description = st.text_area(
+                "description", key=f"single_exp_description_{tab_key}", height=80
+            )
+        _exp_rss_url = st.text_input(
+            "RSS URL（可留空；填入後系統將直接從此 URL 抓取文章）",
+            key=f"single_exp_rss_url_{tab_key}",
+        )
+
+        if st.button("新增專家", key=f"add_single_expert_{tab_key}"):
+            _new_item = editor_row_to_expert(
+                {
+                    "name_zh": _exp_name_zh,
+                    "name_sc": _exp_name_sc,
+                    "name_en": _exp_name_en,
+                    "aliases": _exp_aliases,
+                    "category": category_label,
+                    "affiliation": _exp_affiliation,
+                    "region": _exp_region,
+                    "enabled": _exp_enabled,
+                    "description": _exp_description,
+                    "rss_url": _exp_rss_url,
+                }
+            )
+            _current = load_experts()
+            _dname = display_expert_name(_new_item)
+            if not _dname or _dname == "Unnamed Expert":
+                st.error("至少要填中文名或英文名。")
+            else:
+                _current.append(_new_item)
+                save_experts(_current)
+                st.success("已新增專家。")
+                st.rerun()
+
+    # ── 批次新增 ────────────────────────────────────────────────────────────
+    st.markdown("### 表格式批次貼上新增專家")
+    st.caption("可直接從外部複製多列資料貼到下表，再按「批次加入專家」。")
+
+    _batch_cols = ["name_zh", "name_sc", "name_en", "aliases", "category",
+                   "affiliation", "region", "rss_url", "enabled", "description"]
+    _batch_default = pd.DataFrame([{c: "" for c in _batch_cols} for _ in range(8)])
+    _batch_default["enabled"] = True
+    _batch_default["category"] = category_label
+    if default_region:
+        _batch_default["region"] = default_region
+
+    _sc_col_label = "簡體名（自動轉換）" if is_cn else "簡體名（中國大陸）"
+    _batch_df = st.data_editor(
+        _batch_default,
+        num_rows="dynamic",
+        use_container_width=True,
+        height=280,
+        key=f"expert_batch_editor_{tab_key}",
+        column_config={
+            "name_zh": st.column_config.TextColumn("中文名（繁體）"),
+            "name_sc": st.column_config.TextColumn(_sc_col_label),
+            "name_en": st.column_config.TextColumn("英文名"),
+            "aliases": st.column_config.TextColumn("aliases"),
+            "category": st.column_config.TextColumn("category"),
+            "affiliation": st.column_config.TextColumn("affiliation"),
+            "region": st.column_config.TextColumn("region"),
+            "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+            "description": st.column_config.TextColumn("description"),
+            "rss_url": st.column_config.TextColumn("RSS URL"),
+        },
+    )
+
+    if st.button("批次加入專家", key=f"batch_add_experts_{tab_key}"):
+        _rows = _clean_batch_df(_batch_df)
+        if not _rows:
+            st.warning("沒有可加入的專家資料。")
+        else:
+            _current = load_experts()
+            _name_set = {display_expert_name(x) for x in _current}
+            _added = 0
+            for _row in _rows:
+                if not _row.get("category"):
+                    _row["category"] = category_label
+                _item = editor_row_to_expert(_row)
+                _disp = display_expert_name(_item)
+                if not _disp or _disp == "Unnamed Expert":
+                    continue
+                if _disp in _name_set:
+                    _current = [x for x in _current if display_expert_name(x) != _disp]
+                _current.append(_item)
+                _name_set.add(_disp)
+                _added += 1
+            save_experts(_current)
+            st.success(f"已批次加入 / 更新 {_added} 筆專家。")
+            st.rerun()
+
+    # ── 既有清單 ────────────────────────────────────────────────────────────
+    st.markdown("### 既有專家清單")
+    st.caption("這裡也可以直接貼上多列資料、修改既有資料、增加新列，再按儲存。")
+
+    _experts_df = _build_expert_editor_df(filtered_experts, blank_rows=10)
+    _edited_df = st.data_editor(
+        _experts_df,
+        num_rows="dynamic",
+        use_container_width=True,
+        height=420,
+        key=f"editable_experts_editor_{tab_key}",
+        column_config={
+            "name_zh": st.column_config.TextColumn("中文名（繁體）"),
+            "name_sc": st.column_config.TextColumn(_sc_col_label),
+            "name_en": st.column_config.TextColumn("英文名"),
+            "aliases": st.column_config.TextColumn("aliases"),
+            "category": st.column_config.TextColumn("category"),
+            "affiliation": st.column_config.TextColumn("affiliation"),
+            "region": st.column_config.TextColumn("region"),
+            "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+            "description": st.column_config.TextColumn("description"),
+            "rss_url": st.column_config.TextColumn("RSS URL"),
+        },
+    )
+
+    _c1, _c2 = st.columns(2)
+    with _c1:
+        if st.button(
+            "儲存專家清單編輯", key=f"save_experts_table_{tab_key}", use_container_width=True
+        ):
+            _rows = _clean_batch_df(_edited_df)
+            _cleaned = []
+            for _row in _rows:
+                _item = editor_row_to_expert(_row)
+                _disp = display_expert_name(_item)
+                if _disp and _disp != "Unnamed Expert":
+                    _cleaned.append(_item)
+            # Replace only this tab's experts; keep all others intact
+            _current = load_experts()
+            _filtered_names = {display_expert_name(e) for e in filtered_experts}
+            _others = [e for e in _current if display_expert_name(e) not in _filtered_names]
+            save_experts(_others + _cleaned)
+            st.success("專家清單已儲存。")
+            st.rerun()
+    with _c2:
+        _del_options = [display_expert_name(x) for x in filtered_experts]
+        _del_names = st.multiselect(
+            "刪除專家", options=_del_options, key=f"delete_expert_names_{tab_key}"
+        )
+        if st.button(
+            "刪除選取專家", key=f"delete_experts_btn_{tab_key}", use_container_width=True
+        ):
+            _current = load_experts()
+            _current = [x for x in _current if display_expert_name(x) not in _del_names]
+            save_experts(_current)
+            st.success(f"已刪除 {len(_del_names)} 筆專家。")
+            st.rerun()
+
+    # ── RSS URL 預覽 ─────────────────────────────────────────────────────────
+    st.markdown("### 專家搜尋名稱預覽")
+    if is_cn:
+        _url_note = "中文名用 zh-TW；簡體名（自動轉換）用 zh-CN。"
+    else:
+        _url_note = "中文名用 zh-TW。"
+    st.caption(
+        f"若「rss_url」欄位為空，系統依下表自動生成 Google News RSS URL 搜尋。"
+        f"英文名用 en-US、{_url_note}"
+        "可複製連結貼入 rss_url 欄位以覆蓋。"
+    )
+    _preview_rows = []
+    for _e in filtered_experts:
+        _name = display_expert_name(_e)
+        _rss = (_e.get("rss_url") or "").strip()
+        _url_pairs = _expert_gnews_urls(_e)
+        if _rss:
+            _preview_rows.append({
+                "專家名稱": _name,
+                "類型": "自訂 rss_url",
+                "URL": _rss,
+                "category": ", ".join(_e.get("category", [])),
+                "enabled": _e.get("enabled", True),
+            })
+        elif _url_pairs:
+            for _label, _url in _url_pairs:
+                _preview_rows.append({
+                    "專家名稱": _name,
+                    "類型": _label,
+                    "URL": _url,
+                    "category": ", ".join(_e.get("category", [])),
+                    "enabled": _e.get("enabled", True),
+                })
+        else:
+            _preview_rows.append({
+                "專家名稱": _name,
+                "類型": "（無名稱可生成）",
+                "URL": "",
+                "category": ", ".join(_e.get("category", [])),
+                "enabled": _e.get("enabled", True),
+            })
+    if _preview_rows:
+        st.dataframe(pd.DataFrame(_preview_rows), use_container_width=True, hide_index=True)
+    else:
+        st.info(f"目前尚無{category_label}資料。")
 
 
 # =========================================================
@@ -1371,220 +1641,54 @@ elif selected_page == "Sources":
     # ── 自訂專家 ──────────────────────────────────────────────────────────────
     with src_tab_experts:
 
-        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
-            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。")
-            _kw_experts = st.text_area(
-                "自訂專家 關鍵字",
-                value=_cat_kw.get("自訂專家", DEFAULT_CATEGORY_KEYWORDS.get("自訂專家", "")),
-                height=80,
-                key="kw_editor_experts",
-                label_visibility="collapsed",
+        def _expert_cats(e):
+            return [c.strip() for c in (e.get("category") or []) if c.strip()]
+
+        # 依類別分流；國際專家 = 未歸入中國或台灣的
+        intl_experts = [
+            e for e in experts
+            if "中國專家" not in _expert_cats(e) and "台灣專家" not in _expert_cats(e)
+        ]
+        cn_experts = [e for e in experts if "中國專家" in _expert_cats(e)]
+        tw_experts = [e for e in experts if "台灣專家" in _expert_cats(e)]
+
+        exp_sub_intl, exp_sub_cn, exp_sub_tw = st.tabs(
+            ["🌐 國際專家", "🇨🇳 中國專家", "🇹🇼 台灣專家"]
+        )
+
+        with exp_sub_intl:
+            _render_expert_tab(
+                tab_key="intl",
+                category_label="國際專家",
+                filtered_experts=intl_experts,
+                _cat_kw=_cat_kw,
+                is_cn=False,
+                default_region="",
             )
-            if st.button("儲存關鍵字", key="save_kw_experts", use_container_width=True):
-                _cat_kw["自訂專家"] = _kw_experts.strip()
-                save_category_keywords(_cat_kw)
-                st.success("關鍵字已儲存。")
-                st.rerun()
 
-        with st.expander("單筆新增專家", expanded=False):
-            _exp_type = st.radio(
-                "專家類型",
-                options=["國際", "台灣", "中國大陸"],
-                horizontal=True,
-                key="single_exp_type",
+        with exp_sub_cn:
+            st.caption(
+                "中國專家會自動生成繁體（zh-TW）和簡體（zh-CN）兩組 Google News RSS URL。"
+                "簡體名（name_sc）留空時，系統自動將繁體中文名轉換為簡體。"
             )
-            _type_hint = {
-                "國際":   ("category 建議：國際專家", "region 範例：US / UK / Japan"),
-                "台灣":   ("category 建議：台灣專家", "region 建議：Taiwan"),
-                "中國大陸": ("category 建議：中國專家", "region 建議：CN"),
-            }[_exp_type]
-            st.caption(f"{_type_hint[0]}　　{_type_hint[1]}")
+            _render_expert_tab(
+                tab_key="cn",
+                category_label="中國專家",
+                filtered_experts=cn_experts,
+                _cat_kw=_cat_kw,
+                is_cn=True,
+                default_region="CN",
+            )
 
-            c1, c2 = st.columns(2)
-            with c1:
-                exp_name_zh = st.text_input("中文名 name_zh（繁體）", key="single_exp_name_zh")
-                if _exp_type == "中國大陸":
-                    exp_name_sc = st.text_input(
-                        "簡體字名 name_sc（中國大陸專家）",
-                        key="single_exp_name_sc",
-                        help="留空時系統自動由繁體中文名轉換；填入則直接使用此名稱搜尋 Google News zh-CN。",
-                    )
-                else:
-                    exp_name_sc = ""
-                exp_name_en = st.text_input("英文名 name_en", key="single_exp_name_en")
-                exp_aliases = st.text_input("aliases（逗號分隔）", key="single_exp_aliases")
-                exp_category = st.text_input("category（逗號分隔）", key="single_exp_category")
-            with c2:
-                exp_affiliation = st.text_input("affiliation", key="single_exp_affiliation")
-                exp_region = st.text_input("region", key="single_exp_region")
-                exp_enabled = st.checkbox("enabled", value=True, key="single_exp_enabled")
-                exp_description = st.text_area("description", key="single_exp_description", height=80)
-            exp_rss_url = st.text_input("RSS URL（可留空；填入後系統將直接從此 URL 抓取文章）", key="single_exp_rss_url")
-
-            if st.button("新增專家", key="add_single_expert"):
-                new_item = editor_row_to_expert(
-                    {
-                        "name_zh": exp_name_zh,
-                        "name_sc": exp_name_sc,
-                        "name_en": exp_name_en,
-                        "aliases": exp_aliases,
-                        "category": exp_category,
-                        "affiliation": exp_affiliation,
-                        "region": exp_region,
-                        "enabled": exp_enabled,
-                        "description": exp_description,
-                        "rss_url": exp_rss_url,
-                    }
-                )
-                current = load_experts()
-                display_name = display_expert_name(new_item)
-                if not display_name or display_name == "Unnamed Expert":
-                    st.error("至少要填中文名或英文名。")
-                else:
-                    current.append(new_item)
-                    save_experts(current)
-                    st.success("已新增專家。")
-                    st.rerun()
-
-        st.markdown("### 表格式批次貼上新增專家")
-        st.caption("可直接從外部複製多列資料貼到下表，再按「批次加入專家」。")
-
-        expert_batch_columns = ["name_zh", "name_sc", "name_en", "aliases", "category", "affiliation", "region", "rss_url", "enabled", "description"]
-        expert_batch_default = pd.DataFrame([{c: "" for c in expert_batch_columns} for _ in range(8)])
-        expert_batch_default["enabled"] = True
-
-        expert_batch_df = st.data_editor(
-            expert_batch_default,
-            num_rows="dynamic",
-            use_container_width=True,
-            height=280,
-            key="expert_batch_editor",
-            column_config={
-                "name_zh": st.column_config.TextColumn("中文名（繁體）"),
-                "name_sc": st.column_config.TextColumn("簡體名（中國大陸）"),
-                "name_en": st.column_config.TextColumn("英文名"),
-                "aliases": st.column_config.TextColumn("aliases"),
-                "category": st.column_config.TextColumn("category"),
-                "affiliation": st.column_config.TextColumn("affiliation"),
-                "region": st.column_config.TextColumn("region"),
-                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
-                "description": st.column_config.TextColumn("description"),
-                "rss_url": st.column_config.TextColumn("RSS URL"),
-            },
-        )
-
-        if st.button("批次加入專家", key="batch_add_experts"):
-            rows = _clean_batch_df(expert_batch_df)
-            if not rows:
-                st.warning("沒有可加入的專家資料。")
-            else:
-                current = load_experts()
-                name_set = {display_expert_name(x) for x in current}
-                added = 0
-                for row in rows:
-                    item = editor_row_to_expert(row)
-                    disp = display_expert_name(item)
-                    if not disp or disp == "Unnamed Expert":
-                        continue
-                    if disp in name_set:
-                        current = [x for x in current if display_expert_name(x) != disp]
-                    current.append(item)
-                    name_set.add(disp)
-                    added += 1
-                save_experts(current)
-                st.success(f"已批次加入 / 更新 {added} 筆專家。")
-                st.rerun()
-
-        st.markdown("### 既有專家清單")
-        st.caption("這裡也可以直接貼上多列資料、修改既有資料、增加新列，再按儲存。")
-
-        experts_df = _build_expert_editor_df(experts, blank_rows=10)
-
-        edited_experts_df = st.data_editor(
-            experts_df,
-            num_rows="dynamic",
-            use_container_width=True,
-            height=420,
-            key="editable_experts_editor",
-            column_config={
-                "name_zh": st.column_config.TextColumn("中文名（繁體）"),
-                "name_sc": st.column_config.TextColumn("簡體名（中國大陸）"),
-                "name_en": st.column_config.TextColumn("英文名"),
-                "aliases": st.column_config.TextColumn("aliases"),
-                "category": st.column_config.TextColumn("category"),
-                "affiliation": st.column_config.TextColumn("affiliation"),
-                "region": st.column_config.TextColumn("region"),
-                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
-                "description": st.column_config.TextColumn("description"),
-                "rss_url": st.column_config.TextColumn("RSS URL"),
-            },
-        )
-
-        c1, c2 = st.columns(2)
-        with c1:
-            if st.button("儲存專家清單編輯", key="save_experts_table", use_container_width=True):
-                rows = _clean_batch_df(edited_experts_df)
-                cleaned = []
-                for row in rows:
-                    item = editor_row_to_expert(row)
-                    disp = display_expert_name(item)
-                    if disp and disp != "Unnamed Expert":
-                        cleaned.append(item)
-                save_experts(cleaned)
-                st.success("專家清單已儲存。")
-                st.rerun()
-
-        with c2:
-            expert_delete_options = [display_expert_name(x) for x in experts]
-            delete_expert_names = st.multiselect("刪除專家", options=expert_delete_options, key="delete_expert_names")
-            if st.button("刪除選取專家", key="delete_experts_btn", use_container_width=True):
-                current = load_experts()
-                current = [x for x in current if display_expert_name(x) not in delete_expert_names]
-                save_experts(current)
-                st.success(f"已刪除 {len(delete_expert_names)} 筆專家。")
-                st.rerun()
-
-        st.markdown("### 專家搜尋名稱預覽")
-        st.caption(
-            "若「rss_url」欄位為空，系統依下表自動生成 Google News RSS URL 搜尋。"
-            "英文名用 en-US、中文名用 zh-TW、中國大陸專家另加 zh-CN。"
-            "可複製連結貼入 rss_url 欄位以覆蓋。"
-        )
-        from utils.loaders import expert_gnews_urls as _expert_gnews_urls
-        preview_rows = []
-        for e in load_experts():
-            name = display_expert_name(e)
-            rss_url = (e.get("rss_url") or "").strip()
-            url_pairs = _expert_gnews_urls(e)   # [] if rss_url is set
-            if rss_url:
-                preview_rows.append({
-                    "專家名稱": name,
-                    "類型": "自訂 rss_url",
-                    "URL": rss_url,
-                    "category": ", ".join(e.get("category", [])),
-                    "enabled": e.get("enabled", True),
-                })
-            elif url_pairs:
-                for label, url in url_pairs:
-                    preview_rows.append({
-                        "專家名稱": name,
-                        "類型": label,
-                        "URL": url,
-                        "category": ", ".join(e.get("category", [])),
-                        "enabled": e.get("enabled", True),
-                    })
-            else:
-                preview_rows.append({
-                    "專家名稱": name,
-                    "類型": "（無名稱可生成）",
-                    "URL": "",
-                    "category": ", ".join(e.get("category", [])),
-                    "enabled": e.get("enabled", True),
-                })
-        if preview_rows:
-            st.dataframe(pd.DataFrame(preview_rows), use_container_width=True, hide_index=True)
-        else:
-            st.info("目前尚無專家資料。")
+        with exp_sub_tw:
+            _render_expert_tab(
+                tab_key="tw",
+                category_label="台灣專家",
+                filtered_experts=tw_experts,
+                _cat_kw=_cat_kw,
+                is_cn=False,
+                default_region="TW",
+            )
 
 
     # ── 全球媒體 ──────────────────────────────────────────────────────────────
