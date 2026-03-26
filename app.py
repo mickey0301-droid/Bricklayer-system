@@ -43,6 +43,8 @@ from utils.loaders import (
     save_category_keywords,
     DEFAULT_CATEGORY_KEYWORDS,
     tw_to_simplified,
+    LOCALE_OPTIONS,
+    gnews_url_from_domain,
 )
 import os
 import google.generativeai as genai
@@ -571,7 +573,7 @@ def _append_blank_rows(df: pd.DataFrame, blank_rows: int = 8):
 
 
 def _build_source_editor_df(source_items, blank_rows=8):
-    columns = ["name", "type", "url", "category", "region", "enabled", "description"]
+    columns = ["name", "type", "domain", "language", "url", "category", "region", "enabled", "description"]
     rows = [source_to_editor_row(x) for x in source_items]
     df = pd.DataFrame(rows, columns=columns) if rows else pd.DataFrame(columns=columns)
     df = _append_blank_rows(df, blank_rows=blank_rows)
@@ -579,7 +581,7 @@ def _build_source_editor_df(source_items, blank_rows=8):
 
 
 def _build_expert_editor_df(expert_items, blank_rows=8):
-    columns = ["name_zh", "name_sc", "name_en", "aliases", "category", "affiliation", "region", "rss_url", "enabled", "description"]
+    columns = ["name_zh", "name_sc", "name_en", "aliases", "category", "affiliation", "region", "language", "rss_url", "enabled", "description"]
     rows = [expert_to_editor_row(x) for x in expert_items]
     df = pd.DataFrame(rows, columns=columns) if rows else pd.DataFrame(columns=columns)
     df = _append_blank_rows(df, blank_rows=blank_rows)
@@ -663,6 +665,12 @@ def _render_expert_tab(
             _exp_description = st.text_area(
                 "description", key=f"single_exp_description_{tab_key}", height=80
             )
+        _exp_lang = st.selectbox(
+            "語言（覆蓋自動語言偵測，留空為自動）",
+            options=[""] + LOCALE_OPTIONS,
+            key=f"single_exp_lang_{tab_key}",
+            help="設定後，Google News RSS URL 改用此語言；留空則依名稱類型和地區自動判斷。",
+        )
         _exp_rss_url = st.text_input(
             "RSS URL（可留空；填入後系統將直接從此 URL 抓取文章）",
             key=f"single_exp_rss_url_{tab_key}",
@@ -671,16 +679,17 @@ def _render_expert_tab(
         if st.button("新增專家", key=f"add_single_expert_{tab_key}"):
             _new_item = editor_row_to_expert(
                 {
-                    "name_zh": _exp_name_zh,
-                    "name_sc": _exp_name_sc,
-                    "name_en": _exp_name_en,
-                    "aliases": _exp_aliases,
-                    "category": category_label,
+                    "name_zh":     _exp_name_zh,
+                    "name_sc":     _exp_name_sc,
+                    "name_en":     _exp_name_en,
+                    "aliases":     _exp_aliases,
+                    "category":    category_label,
                     "affiliation": _exp_affiliation,
-                    "region": _exp_region,
-                    "enabled": _exp_enabled,
+                    "region":      _exp_region,
+                    "language":    _exp_lang,
+                    "enabled":     _exp_enabled,
                     "description": _exp_description,
-                    "rss_url": _exp_rss_url,
+                    "rss_url":     _exp_rss_url,
                 }
             )
             _current = load_experts()
@@ -706,24 +715,26 @@ def _render_expert_tab(
         _batch_default["region"] = default_region
 
     _sc_col_label = "簡體名（自動轉換）" if is_cn else "簡體名（中國大陸）"
+    _expert_col_cfg = {
+        "name_zh":     st.column_config.TextColumn("中文名（繁體）"),
+        "name_sc":     st.column_config.TextColumn(_sc_col_label),
+        "name_en":     st.column_config.TextColumn("英文名"),
+        "aliases":     st.column_config.TextColumn("aliases"),
+        "category":    st.column_config.TextColumn("category"),
+        "affiliation": st.column_config.TextColumn("affiliation"),
+        "region":      st.column_config.TextColumn("region"),
+        "language":    st.column_config.SelectboxColumn("語言", options=[""] + LOCALE_OPTIONS),
+        "enabled":     st.column_config.CheckboxColumn("enabled", default=True),
+        "description": st.column_config.TextColumn("description"),
+        "rss_url":     st.column_config.TextColumn("RSS URL"),
+    }
     _batch_df = st.data_editor(
         _batch_default,
         num_rows="dynamic",
         use_container_width=True,
         height=280,
         key=f"expert_batch_editor_{tab_key}",
-        column_config={
-            "name_zh": st.column_config.TextColumn("中文名（繁體）"),
-            "name_sc": st.column_config.TextColumn(_sc_col_label),
-            "name_en": st.column_config.TextColumn("英文名"),
-            "aliases": st.column_config.TextColumn("aliases"),
-            "category": st.column_config.TextColumn("category"),
-            "affiliation": st.column_config.TextColumn("affiliation"),
-            "region": st.column_config.TextColumn("region"),
-            "enabled": st.column_config.CheckboxColumn("enabled", default=True),
-            "description": st.column_config.TextColumn("description"),
-            "rss_url": st.column_config.TextColumn("RSS URL"),
-        },
+        column_config=_expert_col_cfg,
     )
 
     if st.button("批次加入專家", key=f"batch_add_experts_{tab_key}"):
@@ -761,18 +772,7 @@ def _render_expert_tab(
         use_container_width=True,
         height=420,
         key=f"editable_experts_editor_{tab_key}",
-        column_config={
-            "name_zh": st.column_config.TextColumn("中文名（繁體）"),
-            "name_sc": st.column_config.TextColumn(_sc_col_label),
-            "name_en": st.column_config.TextColumn("英文名"),
-            "aliases": st.column_config.TextColumn("aliases"),
-            "category": st.column_config.TextColumn("category"),
-            "affiliation": st.column_config.TextColumn("affiliation"),
-            "region": st.column_config.TextColumn("region"),
-            "enabled": st.column_config.CheckboxColumn("enabled", default=True),
-            "description": st.column_config.TextColumn("description"),
-            "rss_url": st.column_config.TextColumn("RSS URL"),
-        },
+        column_config=_expert_col_cfg,
     )
 
     _c1, _c2 = st.columns(2)
@@ -1502,6 +1502,7 @@ elif selected_page == "Sources":
                 st.rerun()
         st.caption(f"共 {len(tw_sources)} 筆")
         tw_df = _build_source_editor_df(tw_sources, blank_rows=5)
+        st.caption("💡 填入「網域」後若 RSS URL 為空，系統會依「語言」自動生成 Google News RSS URL。")
         edited_tw_df = st.data_editor(
             tw_df,
             num_rows="dynamic",
@@ -1509,12 +1510,14 @@ elif selected_page == "Sources":
             height=420,
             key=f"tw_sources_editor_{_src_v}",
             column_config={
-                "name": st.column_config.TextColumn("name"),
-                "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
-                "url": st.column_config.TextColumn("url"),
+                "name":     st.column_config.TextColumn("name"),
+                "type":     st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
+                "domain":   st.column_config.TextColumn("網域（domain）", help="填入後若 RSS URL 為空則自動生成 Google News URL"),
+                "language": st.column_config.SelectboxColumn("語言", options=[""] + LOCALE_OPTIONS),
+                "url":      st.column_config.TextColumn("RSS URL"),
                 "category": st.column_config.TextColumn("category"),
-                "region": st.column_config.TextColumn("region"),
-                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+                "region":   st.column_config.TextColumn("region"),
+                "enabled":  st.column_config.CheckboxColumn("enabled", default=True),
                 "description": st.column_config.TextColumn("description"),
             },
         )
@@ -1595,6 +1598,7 @@ elif selected_page == "Sources":
                 st.rerun()
         st.caption(f"共 {len(intl_sources)} 筆")
         intl_df = _build_source_editor_df(intl_sources, blank_rows=5)
+        st.caption("💡 填入「網域」後若 RSS URL 為空，系統會依「語言」自動生成 Google News RSS URL。")
         edited_intl_df = st.data_editor(
             intl_df,
             num_rows="dynamic",
@@ -1602,12 +1606,14 @@ elif selected_page == "Sources":
             height=420,
             key=f"intl_sources_editor_{_src_v}",
             column_config={
-                "name": st.column_config.TextColumn("name"),
-                "type": st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
-                "url": st.column_config.TextColumn("url"),
+                "name":     st.column_config.TextColumn("name"),
+                "type":     st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
+                "domain":   st.column_config.TextColumn("網域（domain）", help="填入後若 RSS URL 為空則自動生成 Google News URL"),
+                "language": st.column_config.SelectboxColumn("語言", options=[""] + LOCALE_OPTIONS),
+                "url":      st.column_config.TextColumn("RSS URL"),
                 "category": st.column_config.TextColumn("category"),
-                "region": st.column_config.TextColumn("region"),
-                "enabled": st.column_config.CheckboxColumn("enabled", default=True),
+                "region":   st.column_config.TextColumn("region"),
+                "enabled":  st.column_config.CheckboxColumn("enabled", default=True),
                 "description": st.column_config.TextColumn("description"),
             },
         )

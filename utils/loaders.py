@@ -307,15 +307,41 @@ def display_expert_name(expert: dict) -> str:
     return name_zh or name_en or "Unnamed Expert"
 
 
-def cn_gnews_url_from_domain(domain: str) -> str:
-    """Generate a Google News zh-CN RSS URL from a bare domain string."""
+# ── Google News locale map ───────────────────────────────────────────────────
+# Maps language code → (hl, gl, ceid) parameters for Google News RSS URLs.
+_LOCALE_MAP: dict[str, tuple[str, str, str]] = {
+    "zh-TW": ("zh-TW", "TW", "TW:zh-Hant"),
+    "zh-CN": ("zh-CN", "SG", "SG:zh-Hans"),
+    "en-US": ("en-US", "US", "US:en"),
+    "en-GB": ("en-GB", "GB", "GB:en"),
+    "ja":    ("ja",    "JP", "JP:ja"),
+    "ko":    ("ko",    "KR", "KR:ko"),
+    "fr":    ("fr",    "FR", "FR:fr"),
+    "de":    ("de",    "DE", "DE:de"),
+    "es":    ("es",    "ES", "ES:es"),
+}
+LOCALE_OPTIONS: list[str] = list(_LOCALE_MAP.keys())
+
+
+def _gnews_url(query: str, lang: str = "zh-TW") -> str:
     import urllib.parse as _up
-    domain = domain.strip().lstrip("https://").lstrip("http://").split("/")[0]
+    hl, gl, ceid = _LOCALE_MAP.get(lang, _LOCALE_MAP["zh-TW"])
     return (
         "https://news.google.com/rss/search?q="
-        + _up.quote(f"site:{domain}")
-        + "&hl=zh-CN&gl=SG&ceid=SG:zh-Hans"
+        + _up.quote(query)
+        + f"&hl={hl}&gl={gl}&ceid={ceid}"
     )
+
+
+def gnews_url_from_domain(domain: str, lang: str = "zh-TW") -> str:
+    """Generate a Google News RSS URL for a domain with the given locale."""
+    domain = domain.strip().lstrip("https://").lstrip("http://").split("/")[0]
+    return _gnews_url(f"site:{domain}", lang)
+
+
+def cn_gnews_url_from_domain(domain: str) -> str:
+    """Backward-compat wrapper: generate zh-CN Google News URL from domain."""
+    return gnews_url_from_domain(domain, "zh-CN")
 
 
 def normalize_source(item: dict) -> dict:
@@ -325,40 +351,46 @@ def normalize_source(item: dict) -> dict:
         source_type = "rss"
 
     raw_domain = (item.get("domain") or "").strip()
+    lang       = (item.get("language") or "").strip()
 
     normalized = {
-        "name": (item.get("name") or "").strip(),
-        "name_sc": (item.get("name_sc") or "").strip(),  # 簡體字名（中共官媒用）
-        "domain": raw_domain,                             # 來源網域（用於生成 zh-CN RSS URL）
+        "name":      (item.get("name")      or "").strip(),
+        "name_sc":   (item.get("name_sc")   or "").strip(),  # 簡體字名（中共官媒用）
+        "domain":    raw_domain,
+        "language":  lang,
         "subsource": (item.get("subsource") or "").strip(),
-        "type": source_type,
-        "url": (item.get("url") or "").strip(),
-        "category": normalize_category(item.get("category")),
-        "region": (item.get("region") or "").strip(),
-        "enabled": bool(item.get("enabled", True)),
+        "type":      source_type,
+        "url":       (item.get("url")       or "").strip(),
+        "category":  normalize_category(item.get("category")),
+        "region":    (item.get("region")    or "").strip(),
+        "enabled":   bool(item.get("enabled", True)),
         "description": (item.get("description") or "").strip(),
-        "readonly": bool(item.get("readonly", False)),
-        "fixed": bool(item.get("fixed", False)),
+        "readonly":  bool(item.get("readonly", False)),
+        "fixed":     bool(item.get("fixed", False)),
     }
-    # Auto-generate URL from domain if url is empty
+    # Auto-generate RSS URL from domain when url is empty.
+    # Uses the source's language setting; falls back to zh-TW.
     if normalized["domain"] and not normalized["url"]:
-        normalized["url"] = cn_gnews_url_from_domain(normalized["domain"])
+        normalized["url"] = gnews_url_from_domain(
+            normalized["domain"], normalized["language"] or "zh-TW"
+        )
     return normalized
 
 
 def normalize_expert(item: dict) -> dict:
     item = item or {}
     normalized = {
-        "name_zh": (item.get("name_zh") or "").strip(),
-        "name_sc": (item.get("name_sc") or "").strip(),  # 簡體字名（中國大陸專家）
-        "name_en": (item.get("name_en") or "").strip(),
-        "aliases": normalize_aliases(item.get("aliases")),
-        "category": normalize_category(item.get("category")),
+        "name_zh":     (item.get("name_zh")     or "").strip(),
+        "name_sc":     (item.get("name_sc")     or "").strip(),  # 簡體字名（中國大陸專家）
+        "name_en":     (item.get("name_en")     or "").strip(),
+        "aliases":     normalize_aliases(item.get("aliases")),
+        "category":    normalize_category(item.get("category")),
         "affiliation": (item.get("affiliation") or "").strip(),
-        "region": (item.get("region") or "").strip(),
-        "enabled": bool(item.get("enabled", True)),
+        "region":      (item.get("region")      or "").strip(),
+        "language":    (item.get("language")    or "").strip(),  # 覆蓋自動語言偵測
+        "enabled":     bool(item.get("enabled", True)),
         "description": (item.get("description") or "").strip(),
-        "rss_url": (item.get("rss_url") or "").strip(),  # 專家自訂 RSS URL（儲存於 experts.json）
+        "rss_url":     (item.get("rss_url")     or "").strip(),
     }
     normalized["name"] = display_expert_name(normalized)
     normalized["search_names"] = build_expert_search_names(normalized)
@@ -469,8 +501,13 @@ def save_sources(sources):
         if n.get("fixed") or n.get("readonly") or n["type"] == "cn_official":
             continue
         normalized.append(n)
-    # 始終寫到 _user 版本，不動 git 追蹤的預設檔
     write_json(SOURCES_USER_PATH, normalized)
+    try:
+        from utils.github_storage import commit_file
+        commit_file(SOURCES_USER_PATH, "config/sources_user.json",
+                    "chore: update sources_user.json via app")
+    except Exception:
+        pass
 
 
 def load_experts():
@@ -487,46 +524,49 @@ def expert_gnews_urls(expert: dict) -> list:
     Return a list of (label, url) tuples for Google News RSS queries
     based on the expert's name fields.
 
-    Rules:
-    - name_en (ASCII)  → en-US locale
-    - name_zh          → zh-TW locale (traditional Chinese)
-    - name_zh + region indicates mainland China (CN / 中國) → also zh-CN locale
-    If rss_url is set, returns [] (direct RSS takes priority, no auto-URL needed).
+    If `language` is set on the expert, all name-based queries use that
+    single locale.  Otherwise the automatic rules apply:
+      - name_en → en-US
+      - name_zh → zh-TW, plus zh-CN when region indicates mainland China
+    If rss_url is set, returns [] (direct RSS takes priority).
     """
-    import urllib.parse as _up
-
     if (expert.get("rss_url") or "").strip():
-        return []   # custom RSS URL set; auto-generation not needed
+        return []
 
     results = []
-    name_zh = (expert.get("name_zh") or "").strip()
-    name_en = (expert.get("name_en") or "").strip()
-    region  = (expert.get("region") or "").strip().upper()
+    name_zh  = (expert.get("name_zh")  or "").strip()
+    name_en  = (expert.get("name_en")  or "").strip()
+    name_sc  = (expert.get("name_sc")  or "").strip()
+    region   = (expert.get("region")   or "").strip().upper()
+    language = (expert.get("language") or "").strip()
 
-    def _gnews(name: str, params: str) -> str:
-        q = _up.quote(f'"{name}"')
-        return f"https://news.google.com/rss/search?q={q}&{params}"
+    def _url(name: str, lang: str) -> str:
+        import urllib.parse as _up
+        return _gnews_url(f'"{name}"', lang)
 
-    # English name → en-US
-    if name_en:
-        results.append(("英文名（en-US）", _gnews(name_en, "hl=en-US&gl=US&ceid=US:en")))
+    if language:
+        # User chose an explicit locale — apply it to every available name
+        if name_en:
+            results.append((f"英文名（{language}）", _url(name_en, language)))
+        if name_zh:
+            results.append((f"中文名（{language}）", _url(name_zh, language)))
+        elif name_sc:
+            results.append((f"簡體名（{language}）", _url(name_sc, language)))
+    else:
+        # Auto-detect locale from name type and region
+        if name_en:
+            results.append(("英文名（en-US）", _url(name_en, "en-US")))
 
-    name_sc = (expert.get("name_sc") or "").strip()   # 簡體字名
-
-    # Chinese name → zh-TW (traditional)
-    if name_zh:
-        results.append(("中文名（zh-TW）", _gnews(name_zh, "hl=zh-TW&gl=TW&ceid=TW:zh-Hant")))
-        # Mainland China indicator → also add zh-CN (simplified)
-        _cn_regions = {"CN", "中國", "中国", "大陸", "大陆", "CHINA", "MAINLAND"}
-        is_cn = any(r in region for r in _cn_regions)
-        if is_cn:
-            # Prefer explicit name_sc; fall back to auto-converting name_zh
-            sc_name = name_sc or tw_to_simplified(name_zh)
-            if sc_name:
-                results.append(("簡體名（zh-CN）", _gnews(sc_name, "hl=zh-CN&gl=SG&ceid=SG:zh-Hans")))
-    elif name_sc:
-        # Only name_sc is set (no traditional Chinese name)
-        results.append(("簡體名（zh-CN）", _gnews(name_sc, "hl=zh-CN&gl=SG&ceid=SG:zh-Hans")))
+        if name_zh:
+            results.append(("中文名（zh-TW）", _url(name_zh, "zh-TW")))
+            _cn_regions = {"CN", "中國", "中国", "大陸", "大陆", "CHINA", "MAINLAND"}
+            is_cn = any(r in region for r in _cn_regions)
+            if is_cn:
+                sc_name = name_sc or tw_to_simplified(name_zh)
+                if sc_name:
+                    results.append(("簡體名（zh-CN）", _url(sc_name, "zh-CN")))
+        elif name_sc:
+            results.append(("簡體名（zh-CN）", _url(name_sc, "zh-CN")))
 
     return results
 
@@ -571,8 +611,13 @@ def experts_as_sources() -> list:
 
 def save_experts(experts):
     normalized = [normalize_expert(item) for item in (experts or [])]
-    # 始終寫到 _user 版本，不動 git 追蹤的預設檔，避免被更新覆蓋
     write_json(EXPERTS_USER_PATH, normalized)
+    try:
+        from utils.github_storage import commit_file
+        commit_file(EXPERTS_USER_PATH, "config/experts_user.json",
+                    "chore: update experts_user.json via app")
+    except Exception:
+        pass
 
 
 _INSIGHTS_USER_PATH = "config/insights_user.json"
@@ -807,6 +852,12 @@ def save_category_keywords(keywords: dict):
     ensure_config_dir()
     with open(_CATEGORY_KEYWORDS_USER_PATH, "w", encoding="utf-8") as f:
         json.dump(keywords, f, ensure_ascii=False, indent=2)
+    try:
+        from utils.github_storage import commit_file
+        commit_file(Path(_CATEGORY_KEYWORDS_USER_PATH), "config/category_keywords_user.json",
+                    "chore: update category_keywords_user.json via app")
+    except Exception:
+        pass
 
 
 def get_source_categories(sources=None):
@@ -827,12 +878,14 @@ def get_expert_categories(experts=None):
 
 def source_to_editor_row(source: dict):
     return {
-        "name": source.get("name", ""),
-        "type": source.get("type", "rss"),
-        "url": source.get("url", ""),
-        "category": list_to_csv(source.get("category")),
-        "region": source.get("region", ""),
-        "enabled": bool(source.get("enabled", True)),
+        "name":        source.get("name", ""),
+        "type":        source.get("type", "rss"),
+        "domain":      source.get("domain", ""),
+        "language":    source.get("language", ""),
+        "url":         source.get("url", ""),
+        "category":    list_to_csv(source.get("category")),
+        "region":      source.get("region", ""),
+        "enabled":     bool(source.get("enabled", True)),
         "description": source.get("description", ""),
     }
 
@@ -840,12 +893,14 @@ def source_to_editor_row(source: dict):
 def editor_row_to_source(row: dict):
     return normalize_source(
         {
-            "name": row.get("name", ""),
-            "type": row.get("type", "rss"),
-            "url": row.get("url", ""),
-            "category": row.get("category", ""),
-            "region": row.get("region", ""),
-            "enabled": row.get("enabled", True),
+            "name":        row.get("name", ""),
+            "type":        row.get("type", "rss"),
+            "domain":      row.get("domain", ""),
+            "language":    row.get("language", ""),
+            "url":         row.get("url", ""),
+            "category":    row.get("category", ""),
+            "region":      row.get("region", ""),
+            "enabled":     row.get("enabled", True),
             "description": row.get("description", ""),
         }
     )
@@ -853,31 +908,33 @@ def editor_row_to_source(row: dict):
 
 def expert_to_editor_row(expert: dict):
     return {
-        "name_zh": expert.get("name_zh", ""),
-        "name_sc": expert.get("name_sc", ""),
-        "name_en": expert.get("name_en", ""),
-        "aliases": list_to_csv(expert.get("aliases")),
-        "category": list_to_csv(expert.get("category")),
+        "name_zh":     expert.get("name_zh", ""),
+        "name_sc":     expert.get("name_sc", ""),
+        "name_en":     expert.get("name_en", ""),
+        "aliases":     list_to_csv(expert.get("aliases")),
+        "category":    list_to_csv(expert.get("category")),
         "affiliation": expert.get("affiliation", ""),
-        "region": expert.get("region", ""),
-        "enabled": bool(expert.get("enabled", True)),
+        "region":      expert.get("region", ""),
+        "language":    expert.get("language", ""),
+        "enabled":     bool(expert.get("enabled", True)),
         "description": expert.get("description", ""),
-        "rss_url": expert.get("rss_url", ""),
+        "rss_url":     expert.get("rss_url", ""),
     }
 
 
 def editor_row_to_expert(row: dict):
     return normalize_expert(
         {
-            "name_zh": row.get("name_zh", ""),
-            "name_sc": row.get("name_sc", ""),
-            "name_en": row.get("name_en", ""),
-            "aliases": row.get("aliases", ""),
-            "category": row.get("category", ""),
+            "name_zh":     row.get("name_zh", ""),
+            "name_sc":     row.get("name_sc", ""),
+            "name_en":     row.get("name_en", ""),
+            "aliases":     row.get("aliases", ""),
+            "category":    row.get("category", ""),
             "affiliation": row.get("affiliation", ""),
-            "region": row.get("region", ""),
-            "enabled": row.get("enabled", True),
+            "region":      row.get("region", ""),
+            "language":    row.get("language", ""),
+            "enabled":     row.get("enabled", True),
             "description": row.get("description", ""),
-            "rss_url": row.get("rss_url", ""),
+            "rss_url":     row.get("rss_url", ""),
         }
     )

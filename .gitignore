@@ -10,11 +10,11 @@ venv/
 .streamlit/secrets.toml
 
 # 使用者本機設定（不隨 git pull 被覆蓋）
+# sources_user.json / experts_user.json / category_keywords_user.json
+# 已改由 app 透過 GitHub API 即時同步，確保 Streamlit Cloud 重啟後資料不遺失
 config/auto_export_user.json
 config/auto_export_state.json
 config/insights_user.json
-config/category_keywords_user.json
-config/sources_user.json
 
 # 其他暫存
 *.log
