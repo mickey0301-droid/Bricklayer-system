@@ -173,30 +173,33 @@ def _filter_experts_by_selection(experts, selected_categories, selected_names):
     return filtered
 
 
-# ── 來源群組定義（label, category keys）────────────────────────────────────────
+# ── 來源群組定義（label, main_cat_keys, sub_cat_keys）──────────────────────────
+# sub_cat_keys: 群組內的次分類，選擇後自動展開為該次分類的所有來源名稱
 _SOURCE_GROUPS = [
-    ("自訂",    ["自訂台灣媒體", "自訂國際媒體"]),
-    ("智庫",    ["智庫"]),
-    ("全球媒體", ["全球媒體"]),
-    ("中國媒體", ["中國媒體"]),
-    ("自訂專家", ["自訂專家"]),
+    ("自訂",    ["自訂台灣媒體", "自訂國際媒體"],  ["自訂台灣媒體", "自訂國際媒體"]),
+    ("全球媒體", ["全球媒體"],
+                ["Asia-Pacific", "歐洲地區", "亞西地區", "北美地區", "拉丁美洲及加勒比海", "非洲地區"]),
+    ("中共官媒", ["中共官媒"],                    ["外交", "軍事", "國防", "涉台"]),
+    ("自訂專家", ["自訂專家"],                    []),
 ]
 
 
 def _render_source_group_picker(all_sources, key_prefix, saved_names):
     """
-    Renders per-category expandable dropdowns, each with a 全選 checkbox
-    and a multi-select for individual sources.
+    Renders per-category expandable dropdowns.  Each group has:
+      - a sub-group selector (區域/類型) whose selections auto-expand to source names
+      - 全選 / 清空 buttons
+      - an individual source multiselect
 
     Returns (selected_categories=[], selected_names=[...])
     so it can be passed directly to _filter_sources_by_selection().
     """
     collected: list[str] = []
 
-    for label, cat_keys in _SOURCE_GROUPS:
-        # Gather enabled sources that belong to this group
+    for label, cat_keys, sub_cat_keys in _SOURCE_GROUPS:
+        # ── Build group source list ──────────────────────────────────────────
         seen_names: set[str] = set()
-        group_names: list[str] = []
+        group_sources: list[dict] = []
         for src in all_sources:
             if not src.get("enabled", True):
                 continue
@@ -206,30 +209,77 @@ def _render_source_group_picker(all_sources, key_prefix, saved_names):
             n = (src.get("name") or "").strip()
             if n and n not in seen_names:
                 seen_names.add(n)
-                group_names.append(n)
+                group_sources.append(src)
 
-        if not group_names:
+        if not group_sources:
             continue
 
-        all_key = f"{key_prefix}__{label}__all"
-        sel_key = f"{key_prefix}__{label}__sel"
+        group_names: list[str] = [s["name"] for s in group_sources]
 
-        # Initialise sel_key from saved selection on first render
+        # ── Build sub-cat → source-name mapping ─────────────────────────────
+        sub_cat_to_names: dict[str, list[str]] = {}
+        for sk in sub_cat_keys:
+            names = [s["name"] for s in group_sources if sk in (s.get("category") or [])]
+            if names:
+                sub_cat_to_names[sk] = names
+        available_sub_cats = list(sub_cat_to_names.keys())
+
+        # ── Session-state keys ───────────────────────────────────────────────
+        sel_key = f"{key_prefix}__{label}__sel"
+        sub_key = f"{key_prefix}__{label}__sub"
+
+        # Initialise individual selection from saved_names on first render
         if sel_key not in st.session_state:
             st.session_state[sel_key] = [n for n in saved_names if n in seen_names]
 
-        # When 全選 is checked, override the multiselect to show all items
-        if st.session_state.get(all_key, False):
-            st.session_state[sel_key] = group_names[:]
+        # ── Handle sub-group changes: expand/collapse into sel_key ───────────
+        prev_sub_key = f"{sub_key}__prev"
+        cur_sub: list[str] = st.session_state.get(sub_key, [])
+        prev_sub: list[str] = st.session_state.get(prev_sub_key, [])
+        if cur_sub != prev_sub:
+            added   = set(cur_sub) - set(prev_sub)
+            removed = set(prev_sub) - set(cur_sub)
+            current_sel: list[str] = list(st.session_state.get(sel_key, []))
+            for sg in added:
+                for n in sub_cat_to_names.get(sg, []):
+                    if n not in current_sel:
+                        current_sel.append(n)
+            if removed:
+                keep_via_other = {
+                    n for sg in cur_sub for n in sub_cat_to_names.get(sg, [])
+                }
+                remove_names = {
+                    n for sg in removed for n in sub_cat_to_names.get(sg, [])
+                } - keep_via_other
+                current_sel = [n for n in current_sel if n not in remove_names]
+            st.session_state[sel_key] = current_sel
+            st.session_state[prev_sub_key] = cur_sub
 
+        # ── 全選 / 清空 button presses ────────────────────────────────────────
+        btn_all_key   = f"{key_prefix}__{label}__btn_all"
+        btn_clear_key = f"{key_prefix}__{label}__btn_clear"
+        if st.session_state.pop(btn_all_key, False):
+            st.session_state[sel_key] = group_names[:]
+        if st.session_state.pop(btn_clear_key, False):
+            st.session_state[sel_key] = []
+
+        # ── Render expander ──────────────────────────────────────────────────
         n_sel = len(st.session_state.get(sel_key, []))
-        badge = f"　{n_sel} / {len(group_names)} 已選" if n_sel else f"　{len(group_names)} 個來源"
+        badge = f"　{n_sel} / {len(group_names)} 已選" if n_sel else f"　{len(group_names)} 個"
         with st.expander(f"**{label}**{badge}", expanded=(n_sel > 0)):
-            c_chk, _ = st.columns([1, 5])
-            with c_chk:
-                st.checkbox("全選", key=all_key)
+            if available_sub_cats:
+                st.multiselect(
+                    "選擇群組",
+                    options=available_sub_cats,
+                    key=sub_key,
+                )
+            c_all, c_clr, _ = st.columns([1, 1, 4])
+            with c_all:
+                st.button("全選", key=btn_all_key, use_container_width=True)
+            with c_clr:
+                st.button("清空", key=btn_clear_key, use_container_width=True)
             st.multiselect(
-                "選擇來源",
+                "選擇個別來源",
                 options=group_names,
                 key=sel_key,
                 label_visibility="collapsed",
@@ -642,27 +692,12 @@ if selected_page == "Briefings":
 
     st.markdown("---")
 
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("##### 來源篩選")
-        selected_source_categories, selected_source_names = _render_source_group_picker(
-            all_sources, "brief_src", []
-        )
-
-    with c2:
-        st.markdown("##### 專家篩選")
-        selected_expert_categories = st.multiselect(
-            "專家分類",
-            options=expert_categories,
-            default=[],
-            key="brief_expert_categories",
-        )
-        selected_expert_names = st.multiselect(
-            "專家",
-            options=enabled_expert_names,
-            default=[],
-            key="brief_expert_names",
-        )
+    st.markdown("##### 來源篩選")
+    selected_source_categories, selected_source_names = _render_source_group_picker(
+        all_sources, "brief_src", []
+    )
+    selected_expert_categories: list = []
+    selected_expert_names: list = []
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
@@ -797,16 +832,11 @@ if selected_page == "Briefings":
         selected_source_categories,
         selected_source_names,
     )
-    selected_experts = _filter_experts_by_selection(
-        experts,
-        selected_expert_categories,
-        selected_expert_names,
-    )
+    selected_experts: list = []
 
-    s1, s2, s3 = st.columns(3)
-    s1.metric("已選來源數", len(selected_sources))
-    s2.metric("已選專家數", len(selected_experts))
-    s3.metric("時間範圍（小時）", round(max((end_dt - start_dt).total_seconds() / 3600, 0), 2))
+    s1, s2 = st.columns(2)
+    s1.metric("已選來源數", len(selected_sources) if selected_sources else "全部")
+    s2.metric("時間範圍（小時）", round(max((end_dt - start_dt).total_seconds() / 3600, 0), 2))
 
     if st.button("一鍵生成並輸出", type="primary", use_container_width=True, key="run_briefings"):
         if start_dt >= end_dt:
@@ -2262,37 +2292,9 @@ elif selected_page == "Schedule":
             s["selected_source_names"] = _sched_src_names
 
         with c4:
-            st.markdown("##### 專家篩選")
-            s["selected_expert_categories"] = st.multiselect(
-                "專家分類",
-                options=expert_categories,
-                default=s.get("selected_expert_categories", []),
-                key=f"exp_cat_{selected_idx}",
-            )
-
-            filtered_expert_name_options = []
-            for item in all_experts:
-                item_name = (item.get("name") or "").strip()
-                item_cats = item.get("category", []) or []
-                if not s["selected_expert_categories"]:
-                    if item_name and item_name not in filtered_expert_name_options:
-                        filtered_expert_name_options.append(item_name)
-                else:
-                    if any(cat in s["selected_expert_categories"] for cat in item_cats):
-                        if item_name and item_name not in filtered_expert_name_options:
-                            filtered_expert_name_options.append(item_name)
-
-            existing_expert_names = [
-                x for x in s.get("selected_expert_names", [])
-                if x in filtered_expert_name_options
-            ]
-
-            s["selected_expert_names"] = st.multiselect(
-                "專家名稱",
-                options=filtered_expert_name_options,
-                default=existing_expert_names,
-                key=f"exp_names_{selected_idx}",
-            )
+            # 專家已整合至來源篩選的「自訂專家」群組，此處不再另設專家篩選
+            s["selected_expert_categories"] = []
+            s["selected_expert_names"] = []
 
         config["schedules"][selected_idx] = s
 
