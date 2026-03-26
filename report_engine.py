@@ -2636,12 +2636,17 @@ def _generate_multiphase_synthesis(
     status_callback=None,
 ):
     """
-    Multi-phase report generation:
-      1. Group items by source group
-      2. Generate a focused sub-report (~600-900 words) for each group
-      3. Synthesise all sub-reports into one final strategic briefing
+    Section-by-section report generation (replaces the old source-group sub-report pipeline).
+
+    For each of the 19 report sections, the FULL item pool is classified by the same
+    keyword queries used in generate_segmented_report.  Each section gets its own
+    dedicated AI call (generate_section_mini_report), so every section has access to
+    every relevant article regardless of source group.
+
+    Finally, 一、摘要 and 八、研析 are written from all 19 section texts and the
+    complete report is assembled.
     """
-    from utils.ai_briefing import generate_sub_briefing
+    from utils.ai_briefing import generate_section_mini_report
 
     def _cb(event, detail=None, *args):
         if status_callback:
@@ -2653,10 +2658,13 @@ def _generate_multiphase_synthesis(
     language_label = _normalize_language_label(language)
     format_options = format_options or _load_format_options()
 
-    # ── 1. Group items ──────────────────────────────────────────────────
+    # ── 1. Separate news items from expert items ─────────────────────────
     news_items = [i for i in items if i.get("source_type") != "expert"]
 
-    # ── 0. Build global source_map FIRST so [Sx] codes persist end-to-end ──
+    if not news_items:
+        return "No news items found.", []
+
+    # ── 2. Build global source_map (same as single / segmented report) ───
     source_map = _build_citation_source_map(news_items, max_sources=30)
     item_to_sx: dict[str, str] = {}
     for sx, info in source_map.items():
@@ -2664,228 +2672,142 @@ def _generate_multiphase_synthesis(
         if key:
             item_to_sx[key] = sx
 
-    all_groups: dict[str, list] = {}
-    for item in news_items:
-        key = _get_item_source_group(item)
-        all_groups.setdefault(key, []).append(item)
+    # ── 3. Classify all items into the 19 sections by keyword matching ───
+    _cb("stage", "📂 按章節關鍵字分類文章…")
+    section_buckets = _classify_items_to_sections(news_items, _SEGMENTED_SECTIONS)
+    classified = sum(1 for item in news_items
+                     if any(item in section_buckets[s["id"]] for s in _SEGMENTED_SECTIONS))
+    _cb("stage", f"📂 分類完成：{classified}/{len(news_items)} 篇分入各章節")
 
-    # 使用者明確選取的群組全部列入，沒有文章的群組補空 list，
-    # 確保 N 個選定群組 → N 份子報告（不因無資料而被靜默跳過）
-    if multiphase_groups:
-        selected_groups = {k: all_groups.get(k, []) for k in multiphase_groups}
-    else:
-        selected_groups = all_groups
+    # Per-section source-diversity cap (same as generate_segmented_report)
+    selected_per_section: dict = {}
+    for _sec in _SEGMENTED_SECTIONS:
+        _raw = section_buckets.get(_sec["id"], [])
+        _chosen = _cap_items_per_source(_raw, max_per_source=3, max_total=12)
+        # For expert sections, also append actual expert feed items
+        if _sec["id"] in ("expert_intl", "expert_twcn") and expert_items:
+            expert_pool = [it for it in expert_items if isinstance(it, dict)]
+            # Avoid duplicates already in chosen
+            chosen_urls = {(it.get("url") or "").lower() for it in _chosen}
+            for ei in expert_pool:
+                if (ei.get("url") or "").lower() not in chosen_urls:
+                    _chosen.append(ei)
+                    chosen_urls.add((ei.get("url") or "").lower())
+        selected_per_section[_sec["id"]] = _chosen
 
-    # ── 2. Generate sub-reports ─────────────────────────────────────────
-    sub_reports: list[tuple[str, str]] = []
-    eligible = list(selected_groups.items())   # 全部群組，含空群組
-    total_g = len(eligible)
+    # ── 4. Generate each section mini-report ────────────────────────────
+    total_sections = len(_SEGMENTED_SECTIONS)
+    section_mini_reports: list = []
+    section_mini_secs: list = []
 
-    _EMPTY_SUBREPORT_TEMPLATE = (
-        "一、摘要\n本期【{name}】無相關新聞。\n\n"
-        "二、國際要聞\n本期無相關新聞。\n\n"
-        "三、台美中要聞\n本期無相關新聞。\n\n"
-        "四、台灣國安要聞\n本期無相關新聞。\n\n"
-        "五、中國要聞\n（一）中國對外情勢\n本期無相關新聞。\n（二）中國內部情勢\n本期無相關新聞。\n\n"
-        "六、區域情勢\n（一）亞太地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
-        "（二）亞西地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
-        "（三）北美地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
-        "（四）拉丁美洲及加勒比海\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
-        "（五）歐洲地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n"
-        "（六）非洲地區\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n\n"
-        "七、專家研析\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。\n\n"
-        "八、研析\n1. 國際要聞研析\n本期無相關新聞。\n2. 台美中要聞研析\n本期無相關新聞。"
-    )
+    for idx, sec in enumerate(_SEGMENTED_SECTIONS, 1):
+        label = sec["label"]
+        sec_items = selected_per_section.get(sec["id"], [])
 
-    for done, (group_key, group_items) in enumerate(eligible, 1):
-        group_name_zh = _MULTIPHASE_GROUP_ZH.get(group_key, group_key)
-        _cb("stage", f"📝 子報告 {done}/{total_g}：{group_name_zh}（{len(group_items)} 篇）…")
+        _cb("rss", f"{label}：{len(sec_items)} 篇", idx, total_sections, len(sec_items))
+        _cb("stage", f"✍️  [{idx}/{total_sections}] AI 撰寫：{label}（{len(sec_items)} 篇）…")
 
-        # 若該群組本期無任何文章，直接插入固定空白子報告，不消耗 AI token
-        if not group_items:
-            sub_reports.append((group_name_zh, _EMPTY_SUBREPORT_TEMPLATE.format(name=group_name_zh)))
-            _cb("stage", f"⬜ 子報告 {done}/{total_g}：{group_name_zh}（本期無資料）")
-            continue
-
-        # 子報告需填八個章節（含兩個中國子節及六大區域），文章要分配到各章，
-        # 所以要提供足夠多樣的文章：選 8 個不同議題，每題最多 3 篇 = 最多 24 篇。
-        # 讓 AI 按文章內容自行歸類，而非按來源群組的地理標籤限制。
-        diverse_items = _select_diverse_topics(group_items, n_topics=8, articles_per_topic=3)
-        # Build structured news block WITH [Sx] codes so citations survive synthesis
-        news_block = _format_item_block(group_name_zh, diverse_items, item_to_sx)
-
-        sub_prompt = (
-            f"以下是來自【{group_name_zh}】媒體來源的新聞條目。"
-            f"【{group_name_zh}】是這些媒體的出身地，不代表報導話題的限制——"
-            f"這些媒體可能報導全球任何地區的新聞。"
-            f"請依照每篇文章的內容，分別填入報告的對應章節（八章全部都要寫）。"
-            f"每條已標注引用代碼 [S1][S2]... 請在報告中完整保留這些代碼：\n\n"
-            + news_block
-        )
+        news_block = _format_item_block(label, sec_items, item_to_sx)
 
         try:
-            sub_text = generate_sub_briefing(
-                sub_prompt, group_name=group_name_zh, language=language_label
+            mini_text = generate_section_mini_report(
+                section_path=sec["section_path"],
+                section_label=label,
+                news_block=news_block,
+                language=language_label,
             )
-            sub_reports.append((group_name_zh, sub_text))
-            _cb("stage", f"✅ 子報告完成 {done}/{total_g}：{group_name_zh}")
         except Exception as e:
-            print(f"[Multiphase] Sub-report failed for {group_name_zh}: {e}")
-            sub_reports.append((group_name_zh, _EMPTY_SUBREPORT_TEMPLATE.format(name=group_name_zh)))
+            print(f"[Multiphase] Section mini-report failed for {label}: {e}")
+            mini_text = f"本期資料不足，無法生成{label}小報告。"
 
-    if not sub_reports:
-        return "No news items found.", []
+        section_mini_reports.append((label, mini_text))
+        section_mini_secs.append(sec)
+        _cb("stage", f"✅ [{idx}/{total_sections}] 完成：{label}")
 
-    # ── 3. Build expert blocks (same as generate_report) ────────────────
-    expert_names = list({
-        it["expert"] for it in expert_items
-        if isinstance(it, dict) and it.get("expert")
-    })
-    has_expert_data = bool(expert_names)
-    expert_data_lines = []
-    if has_expert_data:
-        expert_data_lines.append("Expert Analysis Data:")
-        for en in expert_names:
-            this_items = [it for it in expert_items if it.get("expert") == en]
-            expert_data_lines.append(f"\n[{en}]")
-            for i, ei in enumerate(this_items[:5], 1):
-                t = (ei.get("title") or "").strip()
-                s = (ei.get("summary") or "").strip()
-                if t:
-                    expert_data_lines.append(f"  {i}. {t}")
-                if s:
-                    expert_data_lines.append(f"     {s[:300]}")
-    expert_data_block = "\n".join(expert_data_lines)
-
-    if has_expert_data:
-        expert_guidance = (
-            f"- 「七、專家研析」必須根據 Expert Analysis Data 撰寫，引用具名專家"
-            f"（{', '.join(expert_names)}）的實際觀點並標注姓名。"
-            "若某小節無明確觀點可引用，請寫「本期無相關專家意見。」。勿憑空虛構。"
-        )
-        expert_guidance_note = "若本期有專家資料，依上述 expert_guidance 引用；若無，請寫「本期無相關專家意見。」。"
-    else:
-        expert_guidance = ""
-        expert_guidance_note = "本期無專家資料，請在兩個小節各寫「本期無專家資料。」。"
-
-    sub_reports_block = "\n\n".join(
-        f"═══ {name} ═══\n{text}" for name, text in sub_reports
+    # ── 5. AI writes 摘要 + 八、研析 from all 19 section mini-reports ────
+    synthesis_text = _generate_segmented_final_report(
+        section_mini_reports=section_mini_reports,
+        language_label=language_label,
+        insights_block=insights_block,
+        status_callback=status_callback,
     )
-    expert_data_block_section = ("Expert Analysis Data:\n" + expert_data_block) if has_expert_data else ""
 
-    # ── 3b. Build full topic-sorted news block (same as single report) ──
-    # This ensures the synthesis AI has access to ALL items, not just those
-    # captured in each source-group sub-report (which is capped at 24 items).
-    _grouped_full = _group_items_for_report(news_items)
-    _full_news_block = _build_news_data_block(_grouped_full, source_map=source_map)
+    # ── 6. Assemble final report ─────────────────────────────────────────
+    _cb("stage", "📄 組裝完整綜合報告…")
+    report_lines = ["【戰略情報簡報】", ""]
 
-    _cb("stage", f"🤖 AI 綜整 {len(sub_reports)} 份子報告，生成最終簡報…")
+    # Extract 一、摘要 and 八、研析 from synthesis
+    summary_text = ""
+    analysis_text = ""
+    if "八、研析" in synthesis_text:
+        parts = synthesis_text.split("八、研析", 1)
+        summary_text = parts[0].strip()
+        analysis_text = "八、研析\n" + parts[1].strip()
+    else:
+        summary_text = synthesis_text.strip()
+        analysis_text = "八、研析\n1. 國際要聞研析\n本期無相關分析。\n\n2. 台美中要聞研析\n本期無相關分析。"
 
-    # ── 4. Synthesis prompt ─────────────────────────────────────────────
-    synthesis_prompt = f"""
-You are a senior strategic intelligence analyst.
+    # Strip AI's own "一、摘要" header if present to avoid duplication
+    for _prefix in ("一、摘要\n\n", "一、摘要\n", "一、摘要"):
+        if summary_text.startswith(_prefix):
+            summary_text = summary_text[len(_prefix):].strip()
+            break
 
-Write a polished strategic intelligence briefing in {language_label}.
-The output must read like a real analytical report, not like bullet-point news notes.
+    report_lines.append("## 一、摘要")
+    report_lines.append("")
+    report_lines.append(summary_text)
+    report_lines.append("")
 
-You have received sub-reports from {len(sub_reports)} regional analyst teams, plus a complete topic-indexed news index below.
-Use the sub-reports as your primary analytical base. Supplement any thin or missing sections with items from the complete news index.
+    # Insert section mini-reports with hierarchy-aware headings
+    _last_parent: str | None = "__UNSET__"
+    _last_sub: str | None = "__UNSET__"
+    for sec, (label, text) in zip(section_mini_secs, section_mini_reports):
+        dp = sec.get("display_parent")
+        ds = sec.get("display_sub")
+        dl = sec.get("display_leaf")
 
-Requirements:
-1. Write in formal report style with coherent paragraphs.
-2. Do NOT place URLs anywhere in the body text.
-3. Do NOT write source names in brackets such as [DW.com], [Reuters.com], [BBC].
-4. Synthesize information across sub-reports into broader strategic analysis.
-5. Identify cross-regional patterns, escalating trends, and strategic implications.
-6. CRITICAL — Citation codes [S1][S2][S3]... are embedded in the sub-reports AND in the complete news index. You MUST preserve every [Sx] code exactly as it appears — do NOT renumber, merge, drop, or invent any [Sx] marker. When you incorporate a fact from a sub-report or from the news index that has a citation code, carry that exact code into the synthesis text. These codes are the only link to the source bibliography and must NOT be lost.
-7. MANDATORY — Media outlets: NEVER use vague collective terms such as "歐洲媒體", "西方媒體", "美國媒體", "外媒". Always write the specific outlet name. On first mention, provide both Chinese and English, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）、《紐約時報》（New York Times）. This rule has NO exceptions.
-7a. MANDATORY — Media country attribution: When citing a non-Chinese / non-English language media outlet, you MUST note which country it is from on first mention. Format: 「[媒體名稱]（[國家名稱]）」. Examples: 《朝日新聞》（日本）、《韓聯社》（韓國）、《明鏡週刊》（德國）、《費加羅報》（法國）。For articles that carry a language tag such as [日文], [韓文], [德文] etc. in their title, treat them as coming from the corresponding country. This rule has NO exceptions.
-8. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form (e.g., 川普、岸田文雄、習近平、賴清德). ENGLISH NAME RULES BY NATIONALITY — (A) Taiwan/ROC officials and PRC/China officials: DO NOT add a parenthetical English name. Write the Chinese name only (e.g., 行政院長卓榮泰, NOT 卓榮泰（Cho Jung-tai）; 國家主席習近平, NOT 習近平（Xi Jinping））. (B) Western figures: on first mention, follow with the common English name in parentheses — surname only. e.g. 美國總統川普（Donald Trump）、美國國務卿魯比歐（Marco Rubio）. (C) Japanese, Korean, Vietnamese: add the romanised form in square brackets after the Chinese name, then English in parentheses. e.g. 日本首相石破茂[Ishiba Shigeru]（Shigeru Ishiba）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）. (D) Other East Asian (Singapore, Thailand, Malaysia, etc.): use the person's internationally recognised English name in parentheses. CRITICAL — Before writing any parenthetical English name, be 100% certain. Known errors to avoid: 黃循財 = Lawrence Wong (Singapore PM since 2024), NOT Heng Swee Keat (who is 王瑞杰, former DPM). If uncertain of a name, OMIT the parenthetical entirely rather than guess. CRITICAL — The name inside the parentheses must contain ONLY the English name, no titles (correct: 川普（Donald Trump）; WRONG: 川普（President Donald Trump）). CRITICAL — Only assign a ministerial/official title to a person if the provided news articles explicitly confirm they currently hold that position; DO NOT rely on memory for current cabinet assignments. This rule has NO exceptions.
-9a. MANDATORY — Expert names: whenever an expert or analyst is cited in 七、專家研析, render their name in bold (**Name**) and include their full title and affiliation on first mention. E.g. **美國智庫戰略與國際研究中心（CSIS）資深研究員王大維（David Wang）**。
-9. MANDATORY — Organizations and institutions: On first mention, always provide both Chinese and English names. Format: Chinese name（English Name）. Examples: 北大西洋公約組織（NATO）、美國國務院（U.S. Department of State）、歐盟委員會（European Commission）、美國在台協會（American Institute in Taiwan, AIT）. This rule has NO exceptions.
+        if dp is None:
+            report_lines.append(f"## {label}")
+            _last_parent = None
+            _last_sub = None
+        else:
+            if dp != _last_parent:
+                report_lines.append(f"## {dp}")
+                report_lines.append("")
+                _last_parent = dp
+                _last_sub = "__UNSET__"
+            if ds and ds != _last_sub:
+                report_lines.append(f"### {ds}")
+                report_lines.append("")
+                _last_sub = ds
+            if dl:
+                report_lines.append(f"#### {dl}")
 
-Output structure:
-【戰略情報簡報】
+        report_lines.append("")
+        report_lines.append(text)
+        report_lines.append("")
 
-一、摘要
+    report_lines.append("## 八、研析")
+    report_lines.append("")
+    analysis_body = analysis_text.replace("八、研析\n", "", 1).strip()
+    report_lines.append(analysis_body)
 
-二、國際要聞
+    final_report = "\n".join(report_lines)
 
-三、台美中要聞
+    # ── 7. Clean up and render citations ────────────────────────────────
+    final_report = re.sub(r'\[\s*(?!S\d+\s*\])([A-Za-z][^\]]{0,40})\]', '', final_report)
+    final_report = re.sub(r'\[(\d{1,3})\]', '', final_report)
+    final_report = re.sub(r'[ \t]+', ' ', final_report)
+    final_report = _render_citations(final_report, source_map, format_options)
 
-四、台灣國安要聞
+    # Force endnotes if not already present
+    if source_map and "## Notes" not in final_report and "## Sources" not in final_report:
+        endnote_lines = ["", "## 尾註", ""]
+        for seq_idx, (_sx, info) in enumerate(source_map.items(), start=1):
+            endnote_lines.append(_format_chicago_note(seq_idx, info))
+        final_report = final_report + "\n" + "\n".join(endnote_lines)
 
-五、中國要聞
-（一）中國對外情勢
-
-（二）中國內部情勢
-
-六、區域情勢
-（一）亞太地區
-1. 國際要聞研析（若本期無亞太地區相關新聞，請寫：「本期無相關新聞。」）
-2. 台美中要聞研析（若本期無亞太地區涉台涉中新聞，請寫：「本期無相關新聞。」）
-
-（二）亞西地區
-1. 國際要聞研析（若本期無亞西地區相關新聞，請寫：「本期無相關新聞。」）
-2. 台美中要聞研析（若本期無亞西地區涉台涉中新聞，請寫：「本期無相關新聞。」）
-
-（三）北美地區
-1. 國際要聞研析（若本期無北美地區相關新聞，請寫：「本期無相關新聞。」）
-2. 台美中要聞研析（若本期無北美地區涉台涉中新聞，請寫：「本期無相關新聞。」）
-
-（四）拉丁美洲及加勒比海
-1. 國際要聞研析（若本期無拉丁美洲相關新聞，請寫：「本期無相關新聞。」）
-2. 台美中要聞研析（若本期無拉丁美洲涉台涉中新聞，請寫：「本期無相關新聞。」）
-
-（五）歐洲地區
-1. 國際要聞研析（若本期無歐洲地區相關新聞，請寫：「本期無相關新聞。」）
-2. 台美中要聞研析（若本期無歐洲地區涉台涉中新聞，請寫：「本期無相關新聞。」）
-
-（六）非洲地區
-1. 國際要聞研析（若本期無非洲地區相關新聞，請寫：「本期無相關新聞。」）
-2. 台美中要聞研析（若本期無非洲地區涉台涉中新聞，請寫：「本期無相關新聞。」）
-
-七、專家研析
-1. 國際要聞研析
-2. 台美中要聞研析
-
-八、研析
-1. 國際要聞研析
-2. 台美中要聞研析
-
-Writing guidance:
-- 「摘要」請用一小段說明本期最重要判斷。
-- 「國際要聞」聚焦全球戰略層次的重要發展。
-- 「台美中要聞」聚焦台灣、美國、中國三角互動及其戰略意涵。
-- 「台灣國安要聞」聚焦軍事、灰帶、資安、國防、國安治理等。
-- 「五、中國要聞」必須包含兩個子節：「（一）中國對外情勢」聚焦中國外交、軍事對外、對外貿易與制裁、涉外聲明等；「（二）中國內部情勢」聚焦中國黨政內鬥、國內經濟、社會民情、人權、新疆西藏香港等內部議題。若某子節本期無相關新聞，請寫「本期無相關新聞。」，但兩個子節都不可省略。
-- 「區域情勢」六大區域必須全部列出，不得省略任何一個。每個區域各有兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。若某區域本期無相關新聞，請在該小節寫「本期無相關新聞。」，絕不可完全省略任何區域或小節。
-{expert_guidance}
-- 「七、專家研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」。{expert_guidance_note}
-- 「八、研析」分兩小節：「1. 國際要聞研析」與「2. 台美中要聞研析」，請提出跨章節的整體判斷、風險、趨勢、可能後續觀察重點。
-
-Strategic Context:
-{insights_block or "None"}
-
-Sub-reports from regional analyst teams:
-{sub_reports_block}
-{expert_data_block_section}
-
-Complete topic-indexed news items (use to supplement sub-reports when a section is thin or missing):
-{_full_news_block}
-"""
-
-    client = _get_openai_client()
-    response = client.responses.create(model="gpt-4.1-mini", input=synthesis_prompt)
-    report = response.output_text
-
-    report = re.sub(r'\[\s*(?!S\d+\s*\])([A-Za-z][^\]]{0,40})\]', '', report)
-    report = re.sub(r'[ \t]+', ' ', report)
-
-    # Use the global source_map built at the start (preserves [Sx] codes end-to-end)
-    report = _render_citations(report, source_map, format_options)
-
-    return report, items
+    return final_report, items
 
 
 def generate_report(
