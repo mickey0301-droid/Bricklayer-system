@@ -302,7 +302,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -319,7 +319,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -336,7 +336,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -353,7 +353,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -370,7 +370,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -387,7 +387,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -404,7 +404,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -421,7 +421,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -438,7 +438,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -455,7 +455,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -472,7 +472,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -489,7 +489,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -506,7 +506,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -523,7 +523,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "US",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -540,7 +540,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "UK",
+    "region": "英國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -557,7 +557,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "UK",
+    "region": "英國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -574,7 +574,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "UK",
+    "region": "英國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -591,7 +591,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "UK",
+    "region": "英國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -608,7 +608,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "UK",
+    "region": "英國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -625,7 +625,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "France",
+    "region": "法國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -642,7 +642,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "Germany",
+    "region": "德國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -659,7 +659,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "Russia",
+    "region": "俄羅斯",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -676,7 +676,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "Japan",
+    "region": "日本",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -693,7 +693,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "S. Korea",
+    "region": "韓國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -710,7 +710,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "Qatar",
+    "region": "卡達",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -727,7 +727,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "Israel",
+    "region": "以色列",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -2274,7 +2274,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "",
+    "region": "美國",
     "enabled": true,
     "description": "",
     "readonly": false,
@@ -2291,7 +2291,7 @@
     "category": [
       "自訂國際媒體"
     ],
-    "region": "",
+    "region": "英國",
     "enabled": true,
     "description": "",
     "readonly": false,
