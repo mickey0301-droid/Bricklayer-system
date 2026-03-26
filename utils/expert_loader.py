@@ -8,6 +8,7 @@ Priority logic for each expert:
 
 import requests
 import feedparser
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from dateutil import parser as _dateutil_parser
 
@@ -91,13 +92,14 @@ def _fetch_from_rss_url(rss_url: str, expert_name: str) -> list:
 
 def _fetch_from_google_news(search_names: list, expert_name: str) -> list:
     """Query Google News RSS for each search name and deduplicate."""
+    import urllib.parse
+
     seen_urls: set = set()
     items = []
 
     for name in search_names:
         if not name:
             continue
-        import urllib.parse
         query = urllib.parse.quote(f'"{name}"')
         # Try both zh-TW and en-US to maximise coverage
         for lang_params in [
@@ -106,7 +108,12 @@ def _fetch_from_google_news(search_names: list, expert_name: str) -> list:
         ]:
             url = f"https://news.google.com/rss/search?q={query}&{lang_params}"
             try:
-                feed = feedparser.parse(url)
+                # Use requests.get with an explicit timeout so we never hang.
+                # feedparser.parse(url) calls urllib with no timeout and can
+                # block indefinitely; passing bytes avoids that issue.
+                resp = requests.get(url, headers=_HEADERS, timeout=_TIMEOUT)
+                resp.raise_for_status()
+                feed = feedparser.parse(resp.content)
             except Exception as e:
                 print(f"[ExpertLoader] Google News error for '{name}': {e}")
                 continue
@@ -182,14 +189,22 @@ def fetch_expert_items(selected_experts=None) -> list:
             or (e.get("name_zh") or "").strip() in selected_names
         ]
 
+    active_experts = [e for e in experts if e.get("enabled", True)]
+
     all_items = []
-    for expert in experts:
-        if not expert.get("enabled", True):
-            continue
+
+    def _fetch_one(expert):
         try:
-            items = search_expert_news(expert)
-            all_items.extend(items)
+            return search_expert_news(expert)
         except Exception as e:
             print(f"[ExpertLoader] fetch failed for {expert.get('name')}: {e}")
+            return []
+
+    # Fetch all experts in parallel (up to 8 concurrent) so the stage does not
+    # block sequentially on each expert's network requests.
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = {executor.submit(_fetch_one, e): e for e in active_experts}
+        for future in as_completed(futures):
+            all_items.extend(future.result())
 
     return all_items
