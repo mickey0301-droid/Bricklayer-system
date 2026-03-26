@@ -24,6 +24,7 @@ AUTO_EXPORT_STATE_PATH = CONFIG_DIR / "auto_export_state.json"
 FORMATS_PATH = CONFIG_DIR / "formats.json"
 GLOBAL_MEDIA_PATH = CONFIG_DIR / "global_media.json"
 
+# 固定抓法（特殊 scraper，不可編輯）
 FIXED_CN_OFFICIAL_SOURCES = [
     {
         "name": "人民日報",
@@ -61,53 +62,46 @@ FIXED_CN_OFFICIAL_SOURCES = [
         "readonly": True,
         "fixed": True,
     },
+]
+
+# 可編輯的中共官媒預設值（type=rss，使用 Google News zh-CN RSS）
+# 若使用者的 sources 中已有同名來源，則不重複注入。
+CN_OFFICIAL_EDITABLE_DEFAULTS = [
     {
         "name": "新華社",
-        "subsource": "xinhua",
-        "type": "cn_official",
-        "url": "",
+        "type": "rss",
+        "url": "https://news.google.com/rss/search?q=%22%E6%96%B0%E5%8D%8E%E7%A4%BE%22&hl=zh-CN&gl=SG&ceid=SG:zh-Hans",
         "category": ["中共官媒"],
         "region": "CN",
         "enabled": True,
-        "description": "固定抓法（唯讀）",
-        "readonly": True,
-        "fixed": True,
+        "description": "Google News zh-CN（可編輯）",
     },
     {
         "name": "中國外交部記者會",
-        "subsource": "mfa_press",
-        "type": "cn_official",
-        "url": "",
+        "type": "rss",
+        "url": "https://news.google.com/rss/search?q=%22%E4%B8%AD%E5%9B%BD%E5%A4%96%E4%BA%A4%E9%83%A8%E8%AE%B0%E8%80%85%E4%BC%9A%22&hl=zh-CN&gl=SG&ceid=SG:zh-Hans",
         "category": ["中共官媒", "外交"],
         "region": "CN",
         "enabled": True,
-        "description": "固定抓法（唯讀）",
-        "readonly": True,
-        "fixed": True,
+        "description": "Google News zh-CN（可編輯）",
     },
     {
         "name": "中國國防部記者會",
-        "subsource": "mod_press",
-        "type": "cn_official",
-        "url": "",
+        "type": "rss",
+        "url": "https://news.google.com/rss/search?q=%22%E4%B8%AD%E5%9B%BD%E5%9B%BD%E9%98%B2%E9%83%A8%E8%AE%B0%E8%80%85%E4%BC%9A%22&hl=zh-CN&gl=SG&ceid=SG:zh-Hans",
         "category": ["中共官媒", "國防"],
         "region": "CN",
         "enabled": True,
-        "description": "固定抓法（唯讀）",
-        "readonly": True,
-        "fixed": True,
+        "description": "Google News zh-CN（可編輯）",
     },
     {
         "name": "國台辦",
-        "subsource": "taiwan_affairs_office",
-        "type": "cn_official",
-        "url": "",
+        "type": "rss",
+        "url": "https://news.google.com/rss/search?q=%22%E5%9B%BD%E5%8F%B0%E5%8A%9E%22&hl=zh-CN&gl=SG&ceid=SG:zh-Hans",
         "category": ["中共官媒", "涉台"],
         "region": "CN",
         "enabled": True,
-        "description": "固定抓法（唯讀）",
-        "readonly": True,
-        "fixed": True,
+        "description": "Google News zh-CN（可編輯）",
     },
 ]
 
@@ -426,6 +420,12 @@ def load_sources(editable_only=False):
         editable.append(n)
 
     editable = [x for x in editable if not x.get("fixed")]
+
+    # 注入可編輯中共官媒預設值（若使用者尚未自訂同名來源）
+    existing_names = {s["name"] for s in editable}
+    for item in CN_OFFICIAL_EDITABLE_DEFAULTS:
+        if item["name"] not in existing_names:
+            editable.append(normalize_source(item))
 
     global_sources = load_global_media_sources()
 

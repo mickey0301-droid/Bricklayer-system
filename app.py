@@ -1127,6 +1127,7 @@ elif selected_page == "Sources":
     tw_sources = [s for s in editable_sources if "自訂台灣媒體" in (s.get("category") or [])]
     intl_sources = [s for s in editable_sources if "自訂國際媒體" in (s.get("category") or [])]
     global_sources_ui = [s for s in all_sources if "全球媒體" in (s.get("category") or [])]
+    cn_editable_sources = [s for s in editable_sources if "中共官媒" in (s.get("category") or [])]
 
     # ── 新增來源 ──────────────────────────────────────────────────────────────
     with src_tab_add:
@@ -1609,24 +1610,123 @@ elif selected_page == "Sources":
 
     # ── 中國媒體 ──────────────────────────────────────────────────────────────
     with src_tab_cn:
-        with st.expander("🔍 Google News RSS 關鍵字篩選", expanded=False):
-            st.caption("此類別的 domain 來源會以下列關鍵字向 Google News 查詢，只抓取符合的報導。用 OR 分隔多個關鍵字，留空代表不篩選。")
-            _kw_cn = st.text_area(
-                "中國媒體 關鍵字",
-                value=_cat_kw.get("中國媒體", DEFAULT_CATEGORY_KEYWORDS.get("中國媒體", "")),
-                height=80,
-                key="kw_editor_cn",
-                label_visibility="collapsed",
+
+        # ── 新增中共官媒 ───────────────────────────────────────────────────────
+        with st.expander("單筆新增中共官媒", expanded=False):
+            st.caption(
+                "填入簡體字名稱後可自動生成 Google News zh-CN RSS URL，"
+                "也可直接貼上自訂 RSS URL 覆蓋。"
             )
-            if st.button("儲存關鍵字", key="save_kw_cn", use_container_width=True):
-                _cat_kw["中國媒體"] = _kw_cn.strip()
-                save_category_keywords(_cat_kw)
-                st.success("關鍵字已儲存。")
+            c1, c2 = st.columns(2)
+            with c1:
+                cn_new_name    = st.text_input("顯示名稱（繁體可）", key="cn_new_name")
+                cn_new_sc      = st.text_input(
+                    "簡體字名稱（用於生成搜尋 URL）",
+                    key="cn_new_sc",
+                    help="留空時使用顯示名稱作為搜尋關鍵字",
+                )
+                _cn_sub_opts   = ["（無）", "外交", "軍事", "國防", "涉台"]
+                cn_new_subcat  = st.selectbox("次分類", options=_cn_sub_opts, key="cn_new_subcat")
+            with c2:
+                _sc_for_url    = cn_new_sc.strip() or cn_new_name.strip()
+                import urllib.parse as _ulp
+                _auto_url = (
+                    "https://news.google.com/rss/search?q="
+                    + _ulp.quote(f'"{_sc_for_url}"')
+                    + "&hl=zh-CN&gl=SG&ceid=SG:zh-Hans"
+                ) if _sc_for_url else ""
+                cn_new_url  = st.text_input(
+                    "RSS URL（留空則使用下方自動生成的 URL）",
+                    key="cn_new_url",
+                )
+                st.caption(f"自動生成 URL：`{_auto_url}`" if _auto_url else "")
+                cn_new_enabled = st.checkbox("enabled", value=True, key="cn_new_enabled")
+
+            if st.button("新增中共官媒", key="cn_add_btn"):
+                _name = cn_new_name.strip()
+                if not _name:
+                    st.error("請填入顯示名稱。")
+                else:
+                    _url  = cn_new_url.strip() or _auto_url
+                    _cats = ["中共官媒"]
+                    if cn_new_subcat != "（無）":
+                        _cats.append(cn_new_subcat)
+                    _new_src = normalize_source({
+                        "name":     _name,
+                        "type":     "rss",
+                        "url":      _url,
+                        "category": _cats,
+                        "region":   "CN",
+                        "enabled":  cn_new_enabled,
+                        "description": f"Google News zh-CN（{cn_new_sc.strip() or _name}）",
+                    })
+                    _current = load_sources(editable_only=True)
+                    _current = [x for x in _current if x.get("name") != _name]
+                    _current.append(_new_src)
+                    save_sources(_current)
+                    st.success(f"已新增「{_name}」。")
+                    st.session_state["_src_version"] = _src_v + 1
+                    st.rerun()
+
+        st.markdown("### 可編輯中共官媒")
+        st.caption(
+            f"共 {len(cn_editable_sources)} 筆（含預設值）。"
+            "可直接修改 URL 或次分類，儲存後生效。"
+        )
+        cn_ed_df = _build_source_editor_df(cn_editable_sources, blank_rows=3)
+        edited_cn_df = st.data_editor(
+            cn_ed_df,
+            num_rows="dynamic",
+            use_container_width=True,
+            height=320,
+            key=f"cn_sources_editor_{_src_v}",
+            column_config={
+                "name":        st.column_config.TextColumn("名稱"),
+                "type":        st.column_config.SelectboxColumn("type", options=["rss", "domain"]),
+                "url":         st.column_config.TextColumn("RSS URL（zh-CN）"),
+                "category":    st.column_config.TextColumn("category"),
+                "region":      st.column_config.TextColumn("region"),
+                "enabled":     st.column_config.CheckboxColumn("enabled", default=True),
+                "description": st.column_config.TextColumn("description"),
+            },
+        )
+        c1, c2 = st.columns(2)
+        with c1:
+            if st.button("儲存中共官媒編輯", key="save_cn_sources", use_container_width=True):
+                rows = _clean_batch_df(edited_cn_df)
+                current = load_sources(editable_only=True)
+                non_cn = [s for s in current if "中共官媒" not in (s.get("category") or [])]
+                new_cn = []
+                for row in rows:
+                    item = editor_row_to_source(row)
+                    if item["name"]:
+                        if "中共官媒" not in (item.get("category") or []):
+                            item.setdefault("category", [])
+                            item["category"] = ["中共官媒"] + item["category"]
+                        new_cn.append(item)
+                save_sources(non_cn + new_cn)
+                st.success("中共官媒清單已儲存。")
+                st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
-        cn_official_sources = [s for s in fixed_sources if s.get("type") == "cn_official"]
-        st.caption(f"共 {len(cn_official_sources)} 筆（唯讀）")
-        _cn_rows = [source_to_editor_row(x) for x in cn_official_sources]
-        _cn_df = pd.DataFrame(_cn_rows) if _cn_rows else pd.DataFrame(columns=["name", "category", "description"])
+        with c2:
+            del_cn = st.multiselect(
+                "刪除來源",
+                options=[s["name"] for s in cn_editable_sources],
+                key="delete_cn_names",
+            )
+            if st.button("刪除選取", key="delete_cn_btn", use_container_width=True):
+                current = load_sources(editable_only=True)
+                current = [x for x in current if x.get("name") not in del_cn]
+                save_sources(current)
+                st.success(f"已刪除 {len(del_cn)} 筆。")
+                st.session_state["_src_version"] = _src_v + 1
+                st.rerun()
+
+        st.markdown("### 固定中共官媒（唯讀）")
+        st.caption("人民日報、新聞聯播、解放軍報使用特殊 scraper，不開放編輯。")
+        cn_fixed = [s for s in fixed_sources if s.get("type") == "cn_official"]
+        _cn_rows = [source_to_editor_row(x) for x in cn_fixed]
+        _cn_df   = pd.DataFrame(_cn_rows) if _cn_rows else pd.DataFrame(columns=["name", "category", "description"])
         st.dataframe(_cn_df[["name", "category", "description"]], use_container_width=True, hide_index=True)
 
 
