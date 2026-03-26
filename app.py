@@ -580,9 +580,17 @@ _GITHUB_SYNC_WARNING = (
 
 
 def _sync_notify(ok: bool) -> None:
-    """Show a persistent warning banner if GitHub sync did not succeed."""
+    """Store sync failure in session_state so it persists through st.rerun()."""
     if not ok:
-        st.warning(_GITHUB_SYNC_WARNING)
+        st.session_state["_show_sync_warning"] = True
+
+
+def _maybe_show_sync_warning() -> None:
+    """Call once near the top of the page to display any pending sync warning."""
+    if st.session_state.pop("_show_sync_warning", False):
+        err = st.session_state.pop("_github_sync_error", "")
+        detail = f"\n\n**錯誤詳情：** `{err}`" if err else ""
+        st.warning(_GITHUB_SYNC_WARNING + detail)
 
 
 def _build_source_editor_df(source_items, blank_rows=8):
@@ -944,6 +952,9 @@ _PAGE_TITLES = {
 }
 st.title(_PAGE_TITLES.get(selected_page, selected_page))
 
+
+# ── 顯示任何待顯示的 GitHub 同步警告（跨 st.rerun() 持久）──────────────
+_maybe_show_sync_warning()
 
 # =========================================================
 # Briefings

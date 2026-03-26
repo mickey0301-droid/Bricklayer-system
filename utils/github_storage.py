@@ -76,11 +76,16 @@ def commit_file(local_path: Path, repo_path: str, message: str) -> bool:
     Returns True on success, False if credentials are not configured or
     the API call fails.  Never raises — callers should treat failure as
     a silent no-op (data is still saved locally).
+
+    On failure the reason is stored in st.session_state["_github_sync_error"]
+    so it can be displayed after st.rerun().
     """
+    _set_sync_error = _make_sync_error_setter()
     try:
         token, owner, repo, branch = _get_config()
         if not (token and owner and repo):
-            return False  # No credentials configured; skip silently
+            _set_sync_error("GitHub 憑證未設定（GITHUB_TOKEN / GITHUB_OWNER / GITHUB_REPO）")
+            return False
 
         content  = local_path.read_text(encoding="utf-8")
         encoded  = base64.b64encode(content.encode("utf-8")).decode("ascii")
@@ -101,7 +106,22 @@ def commit_file(local_path: Path, repo_path: str, message: str) -> bool:
             payload["sha"] = sha
 
         r = requests.put(api_url, headers=headers, json=payload, timeout=15)
-        return r.status_code in (200, 201)
+        ok = r.status_code in (200, 201)
+        if not ok:
+            _set_sync_error(f"GitHub API 回應 {r.status_code}：{r.text[:200]}")
+        return ok
 
-    except Exception:
+    except Exception as exc:
+        _set_sync_error(f"例外錯誤：{exc}")
         return False
+
+
+def _make_sync_error_setter():
+    """Return a callable that stores a sync-error message in st.session_state if available."""
+    def _set(msg: str):
+        try:
+            import streamlit as st
+            st.session_state["_github_sync_error"] = msg
+        except Exception:
+            pass
+    return _set
