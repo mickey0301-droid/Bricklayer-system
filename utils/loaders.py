@@ -512,7 +512,9 @@ def load_sources(editable_only=False):
     return all_sources
 
 
-def save_sources(sources):
+def save_sources(sources) -> bool:
+    """Save sources locally and commit to GitHub.  Returns True if GitHub
+    sync succeeded, False if local-only (credentials missing or API error)."""
     normalized = []
     for item in (sources or []):
         n = normalize_source(item)
@@ -522,10 +524,10 @@ def save_sources(sources):
     write_json(SOURCES_USER_PATH, normalized)
     try:
         from utils.github_storage import commit_file
-        commit_file(SOURCES_USER_PATH, "config/sources_user.json",
-                    "chore: update sources_user.json via app")
+        return commit_file(SOURCES_USER_PATH, "config/sources_user.json",
+                           "chore: update sources_user.json via app")
     except Exception:
-        pass
+        return False
 
 
 def load_experts():
@@ -629,15 +631,17 @@ def experts_as_sources() -> list:
     return sources
 
 
-def save_experts(experts):
+def save_experts(experts) -> bool:
+    """Save experts locally and commit to GitHub.  Returns True if GitHub
+    sync succeeded, False if local-only (credentials missing or API error)."""
     normalized = [normalize_expert(item) for item in (experts or [])]
     write_json(EXPERTS_USER_PATH, normalized)
     try:
         from utils.github_storage import commit_file
-        commit_file(EXPERTS_USER_PATH, "config/experts_user.json",
-                    "chore: update experts_user.json via app")
+        return commit_file(EXPERTS_USER_PATH, "config/experts_user.json",
+                           "chore: update experts_user.json via app")
     except Exception:
-        pass
+        return False
 
 
 _INSIGHTS_USER_PATH = "config/insights_user.json"
@@ -869,19 +873,19 @@ def load_category_keywords() -> dict:
     return dict(DEFAULT_CATEGORY_KEYWORDS)
 
 
-def save_category_keywords(keywords: dict):
-    """
-    儲存各類別關鍵字設定至使用者自訂檔（不受 git pull 影響）。
-    """
+def save_category_keywords(keywords: dict) -> bool:
+    """Save category keywords locally and commit to GitHub.  Returns True if
+    GitHub sync succeeded, False if local-only (credentials missing or error)."""
     ensure_config_dir()
     with open(_CATEGORY_KEYWORDS_USER_PATH, "w", encoding="utf-8") as f:
         json.dump(keywords, f, ensure_ascii=False, indent=2)
     try:
         from utils.github_storage import commit_file
-        commit_file(Path(_CATEGORY_KEYWORDS_USER_PATH), "config/category_keywords_user.json",
-                    "chore: update category_keywords_user.json via app")
+        return commit_file(Path(_CATEGORY_KEYWORDS_USER_PATH),
+                           "config/category_keywords_user.json",
+                           "chore: update category_keywords_user.json via app")
     except Exception:
-        pass
+        return False
 
 
 def get_source_categories(sources=None):

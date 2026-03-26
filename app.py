@@ -572,6 +572,19 @@ def _append_blank_rows(df: pd.DataFrame, blank_rows: int = 8):
     return pd.concat([df, blank], ignore_index=True)
 
 
+_GITHUB_SYNC_WARNING = (
+    "⚠️ 資料已儲存至本機，但 **GitHub 同步失敗**。"
+    "重啟後資料可能消失。\n\n"
+    "請確認 Streamlit secrets 中已設定 `GITHUB_TOKEN`、`GITHUB_OWNER`、`GITHUB_REPO`。"
+)
+
+
+def _sync_notify(ok: bool) -> None:
+    """Show a persistent warning banner if GitHub sync did not succeed."""
+    if not ok:
+        st.warning(_GITHUB_SYNC_WARNING)
+
+
 def _build_source_editor_df(source_items, blank_rows=8):
     columns = ["name", "type", "domain", "language", "url", "category", "region", "enabled", "description"]
     rows = [source_to_editor_row(x) for x in source_items]
@@ -618,7 +631,7 @@ def _render_expert_tab(
         )
         if st.button("儲存關鍵字", key=f"exp_save_kw_{tab_key}", use_container_width=True):
             _cat_kw[category_label] = _kw_val.strip()
-            save_category_keywords(_cat_kw)
+            _sync_notify(save_category_keywords(_cat_kw))
             st.success("關鍵字已儲存。")
             st.rerun()
 
@@ -698,7 +711,7 @@ def _render_expert_tab(
                 st.error("至少要填中文名或英文名。")
             else:
                 _current.append(_new_item)
-                save_experts(_current)
+                _sync_notify(save_experts(_current))
                 st.success("已新增專家。")
                 st.rerun()
 
@@ -757,7 +770,7 @@ def _render_expert_tab(
                 _current.append(_item)
                 _name_set.add(_disp)
                 _added += 1
-            save_experts(_current)
+            _sync_notify(save_experts(_current))
             st.success(f"已批次加入 / 更新 {_added} 筆專家。")
             st.rerun()
 
@@ -791,7 +804,7 @@ def _render_expert_tab(
             _current = load_experts()
             _filtered_names = {display_expert_name(e) for e in filtered_experts}
             _others = [e for e in _current if display_expert_name(e) not in _filtered_names]
-            save_experts(_others + _cleaned)
+            _sync_notify(save_experts(_others + _cleaned))
             st.success("專家清單已儲存。")
             st.rerun()
     with _c2:
@@ -804,7 +817,7 @@ def _render_expert_tab(
         ):
             _current = load_experts()
             _current = [x for x in _current if display_expert_name(x) not in _del_names]
-            save_experts(_current)
+            _sync_notify(save_experts(_current))
             st.success(f"已刪除 {len(_del_names)} 筆專家。")
             st.rerun()
 
@@ -1433,7 +1446,7 @@ elif selected_page == "Sources":
                     st.error("來源名稱不可空白。")
                 else:
                     current.append(new_item)
-                    save_sources(current)
+                    _sync_notify(save_sources(current))
                     st.success(f"已新增來源至「{target_cat}」。")
                     st.session_state["_src_version"] = _src_v + 1
                     st.rerun()
@@ -1479,7 +1492,7 @@ elif selected_page == "Sources":
                     current.append(item)
                     name_set.add(item["name"])
                     added += 1
-                save_sources(current)
+                _sync_notify(save_sources(current))
                 st.success(f"已批次加入 {added} 筆來源至「{target_cat}」。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
@@ -1497,7 +1510,7 @@ elif selected_page == "Sources":
             )
             if st.button("儲存關鍵字", key="save_kw_tw", use_container_width=True):
                 _cat_kw["自訂台灣媒體"] = _kw_tw.strip()
-                save_category_keywords(_cat_kw)
+                _sync_notify(save_category_keywords(_cat_kw))
                 st.success("關鍵字已儲存。")
                 st.rerun()
         st.caption(f"共 {len(tw_sources)} 筆")
@@ -1534,7 +1547,7 @@ elif selected_page == "Sources":
                         if "自訂台灣媒體" not in (item.get("category") or []):
                             item["category"] = ["自訂台灣媒體"]
                         new_tw.append(item)
-                save_sources(non_tw + new_tw)
+                _sync_notify(save_sources(non_tw + new_tw))
                 st.success("台灣媒體清單已儲存。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
@@ -1543,7 +1556,7 @@ elif selected_page == "Sources":
             if st.button("刪除選取", key="delete_tw_btn", use_container_width=True):
                 current = load_sources(editable_only=True)
                 current = [x for x in current if x.get("name") not in del_tw]
-                save_sources(current)
+                _sync_notify(save_sources(current))
                 st.success(f"已刪除 {len(del_tw)} 筆。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
@@ -1593,7 +1606,7 @@ elif selected_page == "Sources":
             )
             if st.button("儲存關鍵字", key="save_kw_intl", use_container_width=True):
                 _cat_kw["自訂國際媒體"] = _kw_intl.strip()
-                save_category_keywords(_cat_kw)
+                _sync_notify(save_category_keywords(_cat_kw))
                 st.success("關鍵字已儲存。")
                 st.rerun()
         st.caption(f"共 {len(intl_sources)} 筆")
@@ -1630,7 +1643,7 @@ elif selected_page == "Sources":
                         if "自訂國際媒體" not in (item.get("category") or []):
                             item["category"] = ["自訂國際媒體"]
                         new_intl.append(item)
-                save_sources(non_intl + new_intl)
+                _sync_notify(save_sources(non_intl + new_intl))
                 st.success("國際媒體清單已儲存。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
@@ -1639,7 +1652,7 @@ elif selected_page == "Sources":
             if st.button("刪除選取", key="delete_intl_btn", use_container_width=True):
                 current = load_sources(editable_only=True)
                 current = [x for x in current if x.get("name") not in del_intl]
-                save_sources(current)
+                _sync_notify(save_sources(current))
                 st.success(f"已刪除 {len(del_intl)} 筆。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
@@ -1716,7 +1729,7 @@ elif selected_page == "Sources":
                                              if display_expert_name(e) not in
                                              {display_expert_name(x) for x in _imp_items}]
                                     _merged = _base + _imp_items
-                                save_experts(_merged)
+                                _sync_notify(save_experts(_merged))
                                 st.success(f"已匯入 {len(_imp_items)} 筆專家。")
                                 st.rerun()
                         except Exception as _e:
@@ -1775,7 +1788,7 @@ elif selected_page == "Sources":
             )
             if st.button("儲存關鍵字", key="save_kw_global", use_container_width=True):
                 _cat_kw["全球媒體"] = _kw_global.strip()
-                save_category_keywords(_cat_kw)
+                _sync_notify(save_category_keywords(_cat_kw))
                 st.success("關鍵字已儲存。")
                 st.rerun()
         st.caption(f"共 {len(global_sources_ui)} 筆（唯讀）")
@@ -1838,7 +1851,7 @@ elif selected_page == "Sources":
                     _current = load_sources(editable_only=True)
                     _current = [x for x in _current if x.get("name") != _name]
                     _current.append(_new_src)
-                    save_sources(_current)
+                    _sync_notify(save_sources(_current))
                     st.success(f"已新增「{_name}」。")
                     st.session_state["_src_version"] = _src_v + 1
                     st.rerun()
@@ -1902,7 +1915,7 @@ elif selected_page == "Sources":
                         if "中共官媒" not in (item.get("category") or []):
                             item["category"] = ["中共官媒"] + (item.get("category") or [])
                         new_cn.append(item)
-                save_sources(non_cn + new_cn)
+                _sync_notify(save_sources(non_cn + new_cn))
                 st.success("中共官媒清單已儲存。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
@@ -1915,7 +1928,7 @@ elif selected_page == "Sources":
             if st.button("刪除選取", key="delete_cn_btn", use_container_width=True):
                 current = load_sources(editable_only=True)
                 current = [x for x in current if x.get("name") not in del_cn]
-                save_sources(current)
+                _sync_notify(save_sources(current))
                 st.success(f"已刪除 {len(del_cn)} 筆。")
                 st.session_state["_src_version"] = _src_v + 1
                 st.rerun()
