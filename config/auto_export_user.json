@@ -1329,5 +1329,10 @@
       "multiphase_groups": []
     }
   ],
-  "drive_folders": []
+  "drive_folders": [],
+  "default_output_targets": [
+    "local"
+  ],
+  "default_drive_folder_id": "",
+  "default_local_folder": "outputs"
 }
