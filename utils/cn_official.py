@@ -50,11 +50,11 @@ def fetch_people_daily(target_date: datetime) -> list[dict]:
     items = []
     seen_titles = set()
 
-    yymm_no_slash = target_date.strftime("%Y-%m")
+    yymm = target_date.strftime("%Y%m")   # e.g. "202603" — no dash, required by the site
     dd = target_date.strftime("%d")
 
     for p in range(1, 21):
-        url = f"https://paper.people.com.cn/rmrb/pc/layout/{yymm_no_slash}/{dd}/node_{p:02d}.html"
+        url = f"https://paper.people.com.cn/rmrb/pc/layout/{yymm}/{dd}/node_{p:02d}.html"
         try:
             r = requests.get(url, headers=HEADERS, timeout=10)
             r.raise_for_status()
