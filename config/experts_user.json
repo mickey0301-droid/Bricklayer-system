@@ -1,0 +1,6826 @@
+[
+  {
+    "name_zh": "丁冬漢",
+    "name_sc": "丁冬汉",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海外國語大學英國研究中心",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "UK",
+    "rss_url": "",
+    "name": "丁冬漢",
+    "search_names": [
+      "丁冬漢",
+      "丁冬汉"
+    ]
+  },
+  {
+    "name_zh": "丁純",
+    "name_sc": "丁纯",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學歐洲問題研究中心",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "丁純",
+    "search_names": [
+      "丁純",
+      "丁纯"
+    ]
+  },
+  {
+    "name_zh": "嚴安林",
+    "name_sc": "严安林",
+    "name_en": "Yan Anlin",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海市臺灣研究會",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "嚴安林",
+    "search_names": [
+      "嚴安林",
+      "严安林",
+      "Yan Anlin"
+    ]
+  },
+  {
+    "name_zh": "喬新生",
+    "name_sc": "乔新生",
+    "name_en": "Qiao Xinsheng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "海峽兩岸關係法學研究會",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "喬新生",
+    "search_names": [
+      "喬新生",
+      "乔新生",
+      "Qiao Xinsheng"
+    ]
+  },
+  {
+    "name_zh": "仇朝兵",
+    "name_sc": "仇朝兵",
+    "name_en": "Qiu Chaobing",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "仇朝兵",
+    "search_names": [
+      "仇朝兵",
+      "Qiu Chaobing"
+    ]
+  },
+  {
+    "name_zh": "仇長根",
+    "name_sc": "仇长根",
+    "name_en": "Qiu Changgen",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "華東師範大學國際關係與地區發展研究所",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "仇長根",
+    "search_names": [
+      "仇長根",
+      "仇长根",
+      "Qiu Changgen"
+    ]
+  },
+  {
+    "name_zh": "任曉",
+    "name_sc": "任晓",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學中國外交政策研究中心",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "任曉",
+    "search_names": [
+      "任曉",
+      "任晓"
+    ]
+  },
+  {
+    "name_zh": "余克禮",
+    "name_sc": "余克礼",
+    "name_en": "Yu Keli",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "CN",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "余克禮",
+    "search_names": [
+      "余克禮",
+      "余克礼",
+      "Yu Keli"
+    ]
+  },
+  {
+    "name_zh": "俞新天",
+    "name_sc": "俞新天",
+    "name_en": "Yu Xintian",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海台灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "俞新天",
+    "search_names": [
+      "俞新天",
+      "Yu Xintian"
+    ]
+  },
+  {
+    "name_zh": "信強",
+    "name_sc": "信强",
+    "name_en": "Xin Qiang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "信強",
+    "search_names": [
+      "信強",
+      "信强",
+      "Xin Qiang"
+    ]
+  },
+  {
+    "name_zh": "倪永傑",
+    "name_sc": "倪永杰",
+    "name_en": "Ni Yongjie",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "倪永傑",
+    "search_names": [
+      "倪永傑",
+      "倪永杰",
+      "Ni Yongjie"
+    ]
+  },
+  {
+    "name_zh": "黨俊",
+    "name_sc": "党俊",
+    "name_en": "Dang Jun",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "福建省社會科學院臺灣文獻資訊中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "黨俊",
+    "search_names": [
+      "黨俊",
+      "党俊",
+      "Dang Jun"
+    ]
+  },
+  {
+    "name_zh": "關照宇",
+    "name_sc": "关照宇",
+    "name_en": "Guan Zhaoyu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學一帶一路研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "關照宇",
+    "search_names": [
+      "關照宇",
+      "关照宇",
+      "Guan Zhaoyu"
+    ]
+  },
+  {
+    "name_zh": "馮仲平",
+    "name_sc": "冯仲平",
+    "name_en": "Feng Zhongping",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "馮仲平",
+    "search_names": [
+      "馮仲平",
+      "冯仲平",
+      "Feng Zhongping"
+    ]
+  },
+  {
+    "name_zh": "淩勝利",
+    "name_sc": "凌胜利",
+    "name_en": "Ling Shengli",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "外交學院國際關係研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "淩勝利",
+    "search_names": [
+      "淩勝利",
+      "凌胜利",
+      "Ling Shengli"
+    ]
+  },
+  {
+    "name_zh": "刁大明",
+    "name_sc": "刁大明",
+    "name_en": "Diao Daming",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國家發展與戰略研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "刁大明",
+    "search_names": [
+      "刁大明",
+      "Diao Daming"
+    ]
+  },
+  {
+    "name_zh": "劉作奎",
+    "name_sc": "刘作奎",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院歐洲研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "劉作奎",
+    "search_names": [
+      "劉作奎",
+      "刘作奎"
+    ]
+  },
+  {
+    "name_zh": "劉佳雁",
+    "name_sc": "刘佳雁",
+    "name_en": "Liu Jiayan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "劉佳雁",
+    "search_names": [
+      "劉佳雁",
+      "刘佳雁",
+      "Liu Jiayan"
+    ]
+  },
+  {
+    "name_zh": "劉軍紅",
+    "name_sc": "刘军红",
+    "name_en": "Liu Junhong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "劉軍紅",
+    "search_names": [
+      "劉軍紅",
+      "刘军红",
+      "Liu Junhong"
+    ]
+  },
+  {
+    "name_zh": "劉衛東",
+    "name_sc": "刘卫东",
+    "name_en": "Liu Weidong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "劉衛東",
+    "search_names": [
+      "劉衛東",
+      "刘卫东",
+      "Liu Weidong"
+    ]
+  },
+  {
+    "name_zh": "劉國深",
+    "name_sc": "刘国深",
+    "name_en": "Liu Guoshen",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院學術委員會/兩岸關係和平發展協同創新中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "劉國深",
+    "search_names": [
+      "劉國深",
+      "刘国深",
+      "Liu Guoshen"
+    ]
+  },
+  {
+    "name_zh": "劉永濤",
+    "name_sc": "刘永涛",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "劉永濤",
+    "search_names": [
+      "劉永濤",
+      "刘永涛"
+    ]
+  },
+  {
+    "name_zh": "劉江永",
+    "name_sc": "刘江永",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學當代國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "劉江永",
+    "search_names": [
+      "劉江永",
+      "刘江永"
+    ]
+  },
+  {
+    "name_zh": "劉瀾昌",
+    "name_sc": "刘澜昌",
+    "name_en": "Liu Lanchang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "香港中觀研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "劉瀾昌",
+    "search_names": [
+      "劉瀾昌",
+      "刘澜昌",
+      "Liu Lanchang"
+    ]
+  },
+  {
+    "name_zh": "劉相平",
+    "name_sc": "刘相平",
+    "name_en": "Liu Xiangping",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "南京大學臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "劉相平",
+    "search_names": [
+      "劉相平",
+      "刘相平",
+      "Liu Xiangping"
+    ]
+  },
+  {
+    "name_zh": "劉英",
+    "name_sc": "刘英",
+    "name_en": "Liu Ying",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學重陽研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "劉英",
+    "search_names": [
+      "劉英",
+      "刘英",
+      "Liu Ying"
+    ]
+  },
+  {
+    "name_zh": "劉鳴",
+    "name_sc": "刘鸣",
+    "name_en": "Liu Ming",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海社會科學院國際關係研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "劉鳴",
+    "search_names": [
+      "劉鳴",
+      "刘鸣",
+      "Liu Ming"
+    ]
+  },
+  {
+    "name_zh": "包承柯",
+    "name_sc": "包承柯",
+    "name_en": "Bao Chengke",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "華東師範大學兩岸交流與區域發展研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "包承柯",
+    "search_names": [
+      "包承柯",
+      "Bao Chengke"
+    ]
+  },
+  {
+    "name_zh": "千勇",
+    "name_sc": "千勇",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "浙江大學韓國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Korea",
+    "rss_url": "",
+    "name": "千勇",
+    "search_names": [
+      "千勇"
+    ]
+  },
+  {
+    "name_zh": "葉宏明",
+    "name_sc": "叶宏明",
+    "name_en": "Ye Hongming",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究中心兩岸融合發展與國家統一政策模擬實驗室文獻資訊中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "葉宏明",
+    "search_names": [
+      "葉宏明",
+      "叶宏明",
+      "Ye Hongming"
+    ]
+  },
+  {
+    "name_zh": "呂祥",
+    "name_sc": "吕祥",
+    "name_en": "Lu Xiang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院世界政治研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "呂祥",
+    "search_names": [
+      "呂祥",
+      "吕祥",
+      "Lu Xiang"
+    ]
+  },
+  {
+    "name_zh": "呂耀東",
+    "name_sc": "吕耀东",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院日本研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "呂耀東",
+    "search_names": [
+      "呂耀東",
+      "吕耀东"
+    ]
+  },
+  {
+    "name_zh": "呂超",
+    "name_sc": "吕超",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "遼寧社科院朝鮮韓國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Korea",
+    "rss_url": "",
+    "name": "呂超",
+    "search_names": [
+      "呂超",
+      "吕超"
+    ]
+  },
+  {
+    "name_zh": "吳士存",
+    "name_sc": "吴士存",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "南海研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "吳士存",
+    "search_names": [
+      "吳士存",
+      "吴士存"
+    ]
+  },
+  {
+    "name_zh": "吳宜",
+    "name_sc": "吴宜",
+    "name_en": "Wu Yi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "吳宜",
+    "search_names": [
+      "吳宜",
+      "吴宜",
+      "Wu Yi"
+    ]
+  },
+  {
+    "name_zh": "吳強",
+    "name_sc": "吴强",
+    "name_en": "Wu Qiang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學政治系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "吳強",
+    "search_names": [
+      "吳強",
+      "吴强",
+      "Wu Qiang"
+    ]
+  },
+  {
+    "name_zh": "吳心伯",
+    "name_sc": "吴心伯",
+    "name_en": "Wu Xinbo",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "吳心伯",
+    "search_names": [
+      "吳心伯",
+      "吴心伯",
+      "Wu Xinbo"
+    ]
+  },
+  {
+    "name_zh": "周世儉",
+    "name_sc": "周世俭",
+    "name_en": "Zhou Shijian",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學中美關係研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "周世儉",
+    "search_names": [
+      "周世儉",
+      "周世俭",
+      "Zhou Shijian"
+    ]
+  },
+  {
+    "name_zh": "周志懷",
+    "name_sc": "周志怀",
+    "name_en": "Zhou Zhihuai",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "周志懷",
+    "search_names": [
+      "周志懷",
+      "周志怀",
+      "Zhou Zhihuai"
+    ]
+  },
+  {
+    "name_zh": "周方銀",
+    "name_sc": "周方银",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廣東外語外貿大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "周方銀",
+    "search_names": [
+      "周方銀",
+      "周方银"
+    ]
+  },
+  {
+    "name_zh": "周永生",
+    "name_sc": "周永生",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "外交學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "周永生",
+    "search_names": [
+      "周永生"
+    ]
+  },
+  {
+    "name_zh": "周波",
+    "name_sc": "周波",
+    "name_en": "Zhou Bo",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學戰略安全中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "周波",
+    "search_names": [
+      "周波",
+      "Zhou Bo"
+    ]
+  },
+  {
+    "name_zh": "唐曉陽",
+    "name_sc": "唐晓阳",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學國際關係",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "唐曉陽",
+    "search_names": [
+      "唐曉陽",
+      "唐晓阳"
+    ]
+  },
+  {
+    "name_zh": "唐永紅",
+    "name_sc": "唐永红",
+    "name_en": "Tang Yonghong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "唐永紅",
+    "search_names": [
+      "唐永紅",
+      "唐永红",
+      "Tang Yonghong"
+    ]
+  },
+  {
+    "name_zh": "夏樂",
+    "name_sc": "夏乐",
+    "name_en": "Xia Le",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "平安科技研究部",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "夏樂",
+    "search_names": [
+      "夏樂",
+      "夏乐",
+      "Xia Le"
+    ]
+  },
+  {
+    "name_zh": "孔元",
+    "name_sc": "孔元",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院歐洲研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "孔元",
+    "search_names": [
+      "孔元"
+    ]
+  },
+  {
+    "name_zh": "孫亞夫",
+    "name_sc": "孙亚夫",
+    "name_en": "Sun Yafu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "孫亞夫",
+    "search_names": [
+      "孫亞夫",
+      "孙亚夫",
+      "Sun Yafu"
+    ]
+  },
+  {
+    "name_zh": "孫成昊",
+    "name_sc": "孙成昊",
+    "name_en": "Sun Chenghao",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "孫成昊",
+    "search_names": [
+      "孫成昊",
+      "孙成昊",
+      "Sun Chenghao"
+    ]
+  },
+  {
+    "name_zh": "孫杰",
+    "name_sc": "孙杰",
+    "name_en": "Sun Jie",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "孫杰",
+    "search_names": [
+      "孫杰",
+      "孙杰",
+      "Sun Jie"
+    ]
+  },
+  {
+    "name_zh": "孫立鵬",
+    "name_sc": "孙立鹏",
+    "name_en": "Sun Lipeng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "孫立鵬",
+    "search_names": [
+      "孫立鵬",
+      "孙立鹏",
+      "Sun Lipeng"
+    ]
+  },
+  {
+    "name_zh": "季燁",
+    "name_sc": "季烨",
+    "name_en": "Ji Ye",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究中心涉台外交研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "季燁",
+    "search_names": [
+      "季燁",
+      "季烨",
+      "Ji Ye"
+    ]
+  },
+  {
+    "name_zh": "宋國友",
+    "name_sc": "宋国友",
+    "name_en": "Song Guoyou",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "宋國友",
+    "search_names": [
+      "宋國友",
+      "宋国友",
+      "Song Guoyou"
+    ]
+  },
+  {
+    "name_zh": "宋魯鄭",
+    "name_sc": "宋鲁郑",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學中國研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "宋魯鄭",
+    "search_names": [
+      "宋魯鄭",
+      "宋鲁郑"
+    ]
+  },
+  {
+    "name_zh": "屠新泉",
+    "name_sc": "屠新泉",
+    "name_en": "Tu Xinquan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "對外經貿大學中國WTO研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "屠新泉",
+    "search_names": [
+      "屠新泉",
+      "Tu Xinquan"
+    ]
+  },
+  {
+    "name_zh": "崔洪建",
+    "name_sc": "崔洪建",
+    "name_en": "Cui Hongjian",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院歐洲研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "崔洪建",
+    "search_names": [
+      "崔洪建",
+      "Cui Hongjian"
+    ]
+  },
+  {
+    "name_zh": "崔磊",
+    "name_sc": "崔磊",
+    "name_en": "Cui Lei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "崔磊",
+    "search_names": [
+      "崔磊",
+      "Cui Lei"
+    ]
+  },
+  {
+    "name_zh": "巫永平",
+    "name_sc": "巫永平",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "清华大学台湾研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "巫永平",
+    "search_names": [
+      "巫永平"
+    ]
+  },
+  {
+    "name_zh": "龐中英",
+    "name_sc": "庞中英",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國海洋大學海洋發展研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "龐中英",
+    "search_names": [
+      "龐中英",
+      "庞中英"
+    ]
+  },
+  {
+    "name_zh": "龐中鵬",
+    "name_sc": "庞中鹏",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院日本研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "龐中鵬",
+    "search_names": [
+      "龐中鵬",
+      "庞中鹏"
+    ]
+  },
+  {
+    "name_zh": "康杰",
+    "name_sc": "康杰",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中国国际问题研究院欧亚所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "康杰",
+    "search_names": [
+      "康杰"
+    ]
+  },
+  {
+    "name_zh": "張冠華",
+    "name_sc": "张冠华",
+    "name_en": "Zhang Guanhua",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "張冠華",
+    "search_names": [
+      "張冠華",
+      "张冠华",
+      "Zhang Guanhua"
+    ]
+  },
+  {
+    "name_zh": "張華",
+    "name_sc": "张华",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中国社科院台湾研究所科研室",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "張華",
+    "search_names": [
+      "張華",
+      "张华"
+    ]
+  },
+  {
+    "name_zh": "張宇燕",
+    "name_sc": "张宇燕",
+    "name_en": "Zhang Yuyan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院世界政經研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "張宇燕",
+    "search_names": [
+      "張宇燕",
+      "张宇燕",
+      "Zhang Yuyan"
+    ]
+  },
+  {
+    "name_zh": "張家棟",
+    "name_sc": "张家栋",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "張家棟",
+    "search_names": [
+      "張家棟",
+      "张家栋"
+    ]
+  },
+  {
+    "name_zh": "張志新",
+    "name_sc": "张志新",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "張志新",
+    "search_names": [
+      "張志新",
+      "张志新"
+    ]
+  },
+  {
+    "name_zh": "張文生",
+    "name_sc": "张文生",
+    "name_en": "Zhang Wensheng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "張文生",
+    "search_names": [
+      "張文生",
+      "张文生",
+      "Zhang Wensheng"
+    ]
+  },
+  {
+    "name_zh": "張沱生",
+    "name_sc": "张沱生",
+    "name_en": "Zhang Tuosheng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際戰略研究基金會對外政策研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "張沱生",
+    "search_names": [
+      "張沱生",
+      "张沱生",
+      "Zhang Tuosheng"
+    ]
+  },
+  {
+    "name_zh": "張維為",
+    "name_sc": "张维为",
+    "name_en": "Zhang Weiwei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學中國研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "TW",
+    "rss_url": "",
+    "name": "張維為",
+    "search_names": [
+      "張維為",
+      "张维为",
+      "Zhang Weiwei"
+    ]
+  },
+  {
+    "name_zh": "張騰軍",
+    "name_sc": "张腾军",
+    "name_en": "Zhang Tengjun",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究員美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "張騰軍",
+    "search_names": [
+      "張騰軍",
+      "张腾军",
+      "Zhang Tengjun"
+    ]
+  },
+  {
+    "name_zh": "張蘊嶺",
+    "name_sc": "张蕴岭",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中国社会科学院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "張蘊嶺",
+    "search_names": [
+      "張蘊嶺",
+      "张蕴岭"
+    ]
+  },
+  {
+    "name_zh": "彭南生",
+    "name_sc": "彭南生",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "華中師範大學台灣與東亞研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "彭南生",
+    "search_names": [
+      "彭南生"
+    ]
+  },
+  {
+    "name_zh": "彭維學",
+    "name_sc": "彭维学",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "彭維學",
+    "search_names": [
+      "彭維學",
+      "彭维学"
+    ]
+  },
+  {
+    "name_zh": "彭韜",
+    "name_sc": "彭韬",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "華中師範大學台灣與東亞研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "彭韜",
+    "search_names": [
+      "彭韜",
+      "彭韬"
+    ]
+  },
+  {
+    "name_zh": "徐步",
+    "name_sc": "徐步",
+    "name_en": "Xu Bu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "徐步",
+    "search_names": [
+      "徐步",
+      "Xu Bu"
+    ]
+  },
+  {
+    "name_zh": "成曉河",
+    "name_sc": "成晓河",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院國際政治系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "成曉河",
+    "search_names": [
+      "成曉河",
+      "成晓河"
+    ]
+  },
+  {
+    "name_zh": "時殷弘",
+    "name_sc": "时殷弘",
+    "name_en": "Shi Yinhong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "時殷弘",
+    "search_names": [
+      "時殷弘",
+      "时殷弘",
+      "Shi Yinhong"
+    ]
+  },
+  {
+    "name_zh": "曾守正",
+    "name_sc": "曾守正",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "曾守正",
+    "search_names": [
+      "曾守正"
+    ]
+  },
+  {
+    "name_zh": "朱衛東",
+    "name_sc": "朱卫东",
+    "name_en": "Zhu Weidong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "朱衛東",
+    "search_names": [
+      "朱衛東",
+      "朱卫东",
+      "Zhu Weidong"
+    ]
+  },
+  {
+    "name_zh": "朱松嶺",
+    "name_sc": "朱松岭",
+    "name_en": "Zhu Songling",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京聯合大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "朱松嶺",
+    "search_names": [
+      "朱松嶺",
+      "朱松岭",
+      "Zhu Songling"
+    ]
+  },
+  {
+    "name_zh": "朱民",
+    "name_sc": "朱民",
+    "name_en": "Zhu Min",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學國際金融研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "朱民",
+    "search_names": [
+      "朱民",
+      "Zhu Min"
+    ]
+  },
+  {
+    "name_zh": "朱鋒",
+    "name_sc": "朱锋",
+    "name_en": "Zhu Feng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "南京大學國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "朱鋒",
+    "search_names": [
+      "朱鋒",
+      "朱锋",
+      "Zhu Feng"
+    ]
+  },
+  {
+    "name_zh": "朱穎",
+    "name_sc": "朱颖",
+    "name_en": "Zhu Ying",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國西南政法大學行政法學院法理學教研室",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "朱穎",
+    "search_names": [
+      "朱穎",
+      "朱颖",
+      "Zhu Ying"
+    ]
+  },
+  {
+    "name_zh": "李義虎",
+    "name_sc": "李义虎",
+    "name_en": "Li Yihu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "李義虎",
+    "search_names": [
+      "李義虎",
+      "李义虎",
+      "Li Yihu"
+    ]
+  },
+  {
+    "name_zh": "李崢",
+    "name_sc": "李峥",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院美國所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "李崢",
+    "search_names": [
+      "李崢",
+      "李峥"
+    ]
+  },
+  {
+    "name_zh": "李巍",
+    "name_sc": "李巍",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "李巍",
+    "search_names": [
+      "李巍"
+    ]
+  },
+  {
+    "name_zh": "李慶四",
+    "name_sc": "李庆四",
+    "name_en": "Li Qingsi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "李慶四",
+    "search_names": [
+      "李慶四",
+      "李庆四",
+      "Li Qingsi"
+    ]
+  },
+  {
+    "name_zh": "李振廣",
+    "name_sc": "李振广",
+    "name_en": "Li Zhenguang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京聯合大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "李振廣",
+    "search_names": [
+      "李振廣",
+      "李振广",
+      "Li Zhenguang"
+    ]
+  },
+  {
+    "name_zh": "李曉兵",
+    "name_sc": "李晓兵",
+    "name_en": "Li Xiaobing",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "南開大學台港澳法研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "TW",
+    "rss_url": "",
+    "name": "李曉兵",
+    "search_names": [
+      "李曉兵",
+      "李晓兵",
+      "Li Xiaobing"
+    ]
+  },
+  {
+    "name_zh": "李晨",
+    "name_sc": "李晨",
+    "name_en": "Li Chen",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "李晨",
+    "search_names": [
+      "李晨",
+      "Li Chen"
+    ]
+  },
+  {
+    "name_zh": "李海東",
+    "name_sc": "李海东",
+    "name_en": "Li Haidong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "外交學院國際關係研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "李海東",
+    "search_names": [
+      "李海東",
+      "李海东",
+      "Li Haidong"
+    ]
+  },
+  {
+    "name_zh": "李維一",
+    "name_sc": "李维一",
+    "name_en": "Li Weiyi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京聯合大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "李維一",
+    "search_names": [
+      "李維一",
+      "李维一",
+      "Li Weiyi"
+    ]
+  },
+  {
+    "name_zh": "李非",
+    "name_sc": "李非",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學港澳臺研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "李非",
+    "search_names": [
+      "李非"
+    ]
+  },
+  {
+    "name_zh": "李鵬",
+    "name_sc": "李鹏",
+    "name_en": "Li Peng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "李鵬",
+    "search_names": [
+      "李鵬",
+      "李鹏",
+      "Li Peng"
+    ]
+  },
+  {
+    "name_zh": "楊伯江",
+    "name_sc": "杨伯江",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院日本研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "楊伯江",
+    "search_names": [
+      "楊伯江",
+      "杨伯江"
+    ]
+  },
+  {
+    "name_zh": "楊光斌",
+    "name_sc": "杨光斌",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "楊光斌",
+    "search_names": [
+      "楊光斌",
+      "杨光斌"
+    ]
+  },
+  {
+    "name_zh": "楊希雨",
+    "name_sc": "杨希雨",
+    "name_en": "Yang Xiyu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "楊希雨",
+    "search_names": [
+      "楊希雨",
+      "杨希雨",
+      "Yang Xiyu"
+    ]
+  },
+  {
+    "name_zh": "楊明傑",
+    "name_sc": "杨明杰",
+    "name_en": "Yang Mingjie",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國臺灣研究會理事會/中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "楊明傑",
+    "search_names": [
+      "楊明傑",
+      "杨明杰",
+      "Yang Mingjie"
+    ]
+  },
+  {
+    "name_zh": "楊水清",
+    "name_sc": "杨水清",
+    "name_en": "Yang Shuiqing",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院美國研究所經濟研究室",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "楊水清",
+    "search_names": [
+      "楊水清",
+      "杨水清",
+      "Yang Shuiqing"
+    ]
+  },
+  {
+    "name_zh": "楊金發",
+    "name_sc": "杨金发",
+    "name_en": "Yang Jinfa",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "閩江學院海峽學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "楊金發",
+    "search_names": [
+      "楊金發",
+      "杨金发",
+      "Yang Jinfa"
+    ]
+  },
+  {
+    "name_zh": "林岡",
+    "name_sc": "林冈",
+    "name_en": "Lin Gang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海交通大學臺灣研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "林岡",
+    "search_names": [
+      "林岡",
+      "林冈",
+      "Lin Gang"
+    ]
+  },
+  {
+    "name_zh": "林勁",
+    "name_sc": "林劲",
+    "name_en": "Lin Jin",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院民進黨研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "林勁",
+    "search_names": [
+      "林勁",
+      "林劲",
+      "Lin Jin"
+    ]
+  },
+  {
+    "name_zh": "林毅夫",
+    "name_sc": "林毅夫",
+    "name_en": "Lin Yifu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國工商聯",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "林毅夫",
+    "search_names": [
+      "林毅夫",
+      "Lin Yifu"
+    ]
+  },
+  {
+    "name_zh": "柳英",
+    "name_sc": "柳英",
+    "name_en": "Liu Ying",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所經濟研究室",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "柳英",
+    "search_names": [
+      "柳英",
+      "Liu Ying"
+    ]
+  },
+  {
+    "name_zh": "樊吉社",
+    "name_sc": "樊吉社",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中共中央党校",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "樊吉社",
+    "search_names": [
+      "樊吉社"
+    ]
+  },
+  {
+    "name_zh": "樊綱",
+    "name_sc": "樊纲",
+    "name_en": "Fan Gang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中共經濟體制改革研究基金會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "樊綱",
+    "search_names": [
+      "樊綱",
+      "樊纲",
+      "Fan Gang"
+    ]
+  },
+  {
+    "name_zh": "殷存毅",
+    "name_sc": "殷存毅",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學臺灣研究院學術委員會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "殷存毅",
+    "search_names": [
+      "殷存毅"
+    ]
+  },
+  {
+    "name_zh": "畢穎達",
+    "name_sc": "毕颖达",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "山東大學國際政治與經濟系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Korea",
+    "rss_url": "",
+    "name": "畢穎達",
+    "search_names": [
+      "畢穎達",
+      "毕颖达"
+    ]
+  },
+  {
+    "name_zh": "江小涓",
+    "name_sc": "江小涓",
+    "name_en": "Jiang Xiaojuan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學公共管理學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "江小涓",
+    "search_names": [
+      "江小涓",
+      "Jiang Xiaojuan"
+    ]
+  },
+  {
+    "name_zh": "汪曙申",
+    "name_sc": "汪曙申",
+    "name_en": "Wang Shushen",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所台美室",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "汪曙申",
+    "search_names": [
+      "汪曙申",
+      "Wang Shushen"
+    ]
+  },
+  {
+    "name_zh": "汪毅夫",
+    "name_sc": "汪毅夫",
+    "name_en": "Wang Yifu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國臺灣研究會理事會/廈門大學臺灣研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "汪毅夫",
+    "search_names": [
+      "汪毅夫",
+      "Wang Yifu"
+    ]
+  },
+  {
+    "name_zh": "沈丁立",
+    "name_sc": "沈丁立",
+    "name_en": "Shen Dingli",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "沈丁立",
+    "search_names": [
+      "沈丁立",
+      "Shen Dingli"
+    ]
+  },
+  {
+    "name_zh": "沈逸",
+    "name_sc": "沈逸",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學國際關係與公共事務學院國際政治系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "沈逸",
+    "search_names": [
+      "沈逸"
+    ]
+  },
+  {
+    "name_zh": "洪源",
+    "name_sc": "洪源",
+    "name_en": "Hong Yuan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "洪源",
+    "search_names": [
+      "洪源",
+      "Hong Yuan"
+    ]
+  },
+  {
+    "name_zh": "滕建群",
+    "name_sc": "滕建群",
+    "name_en": "Teng Jianqun",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "滕建群",
+    "search_names": [
+      "滕建群",
+      "Teng Jianqun"
+    ]
+  },
+  {
+    "name_zh": "王義桅",
+    "name_sc": "王义桅",
+    "name_en": "Wang Yiwei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王義桅",
+    "search_names": [
+      "王義桅",
+      "王义桅",
+      "Wang Yiwei"
+    ]
+  },
+  {
+    "name_zh": "王雲飛",
+    "name_sc": "王云飞",
+    "name_en": "Wang Yunfei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國政策科學研究會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王雲飛",
+    "search_names": [
+      "王雲飛",
+      "王云飞",
+      "Wang Yunfei"
+    ]
+  },
+  {
+    "name_zh": "王偉男",
+    "name_sc": "王伟男",
+    "name_en": "Wang Weinan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海交通大學臺灣研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王偉男",
+    "search_names": [
+      "王偉男",
+      "王伟男",
+      "Wang Weinan"
+    ]
+  },
+  {
+    "name_zh": "王勇",
+    "name_sc": "王勇",
+    "name_en": "Wang Yong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "1. 北京大學美國研究中心 2. 廈門大學臺灣研究院經濟所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "1. US 2. Taiwan",
+    "rss_url": "",
+    "name": "王勇",
+    "search_names": [
+      "王勇",
+      "Wang Yong"
+    ]
+  },
+  {
+    "name_zh": "王升",
+    "name_sc": "王升",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國台灣研究會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王升",
+    "search_names": [
+      "王升"
+    ]
+  },
+  {
+    "name_zh": "王華",
+    "name_sc": "王华",
+    "name_en": "Wang Hua",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院經濟所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王華",
+    "search_names": [
+      "王華",
+      "王华",
+      "Wang Hua"
+    ]
+  },
+  {
+    "name_zh": "王華和",
+    "name_sc": "王华和",
+    "name_en": "Wang Huahe",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究中心兩岸融合發展與國家統一政策模擬實驗室",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王華和",
+    "search_names": [
+      "王華和",
+      "王华和",
+      "Wang Huahe"
+    ]
+  },
+  {
+    "name_zh": "王衛星",
+    "name_sc": "王卫星",
+    "name_en": "Wang Weixing",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國臺灣研究會理事會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王衛星",
+    "search_names": [
+      "王衛星",
+      "王卫星",
+      "Wang Weixing"
+    ]
+  },
+  {
+    "name_zh": "王在希",
+    "name_sc": "王在希",
+    "name_en": "Wang Zaixi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國臺灣研究會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王在希",
+    "search_names": [
+      "王在希",
+      "Wang Zaixi"
+    ]
+  },
+  {
+    "name_zh": "王小笛",
+    "name_sc": "王小笛",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海交通大學",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "王小笛",
+    "search_names": [
+      "王小笛"
+    ]
+  },
+  {
+    "name_zh": "王帆",
+    "name_sc": "王帆",
+    "name_en": "Wang Fan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "外交學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王帆",
+    "search_names": [
+      "王帆",
+      "Wang Fan"
+    ]
+  },
+  {
+    "name_zh": "王建民",
+    "name_sc": "王建民",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王建民",
+    "search_names": [
+      "王建民"
+    ]
+  },
+  {
+    "name_zh": "王新生",
+    "name_sc": "王新生",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京大學歷史學系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "王新生",
+    "search_names": [
+      "王新生"
+    ]
+  },
+  {
+    "name_zh": "王昌林",
+    "name_sc": "王昌林",
+    "name_en": "Wang Changlin",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中共國家發改委研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "王昌林",
+    "search_names": [
+      "王昌林",
+      "Wang Changlin"
+    ]
+  },
+  {
+    "name_zh": "王棟",
+    "name_sc": "王栋",
+    "name_en": "Wang Dong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王棟",
+    "search_names": [
+      "王棟",
+      "王栋",
+      "Wang Dong"
+    ]
+  },
+  {
+    "name_zh": "王海良",
+    "name_sc": "王海良",
+    "name_en": "Wang Hailiang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海東亞研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王海良",
+    "search_names": [
+      "王海良",
+      "Wang Hailiang"
+    ]
+  },
+  {
+    "name_zh": "王瑋",
+    "name_sc": "王玮",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王瑋",
+    "search_names": [
+      "王瑋",
+      "王玮"
+    ]
+  },
+  {
+    "name_zh": "王緝思",
+    "name_sc": "王缉思",
+    "name_en": "Wang Jisi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京大學國際戰略研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王緝思",
+    "search_names": [
+      "王緝思",
+      "王缉思",
+      "Wang Jisi"
+    ]
+  },
+  {
+    "name_zh": "王英津",
+    "name_sc": "王英津",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院國際政治系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "王英津",
+    "search_names": [
+      "王英津"
+    ]
+  },
+  {
+    "name_zh": "王輝耀",
+    "name_sc": "王辉耀",
+    "name_en": "Wang Huiyao",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國與全球化智庫",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王輝耀",
+    "search_names": [
+      "王輝耀",
+      "王辉耀",
+      "Wang Huiyao"
+    ]
+  },
+  {
+    "name_zh": "王鍵",
+    "name_sc": "王键",
+    "name_en": "Wang Jian",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣史研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王鍵",
+    "search_names": [
+      "王鍵",
+      "王键",
+      "Wang Jian"
+    ]
+  },
+  {
+    "name_zh": "王鴻剛",
+    "name_sc": "王鸿刚",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究員美國所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "王鴻剛",
+    "search_names": [
+      "王鴻剛",
+      "王鸿刚"
+    ]
+  },
+  {
+    "name_zh": "王鵬",
+    "name_sc": "王鹏",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國傳媒大學港澳臺與世界事務研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "王鵬",
+    "search_names": [
+      "王鵬",
+      "王鹏"
+    ]
+  },
+  {
+    "name_zh": "盛九元",
+    "name_sc": "盛九元",
+    "name_en": "Sheng Jiuyuan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海社會科學院臺灣研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "盛九元",
+    "search_names": [
+      "盛九元",
+      "Sheng Jiuyuan"
+    ]
+  },
+  {
+    "name_zh": "石正方",
+    "name_sc": "石正方",
+    "name_en": "Shi Zhengfang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院經濟所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "石正方",
+    "search_names": [
+      "石正方",
+      "Shi Zhengfang"
+    ]
+  },
+  {
+    "name_zh": "祁懷高",
+    "name_sc": "祁怀高",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學國際問題研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "祁懷高",
+    "search_names": [
+      "祁懷高",
+      "祁怀高"
+    ]
+  },
+  {
+    "name_zh": "笪志剛",
+    "name_sc": "笪志刚",
+    "name_en": "Da Zhigang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "黑龍江省社會科學院東北亞研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "笪志剛",
+    "search_names": [
+      "笪志剛",
+      "笪志刚",
+      "Da Zhigang"
+    ]
+  },
+  {
+    "name_zh": "紀昊楠",
+    "name_sc": "纪昊楠",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學國際關係與公共事務學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "紀昊楠",
+    "search_names": [
+      "紀昊楠",
+      "纪昊楠"
+    ]
+  },
+  {
+    "name_zh": "翟東升",
+    "name_sc": "翟东升",
+    "name_en": "Di Dongsheng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "翟東升",
+    "search_names": [
+      "翟東升",
+      "翟东升",
+      "Di Dongsheng"
+    ]
+  },
+  {
+    "name_zh": "胡偉",
+    "name_sc": "胡伟",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國務院參事室公共政策研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "胡偉",
+    "search_names": [
+      "胡偉",
+      "胡伟"
+    ]
+  },
+  {
+    "name_zh": "胡偉星",
+    "name_sc": "胡伟星",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "澳门大学社会科学院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "胡偉星",
+    "search_names": [
+      "胡偉星",
+      "胡伟星"
+    ]
+  },
+  {
+    "name_zh": "胡淩煒",
+    "name_sc": "胡凌炜",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海東亞研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "胡淩煒",
+    "search_names": [
+      "胡淩煒",
+      "胡凌炜"
+    ]
+  },
+  {
+    "name_zh": "胡宗山",
+    "name_sc": "胡宗山",
+    "name_en": "Hu Zongshan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "華中師範大學政治與國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "胡宗山",
+    "search_names": [
+      "胡宗山",
+      "Hu Zongshan"
+    ]
+  },
+  {
+    "name_zh": "胡波",
+    "name_sc": "胡波",
+    "name_en": "Hu Bo",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "南海戰略態勢感知",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "胡波",
+    "search_names": [
+      "胡波",
+      "Hu Bo"
+    ]
+  },
+  {
+    "name_zh": "胡繼平",
+    "name_sc": "胡继平",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "胡繼平",
+    "search_names": [
+      "胡繼平",
+      "胡继平"
+    ]
+  },
+  {
+    "name_zh": "節大磊",
+    "name_sc": "节大磊",
+    "name_en": "Jie Dalei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "節大磊",
+    "search_names": [
+      "節大磊",
+      "节大磊",
+      "Jie Dalei"
+    ]
+  },
+  {
+    "name_zh": "蘇曉暉",
+    "name_sc": "苏晓晖",
+    "name_en": "Su Xiaohui",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "蘇曉暉",
+    "search_names": [
+      "蘇曉暉",
+      "苏晓晖",
+      "Su Xiaohui"
+    ]
+  },
+  {
+    "name_zh": "蘇浩",
+    "name_sc": "苏浩",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中国外交学院战略与和平研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "蘇浩",
+    "search_names": [
+      "蘇浩",
+      "苏浩"
+    ]
+  },
+  {
+    "name_zh": "范宏偉",
+    "name_sc": "范宏伟",
+    "name_en": "Fan Hongwei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學東南亞研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "范宏偉",
+    "search_names": [
+      "范宏偉",
+      "范宏伟",
+      "Fan Hongwei"
+    ]
+  },
+  {
+    "name_zh": "榮鷹",
+    "name_sc": "荣鹰",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "榮鷹",
+    "search_names": [
+      "榮鷹",
+      "荣鹰"
+    ]
+  },
+  {
+    "name_zh": "葛小輝",
+    "name_sc": "葛小辉",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院中國邊疆研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "葛小輝",
+    "search_names": [
+      "葛小輝",
+      "葛小辉"
+    ]
+  },
+  {
+    "name_zh": "董向榮",
+    "name_sc": "董向荣",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院亞太與全球戰略研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "董向榮",
+    "search_names": [
+      "董向榮",
+      "董向荣"
+    ]
+  },
+  {
+    "name_zh": "董春嶺",
+    "name_sc": "董春岭",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "董春嶺",
+    "search_names": [
+      "董春嶺",
+      "董春岭"
+    ]
+  },
+  {
+    "name_zh": "蔡昉",
+    "name_sc": "蔡昉",
+    "name_en": "Cai Fang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "蔡昉",
+    "search_names": [
+      "蔡昉",
+      "Cai Fang"
+    ]
+  },
+  {
+    "name_zh": "袁征",
+    "name_sc": "袁征",
+    "name_en": "Yuan Zheng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "袁征",
+    "search_names": [
+      "袁征",
+      "Yuan Zheng"
+    ]
+  },
+  {
+    "name_zh": "袁莎",
+    "name_sc": "袁莎",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "袁莎",
+    "search_names": [
+      "袁莎"
+    ]
+  },
+  {
+    "name_zh": "袁鵬",
+    "name_sc": "袁鹏",
+    "name_en": "Yuan Peng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "袁鵬",
+    "search_names": [
+      "袁鵬",
+      "袁鹏",
+      "Yuan Peng"
+    ]
+  },
+  {
+    "name_zh": "裴敏欣",
+    "name_sc": "裴敏欣",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "美國克萊蒙特·麥肯納學院政府學",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "裴敏欣",
+    "search_names": [
+      "裴敏欣"
+    ]
+  },
+  {
+    "name_zh": "詹德斌",
+    "name_sc": "詹德斌",
+    "name_en": "Zhan Debin",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海對外經貿大學朝鮮半島研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Korea",
+    "rss_url": "",
+    "name": "詹德斌",
+    "search_names": [
+      "詹德斌",
+      "Zhan Debin"
+    ]
+  },
+  {
+    "name_zh": "許利平",
+    "name_sc": "许利平",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院亞太與全球戰略研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "許利平",
+    "search_names": [
+      "許利平",
+      "许利平"
+    ]
+  },
+  {
+    "name_zh": "許楨",
+    "name_sc": "许桢",
+    "name_en": "Xu Zhen",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "香港智明研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "許楨",
+    "search_names": [
+      "許楨",
+      "许桢",
+      "Xu Zhen"
+    ]
+  },
+  {
+    "name_zh": "謝郁",
+    "name_sc": "谢郁",
+    "name_en": "Xie Yu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院涉台事務研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "謝郁",
+    "search_names": [
+      "謝郁",
+      "谢郁",
+      "Xie Yu"
+    ]
+  },
+  {
+    "name_zh": "賀之杲",
+    "name_sc": "贺之杲",
+    "name_en": "He Zhigao",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院歐洲研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "賀之杲",
+    "search_names": [
+      "賀之杲",
+      "贺之杲",
+      "He Zhigao"
+    ]
+  },
+  {
+    "name_zh": "賈慶國",
+    "name_sc": "贾庆国",
+    "name_en": "Jia Qingguo",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京大學中美人文交流研究基地",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "賈慶國",
+    "search_names": [
+      "賈慶國",
+      "贾庆国",
+      "Jia Qingguo"
+    ]
+  },
+  {
+    "name_zh": "趙可金",
+    "name_sc": "赵可金",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學社會科學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "趙可金",
+    "search_names": [
+      "趙可金",
+      "赵可金"
+    ]
+  },
+  {
+    "name_zh": "趙永升",
+    "name_sc": "赵永升",
+    "name_en": "Zhao Yongsheng",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "對外經濟貿易大學金融學",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "趙永升",
+    "search_names": [
+      "趙永升",
+      "赵永升",
+      "Zhao Yongsheng"
+    ]
+  },
+  {
+    "name_zh": "趙秋豔",
+    "name_sc": "赵秋艳",
+    "name_en": "Zhao Qiuyan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "機工智庫",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "趙秋豔",
+    "search_names": [
+      "趙秋豔",
+      "赵秋艳",
+      "Zhao Qiuyan"
+    ]
+  },
+  {
+    "name_zh": "達巍",
+    "name_sc": "达巍",
+    "name_en": "Da Wei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "清華大學社科學院國際關係學系",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "達巍",
+    "search_names": [
+      "達巍",
+      "达巍",
+      "Da Wei"
+    ]
+  },
+  {
+    "name_zh": "邵善波",
+    "name_sc": "邵善波",
+    "name_en": "Shao Shanbo",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中信改革發展基金會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "邵善波",
+    "search_names": [
+      "邵善波",
+      "Shao Shanbo"
+    ]
+  },
+  {
+    "name_zh": "邵育群",
+    "name_sc": "邵育群",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "邵育群",
+    "search_names": [
+      "邵育群"
+    ]
+  },
+  {
+    "name_zh": "鄭劍",
+    "name_sc": "郑剑",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院戰略與安全研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "鄭劍",
+    "search_names": [
+      "鄭劍",
+      "郑剑"
+    ]
+  },
+  {
+    "name_zh": "鄭永年",
+    "name_sc": "郑永年",
+    "name_en": "Zheng Yongnian",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "香港中文大學人文社科院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "鄭永年",
+    "search_names": [
+      "鄭永年",
+      "郑永年",
+      "Zheng Yongnian"
+    ]
+  },
+  {
+    "name_zh": "郝魯怡",
+    "name_sc": "郝鲁怡",
+    "name_en": "Hao Luyi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院國際法學所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "郝魯怡",
+    "search_names": [
+      "郝魯怡",
+      "郝鲁怡",
+      "Hao Luyi"
+    ]
+  },
+  {
+    "name_zh": "郭延軍",
+    "name_sc": "郭延军",
+    "name_en": "Guo Yanjun",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "外交學院亞洲研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "郭延軍",
+    "search_names": [
+      "郭延軍",
+      "郭延军",
+      "Guo Yanjun"
+    ]
+  },
+  {
+    "name_zh": "郭擁軍",
+    "name_sc": "郭拥军",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院涉台事務研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "郭擁軍",
+    "search_names": [
+      "郭擁軍",
+      "郭拥军"
+    ]
+  },
+  {
+    "name_zh": "金燦榮",
+    "name_sc": "金灿荣",
+    "name_en": "Jin Canrong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "金燦榮",
+    "search_names": [
+      "金燦榮",
+      "金灿荣",
+      "Jin Canrong"
+    ]
+  },
+  {
+    "name_zh": "鐘厚濤",
+    "name_sc": "钟厚涛",
+    "name_en": "Zhong Houtao",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院臺灣研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "鐘厚濤",
+    "search_names": [
+      "鐘厚濤",
+      "钟厚涛",
+      "Zhong Houtao"
+    ]
+  },
+  {
+    "name_zh": "錢峰",
+    "name_sc": "钱峰",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學國家戰略研究院研究部",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "錢峰",
+    "search_names": [
+      "錢峰",
+      "钱峰"
+    ]
+  },
+  {
+    "name_zh": "錢皓",
+    "name_sc": "钱皓",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海外國語大學國際關係與公共事務學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "錢皓",
+    "search_names": [
+      "錢皓",
+      "钱皓"
+    ]
+  },
+  {
+    "name_zh": "閆瑾",
+    "name_sc": "闫瑾",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學歐洲問題研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "閆瑾",
+    "search_names": [
+      "閆瑾",
+      "闫瑾"
+    ]
+  },
+  {
+    "name_zh": "閻學通",
+    "name_sc": "阎学通",
+    "name_en": "Yan Xuetong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學國際關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "閻學通",
+    "search_names": [
+      "閻學通",
+      "阎学通",
+      "Yan Xuetong"
+    ]
+  },
+  {
+    "name_zh": "阮宗澤",
+    "name_sc": "阮宗泽",
+    "name_en": "Ruan Zongze",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "阮宗澤",
+    "search_names": [
+      "阮宗澤",
+      "阮宗泽",
+      "Ruan Zongze"
+    ]
+  },
+  {
+    "name_zh": "陸銘",
+    "name_sc": "陆铭",
+    "name_en": "Lu Ming",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海交通大学安泰经济管理学院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "陸銘",
+    "search_names": [
+      "陸銘",
+      "陆铭",
+      "Lu Ming"
+    ]
+  },
+  {
+    "name_zh": "陳東曉",
+    "name_sc": "陈东晓",
+    "name_en": "Chen Dongxiao",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海國際問題研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "陳東曉",
+    "search_names": [
+      "陳東曉",
+      "陈东晓",
+      "Chen Dongxiao"
+    ]
+  },
+  {
+    "name_zh": "陳麗麗",
+    "name_sc": "陈丽丽",
+    "name_en": "Chen Lili",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "閩南師範大學兩岸一家親研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "陳麗麗",
+    "search_names": [
+      "陳麗麗",
+      "陈丽丽",
+      "Chen Lili"
+    ]
+  },
+  {
+    "name_zh": "陳先才",
+    "name_sc": "陈先才",
+    "name_en": "Chen Xiancai",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究中心兩岸融合發展與國家統一政策模擬實驗室/廈門大學臺灣研究中心政治研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "陳先才",
+    "search_names": [
+      "陳先才",
+      "陈先才",
+      "Chen Xiancai"
+    ]
+  },
+  {
+    "name_zh": "陳鳳英",
+    "name_sc": "陈凤英",
+    "name_en": "Chen Fengying",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國現代國際關係研究院世界經濟研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "陳鳳英",
+    "search_names": [
+      "陳鳳英",
+      "陈凤英",
+      "Chen Fengying"
+    ]
+  },
+  {
+    "name_zh": "陳哲",
+    "name_sc": "陈哲",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "江西財經大學一帶一路研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "陳哲",
+    "search_names": [
+      "陳哲",
+      "陈哲"
+    ]
+  },
+  {
+    "name_zh": "陳士良",
+    "name_sc": "陈士良",
+    "name_en": "Chen Shiliang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海市公共關係研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "陳士良",
+    "search_names": [
+      "陳士良",
+      "陈士良",
+      "Chen Shiliang"
+    ]
+  },
+  {
+    "name_zh": "陳琪",
+    "name_sc": "陈琪",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學中美關係研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "陳琪",
+    "search_names": [
+      "陳琪",
+      "陈琪"
+    ]
+  },
+  {
+    "name_zh": "陳積敏",
+    "name_sc": "陈积敏",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際友好交流聯絡會和平與發展研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "陳積敏",
+    "search_names": [
+      "陳積敏",
+      "陈积敏"
+    ]
+  },
+  {
+    "name_zh": "陳言",
+    "name_sc": "陈言",
+    "name_en": "Chen Yan",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國日本企業研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Japan",
+    "rss_url": "",
+    "name": "陳言",
+    "search_names": [
+      "陳言",
+      "陈言",
+      "Chen Yan"
+    ]
+  },
+  {
+    "name_zh": "陶文釗",
+    "name_sc": "陶文钊",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "陶文釗",
+    "search_names": [
+      "陶文釗",
+      "陶文钊"
+    ]
+  },
+  {
+    "name_zh": "霍建國",
+    "name_sc": "霍建国",
+    "name_en": "Huo Jianguo",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國世界貿易組織研究會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "霍建國",
+    "search_names": [
+      "霍建國",
+      "霍建国",
+      "Huo Jianguo"
+    ]
+  },
+  {
+    "name_zh": "鞠海濤",
+    "name_sc": "鞠海涛",
+    "name_en": "Ju Haitao",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "國務院台灣事務辦公室海峽兩岸關係研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "鞠海濤",
+    "search_names": [
+      "鞠海濤",
+      "鞠海涛",
+      "Ju Haitao"
+    ]
+  },
+  {
+    "name_zh": "韋宗友",
+    "name_sc": "韦宗友",
+    "name_en": "Wei Zongyou",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學美國研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "韋宗友",
+    "search_names": [
+      "韋宗友",
+      "韦宗友",
+      "Wei Zongyou"
+    ]
+  },
+  {
+    "name_zh": "章念馳",
+    "name_sc": "章念驰",
+    "name_en": "Zhang Nianchi",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "上海東亞研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "章念馳",
+    "search_names": [
+      "章念馳",
+      "章念驰",
+      "Zhang Nianchi"
+    ]
+  },
+  {
+    "name_zh": "章百家",
+    "name_sc": "章百家",
+    "name_en": "Zhang Baijia",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京清華大學戰略安全中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "章百家",
+    "search_names": [
+      "章百家",
+      "Zhang Baijia"
+    ]
+  },
+  {
+    "name_zh": "高揚",
+    "name_sc": "高扬",
+    "name_en": "Gao Yang",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國當代世界研究中心",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "高揚",
+    "search_names": [
+      "高揚",
+      "高扬",
+      "Gao Yang"
+    ]
+  },
+  {
+    "name_zh": "高飛",
+    "name_sc": "高飞",
+    "name_en": "Gao Fei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "外交學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "EU",
+    "rss_url": "",
+    "name": "高飛",
+    "search_names": [
+      "高飛",
+      "高飞",
+      "Gao Fei"
+    ]
+  },
+  {
+    "name_zh": "魏紅霞",
+    "name_sc": "魏红霞",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國社會科學院美國研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "魏紅霞",
+    "search_names": [
+      "魏紅霞",
+      "魏红霞"
+    ]
+  },
+  {
+    "name_zh": "黃仁偉",
+    "name_sc": "黄仁伟",
+    "name_en": "Huang Renwei",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "復旦大學一帶一路全球治理研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "黃仁偉",
+    "search_names": [
+      "黃仁偉",
+      "黄仁伟",
+      "Huang Renwei"
+    ]
+  },
+  {
+    "name_zh": "黃嘉樹",
+    "name_sc": "黄嘉树",
+    "name_en": "Huang Jiashu",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "全國臺灣研究會",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "黃嘉樹",
+    "search_names": [
+      "黃嘉樹",
+      "黄嘉树",
+      "Huang Jiashu"
+    ]
+  },
+  {
+    "name_zh": "黃大慧",
+    "name_sc": "黄大慧",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國人民大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "黃大慧",
+    "search_names": [
+      "黃大慧",
+      "黄大慧"
+    ]
+  },
+  {
+    "name_zh": "黃燕萍",
+    "name_sc": "黄燕萍",
+    "name_en": "Huang Yanping",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "廈門大學臺灣研究院經濟所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "Taiwan",
+    "rss_url": "",
+    "name": "黃燕萍",
+    "search_names": [
+      "黃燕萍",
+      "黄燕萍",
+      "Huang Yanping"
+    ]
+  },
+  {
+    "name_zh": "黃靖",
+    "name_sc": "黄靖",
+    "name_en": "Huang Jing",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "北京語言大學國別和區域研究院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "黃靖",
+    "search_names": [
+      "黃靖",
+      "黄靖",
+      "Huang Jing"
+    ]
+  },
+  {
+    "name_zh": "龍興春",
+    "name_sc": "龙兴春",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "四川外國語大學國際關係學院",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "龍興春",
+    "search_names": [
+      "龍興春",
+      "龙兴春"
+    ]
+  },
+  {
+    "name_zh": "龔炯",
+    "name_sc": "龚炯",
+    "name_en": "Gong Jiong",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "對外經濟貿易大學",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "US",
+    "rss_url": "",
+    "name": "龔炯",
+    "search_names": [
+      "龔炯",
+      "龚炯",
+      "Gong Jiong"
+    ]
+  },
+  {
+    "name_zh": "藍建學",
+    "name_sc": "蓝建学",
+    "name_en": "",
+    "aliases": [],
+    "category": [
+      "中國專家"
+    ],
+    "affiliation": "中國國際問題研究院亞太研究所",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "藍建學",
+    "search_names": [
+      "藍建學",
+      "蓝建学"
+    ]
+  },
+  {
+    "name_zh": "貝書穎",
+    "name_sc": "",
+    "name_en": "Bethany Allen",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "貝書穎",
+    "search_names": [
+      "貝書穎",
+      "Bethany Allen"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Graham Allison",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Graham Allison",
+    "search_names": [
+      "Graham Allison"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Michael Beckley",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Michael Beckley",
+    "search_names": [
+      "Michael Beckley"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Bill Bishop",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Bill Bishop",
+    "search_names": [
+      "Bill Bishop"
+    ]
+  },
+  {
+    "name_zh": "白明",
+    "name_sc": "",
+    "name_en": "Jude Blanchette",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "白明",
+    "search_names": [
+      "白明",
+      "Jude Blanchette"
+    ]
+  },
+  {
+    "name_zh": "卜大年",
+    "name_sc": "",
+    "name_en": "Daniel Blumenthal",
+    "aliases": [
+      "Dan Blumenthal"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "卜大年",
+    "search_names": [
+      "卜大年",
+      "Daniel Blumenthal",
+      "Dan Blumenthal"
+    ]
+  },
+  {
+    "name_zh": "波頓",
+    "name_sc": "",
+    "name_en": "John Bolton",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "波頓",
+    "search_names": [
+      "波頓",
+      "John Bolton"
+    ]
+  },
+  {
+    "name_zh": "包士可",
+    "name_sc": "",
+    "name_en": "Joseph Bosco",
+    "aliases": [
+      "Joe Bosco"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "包士可",
+    "search_names": [
+      "包士可",
+      "Joseph Bosco",
+      "Joe Bosco"
+    ]
+  },
+  {
+    "name_zh": "白蘭斯",
+    "name_sc": "",
+    "name_en": "Hal Brands",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "白蘭斯",
+    "search_names": [
+      "白蘭斯",
+      "Hal Brands"
+    ]
+  },
+  {
+    "name_zh": "布蘭默",
+    "name_sc": "",
+    "name_en": "Ian Bremmer",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "布蘭默",
+    "search_names": [
+      "布蘭默",
+      "Ian Bremmer"
+    ]
+  },
+  {
+    "name_zh": "薄瑞光",
+    "name_sc": "",
+    "name_en": "Raymond Burghardt",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "薄瑞光",
+    "search_names": [
+      "薄瑞光",
+      "Raymond Burghardt"
+    ]
+  },
+  {
+    "name_zh": "卜睿哲",
+    "name_sc": "",
+    "name_en": "Richard Bush",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "卜睿哲",
+    "search_names": [
+      "卜睿哲",
+      "Richard Bush"
+    ]
+  },
+  {
+    "name_zh": "坎博",
+    "name_sc": "",
+    "name_en": "Kurt Campbell",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "坎博",
+    "search_names": [
+      "坎博",
+      "Kurt Campbell"
+    ]
+  },
+  {
+    "name_zh": "坎西恩",
+    "name_sc": "",
+    "name_en": "Mark Cancian",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "坎西恩",
+    "search_names": [
+      "坎西恩",
+      "Mark Cancian"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Victor Cha",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Victor Cha",
+    "search_names": [
+      "Victor Cha"
+    ]
+  },
+  {
+    "name_zh": "章家敦",
+    "name_sc": "",
+    "name_en": "Gordon Chang",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "章家敦",
+    "search_names": [
+      "章家敦",
+      "Gordon Chang"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Christopher Chivvis",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Christopher Chivvis",
+    "search_names": [
+      "Christopher Chivvis"
+    ]
+  },
+  {
+    "name_zh": "柯慶生",
+    "name_sc": "",
+    "name_en": "Thomas Christensen",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "柯慶生",
+    "search_names": [
+      "柯慶生",
+      "Thomas Christensen"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Ryan Claffey",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Ryan Claffey",
+    "search_names": [
+      "Ryan Claffey"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Zack Cooper",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Zack Cooper",
+    "search_names": [
+      "Zack Cooper"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Patrick Cronin",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Patrick Cronin",
+    "search_names": [
+      "Patrick Cronin"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Seth Cropsey",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Seth Cropsey",
+    "search_names": [
+      "Seth Cropsey"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "John Culver",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "John Culver",
+    "search_names": [
+      "John Culver"
+    ]
+  },
+  {
+    "name_zh": "孔明尚",
+    "name_sc": "",
+    "name_en": "Michael Cunningham",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "孔明尚",
+    "search_names": [
+      "孔明尚",
+      "Michael Cunningham"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Lisa Curtis",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Lisa Curtis",
+    "search_names": [
+      "Lisa Curtis"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Jonathan Czin",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Jonathan Czin",
+    "search_names": [
+      "Jonathan Czin"
+    ]
+  },
+  {
+    "name_zh": "戴傑",
+    "name_sc": "",
+    "name_en": "Jacques deLisle",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "戴傑",
+    "search_names": [
+      "戴傑",
+      "Jacques deLisle"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Abraham Denmark",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Abraham Denmark",
+    "search_names": [
+      "Abraham Denmark"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Daniel DePetris",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Daniel DePetris",
+    "search_names": [
+      "Daniel DePetris"
+    ]
+  },
+  {
+    "name_zh": "戴雅門",
+    "name_sc": "",
+    "name_en": "Larry Diamond",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "戴雅門",
+    "search_names": [
+      "戴雅門",
+      "Larry Diamond"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Gerard DiPippo",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Gerard DiPippo",
+    "search_names": [
+      "Gerard DiPippo"
+    ]
+  },
+  {
+    "name_zh": "杜如松",
+    "name_sc": "",
+    "name_en": "Rush Doshi",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "杜如松",
+    "search_names": [
+      "杜如松",
+      "Rush Doshi"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Matt Duss",
+    "aliases": [
+      "Matthew Duss"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Matt Duss",
+    "search_names": [
+      "Matt Duss",
+      "Matthew Duss"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "John Dotson",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "John Dotson",
+    "search_names": [
+      "John Dotson"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Peter Dutton",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Peter Dutton",
+    "search_names": [
+      "Peter Dutton"
+    ]
+  },
+  {
+    "name_zh": "易思安",
+    "name_sc": "",
+    "name_en": "Ian Easton",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "易思安",
+    "search_names": [
+      "易思安",
+      "Ian Easton"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Elizabeth Economy",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Elizabeth Economy",
+    "search_names": [
+      "Elizabeth Economy"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Andrew Erickson",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Andrew Erickson",
+    "search_names": [
+      "Andrew Erickson"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Even Feigenbaum",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Even Feigenbaum",
+    "search_names": [
+      "Even Feigenbaum"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Niall Ferguson",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Niall Ferguson",
+    "search_names": [
+      "Niall Ferguson"
+    ]
+  },
+  {
+    "name_zh": "費學禮",
+    "name_sc": "",
+    "name_en": "Richard Fisher",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "費學禮",
+    "search_names": [
+      "費學禮",
+      "Richard Fisher"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Michèle Flournoy",
+    "aliases": [
+      "Michele Flournoy"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Michèle Flournoy",
+    "search_names": [
+      "Michèle Flournoy",
+      "Michele Flournoy"
+    ]
+  },
+  {
+    "name_zh": "傅立民",
+    "name_sc": "",
+    "name_en": "Chas Freeman",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "傅立民",
+    "search_names": [
+      "傅立民",
+      "Chas Freeman"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Thomas Friedman",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Thomas Friedman",
+    "search_names": [
+      "Thomas Friedman"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Francis Fukuyama",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Francis Fukuyama",
+    "search_names": [
+      "Francis Fukuyama"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Bill Gertz",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Bill Gertz",
+    "search_names": [
+      "Bill Gertz"
+    ]
+  },
+  {
+    "name_zh": "葛來儀",
+    "name_sc": "",
+    "name_en": "Bonnie Glaser",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "葛來儀",
+    "search_names": [
+      "葛來儀",
+      "Bonnie Glaser"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Charles Glaser",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Charles Glaser",
+    "search_names": [
+      "Charles Glaser"
+    ]
+  },
+  {
+    "name_zh": "金萊爾",
+    "name_sc": "",
+    "name_en": "Lyle Goldstein",
+    "aliases": [
+      "高德斯坦"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "金萊爾",
+    "search_names": [
+      "金萊爾",
+      "Lyle Goldstein",
+      "高德斯坦"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Philip Gordon",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Philip Gordon",
+    "search_names": [
+      "Philip Gordon"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Alexander Gray",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Alexander Gray",
+    "search_names": [
+      "Alexander Gray"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Michael Green",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Michael Green",
+    "search_names": [
+      "Michael Green"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Sheena Chestnut Greitens",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Sheena Chestnut Greitens",
+    "search_names": [
+      "Sheena Chestnut Greitens"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Derek Grossman",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Derek Grossman",
+    "search_names": [
+      "Derek Grossman"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Richard Haass",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Richard Haass",
+    "search_names": [
+      "Richard Haass"
+    ]
+  },
+  {
+    "name_zh": "韓儒伯",
+    "name_sc": "",
+    "name_en": "Rupert Hammond-Chambers",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "韓儒伯",
+    "search_names": [
+      "韓儒伯",
+      "Rupert Hammond-Chambers"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Brian Hart",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Brian Hart",
+    "search_names": [
+      "Brian Hart"
+    ]
+  },
+  {
+    "name_zh": "何瑞恩",
+    "name_sc": "",
+    "name_en": "Ryan Hass",
+    "aliases": [
+      "何瑞思"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "何瑞恩",
+    "search_names": [
+      "何瑞恩",
+      "Ryan Hass",
+      "何瑞思"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Paul Heer",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Paul Heer",
+    "search_names": [
+      "Paul Heer"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Jennifer Hong",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Jennifer Hong",
+    "search_names": [
+      "Jennifer Hong"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Arran Hope",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Arran Hope",
+    "search_names": [
+      "Arran Hope"
+    ]
+  },
+  {
+    "name_zh": "孔誥烽",
+    "name_sc": "",
+    "name_en": "Ho-fung Hung",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "孔誥烽",
+    "search_names": [
+      "孔誥烽",
+      "Ho-fung Hung"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Michael Hunzeker",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Michael Hunzeker",
+    "search_names": [
+      "Michael Hunzeker"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Shirley Kan",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Shirley Kan",
+    "search_names": [
+      "Shirley Kan"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Jennifer Kavanagh",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Jennifer Kavanagh",
+    "search_names": [
+      "Jennifer Kavanagh"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "David Keegan",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "David Keegan",
+    "search_names": [
+      "David Keegan"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Scott Kennedy",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Scott Kennedy",
+    "search_names": [
+      "Scott Kennedy"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Patricia Kim",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Patricia Kim",
+    "search_names": [
+      "Patricia Kim"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Bruce Klingner",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Bruce Klingner",
+    "search_names": [
+      "Bruce Klingner"
+    ]
+  },
+  {
+    "name_zh": "紀思道",
+    "name_sc": "",
+    "name_en": "Nicholas Kristof",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "紀思道",
+    "search_names": [
+      "紀思道",
+      "Nicholas Kristof"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Matthew Kroenig",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Matthew Kroenig",
+    "search_names": [
+      "Matthew Kroenig"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Raymond Kuo",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Raymond Kuo",
+    "search_names": [
+      "Raymond Kuo"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Channing Lee",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Channing Lee",
+    "search_names": [
+      "Channing Lee"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Kitsch Liao",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Kitsch Liao",
+    "search_names": [
+      "Kitsch Liao"
+    ]
+  },
+  {
+    "name_zh": "李侃如",
+    "name_sc": "",
+    "name_en": "Kenneth Lieberthal",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "李侃如",
+    "search_names": [
+      "李侃如",
+      "Kenneth Lieberthal"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Robert Lighthizer",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Robert Lighthizer",
+    "search_names": [
+      "Robert Lighthizer"
+    ]
+  },
+  {
+    "name_zh": "林洋",
+    "name_sc": "",
+    "name_en": "Bonny Lin",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "林洋",
+    "search_names": [
+      "林洋",
+      "Bonny Lin"
+    ]
+  },
+  {
+    "name_zh": "梅惠琳",
+    "name_sc": "",
+    "name_en": "Oriana Skylar Mastro",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "梅惠琳",
+    "search_names": [
+      "梅惠琳",
+      "Oriana Skylar Mastro"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Peter Mattis",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Peter Mattis",
+    "search_names": [
+      "Peter Mattis"
+    ]
+  },
+  {
+    "name_zh": "馬明漢",
+    "name_sc": "",
+    "name_en": "Michael Mazza",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "馬明漢",
+    "search_names": [
+      "馬明漢",
+      "Michael Mazza"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "H.R. McMaster",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "H.R. McMaster",
+    "search_names": [
+      "H.R. McMaster"
+    ]
+  },
+  {
+    "name_zh": "米爾斯海默",
+    "name_sc": "",
+    "name_en": "John Mearsheimer",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "米爾斯海默",
+    "search_names": [
+      "米爾斯海默",
+      "John Mearsheimer"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Evan Medeiros",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Evan Medeiros",
+    "search_names": [
+      "Evan Medeiros"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Mark Montgomery",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Mark Montgomery",
+    "search_names": [
+      "Mark Montgomery"
+    ]
+  },
+  {
+    "name_zh": "黎安友",
+    "name_sc": "",
+    "name_en": "Andrew Nathan",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "黎安友",
+    "search_names": [
+      "黎安友",
+      "Andrew Nathan"
+    ]
+  },
+  {
+    "name_zh": "裴敏欣",
+    "name_sc": "",
+    "name_en": "Pei Minxin",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "裴敏欣",
+    "search_names": [
+      "裴敏欣",
+      "Pei Minxin"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Robert O'Brien",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Robert O'Brien",
+    "search_names": [
+      "Robert O'Brien"
+    ]
+  },
+  {
+    "name_zh": "歐漢龍",
+    "name_sc": "",
+    "name_en": "Michael O'Hanlon",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "歐漢龍",
+    "search_names": [
+      "歐漢龍",
+      "Michael O'Hanlon"
+    ]
+  },
+  {
+    "name_zh": "包道格",
+    "name_sc": "",
+    "name_en": "Douglas Paal",
+    "aliases": [
+      "Doug Paal"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "包道格",
+    "search_names": [
+      "包道格",
+      "Douglas Paal",
+      "Doug Paal"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Marvin Park",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Marvin Park",
+    "search_names": [
+      "Marvin Park"
+    ]
+  },
+  {
+    "name_zh": "白邦瑞",
+    "name_sc": "",
+    "name_en": "Michael Pillsbury",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "白邦瑞",
+    "search_names": [
+      "白邦瑞",
+      "Michael Pillsbury"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "John Pompfret",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "John Pompfret",
+    "search_names": [
+      "John Pompfret"
+    ]
+  },
+  {
+    "name_zh": "博明",
+    "name_sc": "",
+    "name_en": "Matt Pottinger",
+    "aliases": [
+      "Matthew Pottinger"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "博明",
+    "search_names": [
+      "博明",
+      "Matt Pottinger",
+      "Matthew Pottinger"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Ely Ratner",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Ely Ratner",
+    "search_names": [
+      "Ely Ratner"
+    ]
+  },
+  {
+    "name_zh": "任雪莉",
+    "name_sc": "",
+    "name_en": "Shelley Rigger",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "任雪莉",
+    "search_names": [
+      "任雪莉",
+      "Shelley Rigger"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Josh Rogin",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Josh Rogin",
+    "search_names": [
+      "Josh Rogin"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Daniel Russel",
+    "aliases": [
+      "Danny Russel"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Daniel Russel",
+    "search_names": [
+      "Daniel Russel",
+      "Danny Russel"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Jeffrey Sachs",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Jeffrey Sachs",
+    "search_names": [
+      "Jeffrey Sachs"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "David Sacks",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "David Sacks",
+    "search_names": [
+      "David Sacks"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Adam Savit",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Adam Savit",
+    "search_names": [
+      "Adam Savit"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Eric Sayers",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Eric Sayers",
+    "search_names": [
+      "Eric Sayers"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Orville Schell",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Orville Schell",
+    "search_names": [
+      "Orville Schell"
+    ]
+  },
+  {
+    "name_zh": "薛瑞福",
+    "name_sc": "",
+    "name_en": "Randall Schriver",
+    "aliases": [
+      "Randy Schriver"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "薛瑞福",
+    "search_names": [
+      "薛瑞福",
+      "Randall Schriver",
+      "Randy Schriver"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Victor Shih",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Victor Shih",
+    "search_names": [
+      "Victor Shih"
+    ]
+  },
+  {
+    "name_zh": "謝淑麗",
+    "name_sc": "",
+    "name_en": "Susan Shirk",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "謝淑麗",
+    "search_names": [
+      "謝淑麗",
+      "Susan Shirk"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Michael Sobolik",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Michael Sobolik",
+    "search_names": [
+      "Michael Sobolik"
+    ]
+  },
+  {
+    "name_zh": "孫韻",
+    "name_sc": "",
+    "name_en": "Sun Yun",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "孫韻",
+    "search_names": [
+      "孫韻",
+      "Sun Yun"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Robert Sutter",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Robert Sutter",
+    "search_names": [
+      "Robert Sutter"
+    ]
+  },
+  {
+    "name_zh": "史文",
+    "name_sc": "",
+    "name_en": "Michael Swaine",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "史文",
+    "search_names": [
+      "史文",
+      "Michael Swaine"
+    ]
+  },
+  {
+    "name_zh": "祁凱立",
+    "name_sc": "",
+    "name_en": "Kharis Templeman",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "祁凱立",
+    "search_names": [
+      "祁凱立",
+      "Kharis Templeman"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Colin Tessier-Kay",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Colin Tessier-Kay",
+    "search_names": [
+      "Colin Tessier-Kay"
+    ]
+  },
+  {
+    "name_zh": "唐安竹",
+    "name_sc": "",
+    "name_en": "Drew Thompson",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "唐安竹",
+    "search_names": [
+      "唐安竹",
+      "Drew Thompson"
+    ]
+  },
+  {
+    "name_zh": "董雲裳",
+    "name_sc": "",
+    "name_en": "Susan Thornton",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "董雲裳",
+    "search_names": [
+      "董雲裳",
+      "Susan Thornton"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Kurt Tong",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Kurt Tong",
+    "search_names": [
+      "Kurt Tong"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Riley Walters",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Riley Walters",
+    "search_names": [
+      "Riley Walters"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Joe Wang",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Joe Wang",
+    "search_names": [
+      "Joe Wang"
+    ]
+  },
+  {
+    "name_zh": "華自強",
+    "name_sc": "",
+    "name_en": "Rick Waters",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "華自強",
+    "search_names": [
+      "華自強",
+      "Rick Waters"
+    ]
+  },
+  {
+    "name_zh": "白潔曦",
+    "name_sc": "",
+    "name_en": "Jessica Chen Weiss",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "白潔曦",
+    "search_names": [
+      "白潔曦",
+      "Jessica Chen Weiss"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Stephen Wertheim",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Stephen Wertheim",
+    "search_names": [
+      "Stephen Wertheim"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Chirstian Whiton",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Chirstian Whiton",
+    "search_names": [
+      "Chirstian Whiton"
+    ]
+  },
+  {
+    "name_zh": "韋德寧",
+    "name_sc": "",
+    "name_en": "Dennis Wilder",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "韋德寧",
+    "search_names": [
+      "韋德寧",
+      "Dennis Wilder"
+    ]
+  },
+  {
+    "name_zh": "吳國光",
+    "name_sc": "",
+    "name_en": "Guoguang Wu",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "吳國光",
+    "search_names": [
+      "吳國光",
+      "Guoguang Wu"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Joel Wuthnow",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Joel Wuthnow",
+    "search_names": [
+      "Joel Wuthnow"
+    ]
+  },
+  {
+    "name_zh": "葉望輝",
+    "name_sc": "",
+    "name_en": "Steve Yates",
+    "aliases": [
+      "Stephen Yates"
+    ],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "葉望輝",
+    "search_names": [
+      "葉望輝",
+      "Steve Yates",
+      "Stephen Yates"
+    ]
+  },
+  {
+    "name_zh": "余茂春",
+    "name_sc": "",
+    "name_en": "Miles Yu",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "余茂春",
+    "search_names": [
+      "余茂春",
+      "Miles Yu"
+    ]
+  },
+  {
+    "name_zh": "",
+    "name_sc": "",
+    "name_en": "Fareed Zakaria",
+    "aliases": [],
+    "category": [
+      "國際專家"
+    ],
+    "affiliation": "",
+    "region": "",
+    "language": "",
+    "enabled": true,
+    "description": "",
+    "rss_url": "",
+    "name": "Fareed Zakaria",
+    "search_names": [
+      "Fareed Zakaria"
+    ]
+  }
+]
