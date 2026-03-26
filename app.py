@@ -1287,7 +1287,7 @@ if selected_page == "Briefings":
                 auto_export_cfg["default_drive_folder_id"] = google_drive_folder_id
                 auto_export_cfg["default_local_folder"] = local_folder
 
-                save_auto_export(auto_export_cfg)
+                _sync_notify(save_auto_export(auto_export_cfg))
 
                 with result_box:
                     st.markdown("### 執行結果")
@@ -1396,7 +1396,7 @@ elif selected_page == "Insights":
                 "tags": tag_list,
             })
 
-        save_insights(cleaned)
+        _sync_notify(save_insights(cleaned))
         st.success("Insights saved.")
         st.rerun()
 
@@ -2273,14 +2273,14 @@ elif selected_page == "Schedule":
     with top_c2:
         if st.button("➕ 新增排程", use_container_width=True):
             config["schedules"].append(_new_schedule())
-            save_auto_export(config)
+            _sync_notify(save_auto_export(config))
             st.session_state.automation_selected_index = max(0, len(config["schedules"]) - 1)
             st.session_state["_sch_version"] = _sch_v + 1
             st.rerun()
 
     with top_c3:
         if st.button("💾 儲存全部排程", use_container_width=True):
-            save_auto_export(config)
+            _sync_notify(save_auto_export(config))
             st.success("已儲存排程設定")
 
     # -------------------------
@@ -2654,13 +2654,13 @@ elif selected_page == "Schedule":
 
         with save_c1:
             if st.button("儲存此排程", key=f"save_this_{selected_idx}", use_container_width=True):
-                save_auto_export(config)
+                _sync_notify(save_auto_export(config))
                 st.success("已儲存此排程")
 
         with save_c2:
             if st.button("刪除此排程", key=f"delete_this_{selected_idx}", use_container_width=True):
                 config["schedules"].pop(selected_idx)
-                save_auto_export(config)
+                _sync_notify(save_auto_export(config))
                 st.session_state.automation_selected_index = max(0, selected_idx - 1)
                 st.rerun()
 
@@ -2730,7 +2730,7 @@ elif selected_page == "Schedule":
             with _dfc3:
                 if st.button("🗑️", key=f"df_del_{_dfi}", use_container_width=True):
                     config["drive_folders"].pop(_dfi)
-                    save_auto_export(config)
+                    _sync_notify(save_auto_export(config))
                     st.rerun()
             # 若有修改則即時更新
             if _new_name != _df.get("name", "") or _new_fid != _df.get("folder_id", ""):
@@ -2740,11 +2740,11 @@ elif selected_page == "Schedule":
 
     if st.button("＋ 新增資料夾", key="add_drive_folder"):
         config["drive_folders"].append({"name": "", "folder_id": ""})
-        save_auto_export(config)
+        _sync_notify(save_auto_export(config))
         st.rerun()
 
     if drive_folders and st.button("💾 儲存資料夾設定", key="save_drive_folders"):
-        save_auto_export(config)
+        _sync_notify(save_auto_export(config))
         st.success("已儲存資料夾設定")
 
 

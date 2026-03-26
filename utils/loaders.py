@@ -644,14 +644,17 @@ def save_experts(experts) -> bool:
         return False
 
 
-_INSIGHTS_USER_PATH = "config/insights_user.json"
-_INSIGHTS_DEFAULT_PATH = "config/insights.json"
+_INSIGHTS_USER_PATH = CONFIG_DIR / "insights_user.json"
+_INSIGHTS_DEFAULT_PATH = CONFIG_DIR / "insights.json"
 
 
 def load_insights(path=None):
+    # 若本機檔案不存在（Streamlit Cloud 重啟後），先從 GitHub 拉回
+    if path is None:
+        _restore_from_github(_INSIGHTS_USER_PATH, "config/insights_user.json")
     # 優先讀取使用者本地版本（不被 git pull 覆蓋）
     if path is None:
-        path = _INSIGHTS_USER_PATH if os.path.exists(_INSIGHTS_USER_PATH) else _INSIGHTS_DEFAULT_PATH
+        path = str(_INSIGHTS_USER_PATH) if _INSIGHTS_USER_PATH.exists() else str(_INSIGHTS_DEFAULT_PATH)
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
@@ -683,10 +686,12 @@ def load_insights(path=None):
         return []
 
 
-def save_insights(insights, path=None):
+def save_insights(insights, path=None) -> bool:
+    """Save insights locally and commit to GitHub. Returns True if GitHub sync succeeded."""
     # 始終寫到 _user 版本，不動 git 追蹤的預設檔
-    if path is None:
-        path = _INSIGHTS_USER_PATH
+    use_default_path = path is None
+    if use_default_path:
+        path = str(_INSIGHTS_USER_PATH)
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
     cleaned = []
@@ -719,6 +724,15 @@ def save_insights(insights, path=None):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(cleaned, f, ensure_ascii=False, indent=2)
 
+    if use_default_path:
+        try:
+            from utils.github_storage import commit_file
+            return commit_file(_INSIGHTS_USER_PATH, "config/insights_user.json",
+                               "chore: update insights_user.json via app")
+        except Exception:
+            return False
+    return True
+
 
 def load_profiles():
     data = read_json(PROFILES_PATH)
@@ -743,13 +757,17 @@ def save_formats(formats):
 
 
 AUTO_EXPORT_PATH = "config/auto_export.json"
-AUTO_EXPORT_USER_PATH = "config/auto_export_user.json"
+_AUTO_EXPORT_USER_PATH = CONFIG_DIR / "auto_export_user.json"
+AUTO_EXPORT_USER_PATH = str(_AUTO_EXPORT_USER_PATH)
 
 
 def load_auto_export():
 
     import json
     import os
+
+    # 若本機檔案不存在（Streamlit Cloud 重啟後），先從 GitHub 拉回
+    _restore_from_github(_AUTO_EXPORT_USER_PATH, "config/auto_export_user.json")
 
     # 優先讀取使用者本地版本（不被 git pull 覆蓋）
     path = AUTO_EXPORT_USER_PATH if os.path.exists(AUTO_EXPORT_USER_PATH) else AUTO_EXPORT_PATH
@@ -788,8 +806,8 @@ def load_auto_export():
         }
 
 
-def save_auto_export(config):
-
+def save_auto_export(config) -> bool:
+    """Save auto_export config locally and commit to GitHub. Returns True if GitHub sync succeeded."""
     import json
     import os
 
@@ -797,8 +815,14 @@ def save_auto_export(config):
 
     # 始終寫到 _user 版本，不動 git 追蹤的預設檔
     with open(AUTO_EXPORT_USER_PATH, "w", encoding="utf-8") as f:
-
         json.dump(config, f, ensure_ascii=False, indent=2)
+
+    try:
+        from utils.github_storage import commit_file
+        return commit_file(_AUTO_EXPORT_USER_PATH, "config/auto_export_user.json",
+                           "chore: update auto_export_user.json via app")
+    except Exception:
+        return False
 
 
 def load_auto_export_state():
