@@ -1200,7 +1200,8 @@ def _build_citation_source_map(items, max_sources=12):
             except Exception:
                 published_str = str(raw_pub)[:10]
 
-        key = (url or title).lower().strip()
+        # 用 url+title 組合鍵，允許同一 URL 不同標題的文章（如新聞聯播各則）各自建立尾註
+        key = f"{url}||{title}".lower().strip()
         if not key:
             continue
 
@@ -1741,10 +1742,10 @@ def _format_item_block(label, items, item_to_sx=None):
         src_country  = _safe_text(item.get("source_country"))
         src_language = _safe_text(item.get("source_language"))
 
-        # 找對應的 Sx 代碼，讓 AI 知道引用哪個
+        # 找對應的 Sx 代碼，讓 AI 知道引用哪個（與 _build_citation_source_map 使用相同鍵）
         sx_code = ""
         if item_to_sx:
-            key = (url or title).lower().strip()
+            key = f"{url}||{title}".lower().strip()
             sx_code = item_to_sx.get(key, "")
         sx_label = f" [{sx_code}]" if sx_code else ""
 
@@ -2437,7 +2438,7 @@ def generate_segmented_report(
     source_map = _build_citation_source_map(all_items, max_sources=30)
     item_to_sx: dict[str, str] = {}
     for sx, info in source_map.items():
-        key = (info.get("url") or info.get("title") or "").lower().strip()
+        key = f"{info.get('url') or ''}||{info.get('title') or ''}".lower().strip()
         if key:
             item_to_sx[key] = sx
 
@@ -2656,7 +2657,7 @@ def _generate_multiphase_synthesis(
     source_map = _build_citation_source_map(news_items, max_sources=30)
     item_to_sx: dict[str, str] = {}
     for sx, info in source_map.items():
-        key = (info.get("url") or info.get("title") or "").lower().strip()
+        key = f"{info.get('url') or ''}||{info.get('title') or ''}".lower().strip()
         if key:
             item_to_sx[key] = sx
 
