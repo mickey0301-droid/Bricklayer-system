@@ -1,0 +1,46 @@
+{
+  "enabled": true,
+  "schedules": [
+    {
+      "name": "Morning Briefing",
+      "schedule_mode": "hourly",
+      "once_datetime": "",
+      "hourly_interval_hours": 1,
+      "daily_times": [
+        "09:00"
+      ],
+      "weekly_days": [
+        0
+      ],
+      "weekly_times": [
+        "09:00"
+      ],
+      "monthly_days": [
+        1
+      ],
+      "monthly_times": [
+        "09:00"
+      ],
+      "coverage_hours": 1,
+      "selected_source_categories": [],
+      "selected_source_names": [],
+      "selected_expert_categories": [],
+      "selected_expert_names": [],
+      "language": "繁體中文",
+      "profile": "default",
+      "output_formats": [
+        "docx"
+      ],
+      "output_targets": [
+        "local",
+        "google_drive"
+      ],
+      "google_drive_folder_id": "1kvHvl_p6vxbaZT2dEHnnUHYX-52h_Dl8",
+      "format_name": "default",
+      "start_from": "2026-03-26 18:00",
+      "report_mode": "single",
+      "multiphase_groups": []
+    }
+  ],
+  "drive_folders": []
+}
