@@ -2773,6 +2773,12 @@ def _generate_multiphase_synthesis(
     )
     expert_data_block_section = ("Expert Analysis Data:\n" + expert_data_block) if has_expert_data else ""
 
+    # ── 3b. Build full topic-sorted news block (same as single report) ──
+    # This ensures the synthesis AI has access to ALL items, not just those
+    # captured in each source-group sub-report (which is capped at 24 items).
+    _grouped_full = _group_items_for_report(news_items)
+    _full_news_block = _build_news_data_block(_grouped_full, source_map=source_map)
+
     _cb("stage", f"🤖 AI 綜整 {len(sub_reports)} 份子報告，生成最終簡報…")
 
     # ── 4. Synthesis prompt ─────────────────────────────────────────────
@@ -2782,8 +2788,8 @@ You are a senior strategic intelligence analyst.
 Write a polished strategic intelligence briefing in {language_label}.
 The output must read like a real analytical report, not like bullet-point news notes.
 
-You have received sub-reports from {len(sub_reports)} regional analyst teams.
-Use ONLY the information in these sub-reports as your source material.
+You have received sub-reports from {len(sub_reports)} regional analyst teams, plus a complete topic-indexed news index below.
+Use the sub-reports as your primary analytical base. Supplement any thin or missing sections with items from the complete news index.
 
 Requirements:
 1. Write in formal report style with coherent paragraphs.
@@ -2791,7 +2797,7 @@ Requirements:
 3. Do NOT write source names in brackets such as [DW.com], [Reuters.com], [BBC].
 4. Synthesize information across sub-reports into broader strategic analysis.
 5. Identify cross-regional patterns, escalating trends, and strategic implications.
-6. CRITICAL — Citation codes [S1][S2][S3]... are embedded in the sub-reports. You MUST preserve every [Sx] code exactly as it appears — do NOT renumber, merge, drop, or invent any [Sx] marker. When you incorporate a fact from a sub-report that has a citation code, carry that exact code into the synthesis text. These codes are the only link to the source bibliography and must NOT be lost.
+6. CRITICAL — Citation codes [S1][S2][S3]... are embedded in the sub-reports AND in the complete news index. You MUST preserve every [Sx] code exactly as it appears — do NOT renumber, merge, drop, or invent any [Sx] marker. When you incorporate a fact from a sub-report or from the news index that has a citation code, carry that exact code into the synthesis text. These codes are the only link to the source bibliography and must NOT be lost.
 7. MANDATORY — Media outlets: NEVER use vague collective terms such as "歐洲媒體", "西方媒體", "美國媒體", "外媒". Always write the specific outlet name. On first mention, provide both Chinese and English, e.g. 德國之聲（Deutsche Welle）、法新社（Agence France-Presse, AFP）、路透社（Reuters）、《紐約時報》（New York Times）. This rule has NO exceptions.
 7a. MANDATORY — Media country attribution: When citing a non-Chinese / non-English language media outlet, you MUST note which country it is from on first mention. Format: 「[媒體名稱]（[國家名稱]）」. Examples: 《朝日新聞》（日本）、《韓聯社》（韓國）、《明鏡週刊》（德國）、《費加羅報》（法國）。For articles that carry a language tag such as [日文], [韓文], [德文] etc. in their title, treat them as coming from the corresponding country. This rule has NO exceptions.
 8. MANDATORY — People: Every person mentioned must be preceded by their full official title or role. Use the conventionally established Chinese name form (e.g., 川普、岸田文雄、習近平、賴清德). ENGLISH NAME RULES BY NATIONALITY — (A) Taiwan/ROC officials and PRC/China officials: DO NOT add a parenthetical English name. Write the Chinese name only (e.g., 行政院長卓榮泰, NOT 卓榮泰（Cho Jung-tai）; 國家主席習近平, NOT 習近平（Xi Jinping））. (B) Western figures: on first mention, follow with the common English name in parentheses — surname only. e.g. 美國總統川普（Donald Trump）、美國國務卿魯比歐（Marco Rubio）. (C) Japanese, Korean, Vietnamese: add the romanised form in square brackets after the Chinese name, then English in parentheses. e.g. 日本首相石破茂[Ishiba Shigeru]（Shigeru Ishiba）、韓國總統尹錫悅[Yoon Suk-yeol]（Yoon Suk-yeol）. (D) Other East Asian (Singapore, Thailand, Malaysia, etc.): use the person's internationally recognised English name in parentheses. CRITICAL — Before writing any parenthetical English name, be 100% certain. Known errors to avoid: 黃循財 = Lawrence Wong (Singapore PM since 2024), NOT Heng Swee Keat (who is 王瑞杰, former DPM). If uncertain of a name, OMIT the parenthetical entirely rather than guess. CRITICAL — The name inside the parentheses must contain ONLY the English name, no titles (correct: 川普（Donald Trump）; WRONG: 川普（President Donald Trump）). CRITICAL — Only assign a ministerial/official title to a person if the provided news articles explicitly confirm they currently hold that position; DO NOT rely on memory for current cabinet assignments. This rule has NO exceptions.
@@ -2864,6 +2870,9 @@ Strategic Context:
 Sub-reports from regional analyst teams:
 {sub_reports_block}
 {expert_data_block_section}
+
+Complete topic-indexed news items (use to supplement sub-reports when a section is thin or missing):
+{_full_news_block}
 """
 
     client = _get_openai_client()
