@@ -166,58 +166,77 @@ def fetch_xinwen_lianbo(target_date: datetime) -> list[dict]:
 
 def fetch_pla_daily(target_date: datetime) -> list[dict]:
     """
-    www.81.cn/jfjbmap 是「解放軍報版面圖」閱讀器，結構與人民日報相同：
-      node_XX.htm   → 版面索引頁，含文章連結
-      content_XXXXXXXX.htm → 個別文章頁
-    逐一掃 node 頁、找文章連結、取標題 + 正文。
+    解放軍報數字報（szb_223187）結構：
+      索引頁：szblb/index.html?paperName=jfjb&paperDate=YYYY-MM-DD&paperNumber=01~12
+      文章頁：szbxq/index.html?...&articleid=XXXXXX
+    每天共 12 版（01~12），各版索引頁列出文章連結（完整 URL）。
+    文章頁：<title> 取標題（去掉 " - 解放军报 - 中国军网"），
+            <h1>/<h2> 之後的段落為正文，到「解放军报客户端」為止。
     """
     items = []
-    seen_titles: set[str] = set()
-    date_path = target_date.strftime("%Y-%m/%d")   # e.g. "2026-03/26"
-    base = f"http://www.81.cn/jfjbmap/content/{date_path}"
+    seen_ids: set[str] = set()
+    date_str = target_date.strftime("%Y-%m-%d")
+    index_base = "http://www.81.cn/szb_223187/szblb/index.html"
 
-    for p in range(1, 11):
-        node_url = f"{base}/node_{p:02d}.htm"
+    for page_num in range(1, 13):   # 第01～12版
+        index_url = f"{index_base}?paperName=jfjb&paperDate={date_str}&paperNumber={page_num:02d}"
         try:
-            r = requests.get(node_url, headers=HEADERS, timeout=10)
-            if r.status_code == 404:
-                break           # 該日沒有這麼多版，提前結束
+            r = requests.get(index_url, headers=HEADERS, timeout=10)
             if r.status_code != 200:
                 continue
             r.encoding = "utf-8"
+            soup = BeautifulSoup(r.text, "html.parser")
 
-            # 文章連結形如 content_12345678.htm（相對路徑）
-            art_names = set(re.findall(r'content_\d+\.htm', r.text))
-            for art_name in art_names:
-                art_url = f"{base}/{art_name}"
+            # 文章連結：href 含 szbxq 且有 articleid 參數
+            for a in soup.find_all("a", href=True):
+                href = a["href"]
+                m = re.search(r'articleid=(\d+)', href)
+                if not m or "szbxq" not in href:
+                    continue
+                art_id = m.group(1)
+                if art_id in seen_ids:
+                    continue
+                seen_ids.add(art_id)
+                link_title = a.get_text(strip=True)
+                art_url = href if href.startswith("http") else f"http://www.81.cn{href}"
+
                 try:
-                    art_r = requests.get(art_url, headers=HEADERS, timeout=10)
-                    if art_r.status_code != 200:
+                    ar = requests.get(art_url, headers=HEADERS, timeout=10)
+                    if ar.status_code != 200:
                         continue
-                    art_r.encoding = "utf-8"
+                    ar.encoding = "utf-8"
+                    art_soup = BeautifulSoup(ar.text, "html.parser")
 
-                    title_m = re.search(r"<title>(.*?)</title>", art_r.text, re.S)
-                    if not title_m:
-                        continue
-                    title = title_m.group(1).strip()
-                    if not title or title in seen_titles:
-                        continue
-                    seen_titles.add(title)
+                    # 標題：<title> 去掉網站後綴，fallback 到連結文字
+                    title_tag = art_soup.find("title")
+                    title = title_tag.get_text(strip=True) if title_tag else link_title
+                    title = re.sub(r'\s*[-－–]\s*解放军报.*$', '', title).strip() or link_title
 
-                    # 嘗試常見正文容器，找不到就用全頁文字
-                    art_soup = BeautifulSoup(art_r.text, "html.parser")
-                    body_div = (art_soup.find(id=re.compile(r"article|content|ozoom|text", re.I))
-                                or art_soup.find("div", class_=re.compile(r"article|content|text", re.I)))
-                    txt = body_div.get_text(" ", strip=True) if body_div else art_soup.get_text(" ", strip=True)
-                    txt = txt[:1200]
+                    # 正文：h1/h2 之後的段落，到 footer 關鍵字為止
+                    heading = art_soup.find(["h1", "h2"])
+                    if heading:
+                        parts = []
+                        for sib in heading.find_next_siblings():
+                            txt = sib.get_text(" ", strip=True)
+                            if "解放军报客户端" in txt or "Copyright" in txt:
+                                break
+                            if txt:
+                                parts.append(txt)
+                        content = "\n".join(parts)
+                    else:
+                        content = art_soup.get_text(" ", strip=True)
+                        for marker in ("解放军报客户端", "Copyright"):
+                            idx = content.find(marker)
+                            if idx > 0:
+                                content = content[:idx].strip()
 
                     items.append(_make_item(
                         source_name="解放軍報",
                         title=title,
                         link=art_url,
                         published=target_date,
-                        summary=txt[:280],
-                        content=txt,
+                        summary=content[:280],
+                        content=content[:1200],
                     ))
                 except Exception:
                     continue
