@@ -76,9 +76,6 @@ def fetch_people_daily(target_date: datetime) -> list[dict]:
                     if title in seen_titles:
                         continue
 
-                    if not contains_real_keyword(art_r.text, title):
-                        continue
-
                     seen_titles.add(title)
 
                     content_match = re.search(r'id="ozoom">([\s\S]*?)</div>', art_r.text)
@@ -120,16 +117,15 @@ def fetch_xinwen_lianbo(target_date: datetime) -> list[dict]:
             title = a.get_text(strip=True)
             try:
                 item_r = requests.get(item_url, headers=HEADERS, timeout=10)
-                if contains_real_keyword(item_r.text, title):
-                    text = BeautifulSoup(item_r.text, "html.parser").get_text(" ", strip=True)
-                    items.append(_make_item(
-                        source_name="新聞聯播",
-                        title=title,
-                        link=item_url,
-                        published=target_date,
-                        summary=text[:280],
-                        content=text[:1200],
-                    ))
+                text = BeautifulSoup(item_r.text, "html.parser").get_text(" ", strip=True)
+                items.append(_make_item(
+                    source_name="新聞聯播",
+                    title=title,
+                    link=item_url,
+                    published=target_date,
+                    summary=text[:280],
+                    content=text[:1200],
+                ))
             except Exception:
                 continue
     except Exception:
@@ -145,11 +141,11 @@ def fetch_pla_daily(target_date: datetime) -> list[dict]:
         r = requests.get(jfj_url, headers=HEADERS, timeout=10)
         r.encoding = "utf-8"
 
-        if contains_real_keyword(r.text):
+        if r.status_code == 200:
             text = BeautifulSoup(r.text, "html.parser").get_text(" ", strip=True)
             items.append(_make_item(
                 source_name="解放軍報",
-                title=f"解放軍報 {target_date.strftime('%Y-%m-%d')} 涉台內容",
+                title=f"解放軍報 {target_date.strftime('%Y-%m-%d')}",
                 link=jfj_url,
                 published=target_date,
                 summary=text[:280],
