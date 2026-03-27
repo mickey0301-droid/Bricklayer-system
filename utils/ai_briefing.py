@@ -64,6 +64,17 @@ def load_ai_model() -> str:
     return _DEFAULT_MODEL
 
 
+# ── Backward-compat OpenAI client helper (used by report_engine & topic_cluster) ─
+def get_client():
+    from openai import OpenAI
+    api_key = os.getenv("OPENAI_API_KEY", "")
+    if not api_key:
+        raise RuntimeError(
+            "未找到 OPENAI_API_KEY。\n\n請在 Streamlit secrets 或環境變數設定：\nOPENAI_API_KEY=你的key"
+        )
+    return OpenAI(api_key=api_key)
+
+
 # ── Provider dispatch ─────────────────────────────────────────────────────────
 
 def _call_llm(system_prompt: str, user_content: str, model: str | None = None) -> str:
