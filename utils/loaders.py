@@ -436,6 +436,7 @@ def normalize_global_media_source(item: dict) -> dict:
 
 
 def load_global_media_sources():
+    _restore_from_github(GLOBAL_MEDIA_PATH, "config/global_media.json")
     data = read_json(GLOBAL_MEDIA_PATH)
     if not isinstance(data, list):
         return []
@@ -456,6 +457,24 @@ def load_global_media_sources():
         results.append(normalized)
 
     return results
+
+
+def load_global_media_raw() -> list:
+    """Return the raw global_media.json list (dicts with domain, rss, etc.)."""
+    _restore_from_github(GLOBAL_MEDIA_PATH, "config/global_media.json")
+    data = read_json(GLOBAL_MEDIA_PATH)
+    return data if isinstance(data, list) else []
+
+
+def save_global_media(raw_list: list) -> bool:
+    """Persist the raw global_media list and commit to GitHub."""
+    write_json(GLOBAL_MEDIA_PATH, raw_list)
+    try:
+        from utils.github_storage import commit_file
+        return commit_file(GLOBAL_MEDIA_PATH, "config/global_media.json",
+                           "chore: update global_media.json via app")
+    except Exception:
+        return False
 
 
 def _restore_from_github(local_path: Path, repo_path: str) -> None:

@@ -45,6 +45,8 @@ from utils.loaders import (
     tw_to_simplified,
     LOCALE_OPTIONS,
     gnews_url_from_domain,
+    load_global_media_raw,
+    save_global_media,
 )
 import os
 import google.generativeai as genai
@@ -1910,28 +1912,88 @@ elif selected_page == "Sources":
                 _sync_notify(save_category_keywords(_cat_kw))
                 st.success("關鍵字已儲存。")
                 st.rerun()
-        st.caption(f"共 {len(global_sources_ui)} 筆（唯讀）")
-        _global_rows = []
-        for _gs in global_sources_ui:
-            _gs_row = source_to_editor_row(_gs)
-            _gs_domain = _gs.get("domain", "") or ""
-            _gs_lang   = _gs.get("language", "") or "zh-TW"
-            _gs_row["google_rss_url"] = gnews_url_from_domain(_gs_domain, _gs_lang) if _gs_domain else _gs.get("url", "")
-            _global_rows.append(_gs_row)
-        _global_df = pd.DataFrame(_global_rows) if _global_rows else pd.DataFrame(columns=["name", "url", "language", "region", "enabled", "google_rss_url"])
-        st.dataframe(
-            _global_df[["name", "url", "language", "region", "enabled", "google_rss_url"]],
+
+        # Load raw global media for editing
+        _raw_global = load_global_media_raw()
+        _CONTINENTS = ["Asia-Pacific", "歐洲地區", "亞西地區", "北美地區", "拉丁美洲及加勒比海", "非洲地區"]
+
+        # Build editor rows from raw data
+        _gm_editor_rows = []
+        for _gm in _raw_global:
+            _gm_domain = _gm.get("domain", "") or ""
+            _gm_lang   = _gm.get("language", "") or ""
+            _gm_rss    = _gm.get("rss", "") or ""
+            _auto_url  = gnews_url_from_domain(_gm_domain, _gm_lang or "zh-TW") if _gm_domain and not _gm_rss else ""
+            _gm_editor_rows.append({
+                "name":        _gm.get("name", ""),
+                "domain":      _gm_domain,
+                "rss_url":     _gm_rss,
+                "language":    _gm_lang,
+                "continent":   _gm.get("continent", ""),
+                "country":     _gm.get("country", ""),
+                "enabled":     bool(_gm.get("enabled", True)),
+                "google_rss":  _auto_url,
+            })
+
+        _gm_cols = ["name", "domain", "rss_url", "language", "continent", "country", "enabled", "google_rss"]
+        _gm_df = pd.DataFrame(_gm_editor_rows, columns=_gm_cols) if _gm_editor_rows else pd.DataFrame(columns=_gm_cols)
+
+        st.caption(f"共 {len(_raw_global)} 筆　💡 修改後點「儲存」；RSS URL 留空時系統依網域自動生成 Google News URL。")
+        _edited_gm_df = st.data_editor(
+            _gm_df,
+            num_rows="dynamic",
             use_container_width=True,
-            hide_index=True,
+            height=460,
+            key=f"global_media_editor_{_src_v}",
             column_config={
-                "name":           st.column_config.TextColumn("名稱"),
-                "url":            st.column_config.TextColumn("RSS URL"),
-                "language":       st.column_config.TextColumn("語言"),
-                "region":         st.column_config.TextColumn("地區"),
-                "enabled":        st.column_config.CheckboxColumn("啟用"),
-                "google_rss_url": st.column_config.TextColumn("自動生成 Google RSS URL"),
+                "name":       st.column_config.TextColumn("名稱"),
+                "domain":     st.column_config.TextColumn("網域（domain）"),
+                "rss_url":    st.column_config.TextColumn("RSS URL（留空自動生成）"),
+                "language":   st.column_config.SelectboxColumn("語言", options=[""] + LOCALE_OPTIONS),
+                "continent":  st.column_config.SelectboxColumn("洲別", options=[""] + _CONTINENTS),
+                "country":    st.column_config.TextColumn("國家"),
+                "enabled":    st.column_config.CheckboxColumn("啟用", default=True),
+                "google_rss": st.column_config.TextColumn("自動 Google RSS（僅顯示）", disabled=True),
             },
         )
+
+        _gm_c1, _gm_c2 = st.columns([2, 2])
+        with _gm_c1:
+            if st.button("💾 儲存全球媒體列表", key="save_global_media_btn", use_container_width=True, type="primary"):
+                _new_raw = []
+                for _, _gmrow in _edited_gm_df.iterrows():
+                    _gm_name   = str(_gmrow.get("name", "") or "").strip()
+                    _gm_domain = str(_gmrow.get("domain", "") or "").strip()
+                    if not _gm_name and not _gm_domain:
+                        continue
+                    # Find original entry to preserve extra fields (name_zh, type, priority, etc.)
+                    _orig = next(
+                        (x for x in _raw_global if x.get("name", "") == _gm_name), {}
+                    )
+                    _new_entry = dict(_orig)
+                    _new_entry.update({
+                        "name":      _gm_name,
+                        "domain":    _gm_domain,
+                        "rss":       str(_gmrow.get("rss_url", "") or "").strip(),
+                        "language":  str(_gmrow.get("language", "") or "").strip(),
+                        "continent": str(_gmrow.get("continent", "") or "").strip(),
+                        "country":   str(_gmrow.get("country", "") or "").strip(),
+                        "enabled":   bool(_gmrow.get("enabled", True)),
+                    })
+                    _new_raw.append(_new_entry)
+                _sync_notify(save_global_media(_new_raw))
+                st.success(f"已儲存 {len(_new_raw)} 筆全球媒體設定。")
+                st.session_state["_src_version"] = _src_v + 1
+                st.rerun()
+        with _gm_c2:
+            _gm_del_opts = [r.get("name", "") for r in _raw_global if r.get("name")]
+            _gm_del_sel  = st.multiselect("刪除來源", options=_gm_del_opts, key="delete_global_names")
+            if st.button("刪除選取", key="delete_global_btn", use_container_width=True):
+                _kept = [x for x in _raw_global if x.get("name") not in _gm_del_sel]
+                _sync_notify(save_global_media(_kept))
+                st.success(f"已刪除 {len(_gm_del_sel)} 筆。")
+                st.session_state["_src_version"] = _src_v + 1
+                st.rerun()
 
     # ── 中國媒體 ──────────────────────────────────────────────────────────────
     with src_tab_cn:
@@ -2085,93 +2147,90 @@ elif selected_page == "Sources":
 
     # ── 自訂社群網站 ──────────────────────────────────────────────────────────
     with src_tab_social:
-        st.caption(
-            "記錄您追蹤的社群媒體帳號或頁面，依平台分類（Facebook、Twitter/X、Threads）。"
-            "目前僅供記錄用途；系統未自動抓取社群平台內容。"
-        )
+        st.caption("記錄您追蹤的社群媒體帳號或頁面。目前僅供記錄用途；系統未自動抓取社群平台內容。")
 
         _SOCIAL_PLATFORMS = ["Facebook", "Twitter/X", "Threads"]
+        _SOCIAL_ICONS = {"Facebook": "📘", "Twitter/X": "🐦", "Threads": "🧵"}
+        _SOC_COLS = ["name", "url", "enabled", "description"]
 
-        # Build display dataframe for the social sources editor
-        _social_columns = ["name", "platform", "url", "enabled", "description"]
-        _social_rows = []
-        for _ss in social_sources:
-            _social_rows.append({
-                "name":        _ss.get("name", ""),
-                "platform":    _ss.get("region", "Facebook"),   # reuse region field for platform
-                "url":         _ss.get("url", ""),
-                "enabled":     bool(_ss.get("enabled", True)),
-                "description": _ss.get("description", ""),
-            })
-        # Pad with blank rows
-        for _ in range(max(0, 5 - len(_social_rows))):
-            _social_rows.append({"name": "", "platform": "Facebook", "url": "", "enabled": True, "description": ""})
-        _social_df = pd.DataFrame(_social_rows, columns=_social_columns)
+        def _build_social_df(platform_name, src_list, blank=4):
+            rows = [
+                {
+                    "name":        s.get("name", ""),
+                    "url":         s.get("url", ""),
+                    "enabled":     bool(s.get("enabled", True)),
+                    "description": s.get("description", ""),
+                }
+                for s in src_list if s.get("region") == platform_name
+            ]
+            for _ in range(max(0, blank - len(rows))):
+                rows.append({"name": "", "url": "", "enabled": True, "description": ""})
+            return pd.DataFrame(rows, columns=_SOC_COLS)
 
-        st.caption(f"共 {len(social_sources)} 筆")
-        st.caption("💡 在下方直接新增或編輯社群媒體帳號，填入名稱、平台與頁面/帳號 URL 後儲存。")
-        edited_social_df = st.data_editor(
-            _social_df,
-            num_rows="dynamic",
-            use_container_width=True,
-            height=380,
-            key=f"social_sources_editor_{_src_v}",
-            column_config={
-                "name":        st.column_config.TextColumn("名稱（顯示用）"),
-                "platform":    st.column_config.SelectboxColumn("平台", options=_SOCIAL_PLATFORMS, required=True),
-                "url":         st.column_config.TextColumn("頁面 / 帳號 URL"),
-                "enabled":     st.column_config.CheckboxColumn("啟用", default=True),
-                "description": st.column_config.TextColumn("備註"),
-            },
-        )
+        def _save_social_platform(platform_name, edited_df):
+            new_entries = []
+            for _, row in edited_df.iterrows():
+                _n = str(row.get("name", "") or "").strip()
+                _u = str(row.get("url", "") or "").strip()
+                if not _n and not _u:
+                    continue
+                new_entries.append(normalize_source({
+                    "name":        _n or _u,
+                    "type":        "rss",
+                    "url":         _u,
+                    "category":    ["自訂社群網站"],
+                    "region":      platform_name,
+                    "enabled":     bool(row.get("enabled", True)),
+                    "description": str(row.get("description", "") or "").strip(),
+                }))
+            current = load_sources(editable_only=True)
+            # Replace only this platform's entries, keep all others
+            kept = [x for x in current
+                    if not ("自訂社群網站" in (x.get("category") or []) and x.get("region") == platform_name)]
+            return save_sources(kept + new_entries), len(new_entries)
 
-        _soc_c1, _soc_c2 = st.columns([2, 2])
-        with _soc_c1:
-            if st.button("💾 儲存社群網站設定", key="save_social_sources", use_container_width=True, type="primary"):
-                _new_social = []
-                for _, _srow in edited_social_df.iterrows():
-                    _sname = str(_srow.get("name", "") or "").strip()
-                    _surl  = str(_srow.get("url", "") or "").strip()
-                    if not _sname and not _surl:
-                        continue
-                    _new_social.append(normalize_source({
-                        "name":        _sname or _surl,
-                        "type":        "rss",
-                        "url":         _surl,
-                        "category":    ["自訂社群網站"],
-                        "region":      str(_srow.get("platform", "Facebook") or "Facebook"),
-                        "enabled":     bool(_srow.get("enabled", True)),
-                        "description": str(_srow.get("description", "") or "").strip(),
-                    }))
-                _current_srcs = load_sources(editable_only=True)
-                _non_social   = [x for x in _current_srcs if "自訂社群網站" not in (x.get("category") or [])]
-                _sync_notify(save_sources(_non_social + _new_social))
-                st.success(f"已儲存 {len(_new_social)} 筆社群網站設定。")
-                st.session_state["_src_version"] = _src_v + 1
-                st.rerun()
-        with _soc_c2:
-            _del_social = st.multiselect("刪除帳號", options=[s["name"] for s in social_sources if s.get("name")], key="delete_social_names")
-            if st.button("刪除選取", key="delete_social_btn", use_container_width=True):
-                _current_srcs = load_sources(editable_only=True)
-                _current_srcs = [x for x in _current_srcs if x.get("name") not in _del_social]
-                _sync_notify(save_sources(_current_srcs))
-                st.success(f"已刪除 {len(_del_social)} 筆。")
-                st.session_state["_src_version"] = _src_v + 1
-                st.rerun()
+        _soc_col_config = {
+            "name":        st.column_config.TextColumn("名稱（顯示用）"),
+            "url":         st.column_config.TextColumn("頁面 / 帳號 URL"),
+            "enabled":     st.column_config.CheckboxColumn("啟用", default=True),
+            "description": st.column_config.TextColumn("備註"),
+        }
 
-        # Per-platform preview
-        if social_sources:
+        for _plat in _SOCIAL_PLATFORMS:
+            _plat_srcs = [s for s in social_sources if s.get("region") == _plat]
+            _icon = _SOCIAL_ICONS[_plat]
+            st.markdown(f"### {_icon} {_plat}")
+            st.caption(f"共 {len(_plat_srcs)} 筆")
+            _plat_key = _plat.replace("/", "_")
+            _plat_df = _build_social_df(_plat, social_sources)
+            _edited_plat = st.data_editor(
+                _plat_df,
+                num_rows="dynamic",
+                use_container_width=True,
+                height=220,
+                key=f"social_editor_{_plat_key}_{_src_v}",
+                column_config=_soc_col_config,
+            )
+            _sp_c1, _sp_c2 = st.columns([2, 2])
+            with _sp_c1:
+                if st.button(f"💾 儲存 {_plat}", key=f"save_social_{_plat_key}", use_container_width=True, type="primary"):
+                    _ok, _cnt = _save_social_platform(_plat, _edited_plat)
+                    _sync_notify(_ok)
+                    st.success(f"已儲存 {_cnt} 筆 {_plat} 設定。")
+                    st.session_state["_src_version"] = _src_v + 1
+                    st.rerun()
+            with _sp_c2:
+                _del_opts = [s["name"] for s in _plat_srcs if s.get("name")]
+                if _del_opts:
+                    _del_sel = st.multiselect("刪除", options=_del_opts, key=f"del_social_{_plat_key}")
+                    if st.button("刪除選取", key=f"del_social_btn_{_plat_key}", use_container_width=True):
+                        _cur = load_sources(editable_only=True)
+                        _cur = [x for x in _cur if x.get("name") not in _del_sel]
+                        _sync_notify(save_sources(_cur))
+                        st.success(f"已刪除 {len(_del_sel)} 筆。")
+                        st.session_state["_src_version"] = _src_v + 1
+                        st.rerun()
             st.markdown("---")
-            for _plat in _SOCIAL_PLATFORMS:
-                _plat_items = [s for s in social_sources if s.get("region") == _plat]
-                if _plat_items:
-                    with st.expander(f"📋 {_plat}（{len(_plat_items)} 筆）", expanded=False):
-                        for _pi in _plat_items:
-                            _icon = "✅" if _pi.get("enabled", True) else "⛔"
-                            _purl = _pi.get("url", "")
-                            st.markdown(f"{_icon} **{_pi.get('name', '')}**" + (f"　[{_purl}]({_purl})" if _purl else ""))
-                            if _pi.get("description"):
-                                st.caption(_pi["description"])
 
 
 # =========================================================
