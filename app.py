@@ -2856,6 +2856,14 @@ elif selected_page == "Schedule":
 
     drive_folders = config.get("drive_folders", [])
 
+    # 欄位標題
+    if drive_folders:
+        _h1, _h2, _h3 = st.columns([3, 5, 1])
+        with _h1:
+            st.caption("📝 資料夾名稱（自訂，例如「Hourly」）")
+        with _h2:
+            st.caption("🔗 Google Drive Folder ID")
+
     # 顯示現有資料夾列表
     if drive_folders:
         for _dfi, _df in enumerate(drive_folders):
@@ -2866,7 +2874,7 @@ elif selected_page == "Schedule":
                     value=_df.get("name", ""),
                     key=f"df_name_{_dfi}",
                     label_visibility="collapsed",
-                    placeholder="資料夾名稱",
+                    placeholder="例：Hourly、每日報告…",
                 )
             with _dfc2:
                 _new_fid = st.text_input(
@@ -2874,7 +2882,7 @@ elif selected_page == "Schedule":
                     value=_df.get("folder_id", ""),
                     key=f"df_fid_{_dfi}",
                     label_visibility="collapsed",
-                    placeholder="Google Drive Folder ID",
+                    placeholder="貼上 Google Drive 資料夾 ID",
                 )
             with _dfc3:
                 if st.button("🗑️", key=f"df_del_{_dfi}", use_container_width=True):
@@ -2885,16 +2893,18 @@ elif selected_page == "Schedule":
             if _new_name != _df.get("name", "") or _new_fid != _df.get("folder_id", ""):
                 config["drive_folders"][_dfi] = {"name": _new_name, "folder_id": _new_fid}
     else:
-        st.caption("尚未設定任何資料夾。")
+        st.caption("尚未設定任何資料夾。點「＋ 新增資料夾」開始設定。")
 
-    if st.button("＋ 新增資料夾", key="add_drive_folder"):
-        config["drive_folders"].append({"name": "", "folder_id": ""})
-        _sync_notify(save_auto_export(config))
-        st.rerun()
-
-    if drive_folders and st.button("💾 儲存資料夾設定", key="save_drive_folders"):
-        _sync_notify(save_auto_export(config))
-        st.success("已儲存資料夾設定")
+    _btn_c1, _btn_c2 = st.columns([1, 2])
+    with _btn_c1:
+        if st.button("＋ 新增資料夾", key="add_drive_folder", use_container_width=True):
+            config["drive_folders"].append({"name": "", "folder_id": ""})
+            _sync_notify(save_auto_export(config))
+            st.rerun()
+    with _btn_c2:
+        if drive_folders and st.button("💾 儲存資料夾設定", key="save_drive_folders", use_container_width=True, type="primary"):
+            _sync_notify(save_auto_export(config))
+            st.success("✅ 已儲存資料夾設定")
 
 
 # =========================================================
