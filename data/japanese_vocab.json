@@ -1,0 +1,42 @@
+[
+  {
+    "code": "1",
+    "term": "私",
+    "reading": "わたし",
+    "meaning": "我",
+    "pos": "pronoun",
+    "note": "第一人稱代名詞"
+  },
+  {
+    "code": "2",
+    "term": "ご飯",
+    "reading": "ごはん",
+    "meaning": "飯",
+    "pos": "noun",
+    "note": "米飯、餐點"
+  },
+  {
+    "code": "3",
+    "term": "食べる",
+    "reading": "たべる",
+    "meaning": "吃",
+    "pos": "verb",
+    "note": "一段動詞"
+  },
+  {
+    "code": "4",
+    "term": "水",
+    "reading": "みず",
+    "meaning": "水",
+    "pos": "noun",
+    "note": ""
+  },
+  {
+    "code": "5",
+    "term": "飲む",
+    "reading": "のむ",
+    "meaning": "喝",
+    "pos": "verb",
+    "note": "五段動詞"
+  }
+]

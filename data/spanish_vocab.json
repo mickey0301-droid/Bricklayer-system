@@ -1,0 +1,106 @@
+[
+  {
+    "code": "1",
+    "term": "libro",
+    "reading": "",
+    "meaning": "書",
+    "pos": "noun",
+    "note": ""
+  },
+  {
+    "code": "2",
+    "term": "estar",
+    "reading": "",
+    "meaning": "在、處於某狀態",
+    "pos": "verb",
+    "note": ""
+  },
+  {
+    "code": "3",
+    "term": "ser",
+    "reading": "",
+    "meaning": "是",
+    "pos": "verb",
+    "note": ""
+  },
+  {
+    "code": "4",
+    "term": "muy",
+    "reading": "",
+    "meaning": "非常",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "5",
+    "term": "sin",
+    "reading": "",
+    "meaning": "沒有、沒",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "6",
+    "term": "por",
+    "reading": "",
+    "meaning": "因為、透過",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "7",
+    "term": "a",
+    "reading": "",
+    "meaning": "到、向",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "8",
+    "term": "siempre",
+    "reading": "",
+    "meaning": "永遠、總是",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "9",
+    "term": "miedo",
+    "reading": "",
+    "meaning": "恐懼",
+    "pos": "noun",
+    "note": ""
+  },
+  {
+    "code": "10",
+    "term": "más",
+    "reading": "",
+    "meaning": "更多",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "11",
+    "term": "querer",
+    "reading": "",
+    "meaning": "想要、愛",
+    "pos": "verb",
+    "note": ""
+  },
+  {
+    "code": "12",
+    "term": "en",
+    "reading": "",
+    "meaning": "在…裡面",
+    "pos": "adv",
+    "note": ""
+  },
+  {
+    "code": "13",
+    "term": "dar",
+    "reading": "",
+    "meaning": "給",
+    "pos": "verb",
+    "note": ""
+  }
+]

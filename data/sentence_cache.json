@@ -1,0 +1,112 @@
+{
+  "japanese::1": {
+    "sentence": "私。",
+    "reading": "わたし",
+    "translation": "我。"
+  },
+  "japanese::3": {
+    "sentence": "私はご飯を食べる。",
+    "reading": "わたしはごはんをたべる。",
+    "translation": "我吃飯。"
+  },
+  "japanese::5": {
+    "sentence": "私は水を飲む。",
+    "reading": "わたしはみずをのむ。",
+    "translation": "我喝水。"
+  },
+  "japanese::4": {
+    "sentence": "私はご飯と水を食べる。",
+    "reading": "わたしはごはんとみずをたべる。",
+    "translation": "我吃飯和水。"
+  },
+  "japanese::2": {
+    "sentence": "私のご飯です。",
+    "reading": "わたしのごはんです。",
+    "translation": "這是我的飯。"
+  },
+  "korean::1": {
+    "sentence": "나는 학습을 한다.",
+    "reading": "naneun hakseubeul handa.",
+    "translation": "我學習。"
+  },
+  "spanish::1": {
+    "sentence": "El libro es muy interesante.",
+    "reading": "",
+    "translation": "這本書非常有趣。"
+  },
+  "spanish::2": {
+    "sentence": "Yo muy estar.",
+    "reading": "",
+    "translation": "我非常在。"
+  },
+  "spanish::3": {
+    "sentence": "El libro es de papel.",
+    "reading": "",
+    "translation": "這本書是由紙製成的."
+  },
+  "spanish::4": {
+    "sentence": "Esto es por muy bueno.",
+    "reading": "",
+    "translation": "這是因為非常好。"
+  },
+  "spanish::5": {
+    "sentence": "Estar sin muy de.",
+    "reading": "",
+    "translation": "非常沒有。"
+  },
+  "spanish::6": {
+    "sentence": "Estar a muy de por sin.",
+    "reading": "",
+    "translation": "在非常不需要的情況下。"
+  },
+  "spanish::7": {
+    "sentence": "Ser muy importante para estar por aquí.",
+    "reading": "",
+    "translation": "在這裡非常重要。"
+  },
+  "spanish::8": {
+    "sentence": "Siempre estar muy a de ser sin por.",
+    "reading": "",
+    "translation": "永遠在被沒有的時候。"
+  },
+  "spanish::9": {
+    "sentence": "Ya estar sin miedo.",
+    "reading": "",
+    "translation": "已經沒有恐懼。"
+  },
+  "spanish::10": {
+    "sentence": "Siempre hay más de estar sin ser.",
+    "reading": "",
+    "translation": "永遠有更多的存在而不屬於。"
+  },
+  "spanish::11": {
+    "sentence": "Yo quiero mucho a mi familia.",
+    "reading": "",
+    "translation": "我非常愛我的家人。"
+  },
+  "spanish::12": {
+    "sentence": "Está en la casa.",
+    "reading": "",
+    "translation": "在這座房子裡。"
+  },
+  "spanish::13": {
+    "sentence": "Siempre quiero dar más.",
+    "reading": "",
+    "translation": "我總是想給更多。"
+  },
+  "korean::2": {
+    "sentence": "나는 너를 좋아해.",
+    "reading": "naneun neoreul joahae.",
+    "translation": "我喜歡你。"
+  },
+  "korean::3": {
+    "sentence": "나는 사람이야.",
+    "reading": "naneun saramiya.",
+    "translation": "我是一個人。"
+  },
+  "korean::4": {
+    "sentence": "나는 학생이다.",
+    "reading": "naneun haksaengida.",
+    "translation": "我是一名學生。"
+  }
+}
