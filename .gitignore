@@ -1,21 +1,21 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-.env
-.venv/
-venv/
-
-# Streamlit
+# Secrets - never commit tokens to GitHub
 .streamlit/secrets.toml
 
-# 使用者本機設定（不隨 git pull 被覆蓋）
-# sources_user.json / experts_user.json / category_keywords_user.json
-# 已改由 app 透過 GitHub API 即時同步，確保 Streamlit Cloud 重啟後資料不遺失
-config/auto_export_user.json
-config/auto_export_state.json
-config/insights_user.json
+# User data - vocabulary & learning records (local only)
+data/
 
-# 其他暫存
-*.log
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# OS files
 .DS_Store
+Thumbs.db
