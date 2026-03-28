@@ -3,7 +3,9 @@ import json
 import base64
 import pandas as pd
 
-DATA_FOLDER = "data"
+# 用腳本的絕對位置計算 data/ 路徑，確保不論從哪個目錄啟動都能找到
+_HERE = os.path.dirname(os.path.abspath(__file__))          # utils/
+DATA_FOLDER = os.path.normpath(os.path.join(_HERE, "..", "data"))  # Bricklayer/data/
 VOCAB_COLUMNS = ["code", "term", "reading", "meaning", "pos", "note"]
 
 

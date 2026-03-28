@@ -1,8 +1,9 @@
 import os
 import json
 
-DATA_FOLDER = "data"
-CACHE_FILE  = os.path.join(DATA_FOLDER, "sentence_cache.json")
+_HERE = os.path.dirname(os.path.abspath(__file__))
+DATA_FOLDER   = os.path.normpath(os.path.join(_HERE, "..", "data"))
+CACHE_FILE    = os.path.join(DATA_FOLDER, "sentence_cache.json")
 GH_CACHE_PATH = "data/sentence_cache.json"
 
 
@@ -25,9 +26,12 @@ def _gh_write(gh_path: str, data: dict, message: str):
     try:
         from utils.vocab_manager import _github_write
         content_str = json.dumps(data, ensure_ascii=False, indent=2)
-        _github_write(gh_path, content_str, None, message)
-    except Exception:
-        pass
+        ok, err = _github_write(gh_path, content_str, None, message)
+        # 句子快取失敗只記 log，不打擾使用者
+        if not ok:
+            print(f"[sentence_cache] GitHub sync failed: {err}")
+    except Exception as e:
+        print(f"[sentence_cache] GitHub sync error: {e}")
 
 
 # ── Cache load/save ────────────────────────────────────────

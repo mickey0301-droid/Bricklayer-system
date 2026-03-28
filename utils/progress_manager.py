@@ -2,7 +2,8 @@ import os
 import json
 from datetime import date
 
-DATA_FOLDER = "data"
+_HERE = os.path.dirname(os.path.abspath(__file__))
+DATA_FOLDER   = os.path.normpath(os.path.join(_HERE, "..", "data"))
 PROGRESS_FILE = os.path.join(DATA_FOLDER, "study_progress.json")
 HISTORY_FILE  = os.path.join(DATA_FOLDER, "learning_history.json")
 
@@ -30,9 +31,13 @@ def _gh_write(gh_path: str, data: dict, message: str):
     try:
         from utils.vocab_manager import _github_write
         content_str = json.dumps(data, ensure_ascii=False, indent=2)
-        _github_write(gh_path, content_str, None, message)
-    except Exception:
-        pass
+        ok, err = _github_write(gh_path, content_str, None, message)
+        if not ok:
+            import streamlit as st
+            st.warning(f"⚠️ 進度同步 GitHub 失敗：{err}（資料已存本地，但重啟後可能遺失）")
+    except Exception as e:
+        import streamlit as st
+        st.warning(f"⚠️ 進度同步 GitHub 失敗：{e}（資料已存本地，但重啟後可能遺失）")
 
 
 # ── Progress ───────────────────────────────────────────────
