@@ -888,10 +888,10 @@ def review_page():
                 st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="study-value-md">{sentence_data["reading"]}</div>', unsafe_allow_html=True)
 
-            if st.session_state.review_show_answer:
-                st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="study-value-md">{sentence_data.get("translation", "")}</div>', unsafe_allow_html=True)
+            st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-md">{sentence_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
+            if st.session_state.review_show_answer:
                 if sentence_data.get("grammar"):
                     st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
                     st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
@@ -981,10 +981,10 @@ def review_page():
                     st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
                     st.markdown(f'<div class="study-value-md">{combo_data["reading"]}</div>', unsafe_allow_html=True)
 
-                if st.session_state.combo_show_answer:
-                    st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="study-value-md">{combo_data.get("translation", "")}</div>', unsafe_allow_html=True)
+                st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{combo_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
+                if st.session_state.combo_show_answer:
                     if combo_data.get("grammar"):
                         st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
                         st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
@@ -1360,9 +1360,10 @@ def pattern_review_page():
             st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="study-value-md">{sentence_data["reading"]}</div>', unsafe_allow_html=True)
 
+        st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="study-value-md">{sentence_data.get("translation","")}</div>', unsafe_allow_html=True)
+
         if st.session_state.pattern_review_show_answer:
-            st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-md">{sentence_data.get("translation","")}</div>', unsafe_allow_html=True)
             if sentence_data.get("grammar"):
                 st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
