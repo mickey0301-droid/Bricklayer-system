@@ -37,7 +37,18 @@ def _gh_write(gh_path: str, data: dict, message: str):
 # ── Cache load/save ────────────────────────────────────────
 
 def load_sentence_cache() -> dict:
-    """GitHub 優先，無法連線時退回本地備份。"""
+    """本地優先，本地無資料時才從 GitHub 下載。"""
+    # 1. 本地優先（絕對路徑，最可靠）
+    if os.path.exists(CACHE_FILE):
+        try:
+            with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if data:
+                return data
+        except Exception:
+            pass
+
+    # 2. 本地無資料時從 GitHub 下載（首次安裝 / 換電腦）
     gh_data = _gh_read(GH_CACHE_PATH)
     if gh_data is not None:
         _ensure_data_folder()
@@ -48,12 +59,6 @@ def load_sentence_cache() -> dict:
             pass
         return gh_data
 
-    if os.path.exists(CACHE_FILE):
-        try:
-            with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            pass
     return {}
 
 

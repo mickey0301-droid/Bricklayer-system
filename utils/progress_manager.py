@@ -43,8 +43,18 @@ def _gh_write(gh_path: str, data: dict, message: str):
 # ── Progress ───────────────────────────────────────────────
 
 def load_progress() -> dict:
-    """GitHub 優先，無法連線時退回本地備份。"""
-    # 1. GitHub 優先
+    """本地優先，本地無資料時才從 GitHub 下載。"""
+    # 1. 本地優先（絕對路徑，最可靠）
+    if os.path.exists(PROGRESS_FILE):
+        try:
+            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if data:
+                return data
+        except Exception:
+            pass
+
+    # 2. 本地無資料時從 GitHub 下載（首次安裝 / 換電腦）
     gh_data = _gh_read(GH_PROGRESS_PATH)
     if gh_data is not None:
         _ensure_data_folder()
@@ -55,13 +65,6 @@ def load_progress() -> dict:
             pass
         return gh_data
 
-    # 2. 本地備份
-    if os.path.exists(PROGRESS_FILE):
-        try:
-            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            pass
     return {}
 
 
@@ -91,15 +94,19 @@ def update_language_progress(language: str, index: int):
 # ── History ────────────────────────────────────────────────
 
 def _load_history() -> dict:
-    gh_data = _gh_read(GH_HISTORY_PATH)
-    if gh_data is not None:
-        return gh_data
+    # 1. 本地優先
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+            if data:
+                return data
         except Exception:
             pass
+    # 2. 本地無資料時從 GitHub 下載
+    gh_data = _gh_read(GH_HISTORY_PATH)
+    if gh_data is not None:
+        return gh_data
     return {}
 
 
