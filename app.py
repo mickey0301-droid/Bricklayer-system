@@ -292,11 +292,27 @@ def _vocab_by_codes(codes: list, vocab_df, current_code: int) -> list:
 
 
 def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_codes: list = None):
-    """在例句下方顯示使用到的詞彙 chip 清單。超出範圍的詞以橘色標示。"""
+    """在例句下方顯示使用到的詞彙 chip 清單。超出範圍的詞以橘色標示。
+    合併 vocab_codes（AI 回傳，處理變形）與 string matching（掃描全句，補漏），
+    以確保不遺漏任何使用到的詞彙。
+    """
+    # 方法一：AI 回傳的 vocab_codes（可正確處理動詞活用等變形）
     if vocab_codes:
-        used = _vocab_by_codes(vocab_codes, vocab_df, current_code)
+        code_hits = _vocab_by_codes(vocab_codes, vocab_df, current_code)
     else:
-        used = find_used_vocab(sentence, vocab_df, current_code)
+        code_hits = []
+
+    # 方法二：字串掃描（補捉 AI 漏報的詞、以及原型直接出現在句中的詞）
+    string_hits = find_used_vocab(sentence, vocab_df, current_code)
+
+    # 合併：以 vocab_codes 結果為主，string matching 補充未出現的詞
+    seen_code_nums = {v["code_num"] for v in code_hits}
+    merged = list(code_hits)
+    for v in string_hits:
+        if v["code_num"] not in seen_code_nums:
+            merged.append(v)
+
+    used = sorted(merged, key=lambda x: x["code_num"])
     if not used:
         return
     st.markdown('<div class="study-label" style="margin-top:0.5rem;font-size:0.72rem;">例句使用的詞彙</div>', unsafe_allow_html=True)

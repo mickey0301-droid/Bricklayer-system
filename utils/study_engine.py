@@ -191,10 +191,14 @@ def generate_example_sentence(
         )
     elif current_code > 0 and current_code <= 100:
         vocab_rule = (
-            "VOCABULARY RULE: The learner has studied fewer than 100 words. "
-            "Use content words primarily from the ALLOWED VOCABULARY list. "
-            "You may include AT MOST ONE content word that is NOT in the list if it is essential for naturalness. "
-            "Prefer list words whenever possible.\n"
+            "VOCABULARY RULE (BEGINNER — HARD LIMIT, NO EXCEPTIONS): "
+            "The learner has studied fewer than 100 words. "
+            "ALL content words (nouns, verbs, adjectives, adverbs) MUST come from the ALLOWED VOCABULARY list. "
+            "You are permitted AT MOST 1 (ONE) content word outside the list — "
+            "ONLY when it is literally impossible to form a grammatically natural sentence without it. "
+            "Using 2 or more words outside the list is STRICTLY FORBIDDEN regardless of any reason. "
+            "If you are tempted to use a second outside word, rephrase the sentence instead. "
+            "This limit is ABSOLUTE.\n"
         )
     else:
         vocab_rule = (
@@ -243,9 +247,9 @@ def generate_example_sentence(
     content_word_rule_ja = "\n- 【複習モード】リストから使う内容語は最大2語。" if review_mode else ""
     content_word_rule_ko = "\n- 【복습 모드】목록에서 사용하는 내용어는 최대 2개." if review_mode else ""
     content_word_rule_es = "\n- 【Review mode】Usa como máximo 2 palabras de contenido de la lista." if review_mode else ""
-    loose_rule_ja = "\n- 【初级模式】リストにない内容語を最大1語使ってもよい（自然さのため）。" if (not review_mode and current_code > 0 and current_code <= 100) else ""
-    loose_rule_ko = "\n- 【초급 모드】자연스러움을 위해 목록에 없는 내용어를 최대 1개 사용해도 됨." if (not review_mode and current_code > 0 and current_code <= 100) else ""
-    loose_rule_es = "\n- 【Modo inicial】Puedes usar como máximo 1 palabra de contenido fuera de la lista si es necesario para la naturalidad." if (not review_mode and current_code > 0 and current_code <= 100) else ""
+    loose_rule_ja = "\n- 【厳守・絶対ルール】リストにない内容語は最大1語のみ許可。2語以上の使用は絶対禁止。リストの語で言い換えられる場合はリストを使うこと。" if (not review_mode and current_code > 0 and current_code <= 100) else ""
+    loose_rule_ko = "\n- 【엄수·절대 규칙】목록에 없는 내용어는 최대 1개만 허용. 2개 이상은 절대 금지. 목록 단어로 바꿔 말할 수 있으면 반드시 목록을 사용할 것." if (not review_mode and current_code > 0 and current_code <= 100) else ""
+    loose_rule_es = "\n- 【OBLIGATORIO·ABSOLUTO】Solo se permite 1 (UNA) palabra de contenido fuera de la lista. 2 o más palabras fuera está ESTRICTAMENTE PROHIBIDO. Si se puede reformular con palabras de la lista, hazlo." if (not review_mode and current_code > 0 and current_code <= 100) else ""
 
     if language == "japanese":
         meaning_line = f"\nTARGET WORDの品詞・意味：{term_pos}「{term_meaning}」（読み：{term_reading}）。必ずこの意味・品詞で使うこと。" if (term_meaning or term_pos) else ""
