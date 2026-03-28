@@ -727,7 +727,7 @@ def study_page():
             st.markdown(f'<div class="study-value-md">{sentence_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
             if sentence_data.get("grammar"):
-                st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
+                st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
@@ -841,7 +841,7 @@ def review_page():
     # 模式 1：單字複習（原有功能）
     # ════════════════════════════════════════════════════
     if mode == "📖 單字複習":
-        st.caption("隨機抽一個已學過的單字，例句只使用已學詞彙。讀懂例句後再看答案。")
+        st.caption("隨機抽一個已學過的單字，例句只使用已學詞彙。按「看答案」可查看文法分析與目標單字。")
 
         if st.button("🎲 抽新題目", use_container_width=True, key="word_draw") or not st.session_state.review_term:
             picked     = learned_df.sample(1).iloc[0]
@@ -893,7 +893,7 @@ def review_page():
 
             if st.session_state.review_show_answer:
                 if sentence_data.get("grammar"):
-                    st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
+                    st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                     st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
 
                 st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
@@ -924,7 +924,7 @@ def review_page():
         if n_learned < 2:
             st.info("需要至少學 2 個單字才能使用重組練習。")
         else:
-            st.caption(f"隨機抽 2 個已學過的單字，AI 會把它們組成一句短句。試著讀懂後再看答案。")
+            st.caption(f"隨機抽 2 個已學過的單字，AI 會把它們組成一句短句。按「看答案」可查看文法分析與使用單字。")
 
             if st.button("🎲 抽新組合", use_container_width=True, key="combo_draw") or not st.session_state.combo_words:
                 picked_rows = learned_df.sample(n=n_pick)
@@ -986,7 +986,7 @@ def review_page():
 
                 if st.session_state.combo_show_answer:
                     if combo_data.get("grammar"):
-                        st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
+                        st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                         st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
 
                     # 顯示本題使用的所有目標單字
@@ -1232,7 +1232,7 @@ def pattern_study_page():
             st.markdown(f'<div class="study-value-md">{sentence_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
             if sentence_data.get("grammar"):
-                st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
+                st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
@@ -1365,7 +1365,7 @@ def pattern_review_page():
 
         if st.session_state.pattern_review_show_answer:
             if sentence_data.get("grammar"):
-                st.markdown('<div class="study-label">Grammar</div>', unsafe_allow_html=True)
+                st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
             st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="study-value-lg">{st.session_state.pattern_review_term}</div>', unsafe_allow_html=True)
