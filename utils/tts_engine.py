@@ -52,6 +52,28 @@ def generate_tts_audio(text: str, language: str) -> bytes:
     return response.read()
 
 
+def audio_player_dual(term_bytes: bytes, sentence_bytes: bytes) -> str:
+    """Play term audio first, then sentence audio after term finishes."""
+    b64_term = base64.b64encode(term_bytes).decode()
+    b64_sent = base64.b64encode(sentence_bytes).decode()
+    uid = int(time.time() * 1000)
+    return f"""<!DOCTYPE html>
+<html><body style="margin:0;padding:0;overflow:hidden">
+<audio id="t{uid}" style="display:none">
+  <source src="data:audio/mp3;base64,{b64_term}" type="audio/mp3">
+</audio>
+<audio id="s{uid}" style="display:none">
+  <source src="data:audio/mp3;base64,{b64_sent}" type="audio/mp3">
+</audio>
+<script>
+  var t = document.getElementById('t{uid}');
+  var s = document.getElementById('s{uid}');
+  t.onended = function() {{ setTimeout(function(){{ s.play(); }}, 400); }};
+  t.play();
+</script>
+</body></html>"""
+
+
 def audio_player(audio_bytes: bytes) -> str:
     """Return a self-contained HTML document for use with components.html().
     The iframe reloads its srcdoc on every call, so the script runs fresh

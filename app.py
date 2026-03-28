@@ -16,7 +16,7 @@ from utils.study_engine import (
     generate_recombination_sentence,
     GRAMMAR_PATTERNS,
 )
-from utils.tts_engine import generate_tts_audio, audio_player
+from utils.tts_engine import generate_tts_audio, audio_player, audio_player_dual
 from utils.sentence_cache import get_cached_sentence, set_cached_sentence
 from utils.progress_manager import (
     get_language_progress,
@@ -168,6 +168,7 @@ _defaults = {
     "tts_term_for": "",
     "tts_sentence_audio": None,
     "tts_sentence_for": "",
+    "auto_played_for": "",
     "review_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": ""},
     "review_term": "",
     "review_meaning": "",
@@ -657,6 +658,34 @@ def study_page():
                 st.rerun()
             except Exception as e:
                 st.error(f"自動生成例句失敗：{e}")
+
+    # ── 自動播放：翻到新單字時，依序播放單字→例句 ──────────
+    sentence_data_ready = st.session_state.study_sentence
+    if (
+        sentence_data_ready.get("sentence")
+        and st.session_state.auto_played_for != current_term
+    ):
+        try:
+            with st.spinner("自動播放中..."):
+                # 單字音訊（有快取就用）
+                if st.session_state.tts_term_for == current_term and st.session_state.tts_term_audio:
+                    term_audio = st.session_state.tts_term_audio
+                else:
+                    term_audio = generate_tts_audio(current_term, language)
+                    st.session_state.tts_term_audio = term_audio
+                    st.session_state.tts_term_for = current_term
+                # 例句音訊（有快取就用）
+                cur_sent = sentence_data_ready["sentence"]
+                if st.session_state.tts_sentence_for == cur_sent and st.session_state.tts_sentence_audio:
+                    sent_audio = st.session_state.tts_sentence_audio
+                else:
+                    sent_audio = generate_tts_audio(cur_sent, language)
+                    st.session_state.tts_sentence_audio = sent_audio
+                    st.session_state.tts_sentence_for = cur_sent
+            components.html(audio_player_dual(term_audio, sent_audio), height=0)
+            st.session_state.auto_played_for = current_term
+        except Exception as e:
+            st.warning(f"自動播放失敗：{e}")
 
     # ── 頂部進度列 ─────────────────────────────────────────
     progress_text = f"{st.session_state.study_index + 1} / {len(study_df)}"
