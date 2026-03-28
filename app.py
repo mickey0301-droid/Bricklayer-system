@@ -173,11 +173,13 @@ _defaults = {
     "review_term": "",
     "review_meaning": "",
     "review_show_answer": False,
+    "review_auto_played_for": "",
     # 重組練習模式
     "combo_words": [],
     "combo_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": ""},
     "combo_show_answer": False,
     "combo_pattern": {"label": "", "instruction": ""},
+    "combo_auto_played_for": "",
     # 句型學習模式（逐筆瀏覽，與字彙學習同版面）
     "pattern_vocab_df": None,
     "pattern_vocab_loaded_language": None,
@@ -193,6 +195,7 @@ _defaults = {
     "pattern_review_term": "",
     "pattern_review_meaning": "",
     "pattern_review_show_answer": False,
+    "pattern_review_auto_played_for": "",
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -909,6 +912,16 @@ def review_page():
 
         sentence_data = st.session_state.review_sentence
         if sentence_data.get("sentence"):
+            # 自動播放例句（每題只播一次）
+            if st.session_state.review_auto_played_for != sentence_data["sentence"]:
+                try:
+                    with st.spinner("自動播放中..."):
+                        audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
+                    components.html(audio_player(audio_bytes), height=0)
+                    st.session_state.review_auto_played_for = sentence_data["sentence"]
+                except Exception as e:
+                    st.warning(f"自動播放失敗：{e}")
+
             st.markdown('<div class="study-card">', unsafe_allow_html=True)
             st.markdown('<div class="study-label">例句</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
@@ -920,14 +933,13 @@ def review_page():
             st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="study-value-md">{sentence_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
-            if st.session_state.review_show_answer:
-                if sentence_data.get("grammar"):
-                    st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
+            if sentence_data.get("grammar"):
+                st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
 
-                st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="study-value-lg">{st.session_state.review_term}</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.review_meaning}</div>', unsafe_allow_html=True)
+            st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-lg">{st.session_state.review_term}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.review_meaning}</div>', unsafe_allow_html=True)
 
             st.markdown('</div>', unsafe_allow_html=True)
 
@@ -938,10 +950,6 @@ def review_page():
                     components.html(audio_player(audio_bytes), height=0)
                 except Exception as e:
                     st.error(f"TTS 失敗：{e}")
-            if not st.session_state.review_show_answer:
-                if st.button("👁 看答案", use_container_width=True, key="word_reveal"):
-                    st.session_state.review_show_answer = True
-                    st.rerun()
 
     # ════════════════════════════════════════════════════
     # 模式 2：重組練習（新功能）
@@ -1002,6 +1010,16 @@ def review_page():
 
             combo_data = st.session_state.combo_sentence
             if combo_data.get("sentence"):
+                # 自動播放例句（每題只播一次）
+                if st.session_state.combo_auto_played_for != combo_data["sentence"]:
+                    try:
+                        with st.spinner("自動播放中..."):
+                            audio_bytes = generate_tts_audio(combo_data["sentence"], language)
+                        components.html(audio_player(audio_bytes), height=0)
+                        st.session_state.combo_auto_played_for = combo_data["sentence"]
+                    except Exception as e:
+                        st.warning(f"自動播放失敗：{e}")
+
                 st.markdown('<div class="study-card">', unsafe_allow_html=True)
                 st.markdown('<div class="study-label">重組例句</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="study-value-md">{combo_data["sentence"]}</div>', unsafe_allow_html=True)
@@ -1013,24 +1031,23 @@ def review_page():
                 st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="study-value-md">{combo_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
-                if st.session_state.combo_show_answer:
-                    if combo_data.get("grammar"):
-                        st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                        st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
+                if combo_data.get("grammar"):
+                    st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
 
-                    # 顯示本題使用的所有目標單字
-                    st.markdown('<div class="study-label">本題使用的單字</div>', unsafe_allow_html=True)
-                    words_html = ""
-                    for w in st.session_state.combo_words:
-                        reading_part = f"（{w['reading']}）" if w.get("reading") else ""
-                        words_html += (
-                            f'<div style="margin-bottom:0.5rem;">'
-                            f'<span style="font-size:1.2rem;font-weight:700;">{w["term"]}</span>'
-                            f'<span style="font-size:0.95rem;color:#666;margin-left:0.4rem;">{reading_part}</span>'
-                            f'<span style="font-size:1rem;color:#4F8BF9;margin-left:0.6rem;">{w.get("meaning","")}</span>'
-                            f'</div>'
-                        )
-                    st.markdown(words_html, unsafe_allow_html=True)
+                # 顯示本題使用的所有目標單字
+                st.markdown('<div class="study-label">本題使用的單字</div>', unsafe_allow_html=True)
+                words_html = ""
+                for w in st.session_state.combo_words:
+                    reading_part = f"（{w['reading']}）" if w.get("reading") else ""
+                    words_html += (
+                        f'<div style="margin-bottom:0.5rem;">'
+                        f'<span style="font-size:1.2rem;font-weight:700;">{w["term"]}</span>'
+                        f'<span style="font-size:0.95rem;color:#666;margin-left:0.4rem;">{reading_part}</span>'
+                        f'<span style="font-size:1rem;color:#4F8BF9;margin-left:0.6rem;">{w.get("meaning","")}</span>'
+                        f'</div>'
+                    )
+                st.markdown(words_html, unsafe_allow_html=True)
 
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1041,10 +1058,6 @@ def review_page():
                         components.html(audio_player(audio_bytes), height=0)
                     except Exception as e:
                         st.error(f"TTS 失敗：{e}")
-                if not st.session_state.combo_show_answer:
-                    if st.button("👁 看答案", use_container_width=True, key="combo_reveal"):
-                        st.session_state.combo_show_answer = True
-                        st.rerun()
 
     st.divider()
     if st.button("↩ 回到語言首頁", use_container_width=True):
@@ -1381,6 +1394,16 @@ def pattern_review_page():
 
     sentence_data = st.session_state.pattern_review_sentence
     if sentence_data.get("sentence"):
+        # 自動播放例句（每題只播一次）
+        if st.session_state.pattern_review_auto_played_for != sentence_data["sentence"]:
+            try:
+                with st.spinner("自動播放中..."):
+                    audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
+                components.html(audio_player(audio_bytes), height=0)
+                st.session_state.pattern_review_auto_played_for = sentence_data["sentence"]
+            except Exception as e:
+                st.warning(f"自動播放失敗：{e}")
+
         st.markdown('<div class="study-card">', unsafe_allow_html=True)
         st.markdown('<div class="study-label">例句</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
@@ -1392,13 +1415,13 @@ def pattern_review_page():
         st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="study-value-md">{sentence_data.get("translation","")}</div>', unsafe_allow_html=True)
 
-        if st.session_state.pattern_review_show_answer:
-            if sentence_data.get("grammar"):
-                st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
-            st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-lg">{st.session_state.pattern_review_term}</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.pattern_review_meaning}</div>', unsafe_allow_html=True)
+        if sentence_data.get("grammar"):
+            st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
+
+        st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="study-value-lg">{st.session_state.pattern_review_term}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.pattern_review_meaning}</div>', unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1409,10 +1432,6 @@ def pattern_review_page():
                 components.html(audio_player(audio_bytes), height=0)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
-        if not st.session_state.pattern_review_show_answer:
-            if st.button("👁 看答案", use_container_width=True, key="pr_reveal"):
-                st.session_state.pattern_review_show_answer = True
-                st.rerun()
 
     st.divider()
     if st.button("← Back", use_container_width=True):
