@@ -212,23 +212,52 @@ def find_used_vocab(sentence: str, vocab_df, current_code: int = 9999) -> list:
     """
     搜尋 vocab_df 中出現在 sentence 的詞彙，依 code 排序。
     code_num > current_code 的詞彙標記為 is_extra=True（超出範圍）。
+    使用「長字優先」原則：若一個詞完全被另一個更長的詞覆蓋，則忽略它。
     """
     if vocab_df is None or vocab_df.empty or not sentence:
         return []
-    used, seen = [], set()
+
+    # 第一步：找出所有匹配詞彙及其在句子中的位置
+    candidates = []
+    seen_terms = set()
     for _, row in vocab_df.iterrows():
         term = str(row.get("term", "")).strip()
-        if term and term not in seen and term in sentence:
-            seen.add(term)
-            code_num = int(row.get("code_num", 0))
-            used.append({
+        if not term or term in seen_terms:
+            continue
+        seen_terms.add(term)
+        code_num = int(row.get("code_num", 0))
+        pos = 0
+        while True:
+            idx = sentence.find(term, pos)
+            if idx == -1:
+                break
+            candidates.append({
                 "code":     str(row.get("code", "")),
                 "code_num": code_num,
                 "term":     term,
                 "meaning":  str(row.get("meaning", "")),
                 "is_extra": code_num > current_code,
+                "start":    idx,
+                "end":      idx + len(term),
             })
-    return sorted(used, key=lambda x: x["code_num"])
+            pos = idx + 1
+
+    # 第二步：移除被更長詞彙完全覆蓋的匹配（長字優先）
+    filtered = [
+        c for c in candidates
+        if not any(
+            o["start"] <= c["start"] and o["end"] >= c["end"] and len(o["term"]) > len(c["term"])
+            for o in candidates
+        )
+    ]
+
+    # 第三步：每個詞只保留一次，依 code 排序
+    seen2, result = set(), []
+    for c in sorted(filtered, key=lambda x: x["code_num"]):
+        if c["term"] not in seen2:
+            seen2.add(c["term"])
+            result.append({k: v for k, v in c.items() if k not in ("start", "end")})
+    return result
 
 
 def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999):
