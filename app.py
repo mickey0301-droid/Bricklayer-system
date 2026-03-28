@@ -838,8 +838,7 @@ def study_page():
         jc1, jc2 = st.columns([2, 1])
         with jc1:
             jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
-                                       key="study_jump_input", label_visibility="collapsed",
-                                       placeholder="輸入編號...")
+                                       key="study_jump_input", label_visibility="collapsed")
         with jc2:
             if st.button("跳至", key="study_jump_btn", use_container_width=True):
                 if jump_val > 0:
