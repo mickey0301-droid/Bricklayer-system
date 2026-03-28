@@ -213,8 +213,13 @@ def generate_example_sentence(
         f"{vocab_rule}"
         "Grammatical elements required by the language — particles, articles, conjunctions, auxiliary verbs, "
         "verb conjugations, pronouns — are always permitted even if not in the list. "
-        "CRITICAL: The TARGET WORD may be a homonym. You MUST use the word in the EXACT sense specified "
-        "by its meaning and part of speech. Do NOT use any other sense of the word. "
+        "CRITICAL: The TARGET WORD may be a homonym or polysemous word. "
+        "You MUST use the word in the EXACT sense given by its Chinese meaning and part of speech. "
+        "Do NOT use any other reading, sense, or grammatical category of the word. "
+        "For Japanese: if the target word has multiple possible readings (e.g. 生：なま/せい/しょう), "
+        "you MUST use ONLY the reading specified. The sentence context must MATCH that specific reading's meaning. "
+        "CONTEXTUAL DEMONSTRATION: The sentence should make the word's Chinese meaning naturally inferable "
+        "from context — a learner who reads it should understand what the word means. "
         "Do NOT force multiple allowed words into the sentence just because they exist; "
         "use only as many as needed to form a natural, meaningful sentence. "
         "CRITICAL for the 'sentence' field: write ONLY the plain sentence text with NO furigana, "
@@ -252,7 +257,12 @@ def generate_example_sentence(
     loose_rule_es = "\n- 【OBLIGATORIO·ABSOLUTO】Solo se permite 1 (UNA) palabra de contenido fuera de la lista. 2 o más palabras fuera está ESTRICTAMENTE PROHIBIDO. Si se puede reformular con palabras de la lista, hazlo." if (not review_mode and current_code > 0 and current_code <= 100) else ""
 
     if language == "japanese":
-        meaning_line = f"\nTARGET WORDの品詞・意味：{term_pos}「{term_meaning}」（読み：{term_reading}）。必ずこの意味・品詞で使うこと。" if (term_meaning or term_pos) else ""
+        _reading_constraint = f"読みは必ず「{term_reading}」のみ — 他の読みは絶対に使わないこと。" if term_reading else ""
+        _meaning_constraint = f"意味「{term_meaning}」を文脈で自然に示すこと。" if term_meaning else ""
+        meaning_line = (
+            f"\nTARGET WORDの品詞・意味・読み：{term_pos}「{term_meaning}」（読み：{term_reading}）。"
+            f"{_reading_constraint}{_meaning_constraint}"
+        ) if (term_meaning or term_reading or term_pos) else ""
         prompt = f"""以下は学習者がこれまでに学んだ語彙リストです。
 
 ALLOWED VOCABULARY（内容語はこのリストから選ぶ）:
@@ -402,6 +412,10 @@ def generate_fsi_sentence(
         f"{drill_desc} "
         f"{vocab_rule}"
         "The sentence must be SHORT (no more than 10 characters/words) and NATURAL. "
+        "CRITICAL: The TARGET WORD may be a homonym or polysemous word. "
+        "You MUST use it in the EXACT sense given by its Chinese meaning and part of speech. "
+        "For Japanese: if the word has multiple possible readings, use ONLY the reading specified — "
+        "the sentence context must match that reading's specific meaning. "
         "CRITICAL for 'sentence': plain text only — no furigana, no parentheses, no reading annotations. "
         "CRITICAL for Korean: 'reading' MUST contain full Revised Romanization of the entire sentence. "
         "Grammar analysis ('grammar') must be ENTIRELY in Traditional Chinese (繁體中文) — "
@@ -414,19 +428,26 @@ def generate_fsi_sentence(
     vocab_section = f"\nALLOWED VOCABULARY:\n{vocab_list}" if vocab_list else ""
 
     if language == "japanese":
-        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{vocab_section}
+        _r = f"読みは必ず「{term_reading}」のみ使うこと。" if term_reading else ""
+        _m = f"意味「{term_meaning}」が文脈から伝わる文を作ること。" if term_meaning else ""
+        fsi_meaning_line = (
+            f"\nTARGET WORDの品詞・意味・読み：{term_pos}「{term_meaning}」（読み：{term_reading}）。{_r}{_m}"
+        ) if (term_meaning or term_reading or term_pos) else ""
+        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{fsi_meaning_line}{vocab_section}
 
 JSON形式で出力：
 {{"sentence":"日本語文（ふりがななし）","reading":"ひらがな","translation":"繁體中文翻譯","grammar":"単語(よみ)[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[整数コード]}}"""
 
     elif language == "korean":
-        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{vocab_section}
+        _m_ko = f"\n대상 단어 품사·의미·발음: {term_pos}「{term_meaning}」（발음: {term_reading}）. 반드시 이 의미로 사용하고, 문맥에서 의미 「{term_meaning}」이 자연스럽게 전달되도록 할 것." if (term_meaning or term_reading or term_pos) else ""
+        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{_m_ko}{vocab_section}
 
 JSON 출력：
 {{"sentence":"한국어 문장（괄호 없음）","reading":"全句 Revised Romanization","translation":"繁體中文翻譯","grammar":"단어(romaja)[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[정수 코드]}}"""
 
     else:
-        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{vocab_section}
+        _m_es = f"\nSignificado exacto: {term_pos} '{term_meaning}'. Usa la palabra solo en este sentido; el contexto debe hacer que el significado '{term_meaning}' sea comprensible." if (term_meaning or term_pos) else ""
+        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{_m_es}{vocab_section}
 
 Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[códigos enteros]}}"""
