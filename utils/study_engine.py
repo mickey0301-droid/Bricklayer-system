@@ -328,6 +328,124 @@ Responde solo con JSON：
     }
 
 
+# ── FSI 搭配 / 句型變化生成 ──────────────────────────────
+
+def generate_fsi_sentence(
+    language: str,
+    current_term: str,
+    drill_type: str,               # "substitution" | "transformation"
+    term_meaning: str = "",
+    term_reading: str = "",
+    term_pos: str = "",
+    current_code: int = 0,
+    allowed_vocab: list = None,    # [{"code": int, "term": str}]
+    prev_drill_notes: list = None, # previously generated notes (to avoid repetition)
+) -> dict:
+    """
+    FSI drill sentence generator.
+    substitution : same target word, different collocations / partner words each time.
+    transformation: same target word in a different grammatical form each time.
+    Returns: {sentence, reading, translation, grammar, drill_note, vocab_codes}
+    """
+    if allowed_vocab:
+        vocab_list = "\n".join(f"- [{v['code']}] {v['term']}" for v in allowed_vocab)
+    else:
+        vocab_list = ""
+
+    # Disambiguation hint
+    meaning_hint = ""
+    if term_meaning or term_reading or term_pos:
+        parts = []
+        if term_reading: parts.append(f"reading: {term_reading}")
+        if term_pos:     parts.append(f"part of speech: {term_pos}")
+        if term_meaning: parts.append(f"meaning: {term_meaning}")
+        meaning_hint = f" ({', '.join(parts)})"
+
+    # Avoid-repetition clause
+    prev_str = ""
+    if prev_drill_notes:
+        joined = " | ".join(prev_drill_notes[-5:])
+        prev_str = f" ALREADY USED — do NOT repeat these: [{joined}]."
+
+    vocab_rule = (
+        "Content words (nouns, verbs, adjectives, adverbs) should come from the ALLOWED VOCABULARY list. "
+        "Grammatical elements (particles, articles, conjunctions, conjugations, pronouns) are always free. "
+    ) if allowed_vocab else ""
+
+    vocab_codes_instr = (
+        "CRITICAL for 'vocab_codes': list the integer codes of every content word used from the "
+        "ALLOWED VOCABULARY list, even if in conjugated/inflected form. "
+    ) if allowed_vocab else ""
+
+    if drill_type == "substitution":
+        drill_desc = (
+            "FSI SUBSTITUTION DRILL: Write a short, natural sentence using the TARGET WORD "
+            "combined with a DIFFERENT collocation each time — vary the objects, subjects, adverbs, "
+            "or surrounding context that typically appear with this word. "
+            f"{prev_str} "
+            "In 'drill_note', describe in Traditional Chinese (繁體中文) the collocation/context used, "
+            "e.g. '搭配：每天 + 吃' or '場景：餐廳'."
+        )
+    else:  # transformation
+        drill_desc = (
+            "FSI TRANSFORMATION DRILL: Write a short, natural sentence using the TARGET WORD "
+            "in a DIFFERENT GRAMMATICAL FORM each time. "
+            "Vary tense, polarity, aspect, mood, voice, or other grammatical dimensions "
+            "(e.g. past, negative, progressive, conditional, question, potential, causative, passive, imperative). "
+            f"{prev_str} "
+            "In 'drill_note', name the grammatical form used in Traditional Chinese (繁體中文), "
+            "e.g. '過去形', '否定形', '疑問句', '可能形', '條件句 (たら)', '使役形'."
+        )
+
+    system_message = (
+        "You are a language learning assistant specializing in FSI drill methods. "
+        f"{drill_desc} "
+        f"{vocab_rule}"
+        "The sentence must be SHORT (no more than 10 characters/words) and NATURAL. "
+        "CRITICAL for 'sentence': plain text only — no furigana, no parentheses, no reading annotations. "
+        "CRITICAL for Korean: 'reading' MUST contain full Revised Romanization of the entire sentence. "
+        "Grammar analysis ('grammar') must be ENTIRELY in Traditional Chinese (繁體中文) — "
+        "use terms like 名詞、動詞、形容詞、副詞、助詞、主格助詞、否定詞 etc. "
+        "Use ACTUAL words from the sentence in 'grammar' — never write '語' or any placeholder. "
+        f"{vocab_codes_instr}"
+        "Respond only with a JSON object — no explanation, no markdown."
+    )
+
+    vocab_section = f"\nALLOWED VOCABULARY:\n{vocab_list}" if vocab_list else ""
+
+    if language == "japanese":
+        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{vocab_section}
+
+JSON形式で出力：
+{{"sentence":"日本語文（ふりがななし）","reading":"ひらがな","translation":"繁體中文翻譯","grammar":"単語(よみ)[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[整数コード]}}"""
+
+    elif language == "korean":
+        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{vocab_section}
+
+JSON 출력：
+{{"sentence":"한국어 문장（괄호 없음）","reading":"全句 Revised Romanization","translation":"繁體中文翻譯","grammar":"단어(romaja)[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[정수 코드]}}"""
+
+    else:
+        prompt = f"""TARGET WORD: {current_term}{meaning_hint}{vocab_section}
+
+Responde solo con JSON：
+{{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[códigos enteros]}}"""
+
+    content = _call_ai(system_message, prompt)
+    data = _extract_json(content)
+    raw_codes = data.get("vocab_codes", [])
+    vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])
+                   if str(c).strip().lstrip("-").isdigit()]
+    return {
+        "sentence":    data.get("sentence", ""),
+        "reading":     data.get("reading", ""),
+        "translation": data.get("translation", ""),
+        "grammar":     data.get("grammar", ""),
+        "drill_note":  data.get("drill_note", ""),
+        "vocab_codes": vocab_codes,
+    }
+
+
 # ── 句型重組生成 ──────────────────────────────────────────
 
 def generate_recombination_sentence(

@@ -14,6 +14,7 @@ from utils.study_engine import (
     get_prev_index,
     generate_example_sentence,
     generate_recombination_sentence,
+    generate_fsi_sentence,
     GRAMMAR_PATTERNS,
 )
 from utils.tts_engine import generate_tts_audio, audio_player, audio_player_dual
@@ -173,8 +174,15 @@ _defaults = {
     "review_term": "",
     "review_meaning": "",
     "review_term_code": 0,
+    "review_term_reading": "",
+    "review_term_pos": "",
     "review_show_answer": False,
     "review_auto_played_for": "",
+    # FSI drill sentences
+    "review_sub_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""},
+    "review_trans_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""},
+    "review_sub_prev_notes": [],
+    "review_trans_prev_notes": [],
     # 重組練習模式
     "combo_words": [],
     "combo_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": ""},
@@ -354,6 +362,10 @@ def go_review():
     st.session_state.review_show_answer = False
     st.session_state.review_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
     st.session_state.review_term = ""
+    st.session_state.review_sub_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
+    st.session_state.review_trans_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
+    st.session_state.review_sub_prev_notes = []
+    st.session_state.review_trans_prev_notes = []
     st.session_state.combo_words = []
     st.session_state.combo_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
     st.session_state.combo_show_answer = False
@@ -817,9 +829,27 @@ def study_page():
         except Exception as e:
             st.warning(f"自動播放失敗：{e}")
 
-    # ── 頂部進度列 ─────────────────────────────────────────
+    # ── 頂部進度列 + 跳號 ──────────────────────────────────
     progress_text = f"{st.session_state.study_index + 1} / {len(study_df)}"
-    st.caption(f"📚 {display_name}　　Progress: {progress_text}　｜　Available words: {len(allowed_terms)}")
+    prog_col, jump_col = st.columns([3, 2])
+    with prog_col:
+        st.caption(f"📚 {display_name}　　Progress: {progress_text}　｜　Available words: {len(allowed_terms)}")
+    with jump_col:
+        jc1, jc2 = st.columns([2, 1])
+        with jc1:
+            jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
+                                       key="study_jump_input", label_visibility="collapsed",
+                                       placeholder="輸入編號...")
+        with jc2:
+            if st.button("跳至", key="study_jump_btn", use_container_width=True):
+                if jump_val > 0:
+                    matches = study_df[study_df["code_num"] == int(jump_val)]
+                    if not matches.empty:
+                        st.session_state.study_index = int(matches.index[0])
+                        st.session_state.study_sentence_term = ""
+                        st.rerun()
+                    else:
+                        st.warning(f"找不到編號 {int(jump_val)}")
 
     # ══ 左右分欄（電腦左右、手機上下）══════════════════════
     col_left, col_right = st.columns([1, 1], gap="large")
@@ -1000,90 +1030,196 @@ def review_page():
     st.divider()
 
     # ════════════════════════════════════════════════════
-    # 模式 1：單字複習（原有功能）
+    # 模式 1：單字複習 — FSI Substitution + Transformation
     # ════════════════════════════════════════════════════
     if mode == "📖 單字複習":
-        st.caption("隨機抽一個已學過的單字，例句只使用已學詞彙。按「看答案」可查看文法分析與目標單字。")
+        st.caption("隨機抽一個已學單字，透過 FSI 練習法觀察搭配詞（Substitution）與句型變化（Transformation）。")
 
+        # ── 抽題 ──────────────────────────────────────
         if st.button("🎲 抽新題目", use_container_width=True, key="word_draw") or not st.session_state.review_term:
-            picked     = learned_df.sample(1).iloc[0]
-            pick_code  = int(picked["code_num"])
-            pick_term  = str(picked["term"])
+            picked       = learned_df.sample(1).iloc[0]
+            pick_code    = int(picked["code_num"])
+            pick_term    = str(picked["term"])
             pick_meaning = str(picked.get("meaning", ""))
+            pick_reading = str(picked.get("reading", ""))
+            pick_pos     = str(picked.get("pos", ""))
+            allowed_df   = get_allowed_vocab(study_df, pick_code)
+            allowed_vocab_list = _df_to_allowed_vocab(allowed_df)
 
-            allowed_df    = get_allowed_vocab(study_df, pick_code)
-            allowed_terms = allowed_df["term"].astype(str).tolist()
+            fsi_kwargs = dict(
+                language=language,
+                current_term=pick_term,
+                term_meaning=pick_meaning,
+                term_reading=pick_reading,
+                term_pos=pick_pos,
+                current_code=pick_code,
+                allowed_vocab=allowed_vocab_list,
+            )
+            try:
+                with st.spinner("AI 正在生成搭配練習句..."):
+                    sub_data = generate_fsi_sentence(drill_type="substitution", **fsi_kwargs)
+            except Exception as e:
+                st.error(f"Substitution 生成失敗：{e}")
+                sub_data = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
 
-            cached = get_cached_sentence(language, str(picked["code"]))
-            if cached.get("sentence"):
-                sentence_data = cached
-            else:
-                try:
-                    with st.spinner("AI 正在生成例句..."):
-                        sentence_data = generate_example_sentence(
-                            language=language,
-                            current_term=pick_term,
-                            allowed_terms=allowed_terms,
-                            term_meaning=str(picked.get("meaning", "")),
-                            term_reading=str(picked.get("reading", "")),
-                            term_pos=str(picked.get("pos", "")),
-                            review_mode=True,
-                            allowed_vocab=_df_to_allowed_vocab(allowed_df),
-                        )
-                        set_cached_sentence(language, str(picked["code"]), sentence_data)
-                except Exception as e:
-                    st.error(f"生成例句失敗：{e}")
-                    sentence_data = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
+            try:
+                with st.spinner("AI 正在生成句型變化句..."):
+                    trans_data = generate_fsi_sentence(drill_type="transformation", **fsi_kwargs)
+            except Exception as e:
+                st.error(f"Transformation 生成失敗：{e}")
+                trans_data = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
 
-            st.session_state.review_sentence    = sentence_data
-            st.session_state.review_term        = pick_term
-            st.session_state.review_meaning     = pick_meaning
-            st.session_state.review_term_code   = pick_code
-            st.session_state.review_show_answer = False
+            st.session_state.review_term          = pick_term
+            st.session_state.review_meaning       = pick_meaning
+            st.session_state.review_term_code     = pick_code
+            st.session_state.review_term_reading  = pick_reading
+            st.session_state.review_term_pos      = pick_pos
+            st.session_state.review_sub_sentence  = sub_data
+            st.session_state.review_trans_sentence= trans_data
+            st.session_state.review_sub_prev_notes  = [sub_data["drill_note"]] if sub_data.get("drill_note") else []
+            st.session_state.review_trans_prev_notes= [trans_data["drill_note"]] if trans_data.get("drill_note") else []
             st.rerun()
 
-        sentence_data = st.session_state.review_sentence
-        if sentence_data.get("sentence"):
-            # 自動播放例句（每題只播一次）
-            if st.session_state.review_auto_played_for != sentence_data["sentence"]:
-                try:
-                    with st.spinner("自動播放中..."):
-                        audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
-                    components.html(audio_player(audio_bytes), height=0)
-                    st.session_state.review_auto_played_for = sentence_data["sentence"]
-                except Exception as e:
-                    st.warning(f"自動播放失敗：{e}")
+        if not st.session_state.review_term:
+            return
+
+        # ── 左右分欄 ──────────────────────────────────
+        rev_left, rev_right = st.columns([1, 1], gap="large")
+
+        # ── 左欄：單字資訊卡 ──────────────────────────
+        with rev_left:
+            pick_code = st.session_state.review_term_code
+            pick_term = st.session_state.review_term
 
             st.markdown('<div class="study-card">', unsafe_allow_html=True)
-            st.markdown('<div class="study-label">例句</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
-
-            if supports_reading and sentence_data.get("reading"):
+            st.markdown(f'<div class="study-label">Code</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-md">{pick_code}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-label">單字</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-lg">{pick_term}</div>', unsafe_allow_html=True)
+            if supports_reading and st.session_state.review_term_reading:
                 st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="study-value-md">{sentence_data["reading"]}</div>', unsafe_allow_html=True)
-
-            st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-md">{sentence_data.get("translation", "")}</div>', unsafe_allow_html=True)
-
-            if sentence_data.get("grammar"):
-                st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
-
-            st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-lg">{st.session_state.review_term}</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.review_meaning}</div>', unsafe_allow_html=True)
-
-            render_used_vocab(sentence_data["sentence"], study_df, st.session_state.get("review_term_code", 0), vocab_codes=sentence_data.get("vocab_codes"))
-
+                st.markdown(f'<div class="study-value-md">{st.session_state.review_term_reading}</div>', unsafe_allow_html=True)
+            if st.session_state.review_meaning:
+                st.markdown(f'<div class="study-label">意思</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.review_meaning}</div>', unsafe_allow_html=True)
+            if st.session_state.review_term_pos:
+                st.markdown(f'<div class="study-label">詞性</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{st.session_state.review_term_pos}</div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
-            if st.button("🔊 播放例句", key="review_tts", use_container_width=True):
+            if st.button("🔊 播放發音", key="review_term_tts", use_container_width=True):
                 try:
                     with st.spinner("生成發音中..."):
-                        audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
+                        audio_bytes = generate_tts_audio(pick_term, language)
                     components.html(audio_player(audio_bytes), height=0)
                 except Exception as e:
                     st.error(f"TTS 失敗：{e}")
+
+        # ── 右欄：FSI 練習區 ──────────────────────────
+        with rev_right:
+            allowed_df = get_allowed_vocab(study_df, st.session_state.review_term_code)
+            allowed_vocab_list = _df_to_allowed_vocab(allowed_df)
+            fsi_base = dict(
+                language=language,
+                current_term=st.session_state.review_term,
+                term_meaning=st.session_state.review_meaning,
+                term_reading=st.session_state.review_term_reading,
+                term_pos=st.session_state.review_term_pos,
+                current_code=st.session_state.review_term_code,
+                allowed_vocab=allowed_vocab_list,
+            )
+
+            # ===== Substitution 搭配練習 =====
+            st.markdown("#### 🔄 Substitution — 搭配練習")
+            st.caption("觀察目標單字與不同搭配詞或情境的組合")
+
+            sub_data = st.session_state.review_sub_sentence
+            if sub_data.get("sentence"):
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                if sub_data.get("drill_note"):
+                    st.markdown(f'<div class="study-label">搭配說明</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md" style="color:#e65100;font-weight:600;">{sub_data["drill_note"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{sub_data["sentence"]}</div>', unsafe_allow_html=True)
+                if supports_reading and sub_data.get("reading"):
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md">{sub_data["reading"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{sub_data.get("translation","")}</div>', unsafe_allow_html=True)
+                if sub_data.get("grammar"):
+                    st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="grammar-box">{sub_data["grammar"]}</div>', unsafe_allow_html=True)
+                render_used_vocab(sub_data["sentence"], study_df, st.session_state.review_term_code, vocab_codes=sub_data.get("vocab_codes"))
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            sub_c1, sub_c2 = st.columns(2)
+            with sub_c1:
+                if st.button("🔀 下一個", key="sub_next_btn", use_container_width=True):
+                    prev = st.session_state.get("review_sub_prev_notes", [])
+                    try:
+                        with st.spinner("生成下一個搭配..."):
+                            new_sub = generate_fsi_sentence(drill_type="substitution", prev_drill_notes=prev, **fsi_base)
+                        st.session_state.review_sub_sentence = new_sub
+                        if new_sub.get("drill_note"):
+                            st.session_state.review_sub_prev_notes = (prev + [new_sub["drill_note"]])[-6:]
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"生成失敗：{e}")
+            with sub_c2:
+                if st.button("🔊 發音", key="sub_tts_btn", use_container_width=True):
+                    if sub_data.get("sentence"):
+                        try:
+                            with st.spinner("生成發音中..."):
+                                audio_bytes = generate_tts_audio(sub_data["sentence"], language)
+                            components.html(audio_player(audio_bytes), height=0)
+                        except Exception as e:
+                            st.error(f"TTS 失敗：{e}")
+
+            st.divider()
+
+            # ===== Transformation 句型變化 =====
+            st.markdown("#### ⚙️ Transformation — 句型變化")
+            st.caption("觀察目標單字在不同文法形態下的變化")
+
+            trans_data = st.session_state.review_trans_sentence
+            if trans_data.get("sentence"):
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                if trans_data.get("drill_note"):
+                    st.markdown(f'<div class="study-label">文法形態</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md" style="color:#1565c0;font-weight:600;">{trans_data["drill_note"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{trans_data["sentence"]}</div>', unsafe_allow_html=True)
+                if supports_reading and trans_data.get("reading"):
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md">{trans_data["reading"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{trans_data.get("translation","")}</div>', unsafe_allow_html=True)
+                if trans_data.get("grammar"):
+                    st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="grammar-box">{trans_data["grammar"]}</div>', unsafe_allow_html=True)
+                render_used_vocab(trans_data["sentence"], study_df, st.session_state.review_term_code, vocab_codes=trans_data.get("vocab_codes"))
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            trans_c1, trans_c2 = st.columns(2)
+            with trans_c1:
+                if st.button("🔀 下一個", key="trans_next_btn", use_container_width=True):
+                    prev = st.session_state.get("review_trans_prev_notes", [])
+                    try:
+                        with st.spinner("生成下一個變化..."):
+                            new_trans = generate_fsi_sentence(drill_type="transformation", prev_drill_notes=prev, **fsi_base)
+                        st.session_state.review_trans_sentence = new_trans
+                        if new_trans.get("drill_note"):
+                            st.session_state.review_trans_prev_notes = (prev + [new_trans["drill_note"]])[-6:]
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"生成失敗：{e}")
+            with trans_c2:
+                if st.button("🔊 發音", key="trans_tts_btn", use_container_width=True):
+                    if trans_data.get("sentence"):
+                        try:
+                            with st.spinner("生成發音中..."):
+                                audio_bytes = generate_tts_audio(trans_data["sentence"], language)
+                            components.html(audio_player(audio_bytes), height=0)
+                        except Exception as e:
+                            st.error(f"TTS 失敗：{e}")
 
     # ════════════════════════════════════════════════════
     # 模式 2：重組練習（新功能）
