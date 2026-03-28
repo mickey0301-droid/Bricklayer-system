@@ -40,6 +40,30 @@ def _gh_write(gh_path: str, data: dict, message: str):
         st.warning(f"⚠️ 進度同步 GitHub 失敗：{e}（資料已存本地，但重啟後可能遺失）")
 
 
+# ── 從 GitHub 強制同步到本地 ──────────────────────────────
+
+def sync_progress_from_github() -> bool:
+    """從 GitHub 強制拉取學習進度並覆寫本地。"""
+    _ensure_data_folder()
+    gh_data = _gh_read(GH_PROGRESS_PATH)
+    if gh_data is not None:
+        with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
+            json.dump(gh_data, f, indent=2)
+        return True
+    return False
+
+
+def sync_history_from_github() -> bool:
+    """從 GitHub 強制拉取學習記錄並覆寫本地。"""
+    _ensure_data_folder()
+    gh_data = _gh_read(GH_HISTORY_PATH)
+    if gh_data is not None:
+        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+            json.dump(gh_data, f, ensure_ascii=False, indent=2)
+        return True
+    return False
+
+
 # ── Progress ───────────────────────────────────────────────
 
 def load_progress() -> dict:

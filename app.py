@@ -9,6 +9,7 @@ from utils.vocab_manager import (
     load_vocab, save_vocab, ensure_min_rows,
     load_pattern_vocab, save_pattern_vocab,
     DATA_FOLDER, ensure_data_folder,
+    sync_vocab_from_github, sync_pattern_vocab_from_github,
 )
 from utils.study_engine import (
     prepare_study_df,
@@ -22,11 +23,13 @@ from utils.study_engine import (
     GRAMMAR_PATTERNS,
 )
 from utils.tts_engine import generate_tts_audio, audio_player, audio_player_dual
-from utils.sentence_cache import get_cached_sentence, set_cached_sentence
+from utils.sentence_cache import get_cached_sentence, set_cached_sentence, sync_cache_from_github
 from utils.progress_manager import (
     get_language_progress,
     update_language_progress,
     get_learning_history,
+    sync_progress_from_github,
+    sync_history_from_github,
 )
 from utils.language_manager import load_languages, add_language, get_language_config
 from utils.background_tasks import (
@@ -547,7 +550,37 @@ def home_page():
     # ── 資料備份 / 還原 ──────────────────────────────────────
     st.divider()
     st.subheader("💾 資料備份 / 還原")
-    st.caption("重啟前請先匯出備份，重啟後再匯入還原。")
+
+    # ── GitHub 雙向同步 ──────────────────────────────────────
+    gh_col1, gh_col2 = st.columns(2)
+    with gh_col1:
+        if st.button("☁️ 從 GitHub 同步資料到本機", use_container_width=True, key="home_gh_pull"):
+            _langs = load_languages()
+            _results = []
+            for _l in _langs:
+                _k = _l["key"]
+                _ok_v = sync_vocab_from_github(_k)
+                _ok_p = sync_pattern_vocab_from_github(_k)
+                if _ok_v or _ok_p:
+                    _results.append(f"{_k}: 詞庫✅" if _ok_v else f"{_k}: 句型詞庫✅")
+                else:
+                    _results.append(f"{_k}: GitHub 上無資料")
+            _ok_prog = sync_progress_from_github()
+            _ok_hist = sync_history_from_github()
+            _ok_cache = sync_cache_from_github()
+            _extra = []
+            if _ok_prog: _extra.append("學習進度✅")
+            if _ok_hist: _extra.append("學習歷史✅")
+            if _ok_cache: _extra.append("例句快取✅")
+            _all = _results + _extra
+            if any("✅" in r for r in _all):
+                st.success("同步完成！" + "　".join(_all) + "　⟶ 請重新整理頁面（F5）。")
+            else:
+                st.warning("GitHub bricklayer 分支上目前沒有資料檔案（首次使用屬正常）。")
+    with gh_col2:
+        st.caption("把 GitHub bricklayer 分支上的最新資料拉到本機，適合換電腦或重新安裝後使用。")
+
+    st.caption("⬇️ 本機備份：匯出 ZIP 後可離線保存；匯入 ZIP 可還原。")
 
     exp_col, imp_col = st.columns(2)
 

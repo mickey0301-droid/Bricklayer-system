@@ -34,6 +34,19 @@ def _gh_write(gh_path: str, data: dict, message: str):
         print(f"[sentence_cache] GitHub sync error: {e}")
 
 
+# ── 從 GitHub 強制同步到本地 ──────────────────────────────
+
+def sync_cache_from_github() -> bool:
+    """從 GitHub 強制拉取例句快取並覆寫本地。"""
+    _ensure_data_folder()
+    gh_data = _gh_read(GH_CACHE_PATH)
+    if gh_data is not None:
+        with open(CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(gh_data, f, ensure_ascii=False, indent=2)
+        return True
+    return False
+
+
 # ── Cache load/save ────────────────────────────────────────
 
 def load_sentence_cache() -> dict:

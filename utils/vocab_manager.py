@@ -227,6 +227,30 @@ def _github_write(gh_path: str, content_str: str, _sha_unused, message: str) -> 
         return False, str(e)
 
 
+# ── 從 GitHub 強制同步到本地 ──────────────────────────────
+
+def sync_vocab_from_github(language: str) -> bool:
+    """從 GitHub 強制拉取詞庫並覆寫本地檔案。回傳 True 代表成功取得資料。"""
+    ensure_data_folder()
+    gh_data, _ = _github_read(f"data/{language}_vocab.json")
+    if gh_data:
+        with open(get_vocab_path(language), "w", encoding="utf-8") as f:
+            json.dump(gh_data, f, ensure_ascii=False, indent=2)
+        return True
+    return False
+
+
+def sync_pattern_vocab_from_github(language: str) -> bool:
+    """從 GitHub 強制拉取句型詞庫並覆寫本地檔案。"""
+    ensure_data_folder()
+    gh_data, _ = _github_read(f"data/{language}_pattern_vocab.json")
+    if gh_data:
+        with open(get_pattern_vocab_path(language), "w", encoding="utf-8") as f:
+            json.dump(gh_data, f, ensure_ascii=False, indent=2)
+        return True
+    return False
+
+
 # ── 詞庫讀寫 ─────────────────────────────────────────────
 
 def load_vocab(language: str) -> pd.DataFrame:
