@@ -208,8 +208,11 @@ for k, v in _defaults.items():
 
 
 # ── 例句詞彙查找 ───────────────────────────────────────────
-def find_used_vocab(sentence: str, vocab_df) -> list:
-    """回傳例句中出現的詞彙清單，依 code 排序。"""
+def find_used_vocab(sentence: str, vocab_df, current_code: int = 9999) -> list:
+    """
+    搜尋 vocab_df 中出現在 sentence 的詞彙，依 code 排序。
+    code_num > current_code 的詞彙標記為 is_extra=True（超出範圍）。
+    """
     if vocab_df is None or vocab_df.empty or not sentence:
         return []
     used, seen = [], set()
@@ -217,30 +220,37 @@ def find_used_vocab(sentence: str, vocab_df) -> list:
         term = str(row.get("term", "")).strip()
         if term and term not in seen and term in sentence:
             seen.add(term)
+            code_num = int(row.get("code_num", 0))
             used.append({
                 "code":     str(row.get("code", "")),
-                "code_num": int(row.get("code_num", 0)),
+                "code_num": code_num,
                 "term":     term,
                 "meaning":  str(row.get("meaning", "")),
+                "is_extra": code_num > current_code,
             })
     return sorted(used, key=lambda x: x["code_num"])
 
 
-def render_used_vocab(sentence: str, vocab_df):
-    """在例句下方顯示使用到的詞彙 chip 清單。"""
-    used = find_used_vocab(sentence, vocab_df)
+def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999):
+    """在例句下方顯示使用到的詞彙 chip 清單。超出範圍的詞以橘色標示。"""
+    used = find_used_vocab(sentence, vocab_df, current_code)
     if not used:
         return
     st.markdown('<div class="study-label" style="margin-top:0.5rem;font-size:0.72rem;">例句使用的詞彙</div>', unsafe_allow_html=True)
-    chips = "".join(
-        f'<span style="display:inline-block;margin:0.1rem 0.2rem;background:#eef4fb;'
-        f'border:1px solid #c5d8f0;border-radius:6px;padding:0.05rem 0.4rem;font-size:0.78rem;">'
-        f'<b style="color:#999;">#{v["code"]}</b>&nbsp;'
-        f'<span>{v["term"]}</span>&nbsp;'
-        f'<span style="color:#4F8BF9;">{v["meaning"]}</span></span>'
-        for v in used
-    )
-    st.markdown(chips, unsafe_allow_html=True)
+    chips = []
+    for v in used:
+        if v["is_extra"]:
+            bg, border, code_color, meaning_color, badge = "#fff3e0", "#ffb74d", "#e65100", "#e65100", "&nbsp;↑"
+        else:
+            bg, border, code_color, meaning_color, badge = "#eef4fb", "#c5d8f0", "#999", "#4F8BF9", ""
+        chips.append(
+            f'<span style="display:inline-block;margin:0.1rem 0.2rem;background:{bg};'
+            f'border:1px solid {border};border-radius:6px;padding:0.05rem 0.4rem;font-size:0.78rem;">'
+            f'<b style="color:{code_color};">#{v["code"]}{badge}</b>&nbsp;'
+            f'<span>{v["term"]}</span>&nbsp;'
+            f'<span style="color:{meaning_color};">{v["meaning"]}</span></span>'
+        )
+    st.markdown("".join(chips), unsafe_allow_html=True)
 
 
 # ── 導航函數 ───────────────────────────────────────────────
@@ -800,7 +810,7 @@ def study_page():
                 st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
 
-            render_used_vocab(sentence_data["sentence"], allowed_df)
+            render_used_vocab(sentence_data["sentence"], study_df, current_code)
         else:
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
 
@@ -982,8 +992,7 @@ def review_page():
             st.markdown(f'<div class="study-value-lg">{st.session_state.review_term}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.review_meaning}</div>', unsafe_allow_html=True)
 
-            review_allowed_df = get_allowed_vocab(study_df, st.session_state.get("review_term_code", 0))
-            render_used_vocab(sentence_data["sentence"], review_allowed_df)
+            render_used_vocab(sentence_data["sentence"], study_df, st.session_state.get("review_term_code", 0))
 
             st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1093,7 +1102,8 @@ def review_page():
                     )
                 st.markdown(words_html, unsafe_allow_html=True)
 
-                render_used_vocab(combo_data["sentence"], learned_df)
+                max_learned_code = int(learned_df["code_num"].max()) if not learned_df.empty else 0
+                render_used_vocab(combo_data["sentence"], study_df, max_learned_code)
 
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1323,7 +1333,7 @@ def pattern_study_page():
                 st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
 
-            render_used_vocab(sentence_data["sentence"], allowed_df)
+            render_used_vocab(sentence_data["sentence"], study_df, current_code)
         else:
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
 
@@ -1472,8 +1482,7 @@ def pattern_review_page():
         st.markdown(f'<div class="study-value-lg">{st.session_state.pattern_review_term}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.pattern_review_meaning}</div>', unsafe_allow_html=True)
 
-        pr_allowed_df = get_allowed_vocab(study_df, st.session_state.get("pattern_review_term_code", 0))
-        render_used_vocab(sentence_data["sentence"], pr_allowed_df)
+        render_used_vocab(sentence_data["sentence"], study_df, st.session_state.get("pattern_review_term_code", 0))
 
         st.markdown('</div>', unsafe_allow_html=True)
 
