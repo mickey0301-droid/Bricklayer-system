@@ -1,3 +1,6 @@
+import io
+import os
+import zipfile
 import random
 import streamlit as st
 import streamlit.components.v1 as components
@@ -5,6 +8,7 @@ import pandas as pd
 from utils.vocab_manager import (
     load_vocab, save_vocab, ensure_min_rows,
     load_pattern_vocab, save_pattern_vocab,
+    DATA_FOLDER, ensure_data_folder,
 )
 from utils.study_engine import (
     prepare_study_df,
@@ -539,6 +543,57 @@ def home_page():
                 st.caption("　　尚無學習記錄")
 
             st.markdown("<div style='margin-bottom:0.8rem'></div>", unsafe_allow_html=True)
+
+    # ── 資料備份 / 還原 ──────────────────────────────────────
+    st.divider()
+    st.subheader("💾 資料備份 / 還原")
+    st.caption("重啟前請先匯出備份，重啟後再匯入還原。")
+
+    exp_col, imp_col = st.columns(2)
+
+    with exp_col:
+        # 建立 ZIP（每次渲染時執行，資料量小速度快）
+        _buf = io.BytesIO()
+        with zipfile.ZipFile(_buf, "w", zipfile.ZIP_DEFLATED) as _zf:
+            if os.path.exists(DATA_FOLDER):
+                for _fname in sorted(os.listdir(DATA_FOLDER)):
+                    if _fname.endswith(".json"):
+                        _zf.write(os.path.join(DATA_FOLDER, _fname), _fname)
+        _buf.seek(0)
+        st.download_button(
+            label="📦 匯出全部資料",
+            data=_buf,
+            file_name="bricklayer_backup.zip",
+            mime="application/zip",
+            use_container_width=True,
+            key="home_export_btn",
+        )
+
+    with imp_col:
+        _uploaded = st.file_uploader(
+            "匯入備份 ZIP", type=["zip"],
+            key="home_import_zip",
+            label_visibility="collapsed",
+        )
+        if _uploaded is not None:
+            if st.button("✅ 確認還原資料", use_container_width=True, key="home_import_confirm"):
+                try:
+                    ensure_data_folder()
+                    restored = []
+                    with zipfile.ZipFile(io.BytesIO(_uploaded.read())) as _zf:
+                        for _name in _zf.namelist():
+                            # 只還原頂層 JSON，防止路徑穿越
+                            if _name.endswith(".json") and "/" not in _name and "\\" not in _name:
+                                _dest = os.path.join(DATA_FOLDER, _name)
+                                with _zf.open(_name) as _src, open(_dest, "wb") as _dst:
+                                    _dst.write(_src.read())
+                                restored.append(_name)
+                    if restored:
+                        st.success(f"已還原 {len(restored)} 個檔案：{', '.join(restored)}  ⟶ 請重新整理頁面（F5）使資料生效。")
+                    else:
+                        st.warning("ZIP 裡沒有找到 JSON 資料檔案。")
+                except Exception as _e:
+                    st.error(f"還原失敗：{_e}")
 
     # ── 設定 ────────────────────────────────────────────────
     st.divider()
