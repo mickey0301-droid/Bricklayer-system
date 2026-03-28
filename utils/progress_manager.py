@@ -43,10 +43,10 @@ def _gh_write(gh_path: str, data: dict, message: str):
 # ── Progress ───────────────────────────────────────────────
 
 def load_progress() -> dict:
-    """GitHub 優先，失敗時讀本地檔案。"""
+    """GitHub 優先，無法連線時退回本地備份。"""
+    # 1. GitHub 優先
     gh_data = _gh_read(GH_PROGRESS_PATH)
     if gh_data is not None:
-        # 同步寫回本地（加速後續讀取）
         _ensure_data_folder()
         try:
             with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
@@ -55,7 +55,7 @@ def load_progress() -> dict:
             pass
         return gh_data
 
-    # 本地 fallback
+    # 2. 本地備份
     if os.path.exists(PROGRESS_FILE):
         try:
             with open(PROGRESS_FILE, "r", encoding="utf-8") as f:

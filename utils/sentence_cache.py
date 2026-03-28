@@ -37,7 +37,7 @@ def _gh_write(gh_path: str, data: dict, message: str):
 # ── Cache load/save ────────────────────────────────────────
 
 def load_sentence_cache() -> dict:
-    """GitHub 優先，失敗時讀本地檔案。"""
+    """GitHub 優先，無法連線時退回本地備份。"""
     gh_data = _gh_read(GH_CACHE_PATH)
     if gh_data is not None:
         _ensure_data_folder()
@@ -48,7 +48,6 @@ def load_sentence_cache() -> dict:
             pass
         return gh_data
 
-    # 本地 fallback
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:

@@ -234,16 +234,17 @@ def load_vocab(language: str) -> pd.DataFrame:
     path = get_vocab_path(language)
     gh_path = f"data/{language}_vocab.json"
 
-    # 1. GitHub 優先：GitHub 是唯一可信來源，每次都從 GitHub 載入
+    # 1. GitHub 優先（雲端資料是唯一可信來源）
     token, _ = _github_config()
     if token:
         gh_data, _ = _github_read(gh_path)
         if gh_data:
+            # 同步寫回本地作為備份
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(gh_data, f, ensure_ascii=False, indent=2)
             return normalize_vocab_df(pd.DataFrame(gh_data))
 
-    # 2. GitHub 無法連線時，退而使用本機快取（離線保底）
+    # 2. GitHub 無法連線時，使用本地備份（離線保底）
     if os.path.exists(path):
         try:
             with open(path, "r", encoding="utf-8") as f:
