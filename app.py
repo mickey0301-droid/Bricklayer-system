@@ -197,6 +197,7 @@ _defaults = {
     "pattern_review_meaning": "",
     "pattern_review_term_code": 0,
     "pattern_review_show_answer": False,
+    "pattern_study_auto_played_for": "",
     "pattern_review_auto_played_for": "",
     # AI 設定
     "ai_provider": "openai",
@@ -790,12 +791,11 @@ def study_page():
             except Exception as e:
                 st.error(f"自動生成例句失敗：{e}")
 
-    # ── 自動播放：翻到新單字時，依序播放單字→例句 ──────────
+    # ── 自動播放：翻到新單字或產生新例句時，依序播放單字→例句 ──
+    # 以例句文字為 key，只要句子不同就自動播放（含按「新例句」的情況）
     sentence_data_ready = st.session_state.study_sentence
-    if (
-        sentence_data_ready.get("sentence")
-        and st.session_state.auto_played_for != current_term
-    ):
+    cur_sent = sentence_data_ready.get("sentence", "")
+    if cur_sent and st.session_state.auto_played_for != cur_sent:
         try:
             with st.spinner("自動播放中..."):
                 # 單字音訊（有快取就用）
@@ -806,7 +806,6 @@ def study_page():
                     st.session_state.tts_term_audio = term_audio
                     st.session_state.tts_term_for = current_term
                 # 例句音訊（有快取就用）
-                cur_sent = sentence_data_ready["sentence"]
                 if st.session_state.tts_sentence_for == cur_sent and st.session_state.tts_sentence_audio:
                     sent_audio = st.session_state.tts_sentence_audio
                 else:
@@ -814,7 +813,7 @@ def study_page():
                     st.session_state.tts_sentence_audio = sent_audio
                     st.session_state.tts_sentence_for = cur_sent
             components.html(audio_player_dual(term_audio, sent_audio), height=0)
-            st.session_state.auto_played_for = current_term
+            st.session_state.auto_played_for = cur_sent
         except Exception as e:
             st.warning(f"自動播放失敗：{e}")
 
@@ -1344,6 +1343,32 @@ def pattern_study_page():
                 st.rerun()
             except Exception as e:
                 st.error(f"自動生成例句失敗：{e}")
+
+    # ── 自動播放：翻到新單字或產生新例句時，依序播放單字→例句 ──
+    # 以例句文字為 key，只要句子不同就自動播放（含按「新例句」的情況）
+    pattern_sentence_ready = st.session_state.pattern_study_sentence
+    pattern_cur_sent = pattern_sentence_ready.get("sentence", "")
+    if pattern_cur_sent and st.session_state.get("pattern_study_auto_played_for", "") != pattern_cur_sent:
+        try:
+            with st.spinner("自動播放中..."):
+                # 單字音訊（有快取就用）
+                if st.session_state.pattern_tts_term_for == current_term and st.session_state.pattern_tts_term_audio:
+                    term_audio = st.session_state.pattern_tts_term_audio
+                else:
+                    term_audio = generate_tts_audio(current_term, language)
+                    st.session_state.pattern_tts_term_audio = term_audio
+                    st.session_state.pattern_tts_term_for   = current_term
+                # 例句音訊（有快取就用）
+                if st.session_state.pattern_tts_sentence_for == pattern_cur_sent and st.session_state.pattern_tts_sentence_audio:
+                    sent_audio = st.session_state.pattern_tts_sentence_audio
+                else:
+                    sent_audio = generate_tts_audio(pattern_cur_sent, language)
+                    st.session_state.pattern_tts_sentence_audio = sent_audio
+                    st.session_state.pattern_tts_sentence_for   = pattern_cur_sent
+            components.html(audio_player_dual(term_audio, sent_audio), height=0)
+            st.session_state.pattern_study_auto_played_for = pattern_cur_sent
+        except Exception as e:
+            st.warning(f"自動播放失敗：{e}")
 
     # ── 頂部進度列 ─────────────────────────────────────────
     progress_text = f"{st.session_state.pattern_study_index + 1} / {len(study_df)}"
