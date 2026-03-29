@@ -217,6 +217,9 @@ _defaults = {
     "pattern_review_show_answer": False,
     "pattern_study_auto_played_for": "",
     "pattern_review_auto_played_for": "",
+    # 複習練習範圍
+    "review_code_min": None,
+    "review_code_max": None,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -1119,6 +1122,61 @@ def review_page():
         st.info("還沒有學習進度，請先到 Study Vocabulary 學習至少一個單字。")
         if st.button("← Back"): st.session_state.page = "language_home"; st.rerun()
         return
+
+    # ── 練習範圍設定 ──────────────────────────────────────
+    all_min = int(learned_df["code_num"].min())
+    all_max = int(learned_df["code_num"].max())
+
+    # 初始化：首次進入或超出已學範圍時重設
+    if st.session_state.review_code_min is None or st.session_state.review_code_min < all_min:
+        st.session_state.review_code_min = all_min
+    if st.session_state.review_code_max is None or st.session_state.review_code_max > all_max:
+        st.session_state.review_code_max = all_max
+
+    with st.expander("🎯 練習範圍設定（預設：全部已學）", expanded=False):
+        st.caption(f"已學範圍：{all_min} ～ {all_max}　共 {len(learned_df)} 個單字")
+        rc1, rc2 = st.columns(2)
+        with rc1:
+            new_min = st.number_input(
+                "從編號", min_value=all_min, max_value=all_max,
+                value=st.session_state.review_code_min,
+                step=1, key="review_range_min"
+            )
+        with rc2:
+            new_max = st.number_input(
+                "到編號", min_value=all_min, max_value=all_max,
+                value=st.session_state.review_code_max,
+                step=1, key="review_range_max"
+            )
+        if new_min > new_max:
+            st.warning("「從編號」不能大於「到編號」，已自動對調。")
+            new_min, new_max = new_max, new_min
+
+        # 範圍改變時清除當前題目，觸發重抽
+        if new_min != st.session_state.review_code_min or new_max != st.session_state.review_code_max:
+            st.session_state.review_code_min = new_min
+            st.session_state.review_code_max = new_max
+            st.session_state.review_term = ""
+            st.session_state.combo_words = []
+            st.rerun()
+
+    range_min = st.session_state.review_code_min
+    range_max = st.session_state.review_code_max
+
+    # 過濾 learned_df 到指定範圍
+    learned_df = learned_df[
+        (learned_df["code_num"] >= range_min) & (learned_df["code_num"] <= range_max)
+    ]
+    if learned_df.empty:
+        st.warning(f"編號 {range_min}～{range_max} 範圍內沒有已學的單字，請調整範圍。")
+        return
+
+    # 若當前題目已不在範圍內，清除讓系統重抽
+    if st.session_state.review_term:
+        cur_code = st.session_state.review_term_code
+        if cur_code < range_min or cur_code > range_max:
+            st.session_state.review_term = ""
+            st.session_state.combo_words = []
 
     # ── 模式切換 ──────────────────────────────────────────
     mode = st.radio(
