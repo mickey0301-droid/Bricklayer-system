@@ -2,9 +2,10 @@ import os
 import json
 import base64
 
-DATA_FOLDER = "data"
+_HERE = os.path.dirname(os.path.abspath(__file__))
+DATA_FOLDER    = os.path.normpath(os.path.join(_HERE, "..", "data"))
 LANGUAGES_FILE = os.path.join(DATA_FOLDER, "languages.json")
-GH_PATH = "data/languages.json"
+GH_PATH        = "data/languages.json"
 
 DEFAULT_LANGUAGES = [
     {
@@ -38,52 +39,33 @@ def _github_config():
     try:
         import streamlit as st
         token = st.secrets.get("GITHUB_TOKEN", "")
-        repo = st.secrets.get("GITHUB_REPO", "mickey0301-droid/Bricklayer-system")
-        return token, repo
+        owner = st.secrets.get("GITHUB_OWNER", "")
+        repo_name = st.secrets.get("GITHUB_REPO", "")
+        if owner and repo_name and "/" not in repo_name:
+            repo = f"{owner}/{repo_name}"
+        else:
+            repo = repo_name or "mickey0301-droid/Bricklayer-System"
+        branch = st.secrets.get("GITHUB_BRANCH", "bricklayer")
+        return token, repo, branch
     except Exception:
-        return "", ""
+        return "", "", "bricklayer"
 
 
 def _github_read(gh_path: str):
-    import requests
-    token, repo = _github_config()
-    if not token:
-        return None, None
+    """使用 vocab_manager 的 _github_read（支援大檔、正確 branch）。"""
     try:
-        url = f"https://api.github.com/repos/{repo}/contents/{gh_path}"
-        headers = {
-            "Authorization": f"token {token}",
-            "Accept": "application/vnd.github.v3+json",
-        }
-        r = requests.get(url, headers=headers, timeout=10)
-        if r.status_code == 200:
-            d = r.json()
-            content = base64.b64decode(d["content"]).decode("utf-8")
-            return json.loads(content), d["sha"]
+        from utils.vocab_manager import _github_read as _vm_read
+        return _vm_read(gh_path)
     except Exception:
-        pass
-    return None, None
+        return None, None
 
 
-def _github_write(gh_path: str, content_str: str, sha, message: str) -> bool:
-    import requests
-    token, repo = _github_config()
-    if not token:
-        return False
+def _github_write(gh_path: str, content_str: str, _sha, message: str) -> bool:
+    """使用 vocab_manager 的 _github_write（Git Data API，正確 branch）。"""
     try:
-        url = f"https://api.github.com/repos/{repo}/contents/{gh_path}"
-        headers = {
-            "Authorization": f"token {token}",
-            "Accept": "application/vnd.github.v3+json",
-        }
-        body = {
-            "message": message,
-            "content": base64.b64encode(content_str.encode("utf-8")).decode("utf-8"),
-        }
-        if sha:
-            body["sha"] = sha
-        r = requests.put(url, headers=headers, json=body, timeout=15)
-        return r.status_code in (200, 201)
+        from utils.vocab_manager import _github_write as _vm_write
+        ok, _ = _vm_write(gh_path, content_str, None, message)
+        return ok
     except Exception:
         return False
 

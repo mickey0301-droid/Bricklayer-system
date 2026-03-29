@@ -1,7 +1,50 @@
 import base64
+import hashlib
+import os
 import time
 import streamlit as st
 from openai import OpenAI
+
+# ── TTS 磁碟快取 ───────────────────────────────────────────
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_TTS_DIR = os.path.normpath(os.path.join(_HERE, "..", "data", "tts"))
+
+
+def _tts_path(language: str, code: str, audio_type: str, text: str = "") -> str:
+    """
+    回傳 TTS 快取檔案的完整路徑。
+    - audio_type == "term"  : 以 language + code 為鍵，文字不變就永遠同一個檔
+    - audio_type == "sent"  : 再加上句子文字的 md5 前 8 碼，換句子自動換檔
+    """
+    if audio_type == "term":
+        fname = f"{language}_{code}_term.mp3"
+    else:
+        h = hashlib.md5(text.encode("utf-8")).hexdigest()[:8]
+        fname = f"{language}_{code}_sent_{h}.mp3"
+    return os.path.join(_TTS_DIR, fname)
+
+
+def get_cached_tts(language: str, code: str, audio_type: str, text: str = "") -> bytes | None:
+    """從磁碟讀取 TTS 音訊。找不到時回傳 None。"""
+    try:
+        path = _tts_path(language, code, audio_type, text)
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                return f.read()
+    except Exception:
+        pass
+    return None
+
+
+def set_cached_tts(language: str, code: str, audio_type: str, audio_bytes: bytes, text: str = ""):
+    """把 TTS 音訊寫入磁碟快取。"""
+    try:
+        os.makedirs(_TTS_DIR, exist_ok=True)
+        path = _tts_path(language, code, audio_type, text)
+        with open(path, "wb") as f:
+            f.write(audio_bytes)
+    except Exception:
+        pass
 
 
 def _require_openai_client():

@@ -47,17 +47,31 @@ def sync_cache_from_github() -> bool:
     return False
 
 
+# ── 模組級記憶體快取（Streamlit 每次 rerun 不會重新載入模組）──────
+_MEM_CACHE: dict | None = None
+
+
+def _invalidate_mem_cache():
+    global _MEM_CACHE
+    _MEM_CACHE = None
+
+
 # ── Cache load/save ────────────────────────────────────────
 
 def load_sentence_cache() -> dict:
-    """本地優先，本地無資料時才從 GitHub 下載。"""
+    """本地優先，本地無資料時才從 GitHub 下載。結果存於模組記憶體，避免重複讀磁碟。"""
+    global _MEM_CACHE
+    if _MEM_CACHE is not None:
+        return _MEM_CACHE
+
     # 1. 本地優先（絕對路徑，最可靠）
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
             if data:
-                return data
+                _MEM_CACHE = data
+                return _MEM_CACHE
         except Exception:
             pass
 
@@ -70,13 +84,17 @@ def load_sentence_cache() -> dict:
                 json.dump(gh_data, f, ensure_ascii=False, indent=2)
         except Exception:
             pass
-        return gh_data
+        _MEM_CACHE = gh_data
+        return _MEM_CACHE
 
-    return {}
+    _MEM_CACHE = {}
+    return _MEM_CACHE
 
 
 def save_sentence_cache(cache: dict):
-    """同時存到本地和 GitHub。"""
+    """同時存到記憶體、本地和 GitHub。"""
+    global _MEM_CACHE
+    _MEM_CACHE = cache          # 更新記憶體快取
     _ensure_data_folder()
     try:
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
