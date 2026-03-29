@@ -922,7 +922,7 @@ def study_page():
                     set_cached_tts(language, _code_str, "sent", sent_audio, cur_sent)
                 st.session_state.tts_sentence_audio = sent_audio
                 st.session_state.tts_sentence_for = cur_sent
-            components.html(audio_player_dual(term_audio, sent_audio), height=0)
+            components.html(audio_player_dual(term_audio, sent_audio), height=64)
             st.session_state.auto_played_for = cur_sent
         except Exception as e:
             st.warning(f"自動播放失敗：{e}")
@@ -994,7 +994,7 @@ def study_page():
                         set_cached_tts(language, _code_str, "term", audio_bytes)
                 st.session_state.tts_term_audio = audio_bytes
                 st.session_state.tts_term_for = current_term
-                components.html(audio_player(audio_bytes), height=0)
+                components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
@@ -1061,7 +1061,7 @@ def study_page():
                         audio_bytes = generate_tts_audio(current_sentence, language)
                         st.session_state.tts_sentence_audio = audio_bytes
                         st.session_state.tts_sentence_for = current_sentence
-                components.html(audio_player(audio_bytes), height=0)
+                components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
@@ -1211,7 +1211,7 @@ def review_page():
                 try:
                     with st.spinner("生成發音中..."):
                         audio_bytes = generate_tts_audio(pick_term, language)
-                    components.html(audio_player(audio_bytes), height=0)
+                    components.html(audio_player(audio_bytes), height=64)
                 except Exception as e:
                     st.error(f"TTS 失敗：{e}")
 
@@ -1270,7 +1270,7 @@ def review_page():
                         try:
                             with st.spinner("生成發音中..."):
                                 audio_bytes = generate_tts_audio(sub_data["sentence"], language)
-                            components.html(audio_player(audio_bytes), height=0)
+                            components.html(audio_player(audio_bytes), height=64)
                         except Exception as e:
                             st.error(f"TTS 失敗：{e}")
 
@@ -1317,7 +1317,7 @@ def review_page():
                         try:
                             with st.spinner("生成發音中..."):
                                 audio_bytes = generate_tts_audio(trans_data["sentence"], language)
-                            components.html(audio_player(audio_bytes), height=0)
+                            components.html(audio_player(audio_bytes), height=64)
                         except Exception as e:
                             st.error(f"TTS 失敗：{e}")
 
@@ -1386,7 +1386,7 @@ def review_page():
                     try:
                         with st.spinner("自動播放中..."):
                             audio_bytes = generate_tts_audio(combo_data["sentence"], language)
-                        components.html(audio_player(audio_bytes), height=0)
+                        components.html(audio_player(audio_bytes), height=64)
                         st.session_state.combo_auto_played_for = combo_data["sentence"]
                     except Exception as e:
                         st.warning(f"自動播放失敗：{e}")
@@ -1429,7 +1429,7 @@ def review_page():
                     try:
                         with st.spinner("生成發音中..."):
                             audio_bytes = generate_tts_audio(combo_data["sentence"], language)
-                        components.html(audio_player(audio_bytes), height=0)
+                        components.html(audio_player(audio_bytes), height=64)
                     except Exception as e:
                         st.error(f"TTS 失敗：{e}")
 
@@ -1608,7 +1608,7 @@ def pattern_study_page():
                     set_cached_tts(_pat_lang_key, _pat_code_str, "sent", sent_audio, pattern_cur_sent)
                 st.session_state.pattern_tts_sentence_audio = sent_audio
                 st.session_state.pattern_tts_sentence_for   = pattern_cur_sent
-            components.html(audio_player_dual(term_audio, sent_audio), height=0)
+            components.html(audio_player_dual(term_audio, sent_audio), height=64)
             st.session_state.pattern_study_auto_played_for = pattern_cur_sent
         except Exception as e:
             st.warning(f"自動播放失敗：{e}")
@@ -1660,7 +1660,7 @@ def pattern_study_page():
                         audio_bytes = generate_tts_audio(current_term, language)
                         st.session_state.pattern_tts_term_audio = audio_bytes
                         st.session_state.pattern_tts_term_for   = current_term
-                components.html(audio_player(audio_bytes), height=0)
+                components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
@@ -1726,7 +1726,7 @@ def pattern_study_page():
                         audio_bytes = generate_tts_audio(current_sentence, language)
                         st.session_state.pattern_tts_sentence_audio = audio_bytes
                         st.session_state.pattern_tts_sentence_for   = current_sentence
-                components.html(audio_player(audio_bytes), height=0)
+                components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
@@ -1813,7 +1813,7 @@ def pattern_review_page():
             try:
                 with st.spinner("自動播放中..."):
                     audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
-                components.html(audio_player(audio_bytes), height=0)
+                components.html(audio_player(audio_bytes), height=64)
                 st.session_state.pattern_review_auto_played_for = sentence_data["sentence"]
             except Exception as e:
                 st.warning(f"自動播放失敗：{e}")
@@ -1845,7 +1845,7 @@ def pattern_review_page():
             try:
                 with st.spinner("生成發音中..."):
                     audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
-                components.html(audio_player(audio_bytes), height=0)
+                components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
