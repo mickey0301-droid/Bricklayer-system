@@ -293,6 +293,20 @@ def _df_to_allowed_vocab(df) -> list:
     return [{"code": int(row["code_num"]), "term": str(row["term"])} for _, row in df.iterrows()]
 
 
+def _sent_tts_text(sentence_data: dict, language: str) -> str:
+    """
+    回傳要傳給 TTS 的例句文字。
+    日語有平假名標注時，用平假名（reading）取代漢字句子，
+    確保 TTS 發音與畫面顯示的平假名完全一致。
+    其他語言直接回傳 sentence。
+    """
+    if language == "japanese":
+        reading = (sentence_data.get("reading") or "").strip()
+        if reading:
+            return reading
+    return (sentence_data.get("sentence") or "").strip()
+
+
 def _vocab_by_codes(codes: list, vocab_df, current_code: int) -> list:
     """依 vocab_codes 編號查找詞彙，用於 AI 已回傳編號的情況。"""
     result, seen = [], set()
@@ -920,13 +934,14 @@ def study_page():
                 st.session_state.tts_term_audio = term_audio
                 st.session_state.tts_term_for = current_term
                 # 例句音訊：磁碟快取 → session 快取 → API
+                _sent_tts = _sent_tts_text(sentence_data_ready, language)
                 sent_audio = (
-                    get_cached_tts(language, _code_str, "sent", cur_sent)
+                    get_cached_tts(language, _code_str, "sent", _sent_tts)
                     or (st.session_state.tts_sentence_for == cur_sent and st.session_state.tts_sentence_audio)
                 )
                 if not sent_audio:
-                    sent_audio = generate_tts_audio(cur_sent, language)
-                    set_cached_tts(language, _code_str, "sent", sent_audio, cur_sent)
+                    sent_audio = generate_tts_audio(_sent_tts, language)
+                    set_cached_tts(language, _code_str, "sent", sent_audio, _sent_tts)
                 st.session_state.tts_sentence_audio = sent_audio
                 st.session_state.tts_sentence_for = cur_sent
             components.html(audio_player_dual(term_audio, sent_audio), height=64)
@@ -1081,8 +1096,9 @@ def study_page():
                 if st.session_state.tts_sentence_audio and st.session_state.tts_sentence_for == current_sentence:
                     audio_bytes = st.session_state.tts_sentence_audio
                 else:
+                    _tts_s = _sent_tts_text(sentence_data, language)
                     with st.spinner("生成例句發音中..."):
-                        audio_bytes = generate_tts_audio(current_sentence, language)
+                        audio_bytes = generate_tts_audio(_tts_s, language)
                         st.session_state.tts_sentence_audio = audio_bytes
                         st.session_state.tts_sentence_for = current_sentence
                 components.html(audio_player(audio_bytes), height=64)
@@ -1366,7 +1382,7 @@ def review_page():
                     if sub_data.get("sentence"):
                         try:
                             with st.spinner("生成發音中..."):
-                                audio_bytes = generate_tts_audio(sub_data["sentence"], language)
+                                audio_bytes = generate_tts_audio(_sent_tts_text(sub_data, language), language)
                             components.html(audio_player(audio_bytes), height=64)
                         except Exception as e:
                             st.error(f"TTS 失敗：{e}")
@@ -1413,7 +1429,7 @@ def review_page():
                     if trans_data.get("sentence"):
                         try:
                             with st.spinner("生成發音中..."):
-                                audio_bytes = generate_tts_audio(trans_data["sentence"], language)
+                                audio_bytes = generate_tts_audio(_sent_tts_text(trans_data, language), language)
                             components.html(audio_player(audio_bytes), height=64)
                         except Exception as e:
                             st.error(f"TTS 失敗：{e}")
@@ -1483,7 +1499,7 @@ def review_page():
                 if st.session_state.combo_auto_played_for != combo_data["sentence"]:
                     try:
                         with st.spinner("自動播放中..."):
-                            audio_bytes = generate_tts_audio(combo_data["sentence"], language)
+                            audio_bytes = generate_tts_audio(_sent_tts_text(combo_data, language), language)
                         components.html(audio_player(audio_bytes), height=64)
                         st.session_state.combo_auto_played_for = combo_data["sentence"]
                     except Exception as e:
@@ -1526,7 +1542,7 @@ def review_page():
                 if st.button("🔊 播放例句", key="combo_tts", use_container_width=True):
                     try:
                         with st.spinner("生成發音中..."):
-                            audio_bytes = generate_tts_audio(combo_data["sentence"], language)
+                            audio_bytes = generate_tts_audio(_sent_tts_text(combo_data, language), language)
                         components.html(audio_player(audio_bytes), height=64)
                     except Exception as e:
                         st.error(f"TTS 失敗：{e}")
@@ -1697,13 +1713,14 @@ def pattern_study_page():
                 st.session_state.pattern_tts_term_audio = term_audio
                 st.session_state.pattern_tts_term_for   = current_term
                 # 例句音訊：磁碟快取 → session 快取 → API
+                _pat_sent_tts = _sent_tts_text(pattern_sentence_ready, language)
                 sent_audio = (
-                    get_cached_tts(_pat_lang_key, _pat_code_str, "sent", pattern_cur_sent)
+                    get_cached_tts(_pat_lang_key, _pat_code_str, "sent", _pat_sent_tts)
                     or (st.session_state.pattern_tts_sentence_for == pattern_cur_sent and st.session_state.pattern_tts_sentence_audio)
                 )
                 if not sent_audio:
-                    sent_audio = generate_tts_audio(pattern_cur_sent, language)
-                    set_cached_tts(_pat_lang_key, _pat_code_str, "sent", sent_audio, pattern_cur_sent)
+                    sent_audio = generate_tts_audio(_pat_sent_tts, language)
+                    set_cached_tts(_pat_lang_key, _pat_code_str, "sent", sent_audio, _pat_sent_tts)
                 st.session_state.pattern_tts_sentence_audio = sent_audio
                 st.session_state.pattern_tts_sentence_for   = pattern_cur_sent
             components.html(audio_player_dual(term_audio, sent_audio), height=64)
@@ -1820,8 +1837,9 @@ def pattern_study_page():
                 if st.session_state.pattern_tts_sentence_audio and st.session_state.pattern_tts_sentence_for == current_sentence:
                     audio_bytes = st.session_state.pattern_tts_sentence_audio
                 else:
+                    _tts_ps = _sent_tts_text(sentence_data, language)
                     with st.spinner("生成例句發音中..."):
-                        audio_bytes = generate_tts_audio(current_sentence, language)
+                        audio_bytes = generate_tts_audio(_tts_ps, language)
                         st.session_state.pattern_tts_sentence_audio = audio_bytes
                         st.session_state.pattern_tts_sentence_for   = current_sentence
                 components.html(audio_player(audio_bytes), height=64)
@@ -1910,7 +1928,7 @@ def pattern_review_page():
         if st.session_state.pattern_review_auto_played_for != sentence_data["sentence"]:
             try:
                 with st.spinner("自動播放中..."):
-                    audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
+                    audio_bytes = generate_tts_audio(_sent_tts_text(sentence_data, language), language)
                 components.html(audio_player(audio_bytes), height=64)
                 st.session_state.pattern_review_auto_played_for = sentence_data["sentence"]
             except Exception as e:
@@ -1942,7 +1960,7 @@ def pattern_review_page():
         if st.button("🔊 播放例句", key="pr_tts", use_container_width=True):
             try:
                 with st.spinner("生成發音中..."):
-                    audio_bytes = generate_tts_audio(sentence_data["sentence"], language)
+                    audio_bytes = generate_tts_audio(_sent_tts_text(sentence_data, language), language)
                 components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")

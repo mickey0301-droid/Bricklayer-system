@@ -60,7 +60,9 @@ _TTS_INSTRUCTIONS = {
     "japanese": (
         "You are reading Japanese text aloud. "
         "Read every character as Japanese — do NOT read any kanji or kana as Chinese. "
-        "Use natural Japanese pronunciation and intonation throughout."
+        "Use natural Japanese pronunciation and intonation throughout. "
+        "If the input is written entirely in hiragana or katakana, read it exactly as written "
+        "without substituting kanji — the phonetic spelling is intentional and must be preserved."
     ),
     "korean": (
         "You are reading Korean text aloud. "
