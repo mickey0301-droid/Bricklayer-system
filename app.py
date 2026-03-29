@@ -35,6 +35,10 @@ from utils.progress_manager import (
     sync_history_from_github,
 )
 from utils.language_manager import load_languages, add_language, get_language_config
+from utils.familiarity_manager import (
+    get_familiarity, set_familiarity, get_sample_weights,
+    FAMILIAR, UNFAMILIAR,
+)
 from utils.background_tasks import (
     start_autocomplete_task,
     get_latest_task_for_language,
@@ -1001,6 +1005,23 @@ def study_page():
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
+        # ── 熟悉度標記 ────────────────────────────────────
+        _fam = get_familiarity(language, current_code)
+        _fam_labels = {FAMILIAR: "✅ 熟悉", UNFAMILIAR: "❗ 陌生", None: ""}
+        if _fam:
+            st.caption(f"目前標記：{_fam_labels[_fam]}")
+        fam_c1, fam_c2 = st.columns(2)
+        with fam_c1:
+            _btn_fam = "✅ 熟悉" if _fam != FAMILIAR else "✅ 熟悉（已標）"
+            if st.button(_btn_fam, key="study_fam_familiar", use_container_width=True):
+                set_familiarity(language, current_code, None if _fam == FAMILIAR else FAMILIAR)
+                st.rerun()
+        with fam_c2:
+            _btn_unfam = "❗ 陌生" if _fam != UNFAMILIAR else "❗ 陌生（已標）"
+            if st.button(_btn_unfam, key="study_fam_unfamiliar", use_container_width=True):
+                set_familiarity(language, current_code, None if _fam == UNFAMILIAR else UNFAMILIAR)
+                st.rerun()
+
     # ── 右欄：例句＋文法 ──────────────────────────────────
     with col_right:
         sentence_data = st.session_state.study_sentence
@@ -1195,7 +1216,8 @@ def review_page():
 
         # ── 抽題 ──────────────────────────────────────
         if st.button("🎲 抽新題目", use_container_width=True, key="word_draw") or not st.session_state.review_term:
-            picked       = learned_df.sample(1).iloc[0]
+            _weights = get_sample_weights(language, learned_df["code_num"].tolist())
+            picked       = learned_df.sample(1, weights=_weights).iloc[0]
             pick_code    = int(picked["code_num"])
             pick_term    = str(picked["term"])
             pick_meaning = str(picked.get("meaning", ""))
@@ -1272,6 +1294,23 @@ def review_page():
                     components.html(audio_player(audio_bytes), height=64)
                 except Exception as e:
                     st.error(f"TTS 失敗：{e}")
+
+            # ── 熟悉度標記 ────────────────────────────
+            _fam_r = get_familiarity(language, pick_code)
+            _fam_labels_r = {FAMILIAR: "✅ 熟悉", UNFAMILIAR: "❗ 陌生"}
+            if _fam_r:
+                st.caption(f"目前標記：{_fam_labels_r[_fam_r]}")
+            rfam_c1, rfam_c2 = st.columns(2)
+            with rfam_c1:
+                _rb_fam = "✅ 熟悉（已標）" if _fam_r == FAMILIAR else "✅ 熟悉"
+                if st.button(_rb_fam, key="rev_fam_familiar", use_container_width=True):
+                    set_familiarity(language, pick_code, None if _fam_r == FAMILIAR else FAMILIAR)
+                    st.rerun()
+            with rfam_c2:
+                _rb_unfam = "❗ 陌生（已標）" if _fam_r == UNFAMILIAR else "❗ 陌生"
+                if st.button(_rb_unfam, key="rev_fam_unfamiliar", use_container_width=True):
+                    set_familiarity(language, pick_code, None if _fam_r == UNFAMILIAR else UNFAMILIAR)
+                    st.rerun()
 
         # ── 右欄：FSI 練習區 ──────────────────────────
         with rev_right:
@@ -1392,7 +1431,8 @@ def review_page():
             st.caption(f"隨機抽 2 個已學過的單字，AI 會把它們組成一句短句。按「看答案」可查看文法分析與使用單字。")
 
             if st.button("🎲 抽新組合", use_container_width=True, key="combo_draw") or not st.session_state.combo_words:
-                picked_rows = learned_df.sample(n=n_pick)
+                _combo_weights = get_sample_weights(language, learned_df["code_num"].tolist())
+                picked_rows = learned_df.sample(n=n_pick, weights=_combo_weights)
                 all_allowed = learned_df["term"].astype(str).tolist()
 
                 target_words = [
