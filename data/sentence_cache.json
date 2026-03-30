@@ -1072,5 +1072,11 @@
     "reading": "geugeos-eun nappeuda.",
     "translation": "那個是壞的。",
     "grammar": "그것(geugeos)[代名詞: 那個] + 은[主格助詞] + 나쁘다(nappeuda)[形容詞: 壞]"
+  },
+  "korean::109": {
+    "sentence": "담이 높아서 넘어갈 수 없다.",
+    "reading": "dam-i nop-aseo neomeogal su eopda.",
+    "translation": "堤壩很高，無法越過。",
+    "grammar": "담(dam)[名詞: 堤壩] + 이[i][主格助詞] + 높다(nopda)[形容詞: 高] + 아서[接續詞] + 넘어가다(neomeogada)[動詞: 越過] + 수(su)[名詞: 能夠] + 없다(eopda)[動詞: 沒有]"
   }
 }
