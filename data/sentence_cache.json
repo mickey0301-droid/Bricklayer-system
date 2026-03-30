@@ -1092,9 +1092,9 @@
     "grammar": "밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹다(meogda)[動詞: 吃] + 때(ttae)[名詞: 時候] + 물(mul)[名詞: 水] + 을[eul][受格助詞] + 마시다(masida)[動詞: 喝] + ."
   },
   "korean::112": {
-    "sentence": "나는 집에 리를 두고 왔다.",
-    "reading": "naneun jibe ri-reul dugo watda.",
-    "translation": "我把里放在家裡了。",
-    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 집(jip)[名詞: 家] + 에[方向助詞] + 리(ri)[名詞: 里] + 를[受格助詞] + 두다(dunda)[動詞: 放] + 고[連接詞] + 왔다(watda)[動詞: 來]"
+    "sentence": "나는 집이 리에 있다.",
+    "reading": "naneun jibi rie itda.",
+    "translation": "我的家在里區。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 집(jip)[名詞: 家] + 이[主格助詞] + 리(ri)[名詞: 里] + 에[方向助詞] + 있다(itda)[動詞: 在]"
   }
 }
