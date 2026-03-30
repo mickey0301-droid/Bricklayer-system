@@ -1090,5 +1090,11 @@
     "reading": "babeul meogeul ttae mul-eul masinda.",
     "translation": "吃飯的時候喝水。",
     "grammar": "밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹다(meogda)[動詞: 吃] + 때(ttae)[名詞: 時候] + 물(mul)[名詞: 水] + 을[eul][受格助詞] + 마시다(masida)[動詞: 喝] + ."
+  },
+  "korean::112": {
+    "sentence": "우리 집은 그리 작지 않다.",
+    "reading": "uri jib-eun geuli jagji anhda.",
+    "translation": "我們的家並不小。",
+    "grammar": "우리[代名詞: 我們] + 집[名詞: 家] + 은[主格助詞] + 그리[副詞: 那麼] + 작지[形容詞: 小] + 않다[動詞: 不是]"
   }
 }
