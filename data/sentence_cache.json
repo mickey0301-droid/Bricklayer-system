@@ -1276,5 +1276,11 @@
     "reading": "jyaeneun uriui chinguyah.",
     "translation": "那小子是我們的朋友。",
     "grammar": "쟤(jyae)[代名詞: 那小子] + 는[主格助詞] + 우리(ui)[代名詞: 我們] + 의[屬格助詞] + 친구(chingu)[名詞: 朋友] + 야(yah)[助動詞: 是]"
+  },
+  "korean::132": {
+    "sentence": "아이는 젖을 많이 마신다.",
+    "reading": "aineun jeojeul manhi masinda.",
+    "translation": "孩子喝了很多乳汁。",
+    "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   }
 }
