@@ -588,6 +588,21 @@ Responde solo con JSON：
     }
 
 
+def _count_passage_length(passage: str, language: str) -> int:
+    """
+    Count passage length in the same unit used for the max_length constraint:
+    - CJK languages (japanese / korean): count every non-whitespace character
+    - Roman-script languages: count whitespace-separated words
+    """
+    text = passage.strip()
+    if language in ("japanese", "korean", "chinese"):
+        # Count all non-whitespace characters (CJK + kana + hangul + punctuation)
+        import re
+        return len(re.sub(r"\s", "", text))
+    else:
+        return len(text.split())
+
+
 def generate_passage(
     language: str,
     passage_type: str,          # "短文" | "故事" | "對話"
@@ -596,11 +611,12 @@ def generate_passage(
 ) -> dict:
     """
     Generate a short passage (短文/故事/對話) using ONLY the learned vocabulary.
-    Max ~50 characters (CJK) or ~50 words (roman script).
+    Strictly enforces max_length; retries once if AI exceeds the limit.
     Returns {
         "passage": str, "reading": str, "translation": str,
         "vocab_notes": [{"word", "reading", "meaning", "pos"}],
         "grammar_notes": str,
+        "char_count": int,   # actual length in the counted unit
     }
     """
     vocab_list = "\n".join(
@@ -615,11 +631,22 @@ def generate_passage(
     }
     type_desc = type_desc_map.get(passage_type, "a short text")
 
-    length_rule = (
-        f"{max_length} characters or fewer (count each CJK character individually)."
-        if language in ("japanese", "korean")
-        else f"{max_length} words or fewer."
-    )
+    is_cjk = language in ("japanese", "korean", "chinese")
+    if is_cjk:
+        length_rule = (
+            f"EXACTLY {max_length} non-whitespace characters or fewer. "
+            f"Count every kana, kanji, hangul, and punctuation mark individually. "
+            f"Whitespace does not count. Your passage MUST fit within {max_length} characters. "
+            f"If your draft is longer, CUT sentences until it is {max_length} or fewer."
+        )
+        unit_label = "字元（不含空白）"
+    else:
+        length_rule = (
+            f"EXACTLY {max_length} words or fewer. "
+            f"Count every whitespace-separated token. "
+            f"If your draft is longer, CUT words until it is {max_length} or fewer."
+        )
+        unit_label = "個單詞"
 
     system_message = (
         "You are a language learning assistant creating immersive reading practice. "
@@ -628,12 +655,13 @@ def generate_passage(
         "(1) Content words (nouns, verbs, adjectives, adverbs) MUST come ONLY from the ALLOWED VOCABULARY list. "
         "Grammatical function words (particles, articles, conjunctions, auxiliaries, pronouns, "
         "common adverbs like very/also/not, numbers) are always permitted. "
-        f"(2) LENGTH: {length_rule} "
+        f"(2) LENGTH LIMIT — THIS IS CRITICAL: {length_rule} "
         "(3) The text must feel completely NATURAL — not a textbook exercise. "
         "(4) For 對話 type: format passage as 'A：...\\nB：...'. "
         "(5) 'passage' field: plain text only, no furigana, no parentheses, no reading annotations. "
         "(6) 'reading' field: full reading of the entire passage. "
-        "Japanese → hiragana reading line by line. Korean → full Revised Romanization. Spanish → leave empty string. "
+        "Japanese → hiragana reading line by line. Korean → full Revised Romanization. "
+        "Spanish/French/German/Italian/Portuguese → leave empty string. "
         "(7) 'vocab_notes': list EVERY content word used from the allowed list. "
         "Each entry has: word (surface form), reading, meaning, pos (Traditional Chinese POS label). "
         "(8) 'grammar_notes': in Traditional Chinese (繁體中文), explain 1–3 key grammar patterns used. "
@@ -644,10 +672,11 @@ def generate_passage(
 {vocab_list}
 
 PASSAGE TYPE: {passage_type}
+MAX LENGTH: {max_length} {'non-whitespace characters' if is_cjk else 'words'} — DO NOT EXCEED THIS.
 
 Output JSON:
 {{
-  "passage": "原文（無注音）",
+  "passage": "原文（無注音，嚴格限制在 {max_length} {'字元' if is_cjk else '個單詞'} 以內）",
   "reading": "完整讀音",
   "translation": "繁體中文翻譯",
   "vocab_notes": [
@@ -656,8 +685,28 @@ Output JSON:
   "grammar_notes": "文法說明（繁體中文，1-3條）"
 }}"""
 
+    # ── First attempt ──────────────────────────────────────
     content = _call_ai(system_message, prompt)
     data = _extract_json(content)
+    passage_text = data.get("passage", "")
+    actual_len = _count_passage_length(passage_text, language)
+
+    # ── Retry if AI exceeded the limit by more than 10% ───
+    if actual_len > max_length * 1.10 and passage_text:
+        trim_prompt = (
+            f"The following passage is {actual_len} {'characters' if is_cjk else 'words'} long, "
+            f"but the limit is {max_length}. "
+            f"Rewrite it to be AT MOST {max_length} {'non-whitespace characters' if is_cjk else 'words'}, "
+            "keeping it natural and using only the same vocabulary. "
+            "Return the SAME JSON structure with all fields updated to match the shorter passage.\n\n"
+            f"Original passage: {passage_text}"
+        )
+        retry_content = _call_ai(system_message, trim_prompt)
+        retry_data = _extract_json(retry_content)
+        if retry_data.get("passage"):
+            data = retry_data
+            passage_text = data.get("passage", "")
+            actual_len = _count_passage_length(passage_text, language)
 
     raw_notes = data.get("vocab_notes", [])
     if not isinstance(raw_notes, list):
@@ -673,11 +722,13 @@ Output JSON:
     ]
 
     return {
-        "passage":       data.get("passage", ""),
+        "passage":       passage_text,
         "reading":       data.get("reading", ""),
         "translation":   data.get("translation", ""),
         "vocab_notes":   vocab_notes,
         "grammar_notes": data.get("grammar_notes", ""),
+        "char_count":    actual_len,
+        "unit_label":    unit_label,
     }
 
 # ── 各語言可練習的文法句型 ────────────────────────────────

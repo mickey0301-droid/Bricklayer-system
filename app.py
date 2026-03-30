@@ -225,7 +225,7 @@ _defaults = {
     "pattern_review_auto_played_for": "",
     # 短文練習模式
     "passage_type": "短文",
-    "passage_data": {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": ""},
+    "passage_data": {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": "", "char_count": 0, "unit_label": "字元"},
     # 複習練習範圍
     "review_code_min": None,
     "review_code_max": None,
@@ -1603,7 +1603,7 @@ def review_page():
                 )
             if ptype != st.session_state.passage_type:
                 st.session_state.passage_type = ptype
-                st.session_state.passage_data = {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": ""}
+                st.session_state.passage_data = {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": "", "char_count": 0, "unit_label": "字元"}
                 st.rerun()
 
             # ── 生成按鈕 ──────────────────────────────────
@@ -1623,9 +1623,24 @@ def review_page():
 
             pdata = st.session_state.passage_data
             if pdata.get("passage"):
+                # ── 字數統計 ──────────────────────────────
+                char_count  = pdata.get("char_count", 0)
+                unit_label  = pdata.get("unit_label", "字元")
+                over_limit  = char_count > max_chars
+                count_color = "#e03030" if over_limit else "#4caf50"
+                count_badge = (
+                    f'<span style="font-size:0.85rem;color:{count_color};'
+                    f'font-weight:600;margin-left:0.6rem;">'
+                    f'📊 {char_count} / {max_chars} {unit_label}'
+                    f'{"　⚠️ 超過上限" if over_limit else ""}</span>'
+                )
+
                 # ── 短文卡片 ──────────────────────────────
                 st.markdown('<div class="study-card">', unsafe_allow_html=True)
-                st.markdown(f'<div class="study-label">📄 {ptype}</div>', unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="study-label">📄 {ptype}{count_badge}</div>',
+                    unsafe_allow_html=True
+                )
 
                 # 對話格式換行顯示
                 passage_html = pdata["passage"].replace("\n", "<br>")
