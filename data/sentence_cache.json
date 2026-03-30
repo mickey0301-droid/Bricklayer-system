@@ -1084,5 +1084,11 @@
     "reading": "naneun ttali itda.",
     "translation": "我有女兒。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 딸(ttal)[名詞: 女兒] + 이[主格助詞] + 있다(itda)[動詞: 有]"
+  },
+  "korean::111": {
+    "sentence": "나는 밥을 먹을 때 음악을 들어요.",
+    "reading": "naneun babeul meogeul ttae eumak-eul deureoyo.",
+    "translation": "我吃飯的時候會聽音樂。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹다(meogda)[動詞: 吃] + 때(ttae)[名詞: 時候] + 음악(eumak)[名詞: 音樂] + 을[eul][受格助詞] + 듣다(deudda)[動詞: 聽] + 요(yo)[語尾: 句尾助詞]"
   }
 }
