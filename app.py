@@ -20,10 +20,11 @@ from utils.study_engine import (
     generate_example_sentence,
     generate_recombination_sentence,
     generate_fsi_sentence,
+    generate_passage,
     GRAMMAR_PATTERNS,
 )
 from utils.tts_engine import (
-    generate_tts_audio, audio_player, audio_player_dual,
+    generate_tts_audio, audio_player, audio_player_dual, audio_player_pausable,
     get_cached_tts, set_cached_tts,
 )
 from utils.sentence_cache import get_cached_sentence, set_cached_sentence, sync_cache_from_github
@@ -221,6 +222,9 @@ _defaults = {
     "pattern_review_show_answer": False,
     "pattern_study_auto_played_for": "",
     "pattern_review_auto_played_for": "",
+    # 短文練習模式
+    "passage_type": "短文",
+    "passage_data": {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": ""},
     # 複習練習範圍
     "review_code_min": None,
     "review_code_max": None,
@@ -1218,7 +1222,7 @@ def review_page():
     # ── 模式切換 ──────────────────────────────────────────
     mode = st.radio(
         "複習模式",
-        ["📖 單字複習", "🔀 重組練習"],
+        ["📖 單字複習", "🔀 重組練習", "📝 短文練習"],
         horizontal=True,
         key="review_mode_radio"
     )
@@ -1437,7 +1441,7 @@ def review_page():
     # ════════════════════════════════════════════════════
     # 模式 2：重組練習（新功能）
     # ════════════════════════════════════════════════════
-    else:
+    elif mode == "🔀 重組練習":
         n_learned = len(learned_df)
         n_pick = 2  # 固定抽 2 個詞
 
@@ -1546,6 +1550,114 @@ def review_page():
                         components.html(audio_player(audio_bytes), height=64)
                     except Exception as e:
                         st.error(f"TTS 失敗：{e}")
+
+    # ════════════════════════════════════════════════════
+    # 模式 3：短文練習（短文 / 故事 / 對話）
+    # ════════════════════════════════════════════════════
+    if mode == "📝 短文練習":
+        st.caption("AI 根據你目前學過的詞彙，生成一段短文、故事或對話。最多 50 字，自然流暢。")
+
+        if len(learned_df) < 3:
+            st.info("需要至少學 3 個單字才能使用短文練習。")
+        else:
+            # ── 類型 & 字數設定 ────────────────────────────
+            pc1, pc2 = st.columns([2, 1])
+            with pc1:
+                ptype = st.radio(
+                    "選擇類型",
+                    ["短文", "故事", "對話"],
+                    horizontal=True,
+                    key="passage_type_radio",
+                    index=["短文", "故事", "對話"].index(st.session_state.passage_type),
+                )
+            with pc2:
+                max_chars = st.slider(
+                    "最多字數",
+                    min_value=20, max_value=150, value=50, step=10,
+                    key="passage_max_chars",
+                    help="CJK 語言以字元計，西班牙文以單詞計"
+                )
+            if ptype != st.session_state.passage_type:
+                st.session_state.passage_type = ptype
+                st.session_state.passage_data = {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": ""}
+                st.rerun()
+
+            # ── 生成按鈕 ──────────────────────────────────
+            if st.button("✨ 生成新短文", use_container_width=True, key="passage_gen") or not st.session_state.passage_data.get("passage"):
+                try:
+                    with st.spinner(f"AI 正在生成{ptype}..."):
+                        passage_result = generate_passage(
+                            language=language,
+                            passage_type=ptype,
+                            all_allowed_vocab=_df_to_allowed_vocab(learned_df),
+                            max_length=max_chars,
+                        )
+                    st.session_state.passage_data = passage_result
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"生成失敗：{e}")
+
+            pdata = st.session_state.passage_data
+            if pdata.get("passage"):
+                # ── 短文卡片 ──────────────────────────────
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-label">📄 {ptype}</div>', unsafe_allow_html=True)
+
+                # 對話格式換行顯示
+                passage_html = pdata["passage"].replace("\n", "<br>")
+                st.markdown(f'<div class="study-value-md" style="font-size:1.25rem;line-height:1.8;">{passage_html}</div>', unsafe_allow_html=True)
+
+                if supports_reading and pdata.get("reading"):
+                    reading_html = pdata["reading"].replace("\n", "<br>")
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md" style="color:#555;">{reading_html}</div>', unsafe_allow_html=True)
+
+                st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                translation_html = pdata["translation"].replace("\n", "<br>")
+                st.markdown(f'<div class="study-value-md">{translation_html}</div>', unsafe_allow_html=True)
+
+                st.markdown('</div>', unsafe_allow_html=True)
+
+                # ── TTS：可暫停／繼續 ──────────────────────
+                tts_text = pdata["passage"]
+                if st.button("🔊 生成朗讀", key="passage_tts", use_container_width=True):
+                    try:
+                        with st.spinner("生成朗讀中..."):
+                            audio_bytes = generate_tts_audio(tts_text, language)
+                        components.html(audio_player_pausable(audio_bytes), height=64)
+                    except Exception as e:
+                        st.error(f"TTS 失敗：{e}")
+
+                st.divider()
+
+                # ── 單字解釋 ──────────────────────────────
+                vocab_notes = pdata.get("vocab_notes", [])
+                if vocab_notes:
+                    st.markdown("**📚 本文單字**")
+                    for note in vocab_notes:
+                        word    = note.get("word", "")
+                        reading = note.get("reading", "")
+                        meaning = note.get("meaning", "")
+                        pos     = note.get("pos", "")
+                        reading_part = f"（{reading}）" if reading else ""
+                        pos_part     = f" [{pos}]" if pos else ""
+                        st.markdown(
+                            f'<div style="margin-bottom:0.4rem;">'
+                            f'<span style="font-size:1.1rem;font-weight:700;">{word}</span>'
+                            f'<span style="color:#888;font-size:0.95rem;">{reading_part}</span>'
+                            f'<span style="color:#4F8BF9;font-size:0.9rem;">{pos_part}</span>'
+                            f'<span style="color:#333;margin-left:0.5rem;">＝ {meaning}</span>'
+                            f'</div>',
+                            unsafe_allow_html=True
+                        )
+
+                # ── 文法說明 ──────────────────────────────
+                if pdata.get("grammar_notes"):
+                    st.markdown("**📝 文法說明**")
+                    st.markdown(
+                        f'<div class="grammar-box">{pdata["grammar_notes"]}</div>',
+                        unsafe_allow_html=True
+                    )
 
     st.divider()
     if st.button("↩ 回到語言首頁", use_container_width=True):

@@ -588,6 +588,98 @@ Responde solo con JSON：
     }
 
 
+def generate_passage(
+    language: str,
+    passage_type: str,          # "短文" | "故事" | "對話"
+    all_allowed_vocab: list,    # [{"code": int, "term": str, "meaning": str, "reading": str}, ...]
+    max_length: int = 50,       # max characters (CJK) or words (roman)
+) -> dict:
+    """
+    Generate a short passage (短文/故事/對話) using ONLY the learned vocabulary.
+    Max ~50 characters (CJK) or ~50 words (roman script).
+    Returns {
+        "passage": str, "reading": str, "translation": str,
+        "vocab_notes": [{"word", "reading", "meaning", "pos"}],
+        "grammar_notes": str,
+    }
+    """
+    vocab_list = "\n".join(
+        f"- [{v['code']}] {v['term']}（{v.get('reading','')}: {v.get('meaning','')}）"
+        for v in all_allowed_vocab
+    )
+
+    type_desc_map = {
+        "短文": "a short descriptive paragraph (natural everyday description)",
+        "故事": "a mini story with a tiny plot twist and natural characters",
+        "對話": "a two-person dialogue formatted as 'A：...\\nB：...'",
+    }
+    type_desc = type_desc_map.get(passage_type, "a short text")
+
+    length_rule = (
+        f"{max_length} characters or fewer (count each CJK character individually)."
+        if language in ("japanese", "korean")
+        else f"{max_length} words or fewer."
+    )
+
+    system_message = (
+        "You are a language learning assistant creating immersive reading practice. "
+        f"Generate ONE {passage_type} — {type_desc} — in the target language. "
+        "STRICT RULES: "
+        "(1) Content words (nouns, verbs, adjectives, adverbs) MUST come ONLY from the ALLOWED VOCABULARY list. "
+        "Grammatical function words (particles, articles, conjunctions, auxiliaries, pronouns, "
+        "common adverbs like very/also/not, numbers) are always permitted. "
+        f"(2) LENGTH: {length_rule} "
+        "(3) The text must feel completely NATURAL — not a textbook exercise. "
+        "(4) For 對話 type: format passage as 'A：...\\nB：...'. "
+        "(5) 'passage' field: plain text only, no furigana, no parentheses, no reading annotations. "
+        "(6) 'reading' field: full reading of the entire passage. "
+        "Japanese → hiragana reading line by line. Korean → full Revised Romanization. Spanish → leave empty string. "
+        "(7) 'vocab_notes': list EVERY content word used from the allowed list. "
+        "Each entry has: word (surface form), reading, meaning, pos (Traditional Chinese POS label). "
+        "(8) 'grammar_notes': in Traditional Chinese (繁體中文), explain 1–3 key grammar patterns used. "
+        "(9) Respond ONLY with valid JSON — no markdown, no extra text."
+    )
+
+    prompt = f"""ALLOWED VOCABULARY (only content words from this list):
+{vocab_list}
+
+PASSAGE TYPE: {passage_type}
+
+Output JSON:
+{{
+  "passage": "原文（無注音）",
+  "reading": "完整讀音",
+  "translation": "繁體中文翻譯",
+  "vocab_notes": [
+    {{"word": "單字", "reading": "讀音", "meaning": "意思", "pos": "詞性（繁體中文）"}}
+  ],
+  "grammar_notes": "文法說明（繁體中文，1-3條）"
+}}"""
+
+    content = _call_ai(system_message, prompt)
+    data = _extract_json(content)
+
+    raw_notes = data.get("vocab_notes", [])
+    if not isinstance(raw_notes, list):
+        raw_notes = []
+    vocab_notes = [
+        {
+            "word":    str(n.get("word", "")),
+            "reading": str(n.get("reading", "")),
+            "meaning": str(n.get("meaning", "")),
+            "pos":     str(n.get("pos", "")),
+        }
+        for n in raw_notes if isinstance(n, dict)
+    ]
+
+    return {
+        "passage":       data.get("passage", ""),
+        "reading":       data.get("reading", ""),
+        "translation":   data.get("translation", ""),
+        "vocab_notes":   vocab_notes,
+        "grammar_notes": data.get("grammar_notes", ""),
+    }
+
 # ── 各語言可練習的文法句型 ────────────────────────────────
 
 GRAMMAR_PATTERNS = {

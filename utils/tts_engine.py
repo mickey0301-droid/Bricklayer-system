@@ -170,3 +170,44 @@ def audio_player(audio_bytes: bytes) -> str:
 }})();
 </script>
 </body></html>"""
+
+
+_PAUSE_BTN_STYLE = (
+    "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"
+    "background:#4F8BF9;color:#fff;border:none;border-radius:50%;"
+    "width:44px;height:44px;font-size:1.3rem;cursor:pointer;"
+    "display:flex;align-items:center;justify-content:center;"
+    "box-shadow:0 2px 8px rgba(79,139,249,0.35);"
+)
+
+
+def audio_player_pausable(audio_bytes: bytes) -> str:
+    """Return an HTML audio player with ▶/⏸ toggle (pause & resume).
+    Does NOT autoplay — user must press the button.
+    Suitable for longer passages where pause/resume is needed.
+    """
+    b64 = base64.b64encode(audio_bytes).decode()
+    uid = int(time.time() * 1000)
+    return f"""<!DOCTYPE html>
+<html><body style="margin:0;padding:0;overflow:hidden;position:relative;height:60px">
+<audio id="a{uid}">
+  <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+</audio>
+<button id="btn{uid}" style="{_PAUSE_BTN_STYLE}" title="播放">▶</button>
+<script>
+(function(){{
+  var a   = document.getElementById('a{uid}');
+  var btn = document.getElementById('btn{uid}');
+  btn.onclick = function() {{
+    if (a.paused) {{
+      a.play();
+      btn.textContent = '⏸';
+    }} else {{
+      a.pause();
+      btn.textContent = '▶';
+    }}
+  }};
+  a.onended = function() {{ btn.textContent = '▶'; }};
+}})();
+</script>
+</body></html>"""
