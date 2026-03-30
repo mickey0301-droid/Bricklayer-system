@@ -10,6 +10,7 @@ from utils.vocab_manager import (
     load_pattern_vocab, save_pattern_vocab,
     DATA_FOLDER, ensure_data_folder,
     sync_vocab_from_github, sync_pattern_vocab_from_github,
+    _github_write, _github_config,
 )
 from utils.study_engine import (
     prepare_study_df,
@@ -641,16 +642,39 @@ def home_page():
                 try:
                     ensure_data_folder()
                     restored = []
+                    restored_contents = {}  # name → content str，供後續 GitHub 同步用
                     with zipfile.ZipFile(io.BytesIO(_uploaded.read())) as _zf:
                         for _name in _zf.namelist():
                             # 只還原頂層 JSON，防止路徑穿越
                             if _name.endswith(".json") and "/" not in _name and "\\" not in _name:
                                 _dest = os.path.join(DATA_FOLDER, _name)
-                                with _zf.open(_name) as _src, open(_dest, "wb") as _dst:
-                                    _dst.write(_src.read())
+                                _content_bytes = _zf.read(_name)
+                                with open(_dest, "wb") as _dst:
+                                    _dst.write(_content_bytes)
                                 restored.append(_name)
+                                restored_contents[_name] = _content_bytes.decode("utf-8")
                     if restored:
                         st.success(f"已還原 {len(restored)} 個檔案：{', '.join(restored)}  ⟶ 請重新整理頁面（F5）使資料生效。")
+                        # ── 同步到 GitHub，確保 reboot 後資料不消失 ──
+                        _token, _ = _github_config()
+                        if _token:
+                            _gh_ok_list = []
+                            _gh_fail_list = []
+                            for _name, _content_str in restored_contents.items():
+                                _ok, _err = _github_write(
+                                    f"data/{_name}", _content_str, None,
+                                    f"Restore {_name} from backup"
+                                )
+                                if _ok:
+                                    _gh_ok_list.append(_name)
+                                else:
+                                    _gh_fail_list.append(f"{_name}（{_err}）")
+                            if _gh_fail_list:
+                                st.warning(f"⚠️ 本機還原成功，但以下檔案 GitHub 同步失敗（reboot 後可能消失）：\n" + "\n".join(_gh_fail_list))
+                            else:
+                                st.info(f"☁️ 已同步 {len(_gh_ok_list)} 個檔案至 GitHub，重新啟動後資料不會消失。")
+                        else:
+                            st.warning("⚠️ 未設定 GITHUB_TOKEN，資料僅存於本機，reboot 後可能消失。")
                     else:
                         st.warning("ZIP 裡沒有找到 JSON 資料檔案。")
                 except Exception as _e:
