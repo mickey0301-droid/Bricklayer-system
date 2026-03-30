@@ -1258,5 +1258,11 @@
     "reading": "olhae-neun nalssi-ga jota.",
     "translation": "今年的天氣很好。",
     "grammar": "올해(olhae)[名詞: 今年] + 는[主格助詞] + 날씨(nalssi)[名詞: 天氣] + 가[主格助詞] + 좋다(jota)[動詞: 好]"
+  },
+  "korean::129": {
+    "sentence": "물에 잔이 있다.",
+    "reading": "mul-e jan-i itda.",
+    "translation": "水中有杯子。",
+    "grammar": "물(mul)[名詞: 水] + 에[方向助詞] + 잔(jan)[名詞: 杯子] + 이[i][主格助詞] + 있다(itda)[動詞: 存在]"
   }
 }
