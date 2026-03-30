@@ -1086,9 +1086,9 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 딸(ttal)[名詞: 女兒] + 이[主格助詞] + 있다(itda)[動詞: 有]"
   },
   "korean::111": {
-    "sentence": "너는 언제 자주 아침을 먹는 때가 있니?",
-    "reading": "neoneun eonje jaju achim-eul meokneun ttaega inni?",
-    "translation": "你有多久會常常在早上吃飯的時候嗎？",
-    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 언제(eonje)[副詞: 何時] + 자주(jaju)[副詞: 經常] + 아침(achim)[名詞: 早餐] + 을[受格助詞] + 먹는(meokneun)[動詞: 吃] + 때(tdae)[名詞: 時候] + 가[主格助詞] + 있니?(inni)[助動詞: 嗎]"
+    "sentence": "밥을 먹을 때 물을 마신다.",
+    "reading": "babeul meogeul ttae mul-eul masinda.",
+    "translation": "吃飯的時候喝水。",
+    "grammar": "밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹다(meogda)[動詞: 吃] + 때(ttae)[名詞: 時候] + 물(mul)[名詞: 水] + 을[eul][受格助詞] + 마시다(masida)[動詞: 喝] + ."
   }
 }
