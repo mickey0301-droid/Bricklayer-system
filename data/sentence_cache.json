@@ -1,112 +1,1034 @@
 {
   "japanese::1": {
-    "sentence": "私。",
-    "reading": "わたし",
-    "translation": "我。"
-  },
-  "japanese::3": {
-    "sentence": "私はご飯を食べる。",
-    "reading": "わたしはごはんをたべる。",
-    "translation": "我吃飯。"
-  },
-  "japanese::5": {
-    "sentence": "私は水を飲む。",
-    "reading": "わたしはみずをのむ。",
-    "translation": "我喝水。"
-  },
-  "japanese::4": {
-    "sentence": "私はご飯と水を食べる。",
-    "reading": "わたしはごはんとみずをたべる。",
-    "translation": "我吃飯和水。"
+    "sentence": "公園にベンチがある。",
+    "reading": "こうえんにべんちがある。",
+    "translation": "公園裡有長椅子。",
+    "grammar": "公園(こうえん)[名詞: 公園] + に[助詞] + ベンチ(べんち)[名詞: 長椅子] + が[主格助詞] + ある(ある)[動詞: 有、存在]"
   },
   "japanese::2": {
-    "sentence": "私のご飯です。",
-    "reading": "わたしのごはんです。",
-    "translation": "這是我的飯。"
+    "sentence": "これはいい本だ。",
+    "reading": "これはいいほんだ。",
+    "translation": "這是一本好的書。",
+    "grammar": "これ[代名詞: 這個] + は[主格助詞] + いい[形容詞: 好的] + 本(ほん)[名詞: 書] + だ[助動詞: 是]"
   },
-  "korean::1": {
-    "sentence": "나는 학습을 한다.",
-    "reading": "naneun hakseubeul handa.",
-    "translation": "我學習。"
+  "japanese::3": {
+    "sentence": "犬がいる。",
+    "reading": "いぬがいる。",
+    "translation": "有狗。",
+    "grammar": "犬(いぬ)[名詞: 狗] + が[主格助詞] + いる(いる)[動詞: 有]"
+  },
+  "japanese::4": {
+    "sentence": "これはいい。",
+    "reading": "これはいい。",
+    "translation": "這個很好。",
+    "grammar": "これ(これ)[名詞: 這個] + は[主格助詞] + いい(いい)[形容詞: 好]"
+  },
+  "japanese::5": {
+    "sentence": "これをする。",
+    "reading": "これをする。",
+    "translation": "這個要做。",
+    "grammar": "これ[名詞: 這個] + を[受格助詞] + する(する)[動詞: 做]"
+  },
+  "japanese::6": {
+    "sentence": "それがいい。",
+    "reading": "それがいい。",
+    "translation": "那個很好。",
+    "grammar": "それ(それ)[代名詞: 那個] + が[主格助詞] + いい(いい)[形容詞: 好]"
+  },
+  "japanese::7": {
+    "sentence": "今がいい時だ。",
+    "reading": "いまがいいときだ。",
+    "translation": "現在是好時機。",
+    "grammar": "今(いま)[名詞: 現在] + が[主格助詞] + いい(いい)[形容詞: 好] + 時(とき)[名詞: 時間] + だ[助動詞: 是]"
+  },
+  "japanese::8": {
+    "sentence": "私は今いい気分だ。",
+    "reading": "わたくしはいまいいきぶんだ。",
+    "translation": "我現在心情很好。",
+    "grammar": "私(わたくし)[名詞: 我] + は[主格助詞] + 今(いま)[名詞: 現在] + いい[形容詞: 好] + 気分(きぶん)[名詞: 心情] + だ[助動詞: 是]"
+  },
+  "japanese::9": {
+    "sentence": "これはゼロだ。",
+    "reading": "これはぜろだ。",
+    "translation": "這是零。",
+    "grammar": "これ(これ)[指示詞: 這個] + は[主格助詞] + ゼロ(ゼロ)[名詞: 零] + だ[助動詞: 是]"
+  },
+  "japanese::10": {
+    "sentence": "今、私は一つのリンゴがある。",
+    "reading": "いま、わたしはいちっこのりんごがある。",
+    "translation": "現在，我有一個蘋果。",
+    "grammar": "今(いま)[名詞: 現在] + 、[助詞] + 私(わたし)[代名詞: 我] + は[主格助詞] + 一(いち)[名詞: 一] + つ(つ)[助詞: 個] + の[連接詞] + リンゴ(りんご)[名詞: 蘋果] + が[主格助詞] + ある(ある)[動詞: 在]"
+  },
+  "japanese::11": {
+    "sentence": "今は七時です。",
+    "reading": "いまはしちじです。",
+    "translation": "現在是七點。",
+    "grammar": "今(いま)[名詞: 現在] + は[主格助詞] + 七(しち)[名詞: 七] + 時(じ)[名詞: 點] + です[助動詞: 是]。"
+  },
+  "japanese::12": {
+    "sentence": "私の手に三つのリンゴがある。",
+    "reading": "わたしのてにみっつのりんごがある。",
+    "translation": "我手上有三個蘋果。",
+    "grammar": "私(わたし)[代名詞: 我] + の[助詞] + 手(て)[名詞: 手] + に[助詞] + 三(さん)[名詞: 三] + つ[助詞] + の[助詞] + リンゴ(りんご)[名詞: 蘋果] + が[主格助詞] + ある(ある)[動詞: 在，有]"
+  },
+  "japanese::13": {
+    "sentence": "私は九を知っている。",
+    "reading": "わたしはきゅうをしっている。",
+    "translation": "我知道九。",
+    "grammar": "私(わたし)[名詞: 我] + は[主格助詞] + 九(きゅう)[名詞: 九] + を[受格助詞] + 知っている(しっている)[動詞: 知道]"
+  },
+  "japanese::14": {
+    "sentence": "私は二つのリンゴがある。",
+    "reading": "わたしはふたつのりんごがある。",
+    "translation": "我有兩個蘋果。",
+    "grammar": "私(わたし)[代名詞: 我] + は[主格助詞] + 二(に)[名詞: 二] + つ[助詞] + の[連接詞] + リンゴ(りんご)[名詞: 蘋果] + が[主格助詞] + ある(ある)[動詞: 有]"
+  },
+  "japanese::15": {
+    "sentence": "今は五時です。",
+    "reading": "いまはごじです。",
+    "translation": "現在是五點。",
+    "grammar": "今(いま)[名詞: 現在] + は[主格助詞] + 五(ご)[名詞: 五] + 時(じ)[名詞: 點] + です[助動詞: 是]"
+  },
+  "japanese::16": {
+    "sentence": "今いい人がいる。",
+    "reading": "いまいいひとがいる",
+    "translation": "現在有好人。",
+    "grammar": "今(いま)[副詞: 現在] + いい(いい)[形容詞: 好] + 人(ひと)[名詞: 人] + が[主格助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::17": {
+    "sentence": "今八人がいる。",
+    "reading": "いまはちにんがいる。",
+    "translation": "現在有八個人。",
+    "grammar": "今(いま)[名詞: 現在] + 八(はち)[名詞: 八] + 人(にん)[名詞: 人] + が[主格助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::18": {
+    "sentence": "六人がいる。",
+    "reading": "ろくにんがいる。",
+    "translation": "有六個人。",
+    "grammar": "六(ろく)[名詞: 六] + 人(ひと)[名詞: 人] + が[主格助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::19": {
+    "sentence": "十人いる。",
+    "reading": "じゅうにんいる。",
+    "translation": "有十個人。",
+    "grammar": "十(じゅう)[名詞: 十] + 人(じん)[名詞: 人] + いる[動詞: 有]"
+  },
+  "japanese::20": {
+    "sentence": "四人がいる。",
+    "reading": "しにんがいる。",
+    "translation": "有四個人。",
+    "grammar": "四(し)[名詞: 四] + 人(にん)[名詞: 人] + が[主格助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::21": {
+    "sentence": "私は一日ここにいる。",
+    "reading": "わたしはいちにちここにいる。",
+    "translation": "我今天整天在這裡。",
+    "grammar": "私(わたし)[名詞: 我] + は[主格助詞] + 一日(いちにち)[名詞: 一整天] + ここ[名詞: 這裡] + に[場所助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::22": {
+    "sentence": "今は七時だ。",
+    "reading": "いまはしちじだ。",
+    "translation": "現在是七點。",
+    "grammar": "今(いま)[名詞: 現在] + は[主格助詞] + 七(しち)[名詞: 七] + 時(じ)[名詞: 時間] + だ[助動詞: 是]"
+  },
+  "japanese::23": {
+    "sentence": "今は月がある。",
+    "reading": "いまはつきがある。",
+    "translation": "現在有月亮。",
+    "grammar": "今(いま)[名詞: 現在] + は[助詞] + 月(つき)[名詞: 月亮] + が[主格助詞] + ある[動詞: 有]"
+  },
+  "japanese::24": {
+    "sentence": "零の意味はゼロだ。",
+    "reading": "れいのいみはぜろだ。",
+    "translation": "零的意思是零。",
+    "grammar": "零(れい)[名詞: 零] + の[連接詞] + 意味(いみ)[名詞: 意思] + は[主格助詞] + ゼロ(ゼロ)[名詞: 零] + だ[助動詞: 是]"
+  },
+  "japanese::25": {
+    "sentence": "私のノートにばつがある。",
+    "reading": "わたしののーとにばつがある。",
+    "translation": "我的筆記本上有錯誤符號。",
+    "grammar": "私(わたし)[名詞: 我] + の[助詞] + ノート[名詞: 筆記本] + に[助詞] + ばつ(ばつ)[名詞: 錯誤符號] + が[主格助詞] + ある(ある)[動詞: 有]"
+  },
+  "japanese::26": {
+    "sentence": "え、これは何ですか？",
+    "reading": "え、これはなんですか？",
+    "translation": "咦，這個是什麼？",
+    "grammar": "え[間投詞: 咦] + 、[助詞] + これ[代名詞: 這個] + は[主格助詞] + 何(なん)[名詞: 什麼] + です[助動詞: 是] + か[疑問助詞]"
+  },
+  "japanese::27": {
+    "sentence": "今は何時ですか。",
+    "reading": "いまはなんじですか",
+    "translation": "現在是幾點呢？",
+    "grammar": "今(いま)[名詞: 現在] + は[主格助詞] + 何(なに)[名詞: 什麼] + 時(じ)[名詞: 時間] + です[助動詞: 是] + か[疑問標記]"
+  },
+  "japanese::28": {
+    "sentence": "今日はいい天気げ。",
+    "reading": "きょうはいいうんてんきげ",
+    "translation": "今天的天氣很好呢。",
+    "grammar": "今日(きょう)[名詞: 今天] + は[主格助詞] + いい[形容詞: 好] + 天気(てんき)[名詞: 天氣] + げ[助詞: 語氣]"
+  },
+  "japanese::29": {
+    "sentence": "光は窓で入る。",
+    "reading": "ひかりはまどでいる",
+    "translation": "光從窗戶進來。",
+    "grammar": "光(ひかり)[名詞: 光] + は[主格助詞] + 窓(まど)[名詞: 窗戶] + で[助詞: 透過] + 入る(はいる)[動詞: 進來]"
+  },
+  "japanese::30": {
+    "sentence": "私とあなたがいる。",
+    "reading": "わたしとあなたがいる。",
+    "translation": "我和你在這裡。",
+    "grammar": "私(わたし)[名詞: 我] + と[接続詞: 和] + あなた[名詞: 你] + が[主格助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::31": {
+    "sentence": "これはいいな。",
+    "reading": "これはいいな。",
+    "translation": "這個真不錯啊。",
+    "grammar": "これ[代名詞: 這個] + は[主格助詞] + いい[形容詞: 好] + な[終助詞: （男性語氣）～啊]"
+  },
+  "japanese::32": {
+    "sentence": "私が本に絵をする。",
+    "reading": "わたしがほんにえをする。",
+    "translation": "我在書上畫圖。",
+    "grammar": "私(わたし)[名詞: 我] + が[主格助詞] + 本(ほん)[名詞: 書] + に[間接受詞標記] + 絵(え)[名詞: 圖] + を[受格助詞] + する(する)[動詞: 做]"
+  },
+  "japanese::33": {
+    "sentence": "私の本がある。",
+    "reading": "わたしのほんがある。",
+    "translation": "我的書在這裡。",
+    "grammar": "私(わたし)[名詞: 我] + の[所有格助詞] + 本(ほん)[名詞: 書] + が[主格助詞] + ある[動詞: 存在]"
+  },
+  "japanese::34": {
+    "sentence": "私にはいい考えがある。",
+    "reading": "わたしにはいいかんがえがある。",
+    "translation": "我有一個好主意。",
+    "grammar": "私(わたし)[名詞: 我] + に[助詞] + は[主題標記] + いい[形容詞: 好的] + 考え(かんがえ)[名詞: 想法] + が[受格助詞] + ある[動詞: 有]"
+  },
+  "japanese::35": {
+    "sentence": "果物の中に甘いみがある。",
+    "reading": "くだもののなかにあまいみがある。",
+    "translation": "水果裡面有甜的果肉。",
+    "grammar": "果物(くだもの)[名詞: 水果] + の[助詞] + 中に(なかに)[名詞: 裡面] + 甘い(あまい)[形容詞: 甜] + み(み)[名詞: 果肉] + が[主格助詞] + ある(ある)[動詞: 有]"
+  },
+  "japanese::36": {
+    "sentence": "今はいい時や。",
+    "reading": "いまはいいうじかや",
+    "translation": "現在是好時候。",
+    "grammar": "今(いま)[名詞: 現在] + は[主格助詞] + いい(いい)[形容詞: 好] + 時(じ)[名詞: 時候] + や[助詞: 一…就…]"
+  },
+  "japanese::37": {
+    "sentence": "私は本を読む。",
+    "reading": "わたしはほんをよむ。",
+    "translation": "我在讀書。",
+    "grammar": "私(わたし)[代名詞: 我] + は[主格助詞] + 本(ほん)[名詞: 書] + を[直接受詞標記] + 読む(よむ)[動詞: 讀]"
+  },
+  "japanese::38": {
+    "sentence": "",
+    "reading": "",
+    "translation": "",
+    "grammar": ""
+  },
+  "japanese::39": {
+    "sentence": "あなたはいい人です。",
+    "reading": "あなたはいいひとです。",
+    "translation": "你是個好人。",
+    "grammar": "あなた(あなた)[代名詞: 你] + は[主格助詞] + いい(いい)[形容詞: 好] + 人(ひと)[名詞: 人] + です[助動詞: 是]"
+  },
+  "japanese::40": {
+    "sentence": "私の丈は二メートルです。",
+    "reading": "わたしのたけはにめーとるです。",
+    "translation": "我的身高是兩米。",
+    "grammar": "私(わたし)[名詞: 我] + の[屬格助詞] + 丈(たけ)[名詞: 身高] + は[主格助詞] + 二(に)[名詞: 二] + メートル[外來語: 米] + です[助動詞: 是]。"
+  },
+  "japanese::41": {
+    "sentence": "丘の上に人がいる。",
+    "reading": "おかのうえにひとがいる。",
+    "translation": "丘上有一個人。",
+    "grammar": "丘(おか)[名詞: 小山丘、丘陵] + の[連接詞] + 上(うえ)[名詞: 上面] + に[助詞] + 人(ひと)[名詞: 人] + が[主格助詞] + いる[動詞: 在]"
+  },
+  "japanese::42": {
+    "sentence": "丸は大きいです。",
+    "reading": "まるはおおきいです。",
+    "translation": "圓圈很大。",
+    "grammar": "丸(まる)[名詞: 圓圈] + は[主格助詞] + 大きい(おおきい)[形容詞: 大的] + です[助動詞: 是]"
+  },
+  "japanese::43": {
+    "sentence": "主が家にいる。",
+    "reading": "おもがいえにいる。",
+    "translation": "家裡有主.",
+    "grammar": "主(おも)[名詞: 一家之主] + が[主格助詞] + 家(いえ)[名詞: 房子] + に[方向助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::44": {
+    "sentence": "私の丼にはご飯がある。",
+    "reading": "わたしのどんぶりにはごはんがある。",
+    "translation": "我的大碗裡有飯。",
+    "grammar": "私(わたし)[代名詞: 我] + の[屬格助詞] + 丼(どんぶり)[名詞: 大碗] + には[助詞] + ご飯(ごはん)[名詞: 飯] + が[主格助詞] + ある(ある)[動詞: 有]"
+  },
+  "japanese::45": {
+    "sentence": "これは乙の形をしている。",
+    "reading": "これはおつのかたちをしている。",
+    "translation": "這是第二的形狀。",
+    "grammar": "これ[代名詞: 這個] + は[主格助詞] + 乙(おつ)[名詞: 第二] + の[屬格助詞] + 形(かたち)[名詞: 形狀] + を[受格助詞] + している[動詞: 在做]。"
+  },
+  "japanese::46": {
+    "sentence": "牛乳はとてもいい。",
+    "reading": "ぎゅうにゅうはとてもいい。",
+    "translation": "牛奶很好。",
+    "grammar": "牛乳(ぎゅうにゅう)[名詞: 牛奶] + は[主格助詞] + とても[副詞: 非常] + いい(いい)[形容詞: 好]"
+  },
+  "japanese::47": {
+    "sentence": "亀がいる。",
+    "reading": "かめがいる。",
+    "translation": "有烏龜。",
+    "grammar": "亀(かめ)[名詞: 烏龜] + が[主格助詞] + いる(いる)[動詞: 在]"
+  },
+  "japanese::48": {
+    "sentence": "仏がいる。",
+    "reading": "ほとけがいる。",
+    "translation": "佛陀存在。",
+    "grammar": "仏(ほとけ)[名詞: 佛陀] + が[主格助詞] + いる(いる)[動詞: 存在]"
+  },
+  "japanese::49": {
+    "sentence": "この時代はとても重要だ。",
+    "reading": "このじだいはとてもじゅうようだ。",
+    "translation": "這個時代非常重要。",
+    "grammar": "この[代名詞: 這個] + 時代(じだい)[名詞: 時代] + は[主格助詞] + とても[副詞: 非常] + 重要(じゅうよう)[形容詞: 重要] + だ[助動詞: 是]"
+  },
+  "japanese::50": {
+    "sentence": "これは仮の答えです。",
+    "reading": "これはかりのこたえです。",
+    "translation": "這是暫時的答案。",
+    "grammar": "これ[代名詞: 這個] + は[主格助詞] + 仮(かり)[名詞: 暫時的] + の[助詞] + 答え(こたえ)[名詞: 答案] + です[助動詞: 是]"
+  },
+  "japanese::51": {
+    "sentence": "彼は高い位にいる。",
+    "reading": "かれはたかいくらいにいる。",
+    "translation": "他在高位。",
+    "grammar": "彼(かれ)[代名詞: 他] + は[主格助詞] + 高い(たかい)[形容詞: 高的] + 位(くらい)[名詞: 地位] + に[助詞] + いる(いる)[動詞: 在]"
   },
   "spanish::1": {
-    "sentence": "El libro es muy interesante.",
+    "sentence": "¿Bueno, qué pasa?",
     "reading": "",
-    "translation": "這本書非常有趣。"
+    "translation": "喂，有什麼事嗎？",
+    "grammar": "¿Bueno[名詞: 喂] + ， + qué[代名詞: 什麼] + pasa[動詞: 發生] + ？"
   },
   "spanish::2": {
-    "sentence": "Yo muy estar.",
+    "sentence": "Voy a casa.",
     "reading": "",
-    "translation": "我非常在。"
+    "translation": "我去家裡。",
+    "grammar": "Voy[動詞: 去] + a[助詞: 到] + casa[名詞: 家]"
   },
   "spanish::3": {
-    "sentence": "El libro es de papel.",
+    "sentence": "Ahora es un buen momento.",
     "reading": "",
-    "translation": "這本書是由紙製成的."
+    "translation": "現在是一個好的時刻。",
+    "grammar": "Ahora[副詞: 現在] + es[助動詞] + un[冠詞] + buen[形容詞: 好的] + momento[名詞: 時刻]"
   },
   "spanish::4": {
-    "sentence": "Esto es por muy bueno.",
+    "sentence": "Quiero algo bueno.",
     "reading": "",
-    "translation": "這是因為非常好。"
+    "translation": "我想要某事物好。",
+    "grammar": "Quiero[動詞: 想要] + algo[名詞: 某事物] + bueno[形容詞: 好]"
   },
   "spanish::5": {
-    "sentence": "Estar sin muy de.",
+    "sentence": "El libro está allí.",
     "reading": "",
-    "translation": "非常沒有。"
+    "translation": "書在那裡。",
+    "grammar": "El[冠詞: 這個] + libro[名詞: 書] + está[動詞: 在] + allí[副詞: 那裡] + .[符號: 。]"
   },
   "spanish::6": {
-    "sentence": "Estar a muy de por sin.",
+    "sentence": "Estoy aquí.",
     "reading": "",
-    "translation": "在非常不需要的情況下。"
+    "translation": "我在這裡。",
+    "grammar": "Estoy[動詞: 是] + aquí[副詞: 這裡]"
   },
   "spanish::7": {
-    "sentence": "Ser muy importante para estar por aquí.",
+    "sentence": "Ayer fue un día bueno.",
     "reading": "",
-    "translation": "在這裡非常重要。"
+    "translation": "昨天是一個好日子。",
+    "grammar": "Ayer[名詞: 昨天] + fue[動詞: 是] + un[冠詞: 一個] + día[名詞: 日子] + bueno[形容詞: 好]"
   },
   "spanish::8": {
-    "sentence": "Siempre estar muy a de ser sin por.",
+    "sentence": "Voy a correr bien.",
     "reading": "",
-    "translation": "永遠在被沒有的時候。"
+    "translation": "我會好地跑。",
+    "grammar": "Voy[代名詞: 我] + a[助動詞] + correr( correr)[動詞: 跑] + bien[副詞: 好地]"
   },
   "spanish::9": {
-    "sentence": "Ya estar sin miedo.",
+    "sentence": "Tengo cero libros.",
     "reading": "",
-    "translation": "已經沒有恐懼。"
+    "translation": "我有零本書。",
+    "grammar": "Tengo[動詞: 擁有] + cero[名詞: 零] + libros[名詞: 書]"
   },
   "spanish::10": {
-    "sentence": "Siempre hay más de estar sin ser.",
+    "sentence": "Tengo cinco manzanas aquí.",
     "reading": "",
-    "translation": "永遠有更多的存在而不屬於。"
+    "translation": "我這裡有五個蘋果。",
+    "grammar": "Tengo[動詞: 有] + cinco[名詞: 五] + manzanas[名詞: 蘋果] + aquí[副詞: 這裡]"
   },
   "spanish::11": {
-    "sentence": "Yo quiero mucho a mi familia.",
+    "sentence": "Yo voy con mi amigo.",
     "reading": "",
-    "translation": "我非常愛我的家人。"
+    "translation": "我和我的朋友去。",
+    "grammar": "Yo[代名詞: 我] + voy(ir)[動詞: 去] + con[介詞: 與] + mi[屬格助詞: 我的] + amigo[名詞: 朋友]"
   },
-  "spanish::12": {
-    "sentence": "Está en la casa.",
-    "reading": "",
-    "translation": "在這座房子裡。"
-  },
-  "spanish::13": {
-    "sentence": "Siempre quiero dar más.",
-    "reading": "",
-    "translation": "我總是想給更多。"
+  "korean::1": {
+    "sentence": "나는 집에 있어요.",
+    "reading": "naneun jib-e isseoyo.",
+    "translation": "我在家裡。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 집(jib)[名詞: 家] + 에[方向助詞] + 있어요(isseoyo)[動詞: 在]"
   },
   "korean::2": {
-    "sentence": "나는 너를 좋아해.",
-    "reading": "naneun neoreul joahae.",
-    "translation": "我喜歡你。"
+    "sentence": "너는 나의 친구야.",
+    "reading": "neoneun naui chinguya.",
+    "translation": "你是我的朋友。",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 나(na)[代名詞: 我] + 의[屬格助詞] + 친구(chingu)[名詞: 朋友] + 야[終助詞]"
   },
   "korean::3": {
-    "sentence": "나는 사람이야.",
-    "reading": "naneun saramiya.",
-    "translation": "我是一個人。"
+    "sentence": "네가 어디에 있어?",
+    "reading": "nega eodi-e iseo?",
+    "translation": "你在哪裡？",
+    "grammar": "네(네)[代名詞: 你] + 가[主格助詞] + 어디(eodi)[名詞: 哪裡] + 에[方向助詞] + 있어(isseo)[動詞: 在]"
   },
   "korean::4": {
-    "sentence": "나는 학생이다.",
-    "reading": "naneun haksaengida.",
-    "translation": "我是一名學生。"
+    "sentence": "그건 아니야.",
+    "reading": "geugeon aniya.",
+    "translation": "那不是。",
+    "grammar": "그건(geugeon)[代名詞: 那] + 아니야(an-iya)[動詞: 不]"
+  },
+  "korean::5": {
+    "sentence": "너는 예가 많아.",
+    "reading": "neun ye-ga manh-a.",
+    "translation": "你有很多例子。",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 예(ye)[名詞: 例子] + 가[主格助詞] + 많아(manha)[形容詞: 很多] + .[句號]"
+  },
+  "korean::6": {
+    "sentence": "그 책은 정말 재미있어.",
+    "reading": "geu chaeg-eun jeongmal jaemiisseo.",
+    "translation": "那本書真的很有趣。",
+    "grammar": "그(geu)[代名詞: 那] + 책(chaeg)[名詞: 書] + 은[eun][主格助詞] + 정말(jjeongmal)[副詞: 真的] + 재미있어(jaemiisseo)[動詞: 有趣]"
+  },
+  "korean::7": {
+    "sentence": "그것은 아니요.",
+    "reading": "geugeos eun aniyo.",
+    "translation": "那不是。",
+    "grammar": "그것(geugeos)[代名詞: 那個] + 은[eun][主格助詞] + 아니요(aniyo)[動詞: 不是]"
+  },
+  "korean::8": {
+    "sentence": "우리는 친구다.",
+    "reading": "urineun chinguda.",
+    "translation": "我們是朋友。",
+    "grammar": "우리(uli)[代名詞: 我們] + 는[主格助詞] + 친구(chinguk)[名詞: 朋友] + 다[終結詞: 是]"
+  },
+  "korean::9": {
+    "sentence": "이 책이 좋아요.",
+    "reading": "i chaegi joayo.",
+    "translation": "這本書很好。",
+    "grammar": "이(i)[代名詞: 這個] + 책(chaek)[名詞: 書] + 이(i)[主格助詞] + 좋아요(joayo)[動詞: 好]"
+  },
+  "korean::10": {
+    "sentence": "이것은 나의 것이다.",
+    "reading": "igeos-eun na-ui geosida.",
+    "translation": "這是我的東西。",
+    "grammar": "이(이)[代名詞: 這] + 것(geot)[名詞: 東西] + 은[主格助詞] + 나(na)[代名詞: 我] + 의[屬格助詞] + 것(geos)[名詞: 東西] + 이다[助動詞: 是]"
+  },
+  "korean::11": {
+    "sentence": "이거 뭐야?",
+    "reading": "igeo mwoya?",
+    "translation": "這是什麼？",
+    "grammar": "이(이)[指示詞: 這] + 거(거)[名詞: 事情] + 뭐(뭐)[名詞: 什麼] + 야(야)[助詞: 是]"
+  },
+  "korean::12": {
+    "sentence": "저것은 나의 책이다.",
+    "reading": "jeogeoseun na-ui chaekida.",
+    "translation": "那個是我的書。",
+    "grammar": "저것(jeogeot)[代名詞: 那個] + 은(eun)[主格助詞] + 나(na)[代名詞: 我] + 의(ui)[屬格助詞] + 책(chaek)[名詞: 書] + 이다(ida)[助動詞: 是]"
+  },
+  "korean::13": {
+    "sentence": "그 사람은 누구야?",
+    "reading": "geu salam-eun nu-gua?",
+    "translation": "那個人是誰？",
+    "grammar": "그(geu)[代名詞: 那個] + 사람(salam)[名詞: 人] + 은(eun)[主格助詞] + 누구(nu-gu)[代名詞: 誰] + 야(ya)[終結語尾]"
+  },
+  "korean::14": {
+    "sentence": "너는 어디에 있어?",
+    "reading": "neoneun eodie isseo?",
+    "translation": "你在哪裡？",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 어디(eodi)[名詞: 哪裡] + 에[方向助詞] + 있어(isseo)[動詞: 在]"
+  },
+  "korean::15": {
+    "sentence": "너는 왜 여기 있어?",
+    "reading": "neoneun wae yeogi isseo?",
+    "translation": "你為什麼在這裡？",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 왜(wae)[副詞: 為什麼] + 여기(yeogi)[名詞: 這裡] + 있어(isseo)[動詞: 在]"
+  },
+  "korean::16": {
+    "sentence": "나는 물을 마셔요.",
+    "reading": "naneun muleul masyeoyo.",
+    "translation": "我在喝水。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 물(mul)[名詞: 水] + 을[受格助詞] + 마셔요(masyeoyo)[動詞: 喝]"
+  },
+  "korean::17": {
+    "sentence": "우리는 언제 만나요?",
+    "reading": "urineun eonje manayo?",
+    "translation": "我們什麼時候見面？",
+    "grammar": "우리(uri)[代名詞: 我們] + 는[主格助詞] + 언제(eonje)[副詞: 什麼時候] + 만나요(manayo)[動詞: 見面] + ?"
+  },
+  "korean::18": {
+    "sentence": "우리 집이 어디에 있어?",
+    "reading": "uri jip-i eodie isseo?",
+    "translation": "我們的家在哪裡？",
+    "grammar": "우리(uri)[代名詞: 我們] + 집(jip)[名詞: 家] + 이(i)[主格助詞] + 어디(eodi)[副詞: 哪裡] + 에(e)[方向助詞] + 있어(isseo)[動詞: 在]"
+  },
+  "korean::19": {
+    "sentence": "나는 밥을 먹어요.",
+    "reading": "naneun bap-eul meogeoyo.",
+    "translation": "我在吃飯。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 밥(bap)[名詞: 飯] + 을[受格助詞] + 먹어요(meogeoyo)[動詞: 吃]"
+  },
+  "korean::20": {
+    "sentence": "나는 빵을 좋아해.",
+    "reading": "naneun ppangeul joahae.",
+    "translation": "我喜歡麵包。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 빵(ppang)[名詞: 麵包] + 을[受格助詞] + 좋아해(joahae)[動詞: 喜歡]"
+  },
+  "korean::21": {
+    "sentence": "너는 어떻게 그 일을 했어?",
+    "reading": "neoneun eotteoke geu il-eul haesseo?",
+    "translation": "你是怎麼做那件事的？",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 어떻게(eotteoke)[副詞: 如何] + 그(geu)[代名詞: 那個] + 일(il)[名詞: 事] + 을[eul][受格助詞] + 했어 haesseo)[動詞: 做]"
+  },
+  "korean::22": {
+    "sentence": "나는 책을 읽어요.",
+    "reading": "naneun chaeg-eul ilgeoyo.",
+    "translation": "我在讀書。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 책(chaek)[名詞: 書] + 을[受格助詞] + 읽어요(ilgeoyo)[動詞: 讀]"
+  },
+  "korean::23": {
+    "sentence": "나는 돈이 필요해.",
+    "reading": "naneun don-i piryohae.",
+    "translation": "我需要錢。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 돈(don)[名詞: 錢] + 이[主格助詞] + 필요하다(piryohada)[動詞: 需要] + 해(hae)[助動詞: 表示狀態]"
+  },
+  "korean::24": {
+    "sentence": "차가 나에게 있어요.",
+    "reading": "chaga naege isseoyo.",
+    "translation": "茶在我這裡。",
+    "grammar": "차(cha)[名詞: 茶] + 가[主格助詞] + 나(na)[代名詞: 我] + 에게[方向助詞] + 있어요(isda)[動詞: 在]"
+  },
+  "korean::25": {
+    "sentence": "나는 버스를 타고 집에 가요.",
+    "reading": "naneun beoseureul tago jibe gayo.",
+    "translation": "我搭公車回家。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 버스(beoseu)[名詞: 公車] + 를[受格助詞] + 타고(tago)[動詞: 搭] + 집(jip)[名詞: 家] + 에[方向助詞] + 가요(gayo)[動詞: 去]"
+  },
+  "korean::26": {
+    "sentence": "나는 밥을 해요.",
+    "reading": "naneun babeul haeyo.",
+    "translation": "我煮飯。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 밥(bap)[名詞: 飯] + 을[受格助詞] + 해요(haeyo)[動詞: 做]"
+  },
+  "korean::27": {
+    "sentence": "나는 집에 가요.",
+    "reading": "naneun jibe gayo.",
+    "translation": "我去家裡。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 집(jip)[名詞: 家] + 에[方向助詞] + 가요(gayo)[動詞: 去]"
+  },
+  "korean::28": {
+    "sentence": "나는 잘 자요.",
+    "reading": "naneun jal jayo.",
+    "translation": "我睡得很好。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 잘(jal)[副詞: 好好地] + 자요(jayo)[動詞: 睡覺]"
+  },
+  "korean::29": {
+    "sentence": "나는 밥을 먹다.",
+    "reading": "na-neun bab-eul meokda.",
+    "translation": "我吃飯。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 밥(bab)[名詞: 飯] + 을[受格助詞] + 먹다(meokda)[動詞: 吃]"
+  },
+  "korean::30": {
+    "sentence": "나는 집에 오다.",
+    "reading": "naneun jibe oda.",
+    "translation": "我回到家裡。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 집(jiB)[名詞: 家] + 에[方向助詞] + 오다(oda)[動詞: 來]"
+  },
+  "korean::31": {
+    "sentence": "이것이 내 집이다.",
+    "reading": "igeos-i nae jip-ida.",
+    "translation": "這是我的家。",
+    "grammar": "이것(igeos)[代名詞: 這個] + 이(이)[主格助詞] + 내(nae)[代名詞: 我的] + 집(jip)[名詞: 家] + 이다(ida)[動詞: 是]"
+  },
+  "korean::32": {
+    "sentence": "나는 그 영화를 보다.",
+    "reading": "naneun geu yeonghwareul boda.",
+    "translation": "我看那部電影。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 그(geu)[指示詞: 那] + 영화(yeonghwa)[名詞: 電影] + 를[受格助詞] + 보다(boda)[動詞: 看]"
+  },
+  "korean::33": {
+    "sentence": "여기 물이 있다.",
+    "reading": "yeogi muri itda.",
+    "translation": "這裡有水。",
+    "grammar": "여기(yeogi)[副詞: 這裡] + 물(mul)[名詞: 水] + 이(i)[主格助詞] + 있다(itda)[動詞: 有]"
+  },
+  "korean::34": {
+    "sentence": "물 마시다.",
+    "reading": "mul masida.",
+    "translation": "喝水。",
+    "grammar": "물(mul)[名詞: 水] + 마시다(masida)[動詞: 喝]"
+  },
+  "korean::35": {
+    "sentence": "이것은 물이 아니다.",
+    "reading": "igeoseun muli anida.",
+    "translation": "這不是水。",
+    "grammar": "이것(igeos)[代名詞: 這個] + 은(eun)[主格助詞] + 물(mul)[名詞: 水] + 이(e)[主格助詞] + 아니다(anida)[動詞: 不是]"
+  },
+  "korean::36": {
+    "sentence": "물은 여기 없다.",
+    "reading": "mul-eun yeogi eopda.",
+    "translation": "水在這裡不存在。",
+    "grammar": "물(mul)[名詞: 水] + 은[eun][主格助詞] + 여기(yeogi)[副詞: 這裡] + 없다(eopda)[動詞: 不在、不存在]"
+  },
+  "korean::37": {
+    "sentence": "너의 집 값이 높다.",
+    "reading": "neoui jip gab-i nopda.",
+    "translation": "你的房子價格高。",
+    "grammar": "너(neo)[代名詞: 你] + 의[屬格助詞] + 집(jip)[名詞: 房子] + 값(gab)[名詞: 價格] + 이(yi)[主格助詞] + 높다(nopda)[形容詞: 高]"
+  },
+  "korean::38": {
+    "sentence": "나는 개를 좋아해.",
+    "reading": "naneun gaereul joahae.",
+    "translation": "我喜歡狗。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 개(gae)[名詞: 狗] + 를[受格助詞] + 좋아하다(joahada)[動詞: 喜歡] + 에요(-hae)[助動詞: 是]"
+  },
+  "korean::39": {
+    "sentence": "군이 그 집에 있다.",
+    "reading": "gun-i geu jip-e itda.",
+    "translation": "軍在那個家裡。",
+    "grammar": "군(군)[名詞: 郡] + 이[主格助詞] + 그(그)[指示代名詞: 那個] + 집(집)[名詞: 家] + 에[方向助詞] + 있다(있다)[動詞: 在]"
+  },
+  "korean::40": {
+    "sentence": "나는 귀가 아파.",
+    "reading": "naneun gwiga apa.",
+    "translation": "我耳朵很痛。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 귀(gwi)[名詞: 耳朵] + 가[主格助詞] + 아프다(apda)[形容詞: 痛] + ."
+  },
+  "korean::41": {
+    "sentence": "이 길은 너무 길다.",
+    "reading": "i gil-eun neomu gilda.",
+    "translation": "這條路太長了。",
+    "grammar": "이(이)[代名詞: 這] + 길(gil)[名詞: 路] + 은[主格助詞] + 너무(neomu)[副詞: 太] + 길다(gilda)[形容詞: 長]"
+  },
+  "korean::42": {
+    "sentence": "그 책은 꽤 재미있다.",
+    "reading": "geu chaeg-eun kkwae jaemi-itda.",
+    "translation": "那本書相當有趣。",
+    "grammar": "그(geu)[代名詞: 這] + 책(chaeg)[名詞: 書] + 은[eun][主格助詞] + 꽤(kkwae)[副詞: 相當] + 재미있다(jaemi-itda)[動詞: 有趣]"
+  },
+  "korean::43": {
+    "sentence": "나는 꿈이 있다.",
+    "reading": "naneun kkum-i itda.",
+    "translation": "我有夢想。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 꿈(kkum)[名詞: 夢] + 이[i][主格助詞] + 있다(itda)[動詞: 在]"
+  },
+  "korean::44": {
+    "sentence": "밥을 먹고 끼를 준비해요.",
+    "reading": "babeul meokgo kkireul junbihaeyo.",
+    "translation": "我吃飯，準備餐點。",
+    "grammar": "밥(밥)[名詞: 飯] + 을[受格助詞] + 먹고(meokgo)[動詞: 吃] + 끼(끼)[名詞: 餐] + 를[受格助詞] + 준비해요(junbihaeyo)[動詞: 準備]"
+  },
+  "korean::45": {
+    "sentence": "낮에 우리는 집에 있어요.",
+    "reading": "naje urineun jibe isseoyo.",
+    "translation": "白天我們在家。",
+    "grammar": "낮(na)[名詞: 白天] + 에[時間助詞] + 우리(uri)[代名詞: 我們] + 는[主格助詞] + 집(jib)[名詞: 家] + 에[方向助詞] + 있다(isda)[動詞: 在] + 요(yo)[助動詞: 敬語]"
+  },
+  "korean::46": {
+    "sentence": "올해는 좋은 년이다.",
+    "reading": "olhaeneun joheun nyeonida.",
+    "translation": "今年是好的一年。",
+    "grammar": "올해(olhae)[名詞: 今年] + 는[主格助詞] + 좋은(joheun)[形容詞: 好的] + 년(nyeon)[名詞: 年] + 이다(ida)[助動詞: 是]"
+  },
+  "korean::47": {
+    "sentence": "나는 매일 물을 마시다.",
+    "reading": "naneun maeil mureul masida.",
+    "translation": "我每天喝水。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 매일(maeil)[副詞: 每天] + 물(mul)[名詞: 水] + 을[受格助詞] + 마시다(masida)[動詞: 喝]"
+  },
+  "korean::48": {
+    "sentence": "나는 단 물이 있어요.",
+    "reading": "naneun dan mul-i isseoyo.",
+    "translation": "我有水。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 단(dan)[形容詞: 但、僅] + 물(mul)[名詞: 水] + 이[主格助詞] + 있어요(isseoyo)[動詞: 有]"
+  },
+  "korean::49": {
+    "sentence": "나는 두 개의 빵을 먹는다.",
+    "reading": "naneun du gaeui bbangeul meongneunda.",
+    "translation": "我吃兩個麵包。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 두(du)[數詞: 兩] + 개(gae)[名詞: 個] + 의[屬格助詞] + 빵(bbange)[名詞: 麵包] + 을[受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
+  },
+  "korean::50": {
+    "sentence": "더위로 땀이 나요.",
+    "reading": "deowiro ttam-i nayo.",
+    "translation": "因為炎熱出汗了。",
+    "grammar": "더위(deowi)[名詞: 熱] + 로[助詞] + 땀(ttam)[名詞: 汗] + 이[主格助詞] + 나요(nayo)[動詞: 出現]"
+  },
+  "korean::51": {
+    "sentence": "내 몸은 아프다.",
+    "reading": "nae mom-eun apeuda.",
+    "translation": "我的身體很痛。",
+    "grammar": "내(nae)[代名詞: 我] + 몸(mom)[名詞: 身體] + 은(eun)[主格助詞] + 아프다(apeuda)[動詞: 痛]"
+  },
+  "korean::52": {
+    "sentence": "밖에 나가고 싶다.",
+    "reading": "bak-e nagago sipda.",
+    "translation": "我想去外面。",
+    "grammar": "밖(bak)[名詞: 外面] + 에[方向助詞] + 나가다(nagada)[動詞: 出去] + 고[連接詞] + 싶다(sipda)[助動詞: 想]"
+  },
+  "korean::53": {
+    "sentence": "내 볼이 아파요.",
+    "reading": "nae bol-i apayo.",
+    "translation": "我的臉頰疼。",
+    "grammar": "내(nae)[代名詞: 我] + 볼(bol)[名詞: 臉頰] + 이(i)[主格助詞] + 아파요(apayo)[動詞: 疼]"
+  },
+  "korean::54": {
+    "sentence": "불이 있다.",
+    "reading": "bul-i itda.",
+    "translation": "有火。",
+    "grammar": "불(bul)[名詞: 火] + 이[主格助詞] + 있다(itda)[動詞: 有]"
+  },
+  "korean::55": {
+    "sentence": "나는 빚이 있다.",
+    "reading": "naneun biji itda.",
+    "translation": "我有債務。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 빚(bij)[名詞: 債務] + 이[主格助詞] + 있다(itda)[動詞: 有]"
+  },
+  "korean::56": {
+    "sentence": "나는 삼을 좋아해.",
+    "reading": "naneun sameul joahae.",
+    "translation": "我喜歡三。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 삼(sam)[名詞: 三] + 을[受格助詞] + 좋아하다(joahada)[動詞: 喜歡]"
+  },
+  "korean::57": {
+    "sentence": "선이 길다.",
+    "reading": "seoni gilda.",
+    "translation": "線很長。",
+    "grammar": "선(seon)[名詞: 線] + 이[主格助詞] + 길다(gilda)[形容詞: 長]"
+  },
+  "korean::58": {
+    "sentence": "우리 쇼를 볼 거예요.",
+    "reading": "uri syoreul bol geoyeyo.",
+    "translation": "我們要看表演秀。",
+    "grammar": "우리(uri)[代名詞: 我們] + 쇼(syo)[名詞: 表演秀] + 를(reul)[受格助詞] + 볼(bol)[動詞: 看] + 거예요(geoyeyo)[助動詞: 將要]"
+  },
+  "korean::59": {
+    "sentence": "나는 쌀을 먹는다.",
+    "reading": "naneun ssareul meongneunda.",
+    "translation": "我吃米。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 쌀(ssal)[名詞: 米] + 을[受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
+  },
+  "korean::60": {
+    "sentence": "아, 내가 그거 알아.",
+    "reading": "a, naega geugeo ara.",
+    "translation": "啊，我知道那個。",
+    "grammar": "아(아)[感嘆詞: 啊] + , + 내가(naega)[代名詞: 我] + 그거(geugeo)[代名詞: 那個] + 알아(ara)[動詞: 知道] + ."
+  },
+  "korean::61": {
+    "sentence": "나는 아이를 봐요.",
+    "reading": "naneun aireul bwayo.",
+    "translation": "我看小孩。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 아이(ai)[名詞: 小孩] + 를[受格助詞] + 봐요(bwayo)[動詞: 看]"
+  },
+  "korean::62": {
+    "sentence": "우리는 월에 여행을 간다.",
+    "reading": "urineun weoreul yeohaengeul ganda.",
+    "translation": "我們在月亮去旅行。",
+    "grammar": "우리(uli)[代名詞: 我們] + 는[主格助詞] + 월(wol)[名詞: 月] + 에[方向助詞] + 여행(yeohaeng)[名詞: 旅行] + 을[eul][受格助詞] + 간다(ganda)[動詞: 去]"
+  },
+  "korean::63": {
+    "sentence": "음, 나는 물을 마신다.",
+    "reading": "eum, naneun mureul masinda.",
+    "translation": "嗯，我在喝水。",
+    "grammar": "음(eum)[感嘆詞: 嗯] + , + 나(na)[代名詞: 我] + 는[主格助詞] + 물(mul)[名詞: 水] + 을[受格助詞] + 마신다(masinda)[動詞: 喝]"
+  },
+  "korean::64": {
+    "sentence": "나는 아침에 일어난다.",
+    "reading": "naneun achim-e il-eonanda.",
+    "translation": "我在早上起床。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 아침(achim)[名詞: 早上] + 에[方向助詞] + 일어나다(il-eonada)[動詞: 起床] + 다[語尾: 終結語尾]"
+  },
+  "korean::65": {
+    "sentence": "이 책이 좋아요.",
+    "reading": "i chaeg-i joayo.",
+    "translation": "這本書很好。",
+    "grammar": "이(i)[代名詞: 這] + 책(chaeg)[名詞: 書] + 이(i)[主格助詞] + 좋아요(joayo)[動詞: 好]"
+  },
+  "korean::66": {
+    "sentence": "나는 긴 줄에 서 있다.",
+    "reading": "naneun gin jul-e seo itda.",
+    "translation": "我站在長隊中。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 긴(gin)[形容詞: 長的] + 줄(jul)[名詞: 隊列] + 에[方向助詞] + 서(seo)[動詞: 站] + 있다(itda)[動詞: 有]"
+  },
+  "korean::67": {
+    "sentence": "이 빵은 찐 맛있다.",
+    "reading": "i bbang-eun jjin masitda.",
+    "translation": "這個麵包真好吃。",
+    "grammar": "이(i)[指示詞: 這] + 빵(bbangeun)[名詞: 麵包] + 은(eun)[主格助詞] + 찐(jjin)[形容詞: 真正的] + 맛있다(matitda)[動詞: 好吃]"
+  },
+  "korean::68": {
+    "sentence": "이 빵이 참 맛있다.",
+    "reading": "i bbang-i cham masitda.",
+    "translation": "這個麵包真的很好吃。",
+    "grammar": "이(i)[代名詞: 這] + 빵(bbong)[名詞: 麵包] + 이(i)[主格助詞] + 참(cham)[形容詞: 真的] + 맛있다(matitda)[動詞: 好吃]"
+  },
+  "korean::69": {
+    "sentence": "나는 천을 가지고 있어.",
+    "reading": "naneun cheoneul gajigo isseo.",
+    "translation": "我有布。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 천(cheon)[名詞: 布] + 을[受格助詞] + 가지고(gajigo)[動詞: 擁有] + 있어(isseo)[動詞: 有]"
+  },
+  "korean::70": {
+    "sentence": "나는 침이 많다.",
+    "reading": "naneun chimi manhda.",
+    "translation": "我唾液很多。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 침(chim)[名詞: 口水] + 이[主格助詞] + 많다(manhta)[動詞: 很多]"
+  },
+  "korean::71": {
+    "sentence": "칼이 테이블 위에 있다.",
+    "reading": "kal-i teibeul wie itda.",
+    "translation": "刀在桌子上。",
+    "grammar": "칼(칼)[名詞: 刀] + 이[主格助詞] + 테이블(teibeul)[名詞: 桌子] + 위(wi)[名詞: 上] + 에[方向助詞] + 있다(itda)[動詞: 在]"
+  },
+  "korean::72": {
+    "sentence": "나는 태권도를 해.",
+    "reading": "naneun taekwondoreul hae.",
+    "translation": "我打跆拳道。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 태권도(taekwondo)[名詞: 跆拳道] + 를[受格助詞] + 하다(hada)[動詞: 做] + ."
+  },
+  "korean::73": {
+    "sentence": "개의 털이 부드럽다.",
+    "reading": "gaeui teoli budeureopda.",
+    "translation": "狗的毛很軟。",
+    "grammar": "개(gae)[名詞: 狗] + 의[屬格助詞] + 털(teol)[名詞: 毛] + 이[主格助詞] + 부드럽다(budeureopda)[形容詞: 軟]"
+  },
+  "korean::74": {
+    "sentence": "책 사이에 틈이 있다.",
+    "reading": "chaek saie teum-i itda.",
+    "translation": "書本之間有縫隙。",
+    "grammar": "책(책)[名詞: 書本] + 사이(사이)[名詞: 之間] + 에[方向助詞] + 틈(틈)[名詞: 縫隙] + 이[主格助詞] + 있다(있다)[動詞: 有]"
+  },
+  "korean::75": {
+    "sentence": "나는 그 팬이다.",
+    "reading": "naneun geu paenida.",
+    "translation": "我是那個粉絲。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 그(geu)[代名詞: 那個] + 팬(paen)[名詞: 粉絲] + 이다(ida)[助動詞: 是]"
+  },
+  "korean::76": {
+    "sentence": "나는 너의 편이에요.",
+    "reading": "naneun neoui pyeonieyo.",
+    "translation": "我在你身邊。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 너(neo)[代名詞: 你] + 의[屬格助詞] + 편(pyeon)[名詞: 側] + 이에요(ieyo)[助動詞: 是]"
+  },
+  "korean::77": {
+    "sentence": "풀은 초원에 많다.",
+    "reading": "pul-eun chowon-e manhda.",
+    "translation": "草在草原上很多。",
+    "grammar": "풀(pul)[名詞: 草] + 은[eul][主格助詞] + 초원(chowon)[名詞: 草原] + 에[方向助詞] + 많다(manada)[動詞: 多]"
+  },
+  "korean::78": {
+    "sentence": "나는 한 개의 빵을 먹고 싶어.",
+    "reading": "naneun han gaeui bbangeul meokgo sipeo.",
+    "translation": "我想吃一個麵包。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 한(han)[形容詞: 一] + 개의(gaeui)[名詞: 顆] + 빵(bbangeul)[名詞: 麵包] + 을[受格助詞] + 먹고(meokgo)[動詞: 吃] + 싶어(sipeo)[助動詞: 想]"
+  },
+  "korean::79": {
+    "sentence": "나는 햄을 먹고 싶어.",
+    "reading": "naneun haem-eul meoggo sipeo.",
+    "translation": "我想吃火腿。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 햄(haem)[名詞: 火腿] + 을[受格助詞] + 먹다(meogda)[動詞: 吃] + 싶다(sipda)[助動詞: 想] + 어(geo)[語尾]"
+  },
+  "korean::80": {
+    "sentence": "우리 호는 매우 좋다.",
+    "reading": "uri honun maeu johda.",
+    "translation": "我們的號碼非常好。",
+    "grammar": "우리(uri)[代名詞: 我們] + 호(hon)[名詞: 號碼] + 는(nun)[主格助詞] + 매우(maeu)[副詞: 非常] + 좋다(johda)[形容詞: 好]"
+  },
+  "korean::81": {
+    "sentence": "나는 밥을 먹고 후에 책을 읽어요.",
+    "reading": "naneun babeul meokgo hueui chaeg-eul ilgeoyo.",
+    "translation": "我吃完飯後會讀書。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 밥(bap)[名詞: 飯] + 을[受格助詞] + 먹고(meokgo)[動詞: 吃] + 후(hue)[名詞: 之後] + 에(ye)[助詞] + 책(chaeg)[名詞: 書] + 을[受格助詞] + 읽어요(ilgeoyo)[動詞: 讀]"
+  },
+  "korean::82": {
+    "sentence": "나는 객이다.",
+    "reading": "naneun gaekida.",
+    "translation": "我是一位客人。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 객(gaek)[名詞: 客] + 이다(ida)[助動詞: 是]"
+  },
+  "korean::83": {
+    "sentence": "나는 겁이 나요.",
+    "reading": "naneun geop-i nalyo.",
+    "translation": "我感到害怕。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 겁(geop)[名詞: 害怕] + 이[助詞] + 나요(nalyo)[動詞: 出現]"
+  },
+  "korean::84": {
+    "sentence": "그 독이 매우 위험해.",
+    "reading": "geu dogi maeu wiheomhae.",
+    "translation": "那個毒非常危險。",
+    "grammar": "그(geu)[代名詞: 那個] + 독(dog)[名詞: 毒] + 이(i)[主格助詞] + 매우(maeu)[副詞: 非常] + 위험해(wiheomhae)[形容詞: 危險]"
+  },
+  "korean::85": {
+    "sentence": "나는 동을 좋아해.",
+    "reading": "naneun dong-eul joahae.",
+    "translation": "我喜歡東。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 동(dong)[名詞: 東] + 을[eul][受格助詞] + 좋아하다(joahada)[動詞: 喜歡]"
+  },
+  "korean::86": {
+    "sentence": "내 등에 물이 있다.",
+    "reading": "nae deunge mul-i itda.",
+    "translation": "我的背上有水。",
+    "grammar": "내[代名詞: 我] + 등에[助詞: 在…上] + 물[名詞: 水] + 이[主格助詞] + 있다[動詞: 有]"
+  },
+  "korean::87": {
+    "sentence": "그것은 막 좋다.",
+    "reading": "geugeos-eun mak johda.",
+    "translation": "那真的很棒。",
+    "grammar": "그것(geugeos)[代名詞: 那] + 은(eun)[主格助詞] + 막(mak)[副詞: 亂、剛、隨便] + 좋다(johda)[形容詞: 好]"
+  },
+  "korean::88": {
+    "sentence": "그 사람은 멋이 있어요.",
+    "reading": "geu sarameun meoti isseoyo.",
+    "translation": "那個人有品味。",
+    "grammar": "그(geu)[代名詞: 那個] + 사람(saram)[名詞: 人] + 은(eun)[主格助詞] + 멋(meot)[名詞: 品味] + 이(i)[主格助詞] + 있어요(isseoyo)[動詞: 有]"
+  },
+  "korean::89": {
+    "sentence": "너는 몇 개의 책이 있어?",
+    "reading": "neun myeot gaeui chaegi isseo?",
+    "translation": "你有幾本書？",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 몇(myeot)[代名詞: 幾] + 개(gae)[名詞: 個] + 의[eui][屬格助詞] + 책(chaeg)[名詞: 書] + 이[主格助詞] + 있어(isseo)[動詞: 有]"
+  },
+  "korean::90": {
+    "sentence": "나는 붓으로 그림을 그린다.",
+    "reading": "naneun but-euro geun-eun geulinda.",
+    "translation": "我用畫筆畫畫。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 붓(but)[名詞: 畫筆] + 으로(euro)[助詞: 用於] + 그림(gureum)[名詞: 圖畫] + 을[eul][受格助詞] + 그린다(geulinda)[動詞: 畫]"
+  },
+  "korean::91": {
+    "sentence": "빛이 있어요.",
+    "reading": "bich-i iss-eoyo.",
+    "translation": "有光。",
+    "grammar": "빛(bich)[名詞: 光] + 이[主格助詞] + 있어요(iss-eoyo)[動詞: 有]"
+  },
+  "korean::92": {
+    "sentence": "사람이 집에 있다.",
+    "reading": "salami jibe itda.",
+    "translation": "人在人家。",
+    "grammar": "사람이[名詞: 人] + 집에[名詞: 房子] + 있다[動詞: 存在]"
+  },
+  "korean::93": {
+    "sentence": "쉿, 조용히 해요.",
+    "reading": "swit, joyonghi haeyo.",
+    "translation": "噓，請安靜。",
+    "grammar": "쉿(쉿)[感嘆詞: 噓] + ,[標點符號] + 조용히(조용히)[副詞: 安靜地] + 해요(하다)[動詞: 做] + .[標點符號]"
+  },
+  "korean::94": {
+    "sentence": "나는 물을 좀 십 여요.",
+    "reading": "naneun mureul jom sip yeoyo.",
+    "translation": "我喝了一點水。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 물(mul)[名詞: 水] + 을[受格助詞] + 좀(jom)[副詞: 一點] + 십(sip)[動詞: 喝] + 여요(yeoyo)[助動詞: 恩]"
+  },
+  "korean::95": {
+    "sentence": "이 집은 작다.",
+    "reading": "i jib-eun jakda.",
+    "translation": "這個家很小。",
+    "grammar": "이(i)[指示詞: 這] + 집(jib)[名詞: 家] + 은(eun)[主格助詞] + 작다(jakda)[形容詞: 小]"
+  },
+  "korean::96": {
+    "sentence": "그가 적을 봤다.",
+    "reading": "geuga jeogeul bwatda.",
+    "translation": "他看到了敵人。",
+    "grammar": "그(geu)[代名詞: 他] + 가[主格助詞] + 적(jeok)[名詞: 敵人] + 을[受格助詞] + 봤다(bwatda)[動詞: 看]"
+  },
+  "korean::97": {
+    "sentence": "나의 정이 크다.",
+    "reading": "naiui jeongi keuda.",
+    "translation": "我的情感很大。",
+    "grammar": "나(na)[代名詞: 我] + 의[屬格助詞] + 정(jeong)[名詞: 情感] + 이[主格助詞] + 크다(keuda)[動詞: 大]"
+  },
+  "korean::98": {
+    "sentence": "이쪽으로 와.",
+    "reading": "ijjogeuro wa.",
+    "translation": "來這邊。",
+    "grammar": "이(i)[代名詞: 這] + 쪽(쪽)[名詞: 側] + 으로(euro)[方向助詞] + 와(wa)[動詞: 來]"
+  },
+  "korean::99": {
+    "sentence": "나는 쭉 걷고 싶다.",
+    "reading": "naneun jjok geotgo sipda.",
+    "translation": "我想一直走。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 쭉(jjok)[副詞: 一直] + 걷다(geotda)[動詞: 走] + 싶다(sipda)[助動詞: 想]"
+  },
+  "korean::100": {
+    "sentence": "컵에 물이 있다.",
+    "reading": "keope mul-i itda.",
+    "translation": "杯子裡有水。",
+    "grammar": "컵(keop)[名詞: 杯子] + 에[yeyu][屬格助詞] + 물(mul)[名詞: 水] + 이[主格助詞] + 있다(itda)[動詞: 有]"
+  },
+  "korean::101": {
+    "sentence": "이 개는 정말 크다.",
+    "reading": "i gae neun jeongmal keuda.",
+    "translation": "這隻狗真的很大。",
+    "grammar": "이(i)[代名詞: 這] + 개(gae)[名詞: 狗] + 는[主格助詞] + 정말(jeongmal)[副詞: 真的] + 크다(keuda)[形容詞: 大]"
+  },
+  "spanish::12": {
+    "sentence": "¿Cuál es algo bueno?",
+    "reading": "",
+    "translation": "哪一個是好的東西？",
+    "grammar": "¿Cuál[代名詞: 哪一個] + es[助動詞] + algo[名詞: 某物] + bueno[形容詞: 好的] + ?[標點符號]"
+  },
+  "spanish::13": {
+    "sentence": "Yo le doy algo.",
+    "reading": "",
+    "translation": "我給他/她東西。",
+    "grammar": "Yo[代名詞: 我] + le[代名詞: 他/她] + doy(dar)[動詞: 給] + algo[名詞: 某物]"
+  },
+  "spanish::14": {
+    "sentence": "El libro de aquí es bueno.",
+    "reading": "",
+    "translation": "這裡的書很好。",
+    "grammar": "El[代名詞: 這] + libro[名詞: 書] + de[助詞: 的] + aquí[副詞: 這裡] + es[動詞: 是] + bueno[形容詞: 好]"
+  },
+  "spanish::15": {
+    "sentence": "Él quiere decir algo.",
+    "reading": "",
+    "translation": "他想說一些事。",
+    "grammar": "Él[代名詞: 他] + quiere[動詞: 想] + decir(decir)[動詞: 說] + algo[名詞: 一些事]"
+  },
+  "spanish::16": {
+    "sentence": "Yo tengo diez manzanas.",
+    "reading": "",
+    "translation": "我有十個蘋果。",
+    "grammar": "Yo[代名詞: 我] + tengo(tener)[動詞: 擁有] + diez[名詞: 十] + manzanas[名詞: 蘋果]"
+  },
+  "spanish::17": {
+    "sentence": "¿Dónde está algo bueno?",
+    "reading": "",
+    "translation": "哪裡有好東西？",
+    "grammar": "¿Dónde[疑問詞: 哪裡] + está[動詞: 在] + algo[代名詞: 某物] + bueno[形容詞: 好的] + ?"
+  },
+  "spanish::18": {
+    "sentence": "Tengo dos libros aquí.",
+    "reading": "",
+    "translation": "我這裡有兩本書。",
+    "grammar": "Tengo[動詞: 有] + dos[數詞: 二] + libros[名詞: 書] + aquí[副詞: 這裡]"
+  },
+  "spanish::19": {
+    "sentence": "El niño juega aquí.",
+    "reading": "",
+    "translation": "那個男孩在這裡玩。",
+    "grammar": "El[定冠詞: 定冠詞（陽性單數）] + niño[名詞: 男孩] + juega[Jugar][動詞: 玩] + aquí[副詞: 這裡]"
+  },
+  "spanish::20": {
+    "sentence": "Ella está aquí.",
+    "reading": "",
+    "translation": "她在這裡。",
+    "grammar": "Ella[代名詞: 她] + está[動詞: 是] + aquí[副詞: 這裡]"
   }
 }
