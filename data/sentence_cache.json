@@ -1060,5 +1060,11 @@
     "reading": "i giga jeongmal joa.",
     "translation": "這台機器真的很好。",
     "grammar": "이(i)[指示詞: 這] + 기(giga)[名詞: 機器] + 가[主格助詞] + 정말(jeongmal)[副詞: 真的] + 좋아(joa)[形容詞: 好] + .[標點符號]"
+  },
+  "korean::107": {
+    "sentence": "나는 꿀을 먹고 싶다.",
+    "reading": "naneun kkul-eul meokgo sipda.",
+    "translation": "我想吃蜂蜜。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 꿀(kkul)[名詞: 蜂蜜] + 을[受格助詞] + 먹다(meokda)[動詞: 吃] + 싶다(sipda)[助動詞: 想]"
   }
 }
