@@ -1228,5 +1228,11 @@
     "reading": "soe neun saram ege maeu jungyohada.",
     "translation": "鐵對人類來說非常重要。",
     "grammar": "쇠(soe)[名詞: 鐵] + 는[主格助詞] + 사람(saram)[名詞: 人] + 에게[方向助詞] + 매우(maeu)[副詞: 非常] + 중요하다(jungyohada)[動詞: 重要]"
+  },
+  "korean::124": {
+    "sentence": "그 실은 아주 가늘다.",
+    "reading": "geu sil-eun ajou ganeulda.",
+    "translation": "那根絲非常細。",
+    "grammar": "그(geu)[指示代名詞: 那] + 실(sil)[名詞: 絲] + 은[eun][主格助詞] + 아주(ajou)[副詞: 非常] + 가늘다(ganeulda)[形容詞: 細]"
   }
 }
