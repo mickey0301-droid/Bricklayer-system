@@ -916,39 +916,28 @@ def study_page():
     cached_sentence = get_cached_sentence(language, str(current["code"]))
     needs_switch = st.session_state.study_sentence_term != current_term
 
+    # 決定是否需要 AI 生成：有快取直接套用；無快取則延遲到右欄渲染後再生成
+    _gen_needed = False
     if needs_switch:
         if cached_sentence.get("sentence"):
-            # 有快取 → 直接套用，不 rerun，本次渲染就能顯示
+            # 有快取 → 立即套用，本次渲染就能顯示
             st.session_state.study_sentence = cached_sentence
             st.session_state.study_sentence_term = current_term
             st.session_state.study_current_code = str(current["code"])
         else:
-            try:
-                with st.spinner("AI 正在自動生成例句..."):
-                    result = generate_example_sentence(
-                        language=language,
-                        current_term=current_term,
-                        allowed_terms=allowed_terms,
-                        term_meaning=str(current.get("meaning", "")),
-                        term_reading=str(current.get("reading", "")),
-                        term_pos=str(current.get("pos", "")),
-                        current_code=current_code,
-                        allowed_vocab=_df_to_allowed_vocab(allowed_df),
-                    )
-                    st.session_state.study_sentence = result
-                    st.session_state.study_sentence_term = current_term
-                    st.session_state.study_current_code = str(current["code"])
-                    set_cached_sentence(language, str(current["code"]), result)
-                st.rerun()
-            except Exception as e:
-                st.error(f"自動生成例句失敗：{e}")
+            # 無快取 → 先清空句子、標記待生成，讓詞彙卡先渲染出來
+            st.session_state.study_sentence = {}
+            st.session_state.study_sentence_term = current_term
+            st.session_state.study_current_code = str(current["code"])
+            _gen_needed = True
 
     # ── 自動播放：翻到新單字或產生新例句時，依序播放單字→例句 ──
     # 以例句文字為 key，只要句子不同就自動播放（含按「新例句」的情況）
+    # _gen_needed 時例句還未就緒，跳過自動播放，等下一次 rerun 後再播
+    _code_str = str(current["code"])
     sentence_data_ready = st.session_state.study_sentence
     cur_sent = sentence_data_ready.get("sentence", "")
-    _code_str = str(current["code"])
-    if cur_sent and st.session_state.auto_played_for != cur_sent:
+    if cur_sent and not _gen_needed and st.session_state.auto_played_for != cur_sent:
         try:
             with st.spinner("自動播放中..."):
                 # 單字音訊：磁碟快取 → session 快取 → API
@@ -1072,7 +1061,28 @@ def study_page():
         st.markdown('<div class="study-card">', unsafe_allow_html=True)
         st.markdown('<div class="study-label">Example Sentence</div>', unsafe_allow_html=True)
 
-        if sentence_data.get("sentence"):
+        if _gen_needed:
+            # 詞彙卡已渲染，在右欄生成 AI 例句（用戶可看到左欄詞彙）
+            st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+            with st.spinner("AI 正在生成例句…"):
+                try:
+                    result = generate_example_sentence(
+                        language=language,
+                        current_term=current_term,
+                        allowed_terms=allowed_terms,
+                        term_meaning=str(current.get("meaning", "")),
+                        term_reading=str(current.get("reading", "")),
+                        term_pos=str(current.get("pos", "")),
+                        current_code=current_code,
+                        allowed_vocab=_df_to_allowed_vocab(allowed_df),
+                    )
+                    st.session_state.study_sentence = result
+                    set_cached_sentence(language, str(current["code"]), result)
+                except Exception as e:
+                    st.error(f"自動生成例句失敗：{e}")
+            st.rerun()
+        elif sentence_data.get("sentence"):
             st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
 
             if supports_reading and sentence_data.get("reading"):
@@ -1087,10 +1097,10 @@ def study_page():
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
 
             render_used_vocab(sentence_data["sentence"], study_df, current_code, vocab_codes=sentence_data.get("vocab_codes"))
+            st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
-
-        st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
         # 新例句 + TTS 例句
         current_sentence = sentence_data.get("sentence", "")
