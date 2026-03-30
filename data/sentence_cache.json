@@ -1030,5 +1030,11 @@
     "reading": "",
     "translation": "她在這裡。",
     "grammar": "Ella[代名詞: 她] + está[動詞: 是] + aquí[副詞: 這裡]"
+  },
+  "korean::102": {
+    "sentence": "이 음식은 퍽 맛있다.",
+    "reading": "i eumsig-eun peok mas-issda.",
+    "translation": "這道食物非常好吃。",
+    "grammar": "이(i)[代名詞: 這] + 음식(eumsig)[名詞: 食物] + 은[eun][主格助詞] + 퍽(peok)[形容詞: 非常] + 맛있다(mas-issda)[動詞: 好吃]"
   }
 }
