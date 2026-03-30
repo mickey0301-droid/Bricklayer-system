@@ -1180,5 +1180,11 @@
     "reading": "naneun maen cheoeume bapeul meogeotda.",
     "translation": "我最先吃了飯。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 맨(maen)[形容詞: 最] + 처음(cheoeum)[名詞: 最先] + 에[方向助詞] + 밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹었다(meogeotda)[動詞: 吃]"
+  },
+  "korean::116": {
+    "sentence": "우리 반은 매우 재미있다.",
+    "reading": "uri ban-eun maeu jaemi-itda.",
+    "translation": "我們班非常有趣。",
+    "grammar": "우리(uri)[代名詞: 我們] + 반(ban)[名詞: 班級] + 은[eun][主格助詞] + 매우(maeu)[副詞: 非常] + 재미있다(jaemi-itda)[動詞: 有趣]"
   }
 }
