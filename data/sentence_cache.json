@@ -1236,9 +1236,9 @@
     "grammar": "그(geu)[指示代名詞: 那] + 실(sil)[名詞: 絲] + 은[eun][主格助詞] + 아주(ajou)[副詞: 非常] + 가늘다(ganeulda)[形容詞: 細]"
   },
   "korean::125": {
-    "sentence": "씨를 심으면 나무가 자란다.",
-    "reading": "ssireul simyeon namuga jalanda.",
-    "translation": "種子如果種下去，樹就會長大。",
-    "grammar": "씨(ssi)[名詞: 種子] + 를[受格助詞] + 심다(simda)[動詞: 種] + 면[接續語: 如果] + 나무(namu)[名詞: 樹] + 가[主格助詞] + 자라다(jalada)[動詞: 長大] + .[句點]"
+    "sentence": "씨가 아주 크다.",
+    "reading": "ssi-ga aju keuda.",
+    "translation": "種子非常大。",
+    "grammar": "씨(ssi)[名詞: 種子] + 가[主格助詞] + 아주(aju)[副詞: 非常] + 크다(keuda)[形容詞: 大]"
   }
 }
