@@ -1200,9 +1200,9 @@
     "grammar": "그(geu)[代名詞: 那個] + 부(bu)[名詞: 富] + 는[主格助詞] + 정말(jeongmal)[副詞: 真的] + 많다(manhda)[動詞: 很多]"
   },
   "korean::119": {
-    "sentence": "나는 매년 한 살 더 먹는다.",
-    "reading": "naneun maenyeon han sal deo meokneunda.",
-    "translation": "我每年增長一歲。",
-    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 매년(maenyeon)[名詞: 每年] + 한(han)[數詞: 一] + 살(sal)[名詞: 歲] + 더(deo)[副詞: 再] + 먹다(meokda)[動詞: 吃] + ㅂ니다(da)[助動詞: 表示狀態]。"
+    "sentence": "그 사람은 많이 살았다.",
+    "reading": "geu saram-eun mani sal-assda.",
+    "translation": "那個人活了很多年。",
+    "grammar": "그(geu)[代名詞: 那個] + 사람(saram)[名詞: 人] + 은(eun)[主格助詞] + 많이(mani)[副詞: 很多] + 살았다(sal-assda)[動詞: 活了]"
   }
 }
