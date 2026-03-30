@@ -1246,5 +1246,11 @@
     "reading": "eo, onul bap meogeosseo?",
     "translation": "嗯，今天吃飯了嗎？",
     "grammar": "어(eo)[語: 嗯] + , + 오늘(onul)[名詞: 今天] + 밥(bap)[名詞: 飯] + 먹다(meokda)[動詞: 吃] + 었어(eosseosseo)[助動詞: 過去式] + ?"
+  },
+  "korean::127": {
+    "sentence": "나는 2023년이 기대된다.",
+    "reading": "naneun 2023nyeoni gidae-doenda.",
+    "translation": "我期待2023年。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 2023(2023)[名詞: 數字] + 년(nyeon)[名詞: 年] + 이[主格助詞] + 기대된다(gidae-doenda)[動詞: 期待]"
   }
 }
