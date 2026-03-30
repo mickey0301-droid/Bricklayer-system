@@ -1240,5 +1240,11 @@
     "reading": "ssi-ga aju keuda.",
     "translation": "種子非常大。",
     "grammar": "씨(ssi)[名詞: 種子] + 가[主格助詞] + 아주(aju)[副詞: 非常] + 크다(keuda)[形容詞: 大]"
+  },
+  "korean::126": {
+    "sentence": "어, 오늘 밥 먹었어?",
+    "reading": "eo, onul bap meogeosseo?",
+    "translation": "嗯，今天吃飯了嗎？",
+    "grammar": "어(eo)[語: 嗯] + , + 오늘(onul)[名詞: 今天] + 밥(bap)[名詞: 飯] + 먹다(meokda)[動詞: 吃] + 었어(eosseosseo)[助動詞: 過去式] + ?"
   }
 }
