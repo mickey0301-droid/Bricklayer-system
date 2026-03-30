@@ -1056,9 +1056,9 @@
     "grammar": "금요일(geumyoil)[名詞: 星期五] + 에[方向助詞] + 친구(chingu)[名詞: 朋友] + 를[受格助詞] + 만나요(mannayo)[動詞: 見]"
   },
   "korean::106": {
-    "sentence": "기계가 고장났다.",
-    "reading": "gigae-ga gojangnatta.",
-    "translation": "機器壞了。",
-    "grammar": "기계(gigae)[名詞: 機器] + 가[主格助詞] + 고장나다(gojangnada)[動詞: 壞掉] + 았다(atda)[助動詞: 過去式]"
+    "sentence": "이 기가 정말 좋아.",
+    "reading": "i giga jeongmal joa.",
+    "translation": "這台機器真的很好。",
+    "grammar": "이(i)[指示詞: 這] + 기(giga)[名詞: 機器] + 가[主格助詞] + 정말(jeongmal)[副詞: 真的] + 좋아(joa)[形容詞: 好] + .[標點符號]"
   }
 }
