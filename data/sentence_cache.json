@@ -1264,5 +1264,11 @@
     "reading": "mul-e jan-i itda.",
     "translation": "水中有杯子。",
     "grammar": "물(mul)[名詞: 水] + 에[方向助詞] + 잔(jan)[名詞: 杯子] + 이[i][主格助詞] + 있다(itda)[動詞: 存在]"
+  },
+  "korean::130": {
+    "sentence": "나는 아침에 잼이 있는 빵을 먹었다.",
+    "reading": "naneun achime jaemi itneun ppangeul meogeotda.",
+    "translation": "我在早上吃了有果醬的麵包。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 아침(achim)[名詞: 早上] + 에[方向助詞] + 잼(jaem)[名詞: 果醬] + 이[主格助詞] + 있는(itneun)[形容詞: 有] + 빵(ppang)[名詞: 麵包] + 을[eul][受格助詞] + 먹었다(meogeotda)[動詞: 吃]"
   }
 }
