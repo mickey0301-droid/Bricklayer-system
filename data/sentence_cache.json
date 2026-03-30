@@ -1248,9 +1248,9 @@
     "grammar": "어(eo)[語: 嗯] + , + 오늘(onul)[名詞: 今天] + 밥(bap)[名詞: 飯] + 먹다(meokda)[動詞: 吃] + 었어(eosseosseo)[助動詞: 過去式] + ?"
   },
   "korean::127": {
-    "sentence": "올해는 좋은 연이 될 것 같아요.",
-    "reading": "olhaeneun joheun yeon-i doel geos gatayo.",
-    "translation": "今年會是一個好的年。",
-    "grammar": "올해(olhae)[名詞: 今年] + 는[主格助詞] + 좋은(joheun)[形容詞: 好的] + 연(yeon)[名詞: 年] + 이[主格助詞] + 될(dael)[動詞: 會成為] + 것(geot)[名詞: 事情] + 같아요(gatayo)[動詞: 似乎]"
+    "sentence": "올해는 좋은 년이 될 것 같아.",
+    "reading": "olhaeneun joheun yeoni doel geot gata.",
+    "translation": "今年將會是美好的一年。",
+    "grammar": "올해(olhae)[名詞: 今年] + 는[主格助詞] + 좋은(joheun)[形容詞: 美好的] + 년(yeon)[名詞: 年] + 이[主格助詞] + 될(doel)[動詞: 變成] + 것(geot)[名詞: 事物] + 같아(gata)[動詞: 似乎]"
   }
 }
