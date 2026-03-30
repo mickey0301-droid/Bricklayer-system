@@ -220,6 +220,19 @@ _defaults = {
     "pattern_review_term": "",
     "pattern_review_meaning": "",
     "pattern_review_term_code": 0,
+    "pattern_review_term_reading": "",
+    "pattern_review_term_pos": "",
+    "pattern_review_sub_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""},
+    "pattern_review_trans_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""},
+    "pattern_review_sub_prev_notes": [],
+    "pattern_review_trans_prev_notes": [],
+    "pattern_combo_words": [],
+    "pattern_combo_sentence": {"sentence": "", "reading": "", "translation": "", "grammar": ""},
+    "pattern_combo_show_answer": False,
+    "pattern_combo_auto_played_for": "",
+    "pattern_combo_pattern": {"label": "", "instruction": ""},
+    "pattern_review_code_min": None,
+    "pattern_review_code_max": None,
     "pattern_review_show_answer": False,
     "pattern_study_auto_played_for": "",
     "pattern_review_auto_played_for": "",
@@ -427,9 +440,21 @@ def go_pattern_study():
 
 def go_pattern_review():
     st.session_state.page = "pattern_review"
-    st.session_state.pattern_review_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
     st.session_state.pattern_review_term = ""
-    st.session_state.pattern_review_show_answer = False
+    st.session_state.pattern_review_meaning = ""
+    st.session_state.pattern_review_term_code = 0
+    st.session_state.pattern_review_term_reading = ""
+    st.session_state.pattern_review_term_pos = ""
+    st.session_state.pattern_review_sub_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
+    st.session_state.pattern_review_trans_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
+    st.session_state.pattern_review_sub_prev_notes = []
+    st.session_state.pattern_review_trans_prev_notes = []
+    st.session_state.pattern_combo_words = []
+    st.session_state.pattern_combo_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
+    st.session_state.pattern_combo_show_answer = False
+    st.session_state.pattern_combo_pattern = {"label": "", "instruction": ""}
+    st.session_state.pattern_review_code_min = None
+    st.session_state.pattern_review_code_max = None
 
 def go_settings():
     st.session_state.page = "settings"
@@ -1830,73 +1855,81 @@ def pattern_study_page():
     cached_sentence = get_cached_sentence(f"{language}_pattern", str(current["code"]))
     needs_switch    = st.session_state.pattern_study_sentence_term != current_term
 
-    _pat_code_str = str(current["code"])
+    # 決定是否需要 AI 生成：有快取直接套用；無快取則延遲到右欄渲染後再生成
+    _gen_needed = False
     if needs_switch:
         if cached_sentence.get("sentence"):
-            # 有快取 → 直接套用，不 rerun
-            st.session_state.pattern_study_sentence      = cached_sentence
+            # 有快取 → 立即套用，本次渲染就能顯示
+            st.session_state.pattern_study_sentence = cached_sentence
             st.session_state.pattern_study_sentence_term = current_term
+            st.session_state.pattern_study_current_code = str(current["code"])
         else:
-            try:
-                with st.spinner("AI 正在自動生成例句..."):
-                    result = generate_example_sentence(
-                        language=language,
-                        current_term=current_term,
-                        allowed_terms=allowed_terms,
-                        term_meaning=str(current.get("meaning", "")),
-                        term_reading=str(current.get("reading", "")),
-                        term_pos=str(current.get("pos", "")),
-                        current_code=current_code,
-                        allowed_vocab=_df_to_allowed_vocab(allowed_df),
-                    )
-                    st.session_state.pattern_study_sentence      = result
-                    st.session_state.pattern_study_sentence_term = current_term
-                    set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
-                st.rerun()
-            except Exception as e:
-                st.error(f"自動生成例句失敗：{e}")
+            # 無快取 → 先清空句子、標記待生成，讓詞彙卡先渲染出來
+            st.session_state.pattern_study_sentence = {}
+            st.session_state.pattern_study_sentence_term = current_term
+            st.session_state.pattern_study_current_code = str(current["code"])
+            _gen_needed = True
 
     # ── 自動播放：翻到新單字或產生新例句時，依序播放單字→例句 ──
-    _pat_lang_key = f"{language}_pattern"
-    pattern_sentence_ready = st.session_state.pattern_study_sentence
-    pattern_cur_sent = pattern_sentence_ready.get("sentence", "")
-    if pattern_cur_sent and st.session_state.get("pattern_study_auto_played_for", "") != pattern_cur_sent:
+    # 以例句文字為 key，只要句子不同就自動播放（含按「新例句」的情況）
+    # _gen_needed 時例句還未就緒，跳過自動播放，等下一次 rerun 後再播
+    _code_str = str(current["code"])
+    sentence_data_ready = st.session_state.pattern_study_sentence
+    cur_sent = sentence_data_ready.get("sentence", "")
+    if cur_sent and not _gen_needed and st.session_state.pattern_study_auto_played_for != cur_sent:
         try:
             with st.spinner("自動播放中..."):
                 # 單字音訊：磁碟快取 → session 快取 → API
                 term_audio = (
-                    get_cached_tts(language, _pat_code_str, "term")
+                    get_cached_tts(language, _code_str, "term")
                     or (st.session_state.pattern_tts_term_for == current_term and st.session_state.pattern_tts_term_audio)
                 )
                 if not term_audio:
                     term_audio = generate_tts_audio(current_term, language)
-                    set_cached_tts(language, _pat_code_str, "term", term_audio)
+                    set_cached_tts(language, _code_str, "term", term_audio)
                 st.session_state.pattern_tts_term_audio = term_audio
-                st.session_state.pattern_tts_term_for   = current_term
+                st.session_state.pattern_tts_term_for = current_term
                 # 例句音訊：磁碟快取 → session 快取 → API
-                _pat_sent_tts = _sent_tts_text(pattern_sentence_ready, language)
+                _sent_tts = _sent_tts_text(sentence_data_ready, language)
                 sent_audio = (
-                    get_cached_tts(_pat_lang_key, _pat_code_str, "sent", _pat_sent_tts)
-                    or (st.session_state.pattern_tts_sentence_for == pattern_cur_sent and st.session_state.pattern_tts_sentence_audio)
+                    get_cached_tts(f"{language}_pattern", _code_str, "sent", _sent_tts)
+                    or (st.session_state.pattern_tts_sentence_for == cur_sent and st.session_state.pattern_tts_sentence_audio)
                 )
                 if not sent_audio:
-                    sent_audio = generate_tts_audio(_pat_sent_tts, language)
-                    set_cached_tts(_pat_lang_key, _pat_code_str, "sent", sent_audio, _pat_sent_tts)
+                    sent_audio = generate_tts_audio(_sent_tts, language)
+                    set_cached_tts(f"{language}_pattern", _code_str, "sent", sent_audio, _sent_tts)
                 st.session_state.pattern_tts_sentence_audio = sent_audio
-                st.session_state.pattern_tts_sentence_for   = pattern_cur_sent
+                st.session_state.pattern_tts_sentence_for = cur_sent
             components.html(audio_player_dual(term_audio, sent_audio), height=64)
-            st.session_state.pattern_study_auto_played_for = pattern_cur_sent
+            st.session_state.pattern_study_auto_played_for = cur_sent
         except Exception as e:
             st.warning(f"自動播放失敗：{e}")
 
-    # ── 頂部進度列 ─────────────────────────────────────────
+    # ── 頂部進度列 + 跳號 ──────────────────────────────────
     progress_text = f"{st.session_state.pattern_study_index + 1} / {len(study_df)}"
-    st.caption(f"🗣️ {display_name} 句型學習　　Progress: {progress_text}")
+    prog_col, jump_col = st.columns([3, 2])
+    with prog_col:
+        st.caption(f"🗣️ {display_name} 句型學習　　Progress: {progress_text}　｜　Available words: {len(allowed_terms)}")
+    with jump_col:
+        jc1, jc2 = st.columns([2, 1])
+        with jc1:
+            jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
+                                       key="pattern_study_jump_input", label_visibility="collapsed")
+        with jc2:
+            if st.button("跳至", key="pattern_study_jump_btn", use_container_width=True):
+                if jump_val > 0:
+                    matches = study_df[study_df["code_num"] == int(jump_val)]
+                    if not matches.empty:
+                        st.session_state.pattern_study_index = int(matches.index[0])
+                        st.session_state.pattern_study_sentence_term = ""
+                        st.rerun()
+                    else:
+                        st.warning(f"找不到編號 {int(jump_val)}")
 
     # ══ 左右分欄（電腦左右、手機上下）══════════════════════
     col_left, col_right = st.columns([1, 1], gap="large")
 
-    # ── 左欄：句型詞彙資訊 ────────────────────────────────
+    # ── 左欄：詞彙資訊 ────────────────────────────────────
     with col_left:
         st.markdown('<div class="study-card">', unsafe_allow_html=True)
 
@@ -1925,20 +1958,40 @@ def pattern_study_page():
         # TTS 發音
         if st.session_state.pattern_tts_term_for != current_term:
             st.session_state.pattern_tts_term_audio = None
-            st.session_state.pattern_tts_term_for   = ""
+            st.session_state.pattern_tts_term_for = ""
 
-        if st.button("🔊 播放發音", key="pattern_tts_term_btn", use_container_width=True):
+        if st.button("🔊 播放發音", key="pat_study_tts_term_btn", use_container_width=True):
             try:
-                if st.session_state.pattern_tts_term_audio and st.session_state.pattern_tts_term_for == current_term:
-                    audio_bytes = st.session_state.pattern_tts_term_audio
-                else:
+                audio_bytes = (
+                    (st.session_state.pattern_tts_term_audio if st.session_state.pattern_tts_term_for == current_term else None)
+                    or get_cached_tts(language, _code_str, "term")
+                )
+                if not audio_bytes:
                     with st.spinner("生成發音中..."):
                         audio_bytes = generate_tts_audio(current_term, language)
-                        st.session_state.pattern_tts_term_audio = audio_bytes
-                        st.session_state.pattern_tts_term_for   = current_term
+                        set_cached_tts(language, _code_str, "term", audio_bytes)
+                st.session_state.pattern_tts_term_audio = audio_bytes
+                st.session_state.pattern_tts_term_for = current_term
                 components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
+
+        # ── 熟悉度標記 ────────────────────────────────────
+        _fam = get_familiarity(language, current_code)
+        _fam_labels = {FAMILIAR: "✅ 熟悉", UNFAMILIAR: "❗ 陌生", None: ""}
+        if _fam:
+            st.caption(f"目前標記：{_fam_labels[_fam]}")
+        fam_c1, fam_c2 = st.columns(2)
+        with fam_c1:
+            _btn_fam = "✅ 熟悉（已標）" if _fam == FAMILIAR else "✅ 熟悉"
+            if st.button(_btn_fam, key="pat_study_fam_familiar", use_container_width=True):
+                set_familiarity(language, current_code, None if _fam == FAMILIAR else FAMILIAR)
+                st.rerun()
+        with fam_c2:
+            _btn_unfam = "❗ 陌生（已標）" if _fam == UNFAMILIAR else "❗ 陌生"
+            if st.button(_btn_unfam, key="pat_study_fam_unfamiliar", use_container_width=True):
+                set_familiarity(language, current_code, None if _fam == UNFAMILIAR else UNFAMILIAR)
+                st.rerun()
 
     # ── 右欄：例句＋文法 ──────────────────────────────────
     with col_right:
@@ -1947,7 +2000,28 @@ def pattern_study_page():
         st.markdown('<div class="study-card">', unsafe_allow_html=True)
         st.markdown('<div class="study-label">Example Sentence</div>', unsafe_allow_html=True)
 
-        if sentence_data.get("sentence"):
+        if _gen_needed:
+            # 詞彙卡已渲染，在右欄生成 AI 例句（用戶可看到左欄詞彙）
+            st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+            with st.spinner("AI 正在生成例句…"):
+                try:
+                    result = generate_example_sentence(
+                        language=language,
+                        current_term=current_term,
+                        allowed_terms=allowed_terms,
+                        term_meaning=str(current.get("meaning", "")),
+                        term_reading=str(current.get("reading", "")),
+                        term_pos=str(current.get("pos", "")),
+                        current_code=current_code,
+                        allowed_vocab=_df_to_allowed_vocab(allowed_df),
+                    )
+                    st.session_state.pattern_study_sentence = result
+                    set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
+                except Exception as e:
+                    st.error(f"自動生成例句失敗：{e}")
+            st.rerun()
+        elif sentence_data.get("sentence"):
             st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
 
             if supports_reading and sentence_data.get("reading"):
@@ -1962,18 +2036,18 @@ def pattern_study_page():
                 st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
 
             render_used_vocab(sentence_data["sentence"], study_df, current_code, vocab_codes=sentence_data.get("vocab_codes"))
+            st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
-
-        st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
         # 新例句 + TTS 例句
         current_sentence = sentence_data.get("sentence", "")
         if st.session_state.pattern_tts_sentence_for != current_sentence:
             st.session_state.pattern_tts_sentence_audio = None
-            st.session_state.pattern_tts_sentence_for   = ""
+            st.session_state.pattern_tts_sentence_for = ""
 
-        if st.button("🔀 新例句", key="pattern_new_sentence_btn", use_container_width=True):
+        if st.button("🔀 新例句", key="pat_study_new_sentence_btn", use_container_width=True):
             try:
                 with st.spinner("AI 正在生成新例句..."):
                     result = generate_example_sentence(
@@ -1986,40 +2060,41 @@ def pattern_study_page():
                         current_code=current_code,
                         allowed_vocab=_df_to_allowed_vocab(allowed_df),
                     )
-                    st.session_state.pattern_study_sentence      = result
+                    st.session_state.pattern_study_sentence = result
                     st.session_state.pattern_study_sentence_term = current_term
+                    st.session_state.pattern_study_current_code = str(current["code"])
                     set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
                 st.rerun()
             except Exception as e:
                 st.error(f"生成例句失敗：{e}")
 
-        if st.button("🔊 播放例句", key="pattern_tts_sentence_btn", use_container_width=True):
+        if st.button("🔊 播放例句", key="pat_study_tts_sentence_btn", use_container_width=True):
             try:
                 if st.session_state.pattern_tts_sentence_audio and st.session_state.pattern_tts_sentence_for == current_sentence:
                     audio_bytes = st.session_state.pattern_tts_sentence_audio
                 else:
-                    _tts_ps = _sent_tts_text(sentence_data, language)
+                    _tts_s = _sent_tts_text(sentence_data, language)
                     with st.spinner("生成例句發音中..."):
-                        audio_bytes = generate_tts_audio(_tts_ps, language)
+                        audio_bytes = generate_tts_audio(_tts_s, language)
                         st.session_state.pattern_tts_sentence_audio = audio_bytes
-                        st.session_state.pattern_tts_sentence_for   = current_sentence
+                        st.session_state.pattern_tts_sentence_for = current_sentence
                 components.html(audio_player(audio_bytes), height=64)
             except Exception as e:
                 st.error(f"TTS 失敗：{e}")
 
     # ── 底部導航 ───────────────────────────────────────────
     st.divider()
-    if st.button("⬅ 上一個詞", use_container_width=True, key="pattern_prev"):
+    if st.button("⬅ 上一個詞", use_container_width=True, key="pat_study_prev"):
         st.session_state.pattern_study_index = get_prev_index(study_df, st.session_state.pattern_study_index)
         st.session_state.pattern_study_sentence_term = ""
         st.rerun()
 
-    if st.button("下一個詞 ➡", use_container_width=True, key="pattern_next"):
+    if st.button("下一個詞 ➡", use_container_width=True, key="pat_study_next"):
         st.session_state.pattern_study_index = get_next_index(study_df, st.session_state.pattern_study_index)
         st.session_state.pattern_study_sentence_term = ""
         st.rerun()
 
-    if st.button("↩ 回到語言首頁", use_container_width=True, key="pattern_back"):
+    if st.button("↩ 回到語言首頁", use_container_width=True, key="pat_study_back"):
         st.session_state.page = "language_home"
         st.rerun()
 
@@ -2033,14 +2108,14 @@ def pattern_review_page():
         go_home(); st.rerun()
 
     lang_config = get_language_config(language)
-    display_name  = lang_config["label"] if lang_config else language.capitalize()
+    display_name = lang_config["label"] if lang_config else language.capitalize()
     reading_label = lang_config["reading_label"] if lang_config else "Reading"
     supports_reading = lang_config["supports_reading"] if lang_config else False
     flag = LANGUAGE_FLAGS.get(language, "🌐")
 
     st.title(f"{flag} {display_name} — 句型複習")
 
-    raw_df   = get_current_pattern_vocab_df(language)
+    raw_df = get_current_pattern_vocab_df(language)
     study_df = prepare_study_df(raw_df)
 
     if study_df.empty:
@@ -2049,85 +2124,516 @@ def pattern_review_page():
             st.session_state.page = "language_home"; st.rerun()
         return
 
-    all_terms = study_df["term"].astype(str).tolist()
+    # ── 練習範圍設定 ──────────────────────────────────────
+    all_min = int(study_df["code_num"].min())
+    all_max = int(study_df["code_num"].max())
 
-    st.caption("從句型詞庫隨機抽一個單字，用句型詞庫的詞彙生成例句，試著看懂後再翻答案。")
+    # 初始化：首次進入或超出範圍時重設
+    if st.session_state.pattern_review_code_min is None or st.session_state.pattern_review_code_min < all_min:
+        st.session_state.pattern_review_code_min = all_min
+    if st.session_state.pattern_review_code_max is None or st.session_state.pattern_review_code_max > all_max:
+        st.session_state.pattern_review_code_max = all_max
 
-    if st.button("🎲 抽新題目", use_container_width=True, key="pr_draw") or not st.session_state.pattern_review_term:
-        picked     = study_df.sample(1).iloc[0]
-        pick_code  = int(picked["code_num"])
-        pick_term  = str(picked["term"])
-        pick_meaning = str(picked.get("meaning", ""))
-        allowed_df   = get_allowed_vocab(study_df, pick_code)
-        allowed_terms = allowed_df["term"].astype(str).tolist()
-        try:
-            with st.spinner("AI 正在生成例句..."):
-                sentence_data = generate_example_sentence(
-                    language=language,
-                    current_term=pick_term,
-                    allowed_terms=allowed_terms if allowed_terms else all_terms,
-                    term_meaning=str(picked.get("meaning", "")),
-                    term_reading=str(picked.get("reading", "")),
-                    term_pos=str(picked.get("pos", "")),
-                    current_code=pick_code,
-                    review_mode=True,
-                    allowed_vocab=_df_to_allowed_vocab(allowed_df),
+    with st.expander("🎯 練習範圍設定（預設：全部）", expanded=False):
+        st.caption(f"全部句型範圍：{all_min} ～ {all_max}　共 {len(study_df)} 個句型")
+        rc1, rc2 = st.columns(2)
+        with rc1:
+            new_min = st.number_input(
+                "從編號", min_value=all_min, max_value=all_max,
+                value=st.session_state.pattern_review_code_min,
+                step=1, key="pattern_review_range_min"
+            )
+        with rc2:
+            new_max = st.number_input(
+                "到編號", min_value=all_min, max_value=all_max,
+                value=st.session_state.pattern_review_code_max,
+                step=1, key="pattern_review_range_max"
+            )
+        if new_min > new_max:
+            st.warning("「從編號」不能大於「到編號」，已自動對調。")
+            new_min, new_max = new_max, new_min
+
+        # 範圍改變時清除當前題目，觸發重抽
+        if new_min != st.session_state.pattern_review_code_min or new_max != st.session_state.pattern_review_code_max:
+            st.session_state.pattern_review_code_min = new_min
+            st.session_state.pattern_review_code_max = new_max
+            st.session_state.pattern_review_term = ""
+            st.session_state.pattern_combo_words = []
+            st.rerun()
+
+    range_min = st.session_state.pattern_review_code_min
+    range_max = st.session_state.pattern_review_code_max
+
+    # 過濾 study_df 到指定範圍
+    filtered_df = study_df[
+        (study_df["code_num"] >= range_min) & (study_df["code_num"] <= range_max)
+    ]
+    if filtered_df.empty:
+        st.warning(f"編號 {range_min}～{range_max} 範圍內沒有句型，請調整範圍。")
+        return
+
+    # 若當前題目已不在範圍內，清除讓系統重抽
+    if st.session_state.pattern_review_term:
+        cur_code = st.session_state.pattern_review_term_code
+        if cur_code < range_min or cur_code > range_max:
+            st.session_state.pattern_review_term = ""
+            st.session_state.pattern_combo_words = []
+
+    # ── 模式切換 ──────────────────────────────────────────
+    mode = st.radio(
+        "複習模式",
+        ["📖 單字複習", "🔀 重組練習", "📝 短文練習"],
+        horizontal=True,
+        key="pattern_review_mode_radio"
+    )
+    st.divider()
+
+    # ════════════════════════════════════════════════════
+    # 模式 1：單字複習 — FSI Substitution + Transformation
+    # ════════════════════════════════════════════════════
+    if mode == "📖 單字複習":
+        st.caption("隨機抽一個句型詞彙，透過 FSI 練習法觀察搭配詞（Substitution）與句型變化（Transformation）。")
+
+        # ── 抽題 ──────────────────────────────────────
+        if st.button("🎲 抽新題目", use_container_width=True, key="pat_review_word_draw") or not st.session_state.pattern_review_term:
+            picked       = filtered_df.sample(1).iloc[0]
+            pick_code    = int(picked["code_num"])
+            pick_term    = str(picked["term"])
+            pick_meaning = str(picked.get("meaning", ""))
+            pick_reading = str(picked.get("reading", ""))
+            pick_pos     = str(picked.get("pos", ""))
+            allowed_df   = get_allowed_vocab(filtered_df, pick_code)
+            allowed_vocab_list = _df_to_allowed_vocab(allowed_df)
+
+            fsi_kwargs = dict(
+                language=language,
+                current_term=pick_term,
+                term_meaning=pick_meaning,
+                term_reading=pick_reading,
+                term_pos=pick_pos,
+                current_code=pick_code,
+                allowed_vocab=allowed_vocab_list,
+            )
+            try:
+                with st.spinner("AI 正在生成搭配練習句..."):
+                    sub_data = generate_fsi_sentence(drill_type="substitution", **fsi_kwargs)
+            except Exception as e:
+                st.error(f"Substitution 生成失敗：{e}")
+                sub_data = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
+
+            try:
+                with st.spinner("AI 正在生成句型變化句..."):
+                    trans_data = generate_fsi_sentence(drill_type="transformation", **fsi_kwargs)
+            except Exception as e:
+                st.error(f"Transformation 生成失敗：{e}")
+                trans_data = {"sentence": "", "reading": "", "translation": "", "grammar": "", "drill_note": ""}
+
+            st.session_state.pattern_review_term          = pick_term
+            st.session_state.pattern_review_meaning       = pick_meaning
+            st.session_state.pattern_review_term_code     = pick_code
+            st.session_state.pattern_review_term_reading  = pick_reading
+            st.session_state.pattern_review_term_pos      = pick_pos
+            st.session_state.pattern_review_sub_sentence  = sub_data
+            st.session_state.pattern_review_trans_sentence= trans_data
+            st.session_state.pattern_review_sub_prev_notes  = [sub_data["drill_note"]] if sub_data.get("drill_note") else []
+            st.session_state.pattern_review_trans_prev_notes= [trans_data["drill_note"]] if trans_data.get("drill_note") else []
+            st.rerun()
+
+        if not st.session_state.pattern_review_term:
+            return
+
+        # ── 左右分欄 ──────────────────────────────
+        rev_left, rev_right = st.columns([1, 1], gap="large")
+
+        # ── 左欄：單字資訊卡 ──────────────────────────
+        with rev_left:
+            pick_code = st.session_state.pattern_review_term_code
+            pick_term = st.session_state.pattern_review_term
+
+            st.markdown('<div class="study-card">', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-label">Code</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-md">{pick_code}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-label">單字</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="study-value-lg">{pick_term}</div>', unsafe_allow_html=True)
+            if supports_reading and st.session_state.pattern_review_term_reading:
+                st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{st.session_state.pattern_review_term_reading}</div>', unsafe_allow_html=True)
+            if st.session_state.pattern_review_meaning:
+                st.markdown(f'<div class="study-label">意思</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.pattern_review_meaning}</div>', unsafe_allow_html=True)
+            if st.session_state.pattern_review_term_pos:
+                st.markdown(f'<div class="study-label">詞性</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{st.session_state.pattern_review_term_pos}</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            if st.button("🔊 播放發音", key="pat_review_term_tts", use_container_width=True):
+                try:
+                    with st.spinner("生成發音中..."):
+                        audio_bytes = generate_tts_audio(pick_term, language)
+                    components.html(audio_player(audio_bytes), height=64)
+                except Exception as e:
+                    st.error(f"TTS 失敗：{e}")
+
+            # ── 熟悉度標記 ────────────────────────────
+            _fam_r = get_familiarity(language, pick_code)
+            _fam_labels_r = {FAMILIAR: "✅ 熟悉", UNFAMILIAR: "❗ 陌生"}
+            if _fam_r:
+                st.caption(f"目前標記：{_fam_labels_r[_fam_r]}")
+            rfam_c1, rfam_c2 = st.columns(2)
+            with rfam_c1:
+                _rb_fam = "✅ 熟悉（已標）" if _fam_r == FAMILIAR else "✅ 熟悉"
+                if st.button(_rb_fam, key="pat_rev_fam_familiar", use_container_width=True):
+                    set_familiarity(language, pick_code, None if _fam_r == FAMILIAR else FAMILIAR)
+                    st.rerun()
+            with rfam_c2:
+                _rb_unfam = "❗ 陌生（已標）" if _fam_r == UNFAMILIAR else "❗ 陌生"
+                if st.button(_rb_unfam, key="pat_rev_fam_unfamiliar", use_container_width=True):
+                    set_familiarity(language, pick_code, None if _fam_r == UNFAMILIAR else UNFAMILIAR)
+                    st.rerun()
+
+        # ── 右欄：FSI 練習區 ──────────────────────────
+        with rev_right:
+            allowed_df = get_allowed_vocab(filtered_df, st.session_state.pattern_review_term_code)
+            allowed_vocab_list = _df_to_allowed_vocab(allowed_df)
+            fsi_base = dict(
+                language=language,
+                current_term=st.session_state.pattern_review_term,
+                term_meaning=st.session_state.pattern_review_meaning,
+                term_reading=st.session_state.pattern_review_term_reading,
+                term_pos=st.session_state.pattern_review_term_pos,
+                current_code=st.session_state.pattern_review_term_code,
+                allowed_vocab=allowed_vocab_list,
+            )
+
+            # ===== Substitution 搭配練習 =====
+            st.markdown("#### 🔄 Substitution — 搭配練習")
+            st.caption("觀察目標單字與不同搭配詞或情境的組合")
+
+            sub_data = st.session_state.pattern_review_sub_sentence
+            if sub_data.get("sentence"):
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                if sub_data.get("drill_note"):
+                    st.markdown(f'<div class="study-label">搭配說明</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md" style="color:#e65100;font-weight:600;">{sub_data["drill_note"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{sub_data["sentence"]}</div>', unsafe_allow_html=True)
+                if supports_reading and sub_data.get("reading"):
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md">{sub_data["reading"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{sub_data.get("translation","")}</div>', unsafe_allow_html=True)
+                if sub_data.get("grammar"):
+                    st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="grammar-box">{sub_data["grammar"]}</div>', unsafe_allow_html=True)
+                render_used_vocab(sub_data["sentence"], study_df, st.session_state.pattern_review_term_code, vocab_codes=sub_data.get("vocab_codes"))
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            sub_c1, sub_c2 = st.columns(2)
+            with sub_c1:
+                if st.button("🔀 下一個", key="pat_sub_next_btn", use_container_width=True):
+                    prev = st.session_state.get("pattern_review_sub_prev_notes", [])
+                    try:
+                        with st.spinner("生成下一個搭配..."):
+                            new_sub = generate_fsi_sentence(drill_type="substitution", prev_drill_notes=prev, **fsi_base)
+                        st.session_state.pattern_review_sub_sentence = new_sub
+                        if new_sub.get("drill_note"):
+                            st.session_state.pattern_review_sub_prev_notes = (prev + [new_sub["drill_note"]])[-6:]
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"生成失敗：{e}")
+            with sub_c2:
+                if st.button("🔊 發音", key="pat_sub_tts_btn", use_container_width=True):
+                    if sub_data.get("sentence"):
+                        try:
+                            with st.spinner("生成發音中..."):
+                                audio_bytes = generate_tts_audio(_sent_tts_text(sub_data, language), language)
+                            components.html(audio_player(audio_bytes), height=64)
+                        except Exception as e:
+                            st.error(f"TTS 失敗：{e}")
+
+            st.divider()
+
+            # ===== Transformation 句型變化 =====
+            st.markdown("#### ⚙️ Transformation — 句型變化")
+            st.caption("觀察目標單字在不同文法形態下的變化")
+
+            trans_data = st.session_state.pattern_review_trans_sentence
+            if trans_data.get("sentence"):
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                if trans_data.get("drill_note"):
+                    st.markdown(f'<div class="study-label">文法形態</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md" style="color:#1565c0;font-weight:600;">{trans_data["drill_note"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{trans_data["sentence"]}</div>', unsafe_allow_html=True)
+                if supports_reading and trans_data.get("reading"):
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md">{trans_data["reading"]}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{trans_data.get("translation","")}</div>', unsafe_allow_html=True)
+                if trans_data.get("grammar"):
+                    st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="grammar-box">{trans_data["grammar"]}</div>', unsafe_allow_html=True)
+                render_used_vocab(trans_data["sentence"], study_df, st.session_state.pattern_review_term_code, vocab_codes=trans_data.get("vocab_codes"))
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            trans_c1, trans_c2 = st.columns(2)
+            with trans_c1:
+                if st.button("🔀 下一個", key="pat_trans_next_btn", use_container_width=True):
+                    prev = st.session_state.get("pattern_review_trans_prev_notes", [])
+                    try:
+                        with st.spinner("生成下一個變化..."):
+                            new_trans = generate_fsi_sentence(drill_type="transformation", prev_drill_notes=prev, **fsi_base)
+                        st.session_state.pattern_review_trans_sentence = new_trans
+                        if new_trans.get("drill_note"):
+                            st.session_state.pattern_review_trans_prev_notes = (prev + [new_trans["drill_note"]])[-6:]
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"生成失敗：{e}")
+            with trans_c2:
+                if st.button("🔊 發音", key="pat_trans_tts_btn", use_container_width=True):
+                    if trans_data.get("sentence"):
+                        try:
+                            with st.spinner("生成發音中..."):
+                                audio_bytes = generate_tts_audio(_sent_tts_text(trans_data, language), language)
+                            components.html(audio_player(audio_bytes), height=64)
+                        except Exception as e:
+                            st.error(f"TTS 失敗：{e}")
+
+    # ════════════════════════════════════════════════════
+    # 模式 2：重組練習（新功能）
+    # ════════════════════════════════════════════════════
+    elif mode == "🔀 重組練習":
+        n_learned = len(filtered_df)
+        n_pick = 2  # 固定抽 2 個詞
+
+        if n_learned < 2:
+            st.info("需要至少 2 個句型才能使用重組練習。")
+        else:
+            st.caption(f"隨機抽 2 個句型詞彙，AI 會把它們組成一句短句。按「看答案」可查看文法分析與使用單字。")
+
+            if st.button("🎲 抽新組合", use_container_width=True, key="pat_combo_draw") or not st.session_state.pattern_combo_words:
+                picked_rows = filtered_df.sample(n=n_pick)
+                all_allowed = filtered_df["term"].astype(str).tolist()
+
+                target_words = [
+                    {
+                        "term":    str(row["term"]),
+                        "meaning": str(row.get("meaning", "")),
+                        "reading": str(row.get("reading", ""))
+                    }
+                    for _, row in picked_rows.iterrows()
+                ]
+
+                # 隨機挑一個文法句型
+                patterns = GRAMMAR_PATTERNS.get(language, GRAMMAR_PATTERNS["default"])
+                pattern  = random.choice(patterns)
+
+                try:
+                    with st.spinner("AI 正在重組新句子..."):
+                        combo_sentence = generate_recombination_sentence(
+                            language=language,
+                            target_words=target_words,
+                            all_allowed_terms=all_allowed,
+                            grammar_instruction=pattern["instruction"],
+                            all_allowed_vocab=_df_to_allowed_vocab(filtered_df),
+                        )
+                except Exception as e:
+                    st.error(f"生成例句失敗：{e}")
+                    combo_sentence = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
+
+                st.session_state.pattern_combo_words       = target_words
+                st.session_state.pattern_combo_sentence    = combo_sentence
+                st.session_state.pattern_combo_show_answer = False
+                st.session_state.pattern_combo_pattern     = pattern
+                st.rerun()
+
+            # 顯示本題文法句型標籤
+            pattern_label = st.session_state.pattern_combo_pattern.get("label", "")
+            if pattern_label:
+                st.markdown(
+                    f'<div style="display:inline-block;background:#eef4fb;border:1.5px solid #4F8BF9;'
+                    f'border-radius:20px;padding:0.25rem 0.9rem;font-size:0.95rem;'
+                    f'color:#2c5db3;margin-bottom:0.8rem;">🎯 本題文法：{pattern_label}</div>',
+                    unsafe_allow_html=True
                 )
-        except Exception as e:
-            st.error(f"生成例句失敗：{e}")
-            sentence_data = {"sentence": "", "reading": "", "translation": "", "grammar": ""}
-        st.session_state.pattern_review_sentence    = sentence_data
-        st.session_state.pattern_review_term        = pick_term
-        st.session_state.pattern_review_meaning     = pick_meaning
-        st.session_state.pattern_review_term_code   = pick_code
-        st.session_state.pattern_review_show_answer = False
-        st.rerun()
 
-    sentence_data = st.session_state.pattern_review_sentence
-    if sentence_data.get("sentence"):
-        # 自動播放例句（每題只播一次）
-        if st.session_state.pattern_review_auto_played_for != sentence_data["sentence"]:
-            try:
-                with st.spinner("自動播放中..."):
-                    audio_bytes = generate_tts_audio(_sent_tts_text(sentence_data, language), language)
-                components.html(audio_player(audio_bytes), height=64)
-                st.session_state.pattern_review_auto_played_for = sentence_data["sentence"]
-            except Exception as e:
-                st.warning(f"自動播放失敗：{e}")
+            combo_data = st.session_state.pattern_combo_sentence
+            if combo_data.get("sentence"):
+                # 自動播放例句（每題只播一次）
+                if st.session_state.pattern_combo_auto_played_for != combo_data["sentence"]:
+                    try:
+                        with st.spinner("自動播放中..."):
+                            audio_bytes = generate_tts_audio(_sent_tts_text(combo_data, language), language)
+                        components.html(audio_player(audio_bytes), height=64)
+                        st.session_state.pattern_combo_auto_played_for = combo_data["sentence"]
+                    except Exception as e:
+                        st.warning(f"自動播放失敗：{e}")
 
-        st.markdown('<div class="study-card">', unsafe_allow_html=True)
-        st.markdown('<div class="study-label">例句</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                st.markdown('<div class="study-label">重組例句</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{combo_data["sentence"]}</div>', unsafe_allow_html=True)
 
-        if supports_reading and sentence_data.get("reading"):
-            st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="study-value-md">{sentence_data["reading"]}</div>', unsafe_allow_html=True)
+                if supports_reading and combo_data.get("reading"):
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md">{combo_data["reading"]}</div>', unsafe_allow_html=True)
 
-        st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="study-value-md">{sentence_data.get("translation","")}</div>', unsafe_allow_html=True)
+                st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="study-value-md">{combo_data.get("translation", "")}</div>', unsafe_allow_html=True)
 
-        if sentence_data.get("grammar"):
-            st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
+                if combo_data.get("grammar"):
+                    st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
 
-        st.markdown('<div class="study-label">目標單字</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="study-value-lg">{st.session_state.pattern_review_term}</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="study-value-md" style="color:#4F8BF9;">{st.session_state.pattern_review_meaning}</div>', unsafe_allow_html=True)
+                # 顯示本題使用的所有目標單字
+                st.markdown('<div class="study-label">本題使用的單字</div>', unsafe_allow_html=True)
+                words_html = ""
+                for w in st.session_state.pattern_combo_words:
+                    reading_part = f"（{w['reading']}）" if w.get("reading") else ""
+                    words_html += (
+                        f'<div style="margin-bottom:0.5rem;">'
+                        f'<span style="font-size:1.2rem;font-weight:700;">{w["term"]}</span>'
+                        f'<span style="font-size:0.95rem;color:#666;margin-left:0.4rem;">{reading_part}</span>'
+                        f'<span style="font-size:1rem;color:#4F8BF9;margin-left:0.6rem;">{w.get("meaning","")}</span>'
+                        f'</div>'
+                    )
+                st.markdown(words_html, unsafe_allow_html=True)
 
-        render_used_vocab(sentence_data["sentence"], study_df, st.session_state.get("pattern_review_term_code", 0), vocab_codes=sentence_data.get("vocab_codes"))
+                max_code = int(filtered_df["code_num"].max()) if not filtered_df.empty else 0
+                render_used_vocab(combo_data["sentence"], study_df, max_code, vocab_codes=combo_data.get("vocab_codes"))
 
-        st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
 
-        if st.button("🔊 播放例句", key="pr_tts", use_container_width=True):
-            try:
-                with st.spinner("生成發音中..."):
-                    audio_bytes = generate_tts_audio(_sent_tts_text(sentence_data, language), language)
-                components.html(audio_player(audio_bytes), height=64)
-            except Exception as e:
-                st.error(f"TTS 失敗：{e}")
+                if st.button("🔊 播放例句", key="pat_combo_tts", use_container_width=True):
+                    try:
+                        with st.spinner("生成發音中..."):
+                            audio_bytes = generate_tts_audio(_sent_tts_text(combo_data, language), language)
+                        components.html(audio_player(audio_bytes), height=64)
+                    except Exception as e:
+                        st.error(f"TTS 失敗：{e}")
+
+    # ════════════════════════════════════════════════════
+    # 模式 3：短文練習（短文 / 故事 / 對話）
+    # ════════════════════════════════════════════════════
+    if mode == "📝 短文練習":
+        st.caption("AI 根據你選定的句型範圍，生成一段短文、故事或對話。最多 50 字，自然流暢。")
+
+        if len(filtered_df) < 3:
+            st.info("需要至少 3 個句型才能使用短文練習。")
+        else:
+            # ── 類型 & 字數設定 ────────────────────────────
+            pc1, pc2 = st.columns([2, 1])
+            with pc1:
+                ptype = st.radio(
+                    "選擇類型",
+                    ["短文", "故事", "對話"],
+                    horizontal=True,
+                    key="passage_type_radio",
+                    index=["短文", "故事", "對話"].index(st.session_state.passage_type),
+                )
+            with pc2:
+                max_chars = st.slider(
+                    "最多字數",
+                    min_value=20, max_value=150, value=50, step=10,
+                    key="passage_max_chars",
+                    help="CJK 語言以字元計，西班牙文以單詞計"
+                )
+            if ptype != st.session_state.passage_type:
+                st.session_state.passage_type = ptype
+                st.session_state.passage_data = {"passage": "", "reading": "", "translation": "", "vocab_notes": [], "grammar_notes": "", "char_count": 0, "unit_label": "字元"}
+                st.rerun()
+
+            # ── 生成按鈕 ──────────────────────────────────
+            if st.button("✨ 生成新短文", use_container_width=True, key="pat_passage_gen") or not st.session_state.passage_data.get("passage"):
+                try:
+                    with st.spinner(f"AI 正在生成{ptype}..."):
+                        passage_result = generate_passage(
+                            language=language,
+                            passage_type=ptype,
+                            all_allowed_vocab=_df_to_allowed_vocab(filtered_df),
+                            max_length=max_chars,
+                        )
+                    st.session_state.passage_data = passage_result
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"生成失敗：{e}")
+
+            pdata = st.session_state.passage_data
+            if pdata.get("passage"):
+                # ── 字數統計 ──────────────────────────────
+                char_count  = pdata.get("char_count", 0)
+                unit_label  = pdata.get("unit_label", "字元")
+                over_limit  = char_count > max_chars
+                count_color = "#e03030" if over_limit else "#4caf50"
+                count_badge = (
+                    f'<span style="font-size:0.85rem;color:{count_color};'
+                    f'font-weight:600;margin-left:0.6rem;">'
+                    f'📊 {char_count} / {max_chars} {unit_label}'
+                    f'{"　⚠️ 超過上限" if over_limit else ""}</span>'
+                )
+
+                # ── 短文卡片 ──────────────────────────────
+                st.markdown('<div class="study-card">', unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="study-label">📄 {ptype}{count_badge}</div>',
+                    unsafe_allow_html=True
+                )
+
+                # 對話格式換行顯示
+                passage_html = pdata["passage"].replace("\n", "<br>")
+                st.markdown(f'<div class="study-value-md" style="font-size:1.25rem;line-height:1.8;">{passage_html}</div>', unsafe_allow_html=True)
+
+                if supports_reading and pdata.get("reading"):
+                    reading_html = pdata["reading"].replace("\n", "<br>")
+                    st.markdown(f'<div class="study-label">{reading_label}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="study-value-md" style="color:#555;">{reading_html}</div>', unsafe_allow_html=True)
+
+                st.markdown('<div class="study-label">翻譯</div>', unsafe_allow_html=True)
+                translation_html = pdata["translation"].replace("\n", "<br>")
+                st.markdown(f'<div class="study-value-md">{translation_html}</div>', unsafe_allow_html=True)
+
+                st.markdown('</div>', unsafe_allow_html=True)
+
+                # ── TTS：可暫停／繼續 ──────────────────────
+                tts_text = pdata["passage"]
+                if st.button("🔊 生成朗讀", key="pat_passage_tts", use_container_width=True):
+                    try:
+                        with st.spinner("生成朗讀中..."):
+                            audio_bytes = generate_tts_audio(tts_text, language)
+                        components.html(audio_player_pausable(audio_bytes), height=64)
+                    except Exception as e:
+                        st.error(f"TTS 失敗：{e}")
+
+                st.divider()
+
+                # ── 單字解釋 ──────────────────────────────
+                vocab_notes = pdata.get("vocab_notes", [])
+                if vocab_notes:
+                    st.markdown("**📚 本文單字**")
+                    for note in vocab_notes:
+                        word    = note.get("word", "")
+                        reading = note.get("reading", "")
+                        meaning = note.get("meaning", "")
+                        pos     = note.get("pos", "")
+                        reading_part = f"（{reading}）" if reading else ""
+                        pos_part     = f" [{pos}]" if pos else ""
+                        st.markdown(
+                            f'<div style="margin-bottom:0.4rem;">'
+                            f'<span style="font-size:1.1rem;font-weight:700;">{word}</span>'
+                            f'<span style="color:#888;font-size:0.95rem;">{reading_part}</span>'
+                            f'<span style="color:#4F8BF9;font-size:0.9rem;">{pos_part}</span>'
+                            f'<span style="color:#333;margin-left:0.5rem;">＝ {meaning}</span>'
+                            f'</div>',
+                            unsafe_allow_html=True
+                        )
+
+                # ── 文法說明 ──────────────────────────────
+                if pdata.get("grammar_notes"):
+                    st.markdown("**📝 文法說明**")
+                    st.markdown(
+                        f'<div class="grammar-box">{pdata["grammar_notes"]}</div>',
+                        unsafe_allow_html=True
+                    )
 
     st.divider()
-    if st.button("← Back", use_container_width=True):
+    if st.button("↩ 回到語言首頁", use_container_width=True, key="pat_review_back"):
         st.session_state.page = "language_home"; st.rerun()
 
 
