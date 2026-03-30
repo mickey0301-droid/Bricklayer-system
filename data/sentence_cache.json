@@ -1078,5 +1078,11 @@
     "reading": "jip dam-i ajU nopda.",
     "translation": "房子的牆非常高。",
     "grammar": "집(jip)[名詞: 房子] + 담(dam)[名詞: 牆] + 이[i][主格助詞] + 아주[副詞: 非常] + 높다(nopda)[形容詞: 高]"
+  },
+  "korean::110": {
+    "sentence": "나는 딸이 있다.",
+    "reading": "naneun ttali itda.",
+    "translation": "我有女兒。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 딸(ttal)[名詞: 女兒] + 이[主格助詞] + 있다(itda)[動詞: 有]"
   }
 }
