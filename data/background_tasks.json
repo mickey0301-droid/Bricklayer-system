@@ -1,0 +1,22 @@
+{
+  "tasks": {
+    "ea895fea-8d00-457a-8c78-8476b532d473": {
+      "task_id": "ea895fea-8d00-457a-8c78-8476b532d473",
+      "type": "autocomplete_vocab",
+      "language": "spanish",
+      "status": "done",
+      "error": "",
+      "created_at": 1774453478.98131,
+      "updated_at": 1774453721.2610176
+    },
+    "b97a3a15-a409-4c97-a26d-d79d0a07d2e7": {
+      "task_id": "b97a3a15-a409-4c97-a26d-d79d0a07d2e7",
+      "type": "autocomplete_vocab",
+      "language": "korean",
+      "status": "running",
+      "error": "",
+      "created_at": 1774455365.3054519,
+      "updated_at": 1774455365.3803532
+    }
+  }
+}
