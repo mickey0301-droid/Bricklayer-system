@@ -1254,9 +1254,9 @@
     "grammar": "이(i)[指示詞: 這] + 연(yeon)[名詞: 年] + 에(e)[方向助詞] + 우리(urinen)[代名詞: 我們] + 는(neun)[主格助詞] + 여행(yeohaeng)[名詞: 旅行] + 을(eul)[受格助詞] + 간다(ganda)[動詞: 去]"
   },
   "korean::128": {
-    "sentence": "올해 나는 많이 공부할 것이다.",
-    "reading": "olhae naneun manhi gongbuhal geosida.",
-    "translation": "今年我會學習很多。",
-    "grammar": "올해(olhae)[名詞: 今年] + 나(na)[代名詞: 我] + 는[主格助詞] + 많이(manhi)[副詞: 很多] + 공부하다(gongbuhada)[動詞: 學習] + 할(hal)[助動詞: 會] + 것이다(geosida)[助動詞: 是]"
+    "sentence": "올해는 날씨가 좋다.",
+    "reading": "olhae-neun nalssi-ga jota.",
+    "translation": "今年的天氣很好。",
+    "grammar": "올해(olhae)[名詞: 今年] + 는[主格助詞] + 날씨(nalssi)[名詞: 天氣] + 가[主格助詞] + 좋다(jota)[動詞: 好]"
   }
 }
