@@ -1170,9 +1170,9 @@
     "grammar": "そんなこと[名詞: 那樣的事] + は[主格助詞] + あり得ないです[動詞: 不可能]"
   },
   "korean::113": {
-    "sentence": "우리 주변에 많은 사람들이 있어요.",
-    "reading": "uri jubyeon-e manheun saram-deul-i isseoyo.",
-    "translation": "我們周圍有很多人。",
-    "grammar": "우리[代名詞: 我們] + 주변[名詞: 周圍] + 에[方向助詞] + 많은[形容詞: 多的] + 사람들[名詞: 人們] + 이[主格助詞] + 있어요[動詞: 有]"
+    "sentence": "사람이 많다.",
+    "reading": "saram-i man-ta.",
+    "translation": "有很多人。",
+    "grammar": "사람(saram)[名詞: 人] + 이[i][主格助詞] + 많다(man-ta)[形容詞: 多]"
   }
 }
