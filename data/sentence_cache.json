@@ -1044,9 +1044,9 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 게(ge)[名詞: 螃蟹] + 를[受格助詞] + 좋아하다(joahada)[動詞: 喜歡]"
   },
   "korean::104": {
-    "sentence": "곰은 숲에서 산다.",
-    "reading": "gom-eun sup-eseo sanda.",
+    "sentence": "곰이 숲에서 산다.",
+    "reading": "gom-i sup-eseo sanda.",
     "translation": "熊在森林裡生活。",
-    "grammar": "곰(gom)[名詞: 熊] + 은[主格助詞] + 숲(sup)[名詞: 森林] + 에서[助詞: 在] + 산다(sanda)[動詞: 生活]"
+    "grammar": "곰(gom)[名詞: 熊] + 이[主格助詞] + 숲(sup)[名詞: 森林] + 에서[處所助詞] + 산다(sanda)[動詞: 生活]"
   }
 }
