@@ -632,19 +632,23 @@ def generate_passage(
     type_desc = type_desc_map.get(passage_type, "a short text")
 
     is_cjk = language in ("japanese", "korean", "chinese")
+    min_length = max(int(max_length * 0.8), 1)   # 目標區間下界（80%）
     if is_cjk:
         length_rule = (
-            f"EXACTLY {max_length} non-whitespace characters or fewer. "
-            f"Count every kana, kanji, hangul, and punctuation mark individually. "
-            f"Whitespace does not count. Your passage MUST fit within {max_length} characters. "
-            f"If your draft is longer, CUT sentences until it is {max_length} or fewer."
+            f"TARGET RANGE: {min_length}–{max_length} non-whitespace characters. "
+            f"Count every kana, kanji, hangul, and punctuation mark individually; whitespace does not count. "
+            f"AIM TO FILL AS CLOSE TO {max_length} CHARACTERS AS POSSIBLE — do not write a passage that is "
+            f"shorter than {min_length} characters. The passage MUST NOT exceed {max_length} characters. "
+            f"If your draft exceeds {max_length}, trim sentences; if it is under {min_length}, expand."
         )
         unit_label = "字元（不含空白）"
     else:
         length_rule = (
-            f"EXACTLY {max_length} words or fewer. "
+            f"TARGET RANGE: {min_length}–{max_length} words. "
             f"Count every whitespace-separated token. "
-            f"If your draft is longer, CUT words until it is {max_length} or fewer."
+            f"AIM TO FILL AS CLOSE TO {max_length} WORDS AS POSSIBLE — do not write a passage shorter "
+            f"than {min_length} words. The passage MUST NOT exceed {max_length} words. "
+            f"If your draft exceeds {max_length}, trim; if it is under {min_length}, expand."
         )
         unit_label = "個單詞"
 
@@ -655,7 +659,7 @@ def generate_passage(
         "(1) Content words (nouns, verbs, adjectives, adverbs) MUST come ONLY from the ALLOWED VOCABULARY list. "
         "Grammatical function words (particles, articles, conjunctions, auxiliaries, pronouns, "
         "common adverbs like very/also/not, numbers) are always permitted. "
-        f"(2) LENGTH LIMIT — THIS IS CRITICAL: {length_rule} "
+        f"(2) LENGTH — THIS IS CRITICAL: {length_rule} "
         "(3) The text must feel completely NATURAL — not a textbook exercise. "
         "(4) For 對話 type: format passage as 'A：...\\nB：...'. "
         "(5) 'passage' field: plain text only, no furigana, no parentheses, no reading annotations. "
@@ -672,11 +676,11 @@ def generate_passage(
 {vocab_list}
 
 PASSAGE TYPE: {passage_type}
-MAX LENGTH: {max_length} {'non-whitespace characters' if is_cjk else 'words'} — DO NOT EXCEED THIS.
+LENGTH: aim for {max_length} {'non-whitespace characters' if is_cjk else 'words'} (range {min_length}–{max_length}, must NOT exceed {max_length}).
 
 Output JSON:
 {{
-  "passage": "原文（無注音，嚴格限制在 {max_length} {'字元' if is_cjk else '個單詞'} 以內）",
+  "passage": "原文（無注音，目標接近 {max_length} {'字元' if is_cjk else '個單詞'}，絕不超過）",
   "reading": "完整讀音",
   "translation": "繁體中文翻譯",
   "vocab_notes": [
@@ -691,14 +695,14 @@ Output JSON:
     passage_text = data.get("passage", "")
     actual_len = _count_passage_length(passage_text, language)
 
-    # ── Retry if AI exceeded the limit by more than 10% ───
+    # ── Retry if AI exceeded the hard limit by more than 10% ──
     if actual_len > max_length * 1.10 and passage_text:
         trim_prompt = (
-            f"The following passage is {actual_len} {'characters' if is_cjk else 'words'} long, "
-            f"but the limit is {max_length}. "
-            f"Rewrite it to be AT MOST {max_length} {'non-whitespace characters' if is_cjk else 'words'}, "
-            "keeping it natural and using only the same vocabulary. "
-            "Return the SAME JSON structure with all fields updated to match the shorter passage.\n\n"
+            f"The following passage is {actual_len} {'characters' if is_cjk else 'words'} long. "
+            f"The hard limit is {max_length} and the target range is {min_length}–{max_length}. "
+            f"Rewrite it to be as close to {max_length} {'non-whitespace characters' if is_cjk else 'words'} "
+            f"as possible without exceeding {max_length}. Keep it natural and use only the same vocabulary. "
+            "Return the SAME JSON structure with all fields updated to match the rewritten passage.\n\n"
             f"Original passage: {passage_text}"
         )
         retry_content = _call_ai(system_message, trim_prompt)
