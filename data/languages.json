@@ -14,7 +14,7 @@
   {
     "key": "korean",
     "label": "Korean",
-    "reading_label": "Reading",
+    "reading_label": "Romanization",
     "supports_reading": true
   }
 ]
