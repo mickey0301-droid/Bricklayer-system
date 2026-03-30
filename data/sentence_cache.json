@@ -1224,9 +1224,9 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 손(soneul)[名詞: 手] + 을[受格助詞] + 자주(jaju)[副詞: 經常] + 씻는다(ssindda)[動詞: 洗]"
   },
   "korean::123": {
-    "sentence": "쇠로 만든 칼이 매우 날카롭다.",
-    "reading": "soe-ro mandeun kal-i maeu nalgarobda.",
-    "translation": "用鐵製成的刀非常鋒利。",
-    "grammar": "쇠(soe)[名詞: 鐵] + 로[助詞: 用] + 만든(mandeun)[動詞: 製作] + 칼(kal)[名詞: 刀] + 이(i)[主格助詞] + 매우(maeu)[副詞: 非常] + 날카롭다(nalgarobda)[形容詞: 鋒利]"
+    "sentence": "쇠는 사람에게 매우 중요하다.",
+    "reading": "soe neun saram ege maeu jungyohada.",
+    "translation": "鐵對人類來說非常重要。",
+    "grammar": "쇠(soe)[名詞: 鐵] + 는[主格助詞] + 사람(saram)[名詞: 人] + 에게[方向助詞] + 매우(maeu)[副詞: 非常] + 중요하다(jungyohada)[動詞: 重要]"
   }
 }
