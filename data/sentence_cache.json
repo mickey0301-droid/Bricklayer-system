@@ -1284,9 +1284,9 @@
     "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   },
   "korean::133": {
-    "sentence": "그 조각은 매우 아름답다.",
-    "reading": "geu jogag-eun maeu aleumdabda.",
-    "translation": "那塊雕刻非常美麗。",
-    "grammar": "그(geu)[代名詞: 那] + 조각(jogag)[名詞: 雕刻] + 은[eun][主格助詞] + 매우(maeu)[副詞: 非常] + 아름답다(aleumdabda)[形容詞: 美麗]"
+    "sentence": "내가 이 조를 좋아해.",
+    "reading": "naega i jo-reul joh-ae.",
+    "translation": "我喜歡這個兆。",
+    "grammar": "내가[代名詞: 我] + 이[指示詞: 這個] + 조(jo)[名詞: 兆] + 를[受格助詞] + 좋아해(joh-ae)[動詞: 喜歡]"
   }
 }
