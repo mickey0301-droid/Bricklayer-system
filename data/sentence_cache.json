@@ -1234,5 +1234,11 @@
     "reading": "geu sil-eun ajou ganeulda.",
     "translation": "那根絲非常細。",
     "grammar": "그(geu)[指示代名詞: 那] + 실(sil)[名詞: 絲] + 은[eun][主格助詞] + 아주(ajou)[副詞: 非常] + 가늘다(ganeulda)[形容詞: 細]"
+  },
+  "korean::125": {
+    "sentence": "이 씨를 심어야 좋은 나무가 자란다.",
+    "reading": "i ssireul sim-eoya joheun namuga jalanda.",
+    "translation": "這粒種子需要種下，才能長出好的樹。",
+    "grammar": "이(i)[代名詞: 這] + 씨(ssi)[名詞: 種子] + 를[受格助詞] + 심다(simda)[動詞: 種下] + 어야[-아야][助動詞: 必要] + 좋은(joheun)[形容詞: 好的] + 나무(namu)[名詞: 樹] + 가[主格助詞] + 자라다(jalada)[動詞: 成長] + 안다[-다][助動詞: 知道]。"
   }
 }
