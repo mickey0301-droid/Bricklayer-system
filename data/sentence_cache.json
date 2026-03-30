@@ -1054,5 +1054,11 @@
     "reading": "geumyoil-e chingu-reul mannayo.",
     "translation": "星期五我會見朋友。",
     "grammar": "금요일(geumyoil)[名詞: 星期五] + 에[方向助詞] + 친구(chingu)[名詞: 朋友] + 를[受格助詞] + 만나요(mannayo)[動詞: 見]"
+  },
+  "korean::106": {
+    "sentence": "나는 기차를 타고 간다.",
+    "reading": "naneun gichareul tago ganda.",
+    "translation": "我搭乘火車去。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 기차(gicha)[名詞: 火車] + 를[受格助詞] + 타고(tagodo)[動詞: 搭] + 간다(ganda)[動詞: 去]"
   }
 }
