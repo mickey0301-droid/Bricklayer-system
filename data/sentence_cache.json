@@ -1284,9 +1284,9 @@
     "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   },
   "korean::133": {
-    "sentence": "일억이 조가 필요해.",
-    "reading": "ilg'eogi jo-ga piryohae.",
-    "translation": "需要一億兆。",
-    "grammar": "일억(il-eog)[名詞: 一億] + 이[主格助詞] + 조(jo)[名詞: 兆] + 가[助詞] + 필요하다(piryohada)[動詞: 需要] + .[符號: 句號]"
+    "sentence": "그 조각은 매우 아름답다.",
+    "reading": "geu jogag-eun maeu aleumdabda.",
+    "translation": "那塊雕刻非常美麗。",
+    "grammar": "그(geu)[代名詞: 那] + 조각(jogag)[名詞: 雕刻] + 은[eun][主格助詞] + 매우(maeu)[副詞: 非常] + 아름답다(aleumdabda)[形容詞: 美麗]"
   }
 }
