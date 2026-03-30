@@ -1270,5 +1270,11 @@
     "reading": "naneun bbanggwa jaemeul meongneunda.",
     "translation": "我吃麵包和果醬。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 빵(bbong)[名詞: 麵包] + 과[gwa][連接詞: 和] + 잼(jaem)[名詞: 果醬] + 을[eul][受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
+  },
+  "korean::131": {
+    "sentence": "쟤는 우리의 친구야.",
+    "reading": "jyaeneun uriui chinguyah.",
+    "translation": "那小子是我們的朋友。",
+    "grammar": "쟤(jyae)[代名詞: 那小子] + 는[主格助詞] + 우리(ui)[代名詞: 我們] + 의[屬格助詞] + 친구(chingu)[名詞: 朋友] + 야(yah)[助動詞: 是]"
   }
 }
