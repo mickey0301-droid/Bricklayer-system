@@ -1036,5 +1036,11 @@
     "reading": "i eumsig-eun peok mas-issda.",
     "translation": "這道食物非常好吃。",
     "grammar": "이(i)[代名詞: 這] + 음식(eumsig)[名詞: 食物] + 은[eun][主格助詞] + 퍽(peok)[形容詞: 非常] + 맛있다(mas-issda)[動詞: 好吃]"
+  },
+  "korean::103": {
+    "sentence": "나는 게를 좋아해.",
+    "reading": "naneun ge-reul joahae.",
+    "translation": "我喜歡螃蟹。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 게(ge)[名詞: 螃蟹] + 를[受格助詞] + 좋아하다(joahada)[動詞: 喜歡]"
   }
 }
