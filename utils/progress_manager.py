@@ -64,18 +64,8 @@ def sync_history_from_github() -> bool:
 # ── Progress ───────────────────────────────────────────────
 
 def load_progress() -> dict:
-    """本地優先，本地無資料時才從 GitHub 下載。"""
-    # 1. 本地優先（絕對路徑，最可靠）
-    if os.path.exists(PROGRESS_FILE):
-        try:
-            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            if data:
-                return data
-        except Exception:
-            pass
-
-    # 2. 本地無資料時從 GitHub 下載（首次安裝 / 換電腦）
+    """有 token → GitHub 為權威來源；無 token → 本地。"""
+    # 1. 有 token → 從 GitHub 拿最新版本（雲端環境）
     gh_data = _gh_read(GH_PROGRESS_PATH)
     if gh_data is not None:
         _ensure_data_folder()
@@ -85,6 +75,16 @@ def load_progress() -> dict:
         except Exception:
             pass
         return gh_data
+
+    # 2. 無 token 或 GitHub 讀取失敗 → 本地檔案
+    if os.path.exists(PROGRESS_FILE):
+        try:
+            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if data:
+                return data
+        except Exception:
+            pass
 
     return {}
 

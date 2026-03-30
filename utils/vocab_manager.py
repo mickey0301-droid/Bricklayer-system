@@ -258,7 +258,21 @@ def load_vocab(language: str) -> pd.DataFrame:
     path = get_vocab_path(language)
     gh_path = f"data/{language}_vocab.json"
 
-    # 1. 本地優先：本地路徑已固定為絕對路徑，是最新最可靠的資料來源
+    # 1. 有 token → GitHub 為權威來源（雲端環境 / 有備份設定的本機）
+    #    每次載入都從 GitHub 拿最新版本，確保 reboot 後資料不會還原到舊的 git clone 版本
+    token, _ = _github_config()
+    if token:
+        gh_data, _ = _github_read(gh_path)
+        if gh_data:
+            # 同步到本地（讓同 session 的後續操作能快速讀取）
+            try:
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(gh_data, f, ensure_ascii=False, indent=2)
+            except Exception:
+                pass
+            return normalize_vocab_df(pd.DataFrame(gh_data))
+
+    # 2. 無 token（純本機開發）→ 讀本地檔案
     if os.path.exists(path):
         try:
             with open(path, "r", encoding="utf-8") as f:
@@ -267,15 +281,6 @@ def load_vocab(language: str) -> pd.DataFrame:
                 return normalize_vocab_df(pd.DataFrame(local_data))
         except Exception:
             pass
-
-    # 2. 本地無資料時（首次安裝 / 換電腦），從 GitHub 下載並存本地
-    token, _ = _github_config()
-    if token:
-        gh_data, _ = _github_read(gh_path)
-        if gh_data:
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(gh_data, f, ensure_ascii=False, indent=2)
-            return normalize_vocab_df(pd.DataFrame(gh_data))
 
     return empty_vocab_df()
 
@@ -351,7 +356,19 @@ def load_pattern_vocab(language: str) -> pd.DataFrame:
     path = get_pattern_vocab_path(language)
     gh_path = f"data/{language}_pattern_vocab.json"
 
-    # 1. 本地優先：本地路徑已固定為絕對路徑，是最新最可靠的資料來源
+    # 1. 有 token → GitHub 為權威來源
+    token, _ = _github_config()
+    if token:
+        gh_data, _ = _github_read(gh_path)
+        if gh_data:
+            try:
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(gh_data, f, ensure_ascii=False, indent=2)
+            except Exception:
+                pass
+            return normalize_vocab_df(pd.DataFrame(gh_data))
+
+    # 2. 無 token → 讀本地
     if os.path.exists(path):
         try:
             with open(path, "r", encoding="utf-8") as f:
@@ -360,15 +377,6 @@ def load_pattern_vocab(language: str) -> pd.DataFrame:
                 return normalize_vocab_df(pd.DataFrame(local_data))
         except Exception:
             pass
-
-    # 2. 本地無資料時（首次安裝 / 換電腦），從 GitHub 下載並存本地
-    token, _ = _github_config()
-    if token:
-        gh_data, _ = _github_read(gh_path)
-        if gh_data:
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(gh_data, f, ensure_ascii=False, indent=2)
-            return normalize_vocab_df(pd.DataFrame(gh_data))
 
     return empty_vocab_df()
 
