@@ -1284,9 +1284,9 @@
     "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   },
   "korean::133": {
-    "sentence": "그에게 10조 돈이 있다.",
-    "reading": "geuege 10jo doni itda.",
-    "translation": "他有10兆的錢。",
-    "grammar": "그(geu)[代名詞: 那] + 에게[方向助詞] + 10조(10jo)[名詞: 兆] + 돈(don)[名詞: 錢] + 이[主格助詞] + 있다(itda)[動詞: 有]"
+    "sentence": "이 조에 대해서 이야기해볼까요?",
+    "reading": "i jo e daehaseo iyaghaebolkka?",
+    "translation": "我們來談談這個兆吧？",
+    "grammar": "이(i)[代名詞: 這] + 조(jo)[名詞: 兆] + 에 대해(edaehayeo)[連接詞: 關於] + 서(seo)[助詞: 之] + 이야기하다(iyagihada)[動詞: 討論] + 볼까요(bolkka)?[助動詞: 嗎]"
   }
 }
