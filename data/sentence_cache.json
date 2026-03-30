@@ -1198,5 +1198,11 @@
     "reading": "geu bun-eun jeongmal manhda.",
     "translation": "那個富人真的很多。",
     "grammar": "그(geu)[代名詞: 那個] + 부(bu)[名詞: 富] + 는[主格助詞] + 정말(jeongmal)[副詞: 真的] + 많다(manhda)[動詞: 很多]"
+  },
+  "korean::119": {
+    "sentence": "나는 여전히 살이 많이 쪘다.",
+    "reading": "naneun yeojeonhi sari manhi jjyeotda.",
+    "translation": "我仍然胖了很多。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 여전히(yeojeonhi)[副詞: 仍然] + 살(sal)[名詞: 肉] + 이[主格助詞] + 많이(manhi)[副詞: 很多] + 쪘다(jjyeotda)[動詞: 胖]"
   }
 }
