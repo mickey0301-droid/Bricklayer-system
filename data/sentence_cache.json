@@ -1210,5 +1210,11 @@
     "reading": "saega namue anja itda.",
     "translation": "鳥在樹上坐著。",
     "grammar": "새(saee)[名詞: 鳥] + 가[主格助詞] + 나무(namu)[名詞: 樹] + 에[方向助詞] + 앉다(anida)[動詞: 坐] + 있다(itda)[動詞: 有]"
+  },
+  "korean::121": {
+    "sentence": "우리는 섬에 간다.",
+    "reading": "urineun seome ganda.",
+    "translation": "我們去島上。",
+    "grammar": "우리(uri)[代名詞: 我們] + 는[主格助詞] + 섬(seom)[名詞: 島] + 에[e][方向助詞] + 간다(ganda)[動詞: 去]"
   }
 }
