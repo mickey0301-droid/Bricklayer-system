@@ -1176,9 +1176,9 @@
     "grammar": "사람(saram)[名詞: 人] + 이[i][主格助詞] + 많다(man-ta)[形容詞: 多]"
   },
   "korean::114": {
-    "sentence": "나는 맨 위에 있는 책을 가져왔다.",
-    "reading": "nanun maen wie itneun chaeg-eul gajyeowatda.",
-    "translation": "我拿到了最上面的書。",
-    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 맨(maen)[形容詞: 最] + 위(wi)[名詞: 上面] + 에[方向助詞] + 있는(itneun)[動詞: 在] + 책(chaeg)[名詞: 書] + 을(eul)[受格助詞] + 가져왔다(gajyeowatda)[動詞: 拿來了]"
+    "sentence": "이 책은 맨 마지막에 중요한 정보가 있다.",
+    "reading": "i chaek-eun maen majimak-e jung-yo han jeongbo-ga itda.",
+    "translation": "這本書在最後有重要的信息。",
+    "grammar": "이(i)[代名詞: 這] + 책(chaek)[名詞: 書] + 은[eun][主格助詞] + 맨(maen)[名詞: 最] + 마지막(majimak)[名詞: 最後] + 에[助詞] + 중요한(jung-yo-han)[形容詞: 重要的] + 정보(jeongbo)[名詞: 信息] + 가[主格助詞] + 있다(itda)[動詞: 有]"
   }
 }
