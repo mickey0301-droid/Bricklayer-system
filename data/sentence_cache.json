@@ -1048,5 +1048,11 @@
     "reading": "gom-i sup-eseo ja-go it-da.",
     "translation": "熊在森林裡睡覺。",
     "grammar": "곰(gom)[名詞: 熊] + 이[主格助詞] + 숲(sup)[名詞: 森林] + 에서[方向助詞] + 자고(jago)[動詞: 睡] + 있다(it-da)[助動詞: 在]"
+  },
+  "korean::105": {
+    "sentence": "금요일에 친구를 만나요.",
+    "reading": "geumyoil-e chingu-reul mannayo.",
+    "translation": "星期五我會見朋友。",
+    "grammar": "금요일(geumyoil)[名詞: 星期五] + 에[方向助詞] + 친구(chingu)[名詞: 朋友] + 를[受格助詞] + 만나요(mannayo)[動詞: 見]"
   }
 }
