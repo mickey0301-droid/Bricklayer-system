@@ -1204,5 +1204,11 @@
     "reading": "geu saram-eun mani sal-assda.",
     "translation": "那個人活了很多年。",
     "grammar": "그(geu)[代名詞: 那個] + 사람(saram)[名詞: 人] + 은(eun)[主格助詞] + 많이(mani)[副詞: 很多] + 살았다(sal-assda)[動詞: 活了]"
+  },
+  "korean::120": {
+    "sentence": "새가 나무에 앉아 있다.",
+    "reading": "saega namue anja itda.",
+    "translation": "鳥在樹上坐著。",
+    "grammar": "새(saee)[名詞: 鳥] + 가[主格助詞] + 나무(namu)[名詞: 樹] + 에[方向助詞] + 앉다(anida)[動詞: 坐] + 있다(itda)[動詞: 有]"
   }
 }
