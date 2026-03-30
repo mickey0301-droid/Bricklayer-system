@@ -1176,9 +1176,9 @@
     "grammar": "사람(saram)[名詞: 人] + 이[i][主格助詞] + 많다(man-ta)[形容詞: 多]"
   },
   "korean::114": {
-    "sentence": "나는 맨 바닥에 앉아 있다.",
-    "reading": "naneun maen badag-e anja itda.",
-    "translation": "我坐在最底下的地板上。",
-    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 맨(maen)[名詞: 最] + 바닥(badag)[名詞: 地板] + 에[方向助詞] + 앉아(an-ja)[動詞: 坐] + 있다(itda)[動詞: 在]"
+    "sentence": "나는 맨 위에 있는 책을 가져왔다.",
+    "reading": "nanun maen wie itneun chaeg-eul gajyeowatda.",
+    "translation": "我拿到了最上面的書。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 맨(maen)[形容詞: 最] + 위(wi)[名詞: 上面] + 에[方向助詞] + 있는(itneun)[動詞: 在] + 책(chaeg)[名詞: 書] + 을(eul)[受格助詞] + 가져왔다(gajyeowatda)[動詞: 拿來了]"
   }
 }
