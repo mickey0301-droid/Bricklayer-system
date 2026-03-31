@@ -1606,5 +1606,11 @@
     "reading": "naneun ibon jue du beon mannal geosida.",
     "translation": "我這週會見兩次。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 이번(ibeon)[名詞: 這次] + 주(ju)[名詞: 週] + 에[方向助詞] + 두(du)[數詞: 兩] + 번(beon)[名詞: 次數] + 만날(mannal)[動詞: 見面] + 것이다(geosida)[助動詞: 將會]"
+  },
+  "korean::187": {
+    "sentence": "하늘에 별이 많다.",
+    "reading": "haneure byeoli manhada.",
+    "translation": "天空中有很多星星。",
+    "grammar": "하늘(haneul)[名詞: 天空] + 에[方向助詞] + 별(byel)[名詞: 星星] + 이[主格助詞] + 많다(manhada)[動詞: 很多] + .[句尾助詞]"
   }
 }
