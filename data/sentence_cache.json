@@ -1462,5 +1462,11 @@
     "reading": "wang-eun os-eul ibgo itda.",
     "translation": "王正在穿衣服。",
     "grammar": "왕(wang)[名詞: 王] + 은[主格助詞] + 옷(os)[名詞: 衣服] + 을[受格助詞] + 입고(ipgo)[動詞: 穿] + 있다(itda)[助動詞: 在]"
+  },
+  "korean::163": {
+    "sentence": "이 책의 내용이 좀 적다.",
+    "reading": "i chaeg-ui naeyongi jom jeokda.",
+    "translation": "這本書的內容有點少。",
+    "grammar": "이[冠詞: 這] + 책(chaeg)[名詞: 書] + 의[eui][屬格助詞] + 내용(naeyong)[名詞: 內容] + 이[主格助詞] + 좀(jom)[副詞: 一點] + 적다(jeokda)[動詞: 少]"
   }
 }
