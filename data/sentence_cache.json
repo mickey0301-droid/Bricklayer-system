@@ -1540,5 +1540,11 @@
     "reading": "i geul-eun maeu heungmirobda.",
     "translation": "這篇文章非常有趣。",
     "grammar": "이(i)[指示詞: 這] + 글(geul)[名詞: 文章] + 은(eun)[主格助詞] + 매우(maeu)[副詞: 非常] + 흥미롭다(heungmirobda)[形容詞: 有趣]"
+  },
+  "korean::176": {
+    "sentence": "그 남이 집에 있다.",
+    "reading": "geu nam-i jip-e itda.",
+    "translation": "那個人（男人）在家裡。",
+    "grammar": "그(geu)[代名詞: 他] + 남(nam)[名詞: 他人] + 이[i][主格助詞] + 집(jip)[名詞: 家] + 에[e][方向助詞] + 있다(itda)[動詞: 在]"
   }
 }
