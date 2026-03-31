@@ -1768,5 +1768,11 @@
     "reading": "",
     "translation": "今天不好。",
     "grammar": "Hoy[副詞: 今天] + está[動詞: 是] + mal[形容詞: 不好地]"
+  },
+  "spanish::34": {
+    "sentence": "Ella me da algo.",
+    "reading": "",
+    "translation": "她給我一些東西。",
+    "grammar": "Ella[代名詞: 她] + me[代名詞: 我（受格）] + da[動詞: 給] + algo[名詞: 一些東西]"
   }
 }
