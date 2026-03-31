@@ -1362,9 +1362,9 @@
     "grammar": "내(nae)[代名詞: 我的] + 굽(gub)[名詞: 鞋跟] + 이(i)[主格助詞] + 너무(neomu)[副詞: 太] + 높아(nopda)[形容詞: 高的] + ."
   },
   "korean::146": {
-    "sentence": "그 고리를 꽉 잡아주세요.",
-    "reading": "geu gorireul kkwak jabajuseyo.",
-    "translation": "請緊緊地抓住那個圈。",
-    "grammar": "그(geu)[指示代名詞: 那] + 고리(gori)[名詞: 圈] + 를[受格助詞] + 꽉(kkwak)[副詞: 緊緊地] + 잡아주다(jabajuda)[動詞: 抓住] + 세요(seyo)[敬語結尾]"
+    "sentence": "나무를 꽉 잡아야 해.",
+    "reading": "namureul kkwak jabaya hae.",
+    "translation": "必須緊緊地抓住樹。",
+    "grammar": "나무(namu)[名詞: 樹] + 를[受格助詞] + 꽉(kkwak)[副詞: 緊緊地] + 잡아야(jabayahae)[動詞: 必須抓住] + 해(hae)[助動詞: 需要]"
   }
 }
