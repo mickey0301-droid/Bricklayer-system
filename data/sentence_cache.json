@@ -1708,5 +1708,11 @@
     "reading": "",
     "translation": "她在家裡。",
     "grammar": "Ella[代名詞: 她] + está[動詞: 在] + en[介詞: 在] + casa[名詞: 家]"
+  },
+  "spanish::24": {
+    "sentence": "Ella está aquí.",
+    "reading": "",
+    "translation": "她在這裡。",
+    "grammar": "Ella[代名詞: 她] + está(estar)[動詞: 處於] + aquí[副詞: 這裡]"
   }
 }
