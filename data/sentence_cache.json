@@ -1420,5 +1420,11 @@
     "reading": "naege seti pilyohae.",
     "translation": "我需要三個。",
     "grammar": "나(na)[代名詞: 我] + 에게[方向助詞] + 셋(set)[名詞: 三個] + 이[主格助詞] + 필요하다(pilyohada)[動詞: 需要] + 해(hae)[助動詞: ...]"
+  },
+  "korean::156": {
+    "sentence": "두 쌍의 장갑이 필요해.",
+    "reading": "du ssang-ui jangbap-i pil-yohada.",
+    "translation": "我需要兩雙手套。",
+    "grammar": "두[數詞: 二] + 쌍(ssang)[名詞: 對、雙] + 의[屬格助詞] + 장갑(jangbap)[名詞: 手套] + 이[主格助詞] + 필요해(pil-yohada)[動詞: 需要]"
   }
 }
