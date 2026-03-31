@@ -1342,5 +1342,11 @@
     "reading": "gak saram-ui uigyeon-eun jungyohada.",
     "translation": "每個人的意見都很重要。",
     "grammar": "각(gak)[形容詞: 每個] + 사람(saram)[名詞: 人] + 의(yeui)[屬格助詞] + 의견(uigyeon)[名詞: 意見] + 은(eun)[主格助詞] + 중요하다(jungyohada)[動詞: 重要]"
+  },
+  "korean::143": {
+    "sentence": "강에서 물을 마셨어요.",
+    "reading": "gangeseo mul-eul masyeosseoyo.",
+    "translation": "在河裡喝水。",
+    "grammar": "강(gang)[名詞: 河] + 에서[助詞] + 물(mul)[名詞: 水] + 을[受格助詞] + 마셨어요(masyeosseoyo)[動詞: 喝]"
   }
 }
