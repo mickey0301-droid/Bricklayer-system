@@ -1392,9 +1392,9 @@
     "grammar": "나(na)[代名詞: 我] + 는[nun][主格助詞] + 뭇(mut)[名詞: 多] + 을(eul)[受格助詞] + 좋아하다(joahada)[動詞: 喜歡] + .[句點]"
   },
   "korean::151": {
-    "sentence": "나와 너는 친구이고, 우리 및 그 친구들도 함께 올 것이다.",
-    "reading": "nawa neoneun chinguilgo, uri mit geu chingudeuldo hamkke ol geosida.",
-    "translation": "我和你是朋友，我們和他的朋友們也會一起來。",
-    "grammar": "나(na)[代名詞: 我] + 와[接續詞] + 너(neo)[代名詞: 你] + 는[主格助詞] + 친구(chingu)[名詞: 朋友] + 이고[接續詞] + 우리(uri)[代名詞: 我們] + 및[接續詞: 與] + 그(geu)[代名詞: 那] + 친구(chingu)[名詞: 朋友] + 들도(deuldo)[名詞: 也] + 함께(hampke)[副詞: 一起] + 올(ol)[動詞: 來] + 것이다(geosida)[助動詞: 將]"
+    "sentence": "나와 너는 친구이다.",
+    "reading": "nawa-neoneun-chingu-ida.",
+    "translation": "我和你是朋友。",
+    "grammar": "나(na)[代名詞: 我] + 와[連接詞] + 너(neon)[代名詞: 你] + 는[主格助詞] + 친구(chingu)[名詞: 朋友] + 이다(ida)[助動詞: 是]"
   }
 }
