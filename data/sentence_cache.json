@@ -1678,5 +1678,11 @@
     "reading": "naneun yeope itneun cha reul watda.",
     "translation": "我看到了旁邊的車。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 옆(yeop)[名詞: 旁邊] + 에서[場所助詞] + 있는(itneun)[動詞: 在] + 차(cha)[名詞: 車] + 를[受格助詞] + 봤다(bwassda)[動詞: 看]"
+  },
+  "korean::199": {
+    "sentence": "오, 오늘 날씨가 좋다.",
+    "reading": "o, oneul nalssiga johda.",
+    "translation": "喔，今天的天氣很好。",
+    "grammar": "오[o][感嘆詞: 喔] + , + 오늘(oneul)[名詞: 今天] + 날씨(nalssi)[名詞: 天氣] + 가[主格助詞] + 좋다(johda)[形容詞: 好]"
   }
 }
