@@ -1324,5 +1324,11 @@
     "reading": "nae gabange pen-i itda.",
     "translation": "我的背包裡有原子筆。",
     "grammar": "내(nae)[代名詞: 我] + 가방(gabang)[名詞: 背包] + 에(e)[方向助詞] + 펜(pen)[名詞: 原子筆] + 이(i)[主格助詞] + 있다(itda)[動詞: 有]"
+  },
+  "korean::140": {
+    "sentence": "그 헌 책이 여기 있어.",
+    "reading": "geu heon chaegi yeogi isseo.",
+    "translation": "那本舊書在這裡。",
+    "grammar": "그(geu)[代名詞: 那] + 헌(heon)[形容詞: 舊的] + 책(chaeg)[名詞: 書] + 이(i)[主格助詞] + 여기(yeogi)[副詞: 這裡] + 있어(isseo)[動詞: 有]"
   }
 }
