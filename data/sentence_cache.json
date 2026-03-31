@@ -1534,5 +1534,11 @@
     "reading": "gul sogeseo manheun muli heuryeona watda.",
     "translation": "在洞穴裡流出了很多水。",
     "grammar": "굴(gul)[名詞: 洞穴] + 속에서[sogeseo][名詞: 裡面] + 많은(manheun)[形容詞: 很多] + 물(mul)[名詞: 水] + 이[i][主格助詞] + 흘러나왔다(heuryeona watda)[動詞: 流出來]"
+  },
+  "korean::175": {
+    "sentence": "이 글은 매우 흥미롭다.",
+    "reading": "i geul-eun maeu heungmirobda.",
+    "translation": "這篇文章非常有趣。",
+    "grammar": "이(i)[指示詞: 這] + 글(geul)[名詞: 文章] + 은(eun)[主格助詞] + 매우(maeu)[副詞: 非常] + 흥미롭다(heungmirobda)[形容詞: 有趣]"
   }
 }
