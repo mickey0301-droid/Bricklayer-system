@@ -1696,5 +1696,11 @@
     "reading": "",
     "translation": "她們在這裡。",
     "grammar": "Ellas[代名詞: 她們] + están[動詞: 是] + aquí[副詞: 這裡]"
+  },
+  "spanish::22": {
+    "sentence": "Ellos están aquí.",
+    "reading": "",
+    "translation": "他們在這裡。",
+    "grammar": "Ellos[代名詞: 他們] + están[動詞: 是] + aquí[副詞: 這裡]"
   }
 }
