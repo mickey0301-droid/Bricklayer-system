@@ -1306,5 +1306,11 @@
     "reading": "chil-i se gae piryohae.",
     "translation": "需要三個七。",
     "grammar": "칠(chil)[名詞: 七] + 이[主格助詞] + 세(se)[名詞: 三] + 개(gae)[名詞: 個] + 필요해(piryohada)[動詞: 需要]"
+  },
+  "korean::137": {
+    "sentence": "내 키는 정말 크다.",
+    "reading": "nae ki neun jeongmal keuda.",
+    "translation": "我的身高真的很高。",
+    "grammar": "내(nae)[代名詞: 我的] + 키(ki)[名詞: 身高] + 는(neun)[主格助詞] + 정말(jeongmal)[副詞: 真的] + 크다(keuda)[動詞: 高]"
   }
 }
