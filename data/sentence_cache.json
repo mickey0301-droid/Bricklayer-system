@@ -1350,9 +1350,9 @@
     "grammar": "강(gang)[名詞: 河] + 에서[助詞] + 물(mul)[名詞: 水] + 을[受格助詞] + 마셨어요(masyeosseoyo)[動詞: 喝]"
   },
   "korean::144": {
-    "sentence": "비가 곧 올 것 같아요.",
-    "reading": "bigaui god ol geot gatayo.",
-    "translation": "好像馬上要下雨。",
-    "grammar": "비(비)[名詞: 雨] + 가[主格助詞] + 곧(god)[副詞: 很快] + 올(오다)[動詞: 來] + 것(것)[名詞: 事情] + 같아요(같다)[動詞: 像是]。"
+    "sentence": "그녀는 곧 집에 올 거예요.",
+    "reading": "geunyeoneun got jib-e ol geoyeyo.",
+    "translation": "她很快就會回家。",
+    "grammar": "그(geu)[代名詞: 她] + 녀(neun)[主格助詞] + 는(neun)[主格助詞] + 곧(got)[副詞: 很快] + 집(jib)[名詞: 家] + 에(e)[方向助詞] + 올(ol)[動詞: 來] + 거예요(geoyeyo)[助動詞: 將會]"
   }
 }
