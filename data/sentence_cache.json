@@ -1372,5 +1372,11 @@
     "reading": "jilmun-e daehan dap-i pilyohae.",
     "translation": "我需要對問題的回答。",
     "grammar": "질문(jilmun)[名詞: 問題] + 에[屬格助詞] + 대한(daehan)[形容詞: 對於] + 답(dap)[名詞: 回答] + 이(i)[主格助詞] + 필요하다(pilyohada)[動詞: 需要]"
+  },
+  "korean::148": {
+    "sentence": "내가 멍이 생겼다.",
+    "reading": "naega meongi saenggyeotda.",
+    "translation": "我有瘀青。",
+    "grammar": "나(na)[代名詞: 我] + 가[主格助詞] + 멍(meong)[名詞: 瘀青] + 이[助詞] + 생겼다(saenggyeotda)[動詞: 出現]"
   }
 }
