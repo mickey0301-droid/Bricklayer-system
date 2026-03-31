@@ -1452,10 +1452,10 @@
     "grammar": "엄마(eomma)[名詞: 媽媽] + 가[主格助詞] + 방(bang)[名詞: 房間] + 에[方向助詞] + 있다(itda)[動詞: 存在]"
   },
   "korean::161": {
-    "sentence": "우리 옷이 더러워서 빨래를 해야 해.",
-    "reading": "uri osi deoreowoseo ballaereul haeya hae.",
-    "translation": "我們的衣服髒了，所以得洗。",
-    "grammar": "우리(uri)[代名詞: 我們] + 옷(ot)[名詞: 衣服] + 이(i)[主格助詞] + 더러워서(deoreowoseo)[形容詞: 髒] + 빨래(ballrae)[名詞: 洗衣] + 를(reul)[受格助詞] + 해야(haeya)[動詞: 得] + 해(hae)[助動詞: 要做]"
+    "sentence": "나는 새로운 옷을 사고 싶다.",
+    "reading": "naneun saeloun ot-eul sago sipda.",
+    "translation": "我想買新的衣服。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 새로운(saeloun)[形容詞: 新的] + 옷(ot)[名詞: 衣服] + 을[受格助詞] + 사고(sago)[動詞: 購買] + 싶다(sipda)[助動詞: 想]。"
   },
   "korean::162": {
     "sentence": "왕은 옷을 입고 있다.",
