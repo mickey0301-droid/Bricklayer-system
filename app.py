@@ -242,6 +242,9 @@ _defaults = {
     # 複習練習範圍
     "review_code_min": None,
     "review_code_max": None,
+    # 批次例句預生成（記錄最近已生成的 batch 索引，-1 代表尚未生成）
+    "study_batch_generated": -1,
+    "pattern_study_batch_generated": -1,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -404,6 +407,7 @@ def go_custom_vocab():
 def go_study():
     language = st.session_state.language
     st.session_state.study_index = get_language_progress(language)
+    st.session_state.study_batch_generated = -1
     st.session_state.page = "study"
 
 def go_review():
@@ -437,6 +441,7 @@ def go_pattern_study():
     st.session_state.pattern_tts_term_for = ""
     st.session_state.pattern_tts_sentence_audio = None
     st.session_state.pattern_tts_sentence_for = ""
+    st.session_state.pattern_study_batch_generated = -1
 
 def go_pattern_review():
     st.session_state.page = "pattern_review"
@@ -937,6 +942,38 @@ def study_page():
 
     allowed_df = get_allowed_vocab(study_df, current_code)
     allowed_terms = allowed_df["term"].astype(str).tolist()
+
+    # ── 批次預生成例句（每 10 個單字一批，進入新批次時一次生成完畢）──
+    _current_batch = st.session_state.study_index // 10
+    if _current_batch != st.session_state.get("study_batch_generated", -1):
+        _batch_start = _current_batch * 10
+        _batch_end   = min(_batch_start + 10, len(study_df))
+        _missing = [
+            i for i in range(_batch_start, _batch_end)
+            if not get_cached_sentence(language, str(get_current_row(study_df, i)["code"])).get("sentence")
+        ]
+        if _missing:
+            with st.spinner(f"AI 正在預先生成第 {_batch_start + 1}–{_batch_end} 個例句（共 {len(_missing)} 個）…"):
+                for _bi in _missing:
+                    _row   = get_current_row(study_df, _bi)
+                    _bcode = str(_row["code"])
+                    _bcode_num = int(_row["code_num"])
+                    _b_allowed_df = get_allowed_vocab(study_df, _bcode_num)
+                    try:
+                        _bresult = generate_example_sentence(
+                            language=language,
+                            current_term=str(_row["term"]),
+                            allowed_terms=_b_allowed_df["term"].astype(str).tolist(),
+                            term_meaning=str(_row.get("meaning", "")),
+                            term_reading=str(_row.get("reading", "")),
+                            term_pos=str(_row.get("pos", "")),
+                            current_code=_bcode_num,
+                            allowed_vocab=_df_to_allowed_vocab(_b_allowed_df),
+                        )
+                        set_cached_sentence(language, _bcode, _bresult)
+                    except Exception:
+                        pass
+        st.session_state.study_batch_generated = _current_batch
 
     cached_sentence = get_cached_sentence(language, str(current["code"]))
     needs_switch = st.session_state.study_sentence_term != current_term
@@ -1851,6 +1888,39 @@ def pattern_study_page():
 
     allowed_df    = get_allowed_vocab(study_df, current_code)
     allowed_terms = allowed_df["term"].astype(str).tolist()
+
+    # ── 批次預生成例句（每 10 個句型一批，進入新批次時一次生成完畢）──
+    _pattern_lang_key = f"{language}_pattern"
+    _current_batch = st.session_state.pattern_study_index // 10
+    if _current_batch != st.session_state.get("pattern_study_batch_generated", -1):
+        _batch_start = _current_batch * 10
+        _batch_end   = min(_batch_start + 10, len(study_df))
+        _missing = [
+            i for i in range(_batch_start, _batch_end)
+            if not get_cached_sentence(_pattern_lang_key, str(get_current_row(study_df, i)["code"])).get("sentence")
+        ]
+        if _missing:
+            with st.spinner(f"AI 正在預先生成第 {_batch_start + 1}–{_batch_end} 個例句（共 {len(_missing)} 個）…"):
+                for _bi in _missing:
+                    _row   = get_current_row(study_df, _bi)
+                    _bcode = str(_row["code"])
+                    _bcode_num = int(_row["code_num"])
+                    _b_allowed_df = get_allowed_vocab(study_df, _bcode_num)
+                    try:
+                        _bresult = generate_example_sentence(
+                            language=language,
+                            current_term=str(_row["term"]),
+                            allowed_terms=_b_allowed_df["term"].astype(str).tolist(),
+                            term_meaning=str(_row.get("meaning", "")),
+                            term_reading=str(_row.get("reading", "")),
+                            term_pos=str(_row.get("pos", "")),
+                            current_code=_bcode_num,
+                            allowed_vocab=_df_to_allowed_vocab(_b_allowed_df),
+                        )
+                        set_cached_sentence(_pattern_lang_key, _bcode, _bresult)
+                    except Exception:
+                        pass
+        st.session_state.pattern_study_batch_generated = _current_batch
 
     cached_sentence = get_cached_sentence(f"{language}_pattern", str(current["code"]))
     needs_switch    = st.session_state.pattern_study_sentence_term != current_term
