@@ -1594,5 +1594,11 @@
     "reading": "mu-reul bab-e neuh-eo meog-eoya hae.",
     "translation": "必須把蘿蔔放進飯裡吃。",
     "grammar": "무(mu)[名詞: 蘿蔔] + 를[受格助詞] + 밥(bab)[名詞: 飯] + 에[方向助詞] + 넣다(neohda)[動詞: 放進] + 먹다(meogda)[動詞: 吃] + -야[助動詞] + 해(hae)[動詞: 必須]"
+  },
+  "korean::185": {
+    "sentence": "밤에 별이 정말 아름답다.",
+    "reading": "bam(e) byeol(i) jeongmal aleumdapda.",
+    "translation": "晚上星星真的很美。",
+    "grammar": "밤(밤)[名詞: 夜晚] + 에[方向助詞] + 별(별)[名詞: 星星] + 이[主格助詞] + 정말(정말)[副詞: 真的] + 아름답다(아름답다)[형容詞: 美麗]"
   }
 }
