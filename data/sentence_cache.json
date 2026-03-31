@@ -1435,8 +1435,8 @@
   },
   "korean::158": {
     "sentence": "어른이 되면 책임이 많아진다.",
-    "reading": "eoreun-i doemyeon chaegimi manhajinda.",
-    "translation": "成為大人的時候，責任變得多了。",
-    "grammar": "어른(eoreun)[名詞: 大人] + 이[主格助詞] + 되다(doeda)[動詞: 變成] + 면[連接詞] + 책임(chaegim)[名詞: 責任] + 이[主格助詞] + 많아지다(man hajida)[動詞: 變多了] + 다[終結詞]"
+    "reading": "eoreuni doemyeon chaegimi manhajinda.",
+    "translation": "成為大人的時候，責任會變得很多。",
+    "grammar": "어른(eoreun)[名詞: 大人] + 이[主格助詞] + 되다(doeda)[動詞: 成為] + 면[條件助詞] + 책임(chaegim)[名詞: 責任] + 이[主格助詞] + 많아지다(manajida)[動詞: 變得很多] + ㄴ다[終結語尾]"
   }
 }
