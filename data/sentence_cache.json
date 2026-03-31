@@ -1516,5 +1516,11 @@
     "reading": "babe-seo hyang-i nayo.",
     "translation": "飯裡面有香味。",
     "grammar": "밥(bap)[名詞: 飯] + 에서[場所助詞] + 향(hyang)[名詞: 香味] + 이[主格助詞] + 나요(nayo)[動詞: 出現]"
+  },
+  "korean::172": {
+    "sentence": "그 사람은 거기서 일해.",
+    "reading": "geu salameun geogiseo ilhae.",
+    "translation": "那個人正在那裡工作。",
+    "grammar": "그(geu)[代名詞: 他] + 사람(saram)[名詞: 人] + 은[eun][主格助詞] + 거기(geogi)[名詞: 那裡] + 서(seo)[助詞: 在] + 일해(ilhae)[動詞: 工作] + ."
   }
 }
