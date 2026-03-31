@@ -1762,5 +1762,11 @@
     "reading": "",
     "translation": "年輕人到這裡。",
     "grammar": "Los[定冠詞: 陽性複數] + jóvenes[名詞: 年輕人] + van[動詞: 去] + aquí[副詞: 這裡]"
+  },
+  "spanish::33": {
+    "sentence": "Hoy está mal.",
+    "reading": "",
+    "translation": "今天不好。",
+    "grammar": "Hoy[副詞: 今天] + está[動詞: 是] + mal[形容詞: 不好地]"
   }
 }
