@@ -1780,5 +1780,11 @@
     "reading": "",
     "translation": "她現在有更少。",
     "grammar": "Ella[代名詞: 她] + tiene(有)[動詞: 擁有] + menos[形容詞: 更少] + ahora[副詞: 現在]"
+  },
+  "spanish::36": {
+    "sentence": "Ella tiene mucho libro.",
+    "reading": "",
+    "translation": "她有很多書。",
+    "grammar": "Ella[代名詞: 她] + tiene(有)[動詞: 有] + mucho[形容詞: 很多] + libro[名詞: 書]"
   }
 }
