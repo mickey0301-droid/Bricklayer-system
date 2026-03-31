@@ -1620,10 +1620,10 @@
     "grammar": "그(geu)[代名詞: 那] + 차(cha)[名詞: 車] + 는[主格助詞] + 아주(aju)[副詞: 非常] + 빠르다(ppa-reu-da)[形容詞: 快]"
   },
   "korean::189": {
-    "sentence": "뼈를 잘라서 국에 넣어야 해.",
-    "reading": "ppyeoreul jallaseo guk-e neohaya hae.",
-    "translation": "必須把骨頭切好放進湯裡。",
-    "grammar": "뼈(ppyeo)[名詞: 骨頭] + 를[受格助詞] + 잘라서(jallaseo)[動詞: 切] + 국(guk)[名詞: 湯] + 에[方向助詞] + 넣어야(neohaya)[動詞: 必須放進] + 해(hae)[助動詞: 做]"
+    "sentence": "닭의 뼈가 작다.",
+    "reading": "dalgui ppyeoga jakda.",
+    "translation": "雞的骨頭很小。",
+    "grammar": "닭(닭)[名詞: 雞] + 의[屬格助詞] + 뼈(뼈)[名詞: 骨頭] + 가[主格助詞] + 작다(작다)[形容詞: 小]"
   },
   "korean::190": {
     "sentence": "사람이 많다.",
