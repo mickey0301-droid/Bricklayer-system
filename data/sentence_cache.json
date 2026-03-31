@@ -1546,5 +1546,11 @@
     "reading": "geu nam-i jip-e itda.",
     "translation": "那個人（男人）在家裡。",
     "grammar": "그(geu)[代名詞: 他] + 남(nam)[名詞: 他人] + 이[i][主格助詞] + 집(jip)[名詞: 家] + 에[e][方向助詞] + 있다(itda)[動詞: 在]"
+  },
+  "korean::177": {
+    "sentence": "누나와 나는 자주 같이 밥을 먹는다.",
+    "reading": "nuna-wa na-neun jaju gachi bap-eul meongneunda.",
+    "translation": "我和姐姐經常一起吃飯。",
+    "grammar": "누나(nuna)[名詞: 姐姐] + 와[連接詞] + 나(na)[代名詞: 我] + 는[主格助詞] + 자주[jaju][副詞: 經常] + 같이(gachi)[副詞: 一起] + 밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
   }
 }
