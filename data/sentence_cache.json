@@ -1284,9 +1284,9 @@
     "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   },
   "korean::133": {
-    "sentence": "조용한 집에서 책을 읽는다.",
-    "reading": "joyonghan jibeseo chaeg-eul ilgeunda.",
-    "translation": "在安靜的家裡看書。",
-    "grammar": "조용한[形容詞: 安靜的] + 집[名詞: 家] + 에서[方向助詞] + 책[名詞: 書] + 을[受格助詞] + 읽는다[動詞: 讀]"
+    "sentence": "내 꿈은 조가 되다.",
+    "reading": "nae kkum-eun jo-ga doeda.",
+    "translation": "我的夢想是成為兆。",
+    "grammar": "내(nae)[代名詞: 我] + 꿈(kkum)[名詞: 夢想] + 은(eun)[主格助詞] + 조(jo)[名詞: 兆] + 가(ga)[助動詞] + 되다(doeda)[動詞: 成為]"
   }
 }
