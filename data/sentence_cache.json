@@ -1624,5 +1624,11 @@
     "reading": "dalk-ui ppye-reul jalla juseyo.",
     "translation": "請把雞的骨頭切好。",
     "grammar": "닭(닭)[名詞: 雞] + 의[屬格助詞] + 뼈(ppyeo)[名詞: 骨頭] + 를[受格助詞] + 잘라(jalla)[動詞: 切] + 주세요(juseyo)[動詞: 請]"
+  },
+  "korean::190": {
+    "sentence": "사람이 많다.",
+    "reading": "saram-i manhda.",
+    "translation": "人很多。",
+    "grammar": "사람(saram)[名詞: 人] + 이[主格助詞] + 많다(manhda)[動詞: 很多]"
   }
 }
