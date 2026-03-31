@@ -1284,9 +1284,9 @@
     "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   },
   "korean::133": {
-    "sentence": "이 조에 대해서 이야기해볼까요?",
-    "reading": "i jo e daehaseo iyaghaebolkka?",
-    "translation": "我們來談談這個兆吧？",
-    "grammar": "이(i)[代名詞: 這] + 조(jo)[名詞: 兆] + 에 대해(edaehayeo)[連接詞: 關於] + 서(seo)[助詞: 之] + 이야기하다(iyagihada)[動詞: 討論] + 볼까요(bolkka)?[助動詞: 嗎]"
+    "sentence": "나는 조용히 공부하고 있다.",
+    "reading": "naneun joyonghi gongbuhago itda.",
+    "translation": "我安靜地在學習。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 조용히(joyonghi)[副詞: 安靜地] + 공부하다(gongbuhada)[動詞: 學習] + 고[接續助詞] + 있다(itda)[助動詞: 在]"
   }
 }
