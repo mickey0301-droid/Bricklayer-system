@@ -1636,5 +1636,11 @@
     "reading": "nae sam-eun hangsang haengbokhae.",
     "translation": "我的生活總是快樂的。",
     "grammar": "내(na)[代名詞: 我] + 삶(sam)[名詞: 生活] + 은[eun][主格助詞] + 항상(hangsang)[副詞: 一直] + 행복해(haengbokhae)[形容詞: 快樂的] + ."
+  },
+  "korean::192": {
+    "sentence": "설이 다가오고 있어요.",
+    "reading": "seol-i dagaogo isseoyo.",
+    "translation": "過年快到了。",
+    "grammar": "설(seol)[名詞: 過年] + 이[i][主格助詞] + 다가오다(dagaoda)[動詞: 快到] + 고[連接詞] + 있어요(isseoyo)[助動詞: 在]"
   }
 }
