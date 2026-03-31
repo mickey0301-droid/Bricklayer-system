@@ -1302,9 +1302,9 @@
     "grammar": "우리(uri)[代名詞: 我們] + 집(jip)[名詞: 家] + 에(e)[方向助詞] + 채(chae)[名詞: 棟] + 가(ga)[主格助詞] + 있다(itda)[動詞: 有]"
   },
   "korean::136": {
-    "sentence": "칠 살이 된 아이가 놀고 있다.",
-    "reading": "chil sal-i doen ai-ga nolgo itda.",
-    "translation": "七歲的孩子正在玩。",
-    "grammar": "칠(chil)[名詞: 七] + 살(sal)[名詞: 岁] + 이[主格助詞] + 된(doen)[動詞: 成為] + 아이(ai)[名詞: 孩子] + 가[主格助詞] + 놀고(nolgo)[動詞: 玩] + 있다(itda)[助動詞: 在]"
+    "sentence": "칠이 세 개 필요해.",
+    "reading": "chil-i se gae piryohae.",
+    "translation": "需要三個七。",
+    "grammar": "칠(chil)[名詞: 七] + 이[主格助詞] + 세(se)[名詞: 三] + 개(gae)[名詞: 個] + 필요해(piryohada)[動詞: 需要]"
   }
 }
