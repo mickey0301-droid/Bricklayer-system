@@ -1366,5 +1366,11 @@
     "reading": "namureul kkwak jabaya hae.",
     "translation": "必須緊緊地抓住樹。",
     "grammar": "나무(namu)[名詞: 樹] + 를[受格助詞] + 꽉(kkwak)[副詞: 緊緊地] + 잡아야(jabayahae)[動詞: 必須抓住] + 해(hae)[助動詞: 需要]"
+  },
+  "korean::147": {
+    "sentence": "질문에 대한 답이 필요해.",
+    "reading": "jilmun-e daehan dap-i pilyohae.",
+    "translation": "我需要對問題的回答。",
+    "grammar": "질문(jilmun)[名詞: 問題] + 에[屬格助詞] + 대한(daehan)[形容詞: 對於] + 답(dap)[名詞: 回答] + 이(i)[主格助詞] + 필요하다(pilyohada)[動詞: 需要]"
   }
 }
