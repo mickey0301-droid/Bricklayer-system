@@ -1666,5 +1666,11 @@
     "reading": "geu si-neun jeongmal aleumdabda.",
     "translation": "那首詩真的很美。",
     "grammar": "그(geu)[代名詞: 那個] + 시(si)[名詞: 詩] + 는[主格助詞] + 정말(jeongmal)[副詞: 真的] + 아름답다(aleumdabda)[形容詞: 美]"
+  },
+  "korean::197": {
+    "sentence": "책이 안에 있다.",
+    "reading": "chaegi an-e itda.",
+    "translation": "書在裡面。",
+    "grammar": "책(chaek)[名詞: 書] + 이[i][主格助詞] + 안(an)[名詞: 裡面] + 에[方向助詞] + 있다(itda)[動詞: 在]"
   }
 }
