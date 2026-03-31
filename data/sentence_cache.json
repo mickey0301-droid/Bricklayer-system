@@ -1578,10 +1578,10 @@
     "grammar": "그(geu)[代名詞: 他] + 는[主格助詞] + 나(nai)[代名詞: 我] + 의[屬格助詞] + 뒤(dwih)[名詞: 後面] + 에[方向助詞] + 있다(itda)[動詞: 在]"
   },
   "korean::182": {
-    "sentence": "사람들이 떼를 지어 걷고 있다.",
-    "reading": "salamdeuri tte-reul ji-eo geodgo itda.",
-    "translation": "人們成群結隊地走著。",
-    "grammar": "사람들( salamdeul)[名詞: 人們] + 이( i)[主格助詞] + 떼( tte)[名詞: 群] + 를( reul)[受格助詞] + 지어( ji-eo)[動詞: 組成] + 걷고( geodgo)[動詞: 走] + 있다( itda)[助動詞: 存在]"
+    "sentence": "사람들이 떼를 지어서 걸어간다.",
+    "reading": "salamdeuli tte reo ji eoseo georeoganda.",
+    "translation": "人們成群結隊地走了。",
+    "grammar": "사람들(사람들)[名詞: 人們] + 이[主格助詞] + 떼(떼)[名詞: 群] + 를[受格助詞] + 지어서(지다)[動詞: 組成] + 걸어간다(걸어가다)[動詞: 走]。"
   },
   "korean::183": {
     "sentence": "우리는 그 모를 기르다.",
