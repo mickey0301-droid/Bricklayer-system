@@ -1672,5 +1672,11 @@
     "reading": "chaegi an-e itda.",
     "translation": "書在裡面。",
     "grammar": "책(chaek)[名詞: 書] + 이[i][主格助詞] + 안(an)[名詞: 裡面] + 에[方向助詞] + 있다(itda)[動詞: 在]"
+  },
+  "korean::198": {
+    "sentence": "나는 옆에 있는 차를 봤다.",
+    "reading": "naneun yeope itneun cha reul watda.",
+    "translation": "我看到了旁邊的車。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 옆(yeop)[名詞: 旁邊] + 에서[場所助詞] + 있는(itneun)[動詞: 在] + 차(cha)[名詞: 車] + 를[受格助詞] + 봤다(bwassda)[動詞: 看]"
   }
 }
