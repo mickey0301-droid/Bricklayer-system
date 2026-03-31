@@ -1726,5 +1726,11 @@
     "reading": "",
     "translation": "我想做一些好的事情。",
     "grammar": "Yo[代名詞: 我] + quiero[動詞: 想] + hacer(做)[動詞: 做] + algo[名詞: 一些] + bueno[形容詞: 好的]"
+  },
+  "spanish::27": {
+    "sentence": "Hoy ella está aquí.",
+    "reading": "",
+    "translation": "今天她在這裡。",
+    "grammar": "Hoy[副詞: 今天] + ella[代名詞: 她] + está[動詞: 在] + aquí[副詞: 這裡]"
   }
 }
