@@ -1294,5 +1294,11 @@
     "reading": "urineun maeju suyoil-e mannayo.",
     "translation": "我們每週三見面。",
     "grammar": "우리(uri)[代名詞: 我們] + 는[主格助詞] + 매주(maeju)[名詞: 每週] + 수요일(suyoil)[名詞: 星期三] + 에[方向助詞] + 만나요(mannayo)[動詞: 見面]"
+  },
+  "korean::135": {
+    "sentence": "우리 집에 채가 있다.",
+    "reading": "uri jibe chaega itda.",
+    "translation": "我們家有一座棟。",
+    "grammar": "우리(uri)[代名詞: 我們] + 집(jip)[名詞: 家] + 에(e)[方向助詞] + 채(chae)[名詞: 棟] + 가(ga)[主格助詞] + 있다(itda)[動詞: 有]"
   }
 }
