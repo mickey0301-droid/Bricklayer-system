@@ -1738,5 +1738,17 @@
     "reading": "",
     "translation": "今天我想去海灘。",
     "grammar": "Hoy[副詞: 今天] + quiero[動詞: 想] + ir[動詞: 去] + a[助詞: 到] + la[冠詞: 這] + playa[名詞: 海灘]"
+  },
+  "spanish::29": {
+    "sentence": "Ella es joven.",
+    "reading": "",
+    "translation": "她是年輕人。",
+    "grammar": "Ella[代名詞: 她] + es[助動詞: 是] + joven[形容詞: 年輕的]"
+  },
+  "spanish::30": {
+    "sentence": "Yo la veo en el parque.",
+    "reading": "",
+    "translation": "我在公園看到她。",
+    "grammar": "Yo[代名詞: 我] + la[代名詞: 她] + veo[動詞: 看] + en[介詞: 在] + el[定冠詞: 這個] + parque[名詞: 公園]"
   }
 }
