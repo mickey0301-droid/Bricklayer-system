@@ -1642,5 +1642,11 @@
     "reading": "seol-i dagaogo isseoyo.",
     "translation": "過年快到了。",
     "grammar": "설(seol)[名詞: 過年] + 이[i][主格助詞] + 다가오다(dagaoda)[動詞: 快到] + 고[連接詞] + 있어요(isseoyo)[助動詞: 在]"
+  },
+  "korean::193": {
+    "sentence": "나는 세 살이에요.",
+    "reading": "naneun se sal-ieyo.",
+    "translation": "我三歲。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 세(se)[名詞: 三、歲] + 살(sal)[名詞: 年齡] + 이에요(-ieyo)[助動詞: 是]"
   }
 }
