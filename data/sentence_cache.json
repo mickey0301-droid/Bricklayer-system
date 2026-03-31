@@ -1476,9 +1476,9 @@
     "grammar": "교회(gyohoe)[名詞: 教會] + 에서[方向助詞] + 종(jong)[名詞: 鐘] + 이[主格助詞] + 울린다(ullinda)[動詞: 鳴響]。"
   },
   "korean::165": {
-    "sentence": "아침에 죽을 먹었다.",
-    "reading": "achim-e juk-eul meogeotda.",
-    "translation": "我在早上吃了粥。",
-    "grammar": "아침(achim)[名詞: 早上] + 에[方向助詞] + 죽(juk)[名詞: 粥] + 을[eul][受格助詞] + 먹었다(meogeotda)[動詞: 吃]"
+    "sentence": "아침에 나는 죽을 먹는다.",
+    "reading": "achim-e naneun juk-eul meongneunda.",
+    "translation": "早上我吃粥。",
+    "grammar": "아침(achim)[名詞: 早上] + 에[方向助詞] + 나(na)[代名詞: 我] + 는[主格助詞] + 죽(juk)[名詞: 粥] + 을[eul][受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
   }
 }
