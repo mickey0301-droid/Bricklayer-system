@@ -1284,9 +1284,9 @@
     "grammar": "아이(아이)[名詞: 孩子] + 는[主格助詞] + 젖(젖)[名詞: 乳汁] + 을[受格助詞] + 많이[副詞: 很多] + 마신다(마시다)[動詞: 喝]"
   },
   "korean::133": {
-    "sentence": "조금 더 기다려 주세요.",
-    "reading": "jogeum deo gidaryeo juseyo.",
-    "translation": "請稍等一下。",
-    "grammar": "조(jo)[名詞: 兆] + 끔(geum)[副詞: 稍微] + 더(deo)[副詞: 更多] + 기다려(gidaryeo)[動詞: 等待] + 주세요(juseyo)[助動詞: 請]"
+    "sentence": "조용한 집에서 책을 읽는다.",
+    "reading": "joyonghan jibeseo chaeg-eul ilgeunda.",
+    "translation": "在安靜的家裡看書。",
+    "grammar": "조용한[形容詞: 安靜的] + 집[名詞: 家] + 에서[方向助詞] + 책[名詞: 書] + 을[受格助詞] + 읽는다[動詞: 讀]"
   }
 }
