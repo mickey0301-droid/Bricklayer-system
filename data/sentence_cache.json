@@ -1654,5 +1654,11 @@
     "reading": "sum-eul gipi swieoya handa.",
     "translation": "需要深呼吸。",
     "grammar": "숨(sum)[名詞: 呼吸] + 을[受格助詞] + 깊이(gipi)[副詞: 深] + 쉬다(swieuda)[動詞: 呼吸] + 어야(handa)[助動詞: 必須] + 한다(handa)[助動詞: 是]"
+  },
+  "korean::195": {
+    "sentence": "숲에서 새들이 노래하고 있다.",
+    "reading": "supeseo saedeuri noraeago itda.",
+    "translation": "在森林裡，鳥兒在唱歌。",
+    "grammar": "숲(sup)[名詞: 森林] + 에서[助詞] + 새들(saedeul)[名詞: 鳥] + 이[主格助詞] + 노래하고(noraehamyeo)[動詞: 唱歌] + 있다(itda)[動詞: 在]"
   }
 }
