@@ -1498,5 +1498,11 @@
     "reading": "geu aiui teogi yeppeoyo.",
     "translation": "那個孩子的下巴很美。",
     "grammar": "그(geu)[代名詞: 那個] + 아이(ai)[名詞: 孩子] + 의[屬格助詞] + 턱(teok)[名詞: 下巴] + 이[主格助詞] + 예쁘다(yeppeuda)[形容詞: 美麗] + 요(yoyo)[終助詞]"
+  },
+  "korean::169": {
+    "sentence": "방 안이 텅 비어 있다.",
+    "reading": "bang ani teong bieo itda.",
+    "translation": "房間裡空蕩蕩的。",
+    "grammar": "방(bang)[名詞: 房間] + 안(an)[名詞: 裡面] + 이(i)[主格助詞] + 텅(teong)[形容詞: 空蕩蕩] + 비다(bida)[動詞: 空著] + 있다(itda)[助動詞: 在]"
   }
 }
