@@ -1552,5 +1552,11 @@
     "reading": "nuna-wa na-neun jaju gachi bap-eul meongneunda.",
     "translation": "我和姐姐經常一起吃飯。",
     "grammar": "누나(nuna)[名詞: 姐姐] + 와[連接詞] + 나(na)[代名詞: 我] + 는[主格助詞] + 자주[jaju][副詞: 經常] + 같이(gachi)[副詞: 一起] + 밥(bap)[名詞: 飯] + 을[eul][受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
+  },
+  "korean::178": {
+    "sentence": "선생님, 이 책은 정말 재미있어요.",
+    "reading": "seonsaengnim, i chaeg-eun jeongmal jaemiiss-eoyo.",
+    "translation": "老師，這本書真的很好玩。",
+    "grammar": "선생님(seonsaengnim)[名詞: 老師] + , + 이(i)[主格助詞] + 책(chaeg)[名詞: 書] + 은(eun)[主格助詞] + 정말(jeongmal)[副詞: 真的] + 재미있다(jaemiissda)[形容詞: 有趣] + -어요(-eoyo)[助動詞: 表示動作的現在時受詞形]"
   }
 }
