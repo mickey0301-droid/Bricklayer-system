@@ -1468,5 +1468,11 @@
     "reading": "i chaeg-ui naeyongi jom jeokda.",
     "translation": "這本書的內容有點少。",
     "grammar": "이[冠詞: 這] + 책(chaeg)[名詞: 書] + 의[eui][屬格助詞] + 내용(naeyong)[名詞: 內容] + 이[主格助詞] + 좀(jom)[副詞: 一點] + 적다(jeokda)[動詞: 少]"
+  },
+  "korean::164": {
+    "sentence": "교회에서 종이 울린다.",
+    "reading": "gyohoeeseo jongi ullinda.",
+    "translation": "教會裡的鐘響了。",
+    "grammar": "교회(gyohoe)[名詞: 教會] + 에서[方向助詞] + 종(jong)[名詞: 鐘] + 이[主格助詞] + 울린다(ullinda)[動詞: 鳴響]。"
   }
 }
