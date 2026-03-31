@@ -1686,10 +1686,10 @@
     "grammar": "오[o][感嘆詞: 喔] + , + 오늘(oneul)[名詞: 今天] + 날씨(nalssi)[名詞: 天氣] + 가[主格助詞] + 좋다(johda)[形容詞: 好]"
   },
   "korean::200": {
-    "sentence": "넌 웬일로 이렇게 늦게 왔어?",
-    "reading": "neon wenilro ileohge neujge wasseo?",
-    "translation": "你怎麼這麼晚來？",
-    "grammar": "넌[代名詞: 你] + 웬일로[副詞: 為何的情況下] + 이렇게[副詞: 這樣] + 늦게[副詞: 晚] + 왔어[動詞: 來]"
+    "sentence": "너는 웬일로 여기 왔니?",
+    "reading": "neoneun wenildo yeogi watni?",
+    "translation": "你怎麼來這裡了？",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 웬(wen)[名詞: 為何] + 일로(illo)[名詞: 事情] + 여기(yeogi)[名詞: 這裡] + 왔니(watni)[動詞: 來] + ?[標點符號]"
   },
   "spanish::21": {
     "sentence": "Ellas están aquí.",
