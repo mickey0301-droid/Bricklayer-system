@@ -1398,9 +1398,9 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 밥(bab)[名詞: 飯] + 및[連接詞: 和] + 빵(bbange)[名詞: 麵包] + 을[eul][受格助詞] + 먹다(meokda)[動詞: 吃] + 요(yo)[助動詞: 形式助動詞]"
   },
   "korean::152": {
-    "sentence": "복이 있으면 행복해진다.",
-    "reading": "bok-i i-seumyeon haengbokhae-jinda.",
-    "translation": "如果有福氣，就會變得快樂。",
-    "grammar": "복(bok)[名詞: 福氣] + 이[主格助詞] + 있으면[動詞: 若有] + 행복해지다(haengbokhaejida)[動詞: 變得快樂] + 다[句尾助詞]"
+    "sentence": "나는 복을 믿어요.",
+    "reading": "naneun bogeul mid-eoyo.",
+    "translation": "我相信福氣。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 복(bok)[名詞: 福、福氣] + 을[受格助詞] + 믿다(midda)[動詞: 相信] + 요[語尾: 結尾]"
   }
 }
