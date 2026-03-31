@@ -1312,5 +1312,11 @@
     "reading": "nae ki neun jeongmal keuda.",
     "translation": "我的身高真的很高。",
     "grammar": "내(nae)[代名詞: 我的] + 키(ki)[名詞: 身高] + 는(neun)[主格助詞] + 정말(jeongmal)[副詞: 真的] + 크다(keuda)[動詞: 高]"
+  },
+  "korean::138": {
+    "sentence": "이 톨이 어디에 있어?",
+    "reading": "i tol-i eodie isseo?",
+    "translation": "這個粒子在哪裡？",
+    "grammar": "이(i)[代名詞: 這] + 톨(tol)[名詞: 粒] + 이(i)[主格助詞] + 어디(eodie)[副詞: 哪裡] + 에(e)[方向助詞] + 있어(isseo)[動詞: 在]"
   }
 }
