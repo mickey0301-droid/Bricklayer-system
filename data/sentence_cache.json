@@ -1732,5 +1732,11 @@
     "reading": "",
     "translation": "今天她在這裡。",
     "grammar": "Hoy[副詞: 今天] + ella[代名詞: 她] + está[動詞: 在] + aquí[副詞: 這裡]"
+  },
+  "spanish::28": {
+    "sentence": "Hoy quiero ir a la playa.",
+    "reading": "",
+    "translation": "今天我想去海灘。",
+    "grammar": "Hoy[副詞: 今天] + quiero[動詞: 想] + ir[動詞: 去] + a[助詞: 到] + la[冠詞: 這] + playa[名詞: 海灘]"
   }
 }
