@@ -1414,5 +1414,11 @@
     "reading": "geu saek-i aju yeppeuda.",
     "translation": "那個顏色非常漂亮。",
     "grammar": "그(geu)[代名詞: 那個] + 색(saek)[名詞: 顏色] + 이[i][主格助詞] + 아주(aju)[副詞: 非常] + 예쁘다(yeppeuda)[形容詞: 漂亮]"
+  },
+  "korean::155": {
+    "sentence": "나에게 셋이 필요해.",
+    "reading": "naege seti pilyohae.",
+    "translation": "我需要三個。",
+    "grammar": "나(na)[代名詞: 我] + 에게[方向助詞] + 셋(set)[名詞: 三個] + 이[主格助詞] + 필요하다(pilyohada)[動詞: 需要] + 해(hae)[助動詞: ...]"
   }
 }
