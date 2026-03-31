@@ -1336,5 +1336,11 @@
     "reading": "him-i pil-yohan sun-gan-i it-da.",
     "translation": "有需要力量的時刻。",
     "grammar": "힘(him)[名詞: 力氣] + 이[主格助詞] + 필요하다(pil-yohada)[動詞: 需要] + 순간(sun-gan)[名詞: 瞬間] + 이[主格助詞] + 있다(it-da)[動詞: 存在]"
+  },
+  "korean::142": {
+    "sentence": "우리 각자 할 일을 찾아야 한다.",
+    "reading": "uri gakja hal il-eul chajaya handa.",
+    "translation": "我們每個人都必須找到自己的工作。",
+    "grammar": "우리(uli)[代名詞: 我們] + 각자(gakja)[名詞: 各自] + 할(hal)[動詞: 做] + 일(il)[名詞: 工作] + 을(eul)[受格助詞] + 찾아야(chajaya)[動詞: 必須找到] + 한다(handa)[動詞: 做]"
   }
 }
