@@ -1330,5 +1330,11 @@
     "reading": "geu heon chaegi yeogi isseo.",
     "translation": "那本舊書在這裡。",
     "grammar": "그(geu)[代名詞: 那] + 헌(heon)[形容詞: 舊的] + 책(chaeg)[名詞: 書] + 이(i)[主格助詞] + 여기(yeogi)[副詞: 這裡] + 있어(isseo)[動詞: 有]"
+  },
+  "korean::141": {
+    "sentence": "그에게 힘을 주어야 한다.",
+    "reading": "geuege him-eul ju-eoya handa.",
+    "translation": "我們必須給他力量。",
+    "grammar": "그(geu)[代名詞: 他] + 에게[方向助詞] + 힘(him)[名詞: 力量] + 을[eul][受格助詞] + 주어야(jueoya)[動詞: 給予] + 한다(handа)[動詞: 必須]"
   }
 }
