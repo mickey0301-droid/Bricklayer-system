@@ -1434,9 +1434,9 @@
     "grammar": "아빠(abba)[名詞: 爸爸] + 와[連接詞] + 나(na)[代名詞: 我] + 는[主格助詞] + 집(jip)[名詞: 家] + 에[方向助詞] + 있다(itda)[動詞: 在]"
   },
   "korean::158": {
-    "sentence": "어른이 되면 책임이 많아진다.",
-    "reading": "eoreuni doemyeon chaegimi manhajinda.",
-    "translation": "成為大人的時候，責任會變得很多。",
-    "grammar": "어른(eoreun)[名詞: 大人] + 이[主格助詞] + 되다(doeda)[動詞: 成為] + 면[條件助詞] + 책임(chaegim)[名詞: 責任] + 이[主格助詞] + 많아지다(manajida)[動詞: 變得很多] + ㄴ다[終結語尾]"
+    "sentence": "어른은 책임이 많아야 해.",
+    "reading": "eoreun-eun chaegimi manh-aya hae.",
+    "translation": "大人必須承擔很多責任。",
+    "grammar": "어른(eoreun)[名詞: 大人] + 은[eun][主格助詞] + 책임(chaegim)[名詞: 責任] + 이(yi)[主格助詞] + 많다(manhda)[動詞: 多] + -아야(aya)[助動詞] + 하다(hada)[動詞: 做]"
   }
 }
