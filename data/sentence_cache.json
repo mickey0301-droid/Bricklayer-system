@@ -1488,10 +1488,10 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 책(chaek)[名詞: 書] + 을[受格助詞] + 읽다(ilgda)[動詞: 閱讀] + 는[接續助詞] + 중(중)[名詞: 正在] + 이다(ida)[助動詞: 是]"
   },
   "korean::167": {
-    "sentence": "이 문제는 즉 쉽게 해결할 수 있다.",
-    "reading": "i munjeun jeuk swipge haegyeolhal su itda.",
-    "translation": "這個問題也就是說很容易解決。",
-    "grammar": "이(i)[代名詞: 這] + 문제(munje)[名詞: 問題] + 는[主格助詞] + 즉(jeuk)[副詞: 也就是說] + 쉽게(swipge)[副詞: 容易地] + 해결하다(haegyeolhada)[動詞: 解決] + 수(su)[名詞: 儘量] + 있다(itda)[動詞: 存在]"
+    "sentence": "우리 집은 조용하다. 즉, 여유가 있다.",
+    "reading": "uri jib-eun joyonghada. jeuk, yeoyu-ga itda.",
+    "translation": "我們的房子很安靜，也就是說，這裡有悠閒。",
+    "grammar": "우리[代名詞: 我們] + 집[名詞: 房子] + 은[主格助詞] + 조용하다[形容詞: 安靜] + 즉[副詞: 也就是說] + 여유[名詞: 悠閒] + 가[主格助詞] + 있다[動詞: 有]"
   },
   "korean::168": {
     "sentence": "그 아이의 턱이 예뻐요.",
