@@ -1612,5 +1612,11 @@
     "reading": "haneure byeoli manhada.",
     "translation": "天空中有很多星星。",
     "grammar": "하늘(haneul)[名詞: 天空] + 에[方向助詞] + 별(byel)[名詞: 星星] + 이[主格助詞] + 많다(manhada)[動詞: 很多] + .[句尾助詞]"
+  },
+  "korean::188": {
+    "sentence": "그 차는 아주 빠르다.",
+    "reading": "geu cha-neun aju ppa-reu-da.",
+    "translation": "那輛車非常快。",
+    "grammar": "그(geu)[代名詞: 那] + 차(cha)[名詞: 車] + 는[主格助詞] + 아주(aju)[副詞: 非常] + 빠르다(ppa-reu-da)[形容詞: 快]"
   }
 }
