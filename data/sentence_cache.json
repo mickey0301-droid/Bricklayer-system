@@ -1444,5 +1444,11 @@
     "reading": "i jib-ui gabs-eun eog-ida.",
     "translation": "這個家的價格是億。",
     "grammar": "이(i)[代名詞: 這] + 집(jib)[名詞: 家] + 의(eui)[屬格助詞] + 값(gab)[名詞: 價格] + 은(eun)[主格助詞] + 억(eog)[名詞: 億] + 이다(ida)[助動詞: 是]"
+  },
+  "korean::160": {
+    "sentence": "엄마가 방에 있다.",
+    "reading": "eomma-ga bang-e itda.",
+    "translation": "媽媽在房間裡。",
+    "grammar": "엄마(eomma)[名詞: 媽媽] + 가[主格助詞] + 방(bang)[名詞: 房間] + 에[方向助詞] + 있다(itda)[動詞: 存在]"
   }
 }
