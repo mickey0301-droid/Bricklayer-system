@@ -1530,10 +1530,10 @@
     "grammar": "그(geu)[代名詞: 那個] + 골(gol)[名詞: 進球] + 은(eun)[主格助詞] + 정말(jeongmal)[副詞: 真的] + 아름답다(aleumdapda)[形容詞: 美麗]"
   },
   "korean::174": {
-    "sentence": "굴 속에서 많은 물이 흘러나왔다.",
-    "reading": "gul sogeseo manheun muli heuryeona watda.",
-    "translation": "在洞穴裡流出了很多水。",
-    "grammar": "굴(gul)[名詞: 洞穴] + 속에서[sogeseo][名詞: 裡面] + 많은(manheun)[形容詞: 很多] + 물(mul)[名詞: 水] + 이[i][主格助詞] + 흘러나왔다(heuryeona watda)[動詞: 流出來]"
+    "sentence": "굴 안에 물이 있다.",
+    "reading": "gul an-e mul-i itda.",
+    "translation": "洞穴裡有水。",
+    "grammar": "굴(gul)[名詞: 洞穴] + 안(eu)[名詞: 裡面] + 에(-e)[方向助詞] + 물(mul)[名詞: 水] + 이(i)[主格助詞] + 있다(itda)[動詞: 有]"
   },
   "korean::175": {
     "sentence": "이 글은 매우 흥미롭다.",
