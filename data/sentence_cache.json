@@ -1570,5 +1570,11 @@
     "reading": "i dae-neun maeu keuda.",
     "translation": "這個台非常大。",
     "grammar": "이(i)[指示代名詞: 這] + 대(dae)[名詞: 台] + 는[主格助詞] + 매우(maeu)[副詞: 非常] + 크다(keuda)[動詞: 大]"
+  },
+  "korean::181": {
+    "sentence": "그는 나의 뒤에 있다.",
+    "reading": "geuneun naui dwie itda.",
+    "translation": "他在我的後面。",
+    "grammar": "그(geu)[代名詞: 他] + 는[主格助詞] + 나(nai)[代名詞: 我] + 의[屬格助詞] + 뒤(dwih)[名詞: 後面] + 에[方向助詞] + 있다(itda)[動詞: 在]"
   }
 }
