@@ -1750,5 +1750,11 @@
     "reading": "",
     "translation": "我在公園看到她。",
     "grammar": "Yo[代名詞: 我] + la[代名詞: 她] + veo[動詞: 看] + en[介詞: 在] + el[定冠詞: 這個] + parque[名詞: 公園]"
+  },
+  "spanish::31": {
+    "sentence": "Ella las ve hoy.",
+    "reading": "",
+    "translation": "她今天看見她們。",
+    "grammar": "Ella[代名詞: 她] + las[代名詞: 她們] + ve(ver)[動詞: 看] + hoy[副詞: 今天]"
   }
 }
