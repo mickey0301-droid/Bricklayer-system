@@ -1786,5 +1786,11 @@
     "reading": "",
     "translation": "她有很多書。",
     "grammar": "Ella[代名詞: 她] + tiene(有)[動詞: 有] + mucho[形容詞: 很多] + libro[名詞: 書]"
+  },
+  "spanish::37": {
+    "sentence": "Ella es muy joven.",
+    "reading": "",
+    "translation": "她非常年輕。",
+    "grammar": "Ella[代名詞: 她] + es[動詞: 是] + muy[副詞: 非常] + joven[形容詞: 年輕]"
   }
 }
