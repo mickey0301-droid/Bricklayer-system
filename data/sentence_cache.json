@@ -1288,5 +1288,11 @@
     "reading": "nae kkum-eun jo-ga doeda.",
     "translation": "我的夢想是成為兆。",
     "grammar": "내(nae)[代名詞: 我] + 꿈(kkum)[名詞: 夢想] + 은(eun)[主格助詞] + 조(jo)[名詞: 兆] + 가(ga)[助動詞] + 되다(doeda)[動詞: 成為]"
+  },
+  "korean::134": {
+    "sentence": "우리는 매주 수요일에 만나요.",
+    "reading": "urineun maeju suyoil-e mannayo.",
+    "translation": "我們每週三見面。",
+    "grammar": "우리(uri)[代名詞: 我們] + 는[主格助詞] + 매주(maeju)[名詞: 每週] + 수요일(suyoil)[名詞: 星期三] + 에[方向助詞] + 만나요(mannayo)[動詞: 見面]"
   }
 }
