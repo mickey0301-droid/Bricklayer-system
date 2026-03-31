@@ -1510,5 +1510,11 @@
     "reading": "i mul-eun jeongmal puk masyeoya hae.",
     "translation": "這水真的要充分地喝。",
     "grammar": "이(i)[指示詞: 這] + 물(mul)[名詞: 水] + 은(eun)[主格助詞] + 정말(jjeongmal)[副詞: 真的] + 푹(puk)[副詞: 充分地] + 마셔야(masyeoya)[動詞: 喝] + 해(hae)[助動詞: 必須] + ."
+  },
+  "korean::171": {
+    "sentence": "밥에서 향이 나요.",
+    "reading": "babe-seo hyang-i nayo.",
+    "translation": "飯裡面有香味。",
+    "grammar": "밥(bap)[名詞: 飯] + 에서[場所助詞] + 향(hyang)[名詞: 香味] + 이[主格助詞] + 나요(nayo)[動詞: 出現]"
   }
 }
