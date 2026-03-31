@@ -1798,5 +1798,11 @@
     "reading": "",
     "translation": "今天我想要更多的水果。",
     "grammar": "Hoy[名詞: 今天] + quiero[動詞: 想要] + más[副詞: 更多] + frutas[名詞: 水果]。"
+  },
+  "spanish::39": {
+    "sentence": "No hay nada aquí.",
+    "reading": "",
+    "translation": "這裡什麼也沒有。",
+    "grammar": "No[否定詞] + hay[動詞: 有] + nada[代名詞: 什麼也沒有] + aquí[副詞: 這裡]"
   }
 }
