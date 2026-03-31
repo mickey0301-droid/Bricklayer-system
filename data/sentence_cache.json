@@ -1456,5 +1456,11 @@
     "reading": "uri osi deoreowoseo ballaereul haeya hae.",
     "translation": "我們的衣服髒了，所以得洗。",
     "grammar": "우리(uri)[代名詞: 我們] + 옷(ot)[名詞: 衣服] + 이(i)[主格助詞] + 더러워서(deoreowoseo)[形容詞: 髒] + 빨래(ballrae)[名詞: 洗衣] + 를(reul)[受格助詞] + 해야(haeya)[動詞: 得] + 해(hae)[助動詞: 要做]"
+  },
+  "korean::162": {
+    "sentence": "왕은 옷을 입고 있다.",
+    "reading": "wang-eun os-eul ibgo itda.",
+    "translation": "王正在穿衣服。",
+    "grammar": "왕(wang)[名詞: 王] + 은[主格助詞] + 옷(os)[名詞: 衣服] + 을[受格助詞] + 입고(ipgo)[動詞: 穿] + 있다(itda)[助動詞: 在]"
   }
 }
