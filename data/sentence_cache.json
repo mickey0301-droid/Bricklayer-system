@@ -1488,10 +1488,10 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 책(chaek)[名詞: 書] + 을[受格助詞] + 읽다(ilgda)[動詞: 閱讀] + 는[接續助詞] + 중(중)[名詞: 正在] + 이다(ida)[助動詞: 是]"
   },
   "korean::167": {
-    "sentence": "그는 아침에 일찍 일어났고, 즉 준비할 시간이 많았다.",
-    "reading": "geu-neun a-chim-e il-jik il-eo-nat-go, jeuk jun-bi-hal si-gan-i man-da.",
-    "translation": "他早上很早起床，也就是說，準備的時間很多。",
-    "grammar": "그(geu)[代名詞: 他] + 는[主格助詞] + 아침(a-chim)[名詞: 早上] + 에[方向助詞] + 일찍(il-jik)[副詞: 早] + 일어났고(il-eo-nat-go)[動詞: 起床] + 즉(jeuk)[副詞: 也就是說] + 준비할(jun-bi-hal)[動詞: 準備] + 시간이(si-gan-i)[名詞: 時間] + 많았다(man-da)[動詞: 很多]。"
+    "sentence": "이 책은 아주 재미있어, 즉 많은 사람들이 좋아해.",
+    "reading": "i chaek-eun aju jaemiisseo, jeuk manh-eun salamdeul-i joahae.",
+    "translation": "這本書非常有趣，也就是說很多人喜歡。",
+    "grammar": "이[冠詞: 這] + 책[名詞: 書] + 은[主格助詞] + 아주[副詞: 非常] + 재미있어[形容詞: 有趣] + , + 즉[副詞: 也就是說] + 많은[形容詞: 很多] + 사람들이[名詞: 人們] + 좋아해[動詞: 喜歡] + ."
   },
   "korean::168": {
     "sentence": "그 아이의 턱이 예뻐요.",
