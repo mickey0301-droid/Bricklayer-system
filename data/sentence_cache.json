@@ -1558,5 +1558,11 @@
     "reading": "seonsaengnim, i chaeg-eun jeongmal jaemiiss-eoyo.",
     "translation": "老師，這本書真的很好玩。",
     "grammar": "선생님(seonsaengnim)[名詞: 老師] + , + 이(i)[主格助詞] + 책(chaeg)[名詞: 書] + 은(eun)[主格助詞] + 정말(jeongmal)[副詞: 真的] + 재미있다(jaemiissda)[形容詞: 有趣] + -어요(-eoyo)[助動詞: 表示動作的現在時受詞形]"
+  },
+  "korean::179": {
+    "sentence": "달이 밝아서 밤에 매우 예뻐.",
+    "reading": "dal-i balg-aseo bam-e maeu yep-eo.",
+    "translation": "月亮明亮，所以晚上非常漂亮。",
+    "grammar": "달(dal)[名詞: 月亮] + 이[主格助詞] + 밝다(bakda)[形容詞: 明亮] + 어(eo)[助詞: 用來連接] + 밤(bam)[名詞: 夜晚] + 에[方向助詞] + 매우(maeu)[副詞: 非常] + 예쁘다(yeppeuda)[形容詞: 漂亮] + ."
   }
 }
