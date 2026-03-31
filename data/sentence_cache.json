@@ -1660,5 +1660,11 @@
     "reading": "supeseo saedeuri noraeago itda.",
     "translation": "在森林裡，鳥兒在唱歌。",
     "grammar": "숲(sup)[名詞: 森林] + 에서[助詞] + 새들(saedeul)[名詞: 鳥] + 이[主格助詞] + 노래하고(noraehamyeo)[動詞: 唱歌] + 있다(itda)[動詞: 在]"
+  },
+  "korean::196": {
+    "sentence": "그 시는 정말 아름답다.",
+    "reading": "geu si-neun jeongmal aleumdabda.",
+    "translation": "那首詩真的很美。",
+    "grammar": "그(geu)[代名詞: 那個] + 시(si)[名詞: 詩] + 는[主格助詞] + 정말(jeongmal)[副詞: 真的] + 아름답다(aleumdabda)[形容詞: 美]"
   }
 }
