@@ -1378,5 +1378,11 @@
     "reading": "naega meongi saenggyeotda.",
     "translation": "我有瘀青。",
     "grammar": "나(na)[代名詞: 我] + 가[主格助詞] + 멍(meong)[名詞: 瘀青] + 이[助詞] + 생겼다(saenggyeotda)[動詞: 出現]"
+  },
+  "korean::149": {
+    "sentence": "못이 필요해.",
+    "reading": "mot-i pil-yohada.",
+    "translation": "我需要釘子。",
+    "grammar": "못(mot)[名詞: 釘子] + 이[主格助詞] + 필요해(pil-yohada)[動詞: 需要]"
   }
 }
