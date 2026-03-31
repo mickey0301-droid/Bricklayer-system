@@ -1792,5 +1792,11 @@
     "reading": "",
     "translation": "她非常年輕。",
     "grammar": "Ella[代名詞: 她] + es[動詞: 是] + muy[副詞: 非常] + joven[形容詞: 年輕]"
+  },
+  "spanish::38": {
+    "sentence": "Hoy quiero más frutas.",
+    "reading": "",
+    "translation": "今天我想要更多的水果。",
+    "grammar": "Hoy[名詞: 今天] + quiero[動詞: 想要] + más[副詞: 更多] + frutas[名詞: 水果]。"
   }
 }
