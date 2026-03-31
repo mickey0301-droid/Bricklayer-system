@@ -1392,9 +1392,9 @@
     "grammar": "나(na)[代名詞: 我] + 는[nun][主格助詞] + 뭇(mut)[名詞: 多] + 을(eul)[受格助詞] + 좋아하다(joahada)[動詞: 喜歡] + .[句點]"
   },
   "korean::151": {
-    "sentence": "나와 너는 친구 및 함께 공부한다.",
-    "reading": "nawa neoneun chingu mit hamkke gongbuhanda.",
-    "translation": "我和你是朋友，並且一起學習。",
-    "grammar": "나(na)[代名詞: 我] + 와[接續詞] + 너(neo)[代名詞: 你] + 는[主格助詞] + 친구(chingu)[名詞: 朋友] + 및[接續詞: 以及] + 함께(hamkke)[副詞: 一起] + 공부한다(gongbuhanda)[動詞: 學習]"
+    "sentence": "나와 너는 친구이며 가족이다.",
+    "reading": "nawa neoneun chinguyihe gajokida.",
+    "translation": "我和你是朋友也是家庭。",
+    "grammar": "나(na)[代名詞: 我] + 와[接續詞] + 너(neon)[代名詞: 你] + 는[主格助詞] + 친구(chingu)[名詞: 朋友] + 이며[助動詞: 也是] + 가족(gajok)[名詞: 家庭] + 이다(ida)[動詞: 是]"
   }
 }
