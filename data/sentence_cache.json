@@ -1488,10 +1488,10 @@
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 책(chaek)[名詞: 書] + 을[受格助詞] + 읽다(ilgda)[動詞: 閱讀] + 는[接續助詞] + 중(중)[名詞: 正在] + 이다(ida)[助動詞: 是]"
   },
   "korean::167": {
-    "sentence": "이것은 즉 우리의 삶에서 중요한 문제이다.",
-    "reading": "igeos-eun jeug uul-ui salm-eseo jungyohan munje-ida.",
-    "translation": "這是一個即在我們的生活中重要的問題。",
-    "grammar": "이것(igeos)[名詞: 這個] + 은[主格助詞] + 즉(jeug)[副詞: 也就是說] + 우리의(uli-ui)[名詞: 我們的] + 삶(salm)[名詞: 生活] + 에서[方向助詞] + 중요한(jungyohan)[形容詞: 重要的] + 문제(munje)[名詞: 問題] + 이다(ida)[助動詞: 是]"
+    "sentence": "이것은 즉 내가 원하는 것이다.",
+    "reading": "igeos-eun jeuk naega wonhaneun geosida.",
+    "translation": "這個就是我想要的東西。",
+    "grammar": "이것(igeos)[名詞: 這個] + 은(eun)[主格助詞] + 즉(jeuk)[副詞: 也就是說] + 내가(naega)[代名詞: 我] + 원하는(wonhaneun)[動詞: 想要] + 것이다(geosida)[助動詞: 的東西]"
   },
   "korean::168": {
     "sentence": "그 아이의 턱이 예뻐요.",
