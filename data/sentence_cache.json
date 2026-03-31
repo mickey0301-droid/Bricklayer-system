@@ -1804,5 +1804,11 @@
     "reading": "",
     "translation": "這裡什麼也沒有。",
     "grammar": "No[否定詞] + hay[動詞: 有] + nada[代名詞: 什麼也沒有] + aquí[副詞: 這裡]"
+  },
+  "spanish::40": {
+    "sentence": "Ellas nos dan algo hoy.",
+    "reading": "",
+    "translation": "她們今天給我們一些東西。",
+    "grammar": "Ellas[代名詞: 她們] + nos[代名詞: 我們] + dan[動詞: 給] + algo[名詞: 一些東西] + hoy[副詞: 今天]"
   }
 }
