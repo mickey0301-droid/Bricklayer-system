@@ -1480,5 +1480,11 @@
     "reading": "achim-e naneun juk-eul meongneunda.",
     "translation": "早上我吃粥。",
     "grammar": "아침(achim)[名詞: 早上] + 에[方向助詞] + 나(na)[代名詞: 我] + 는[主格助詞] + 죽(juk)[名詞: 粥] + 을[eul][受格助詞] + 먹는다(meongneunda)[動詞: 吃]"
+  },
+  "korean::166": {
+    "sentence": "나는 책을 읽는 중이다.",
+    "reading": "naneun chaegeul ilgneun jungida.",
+    "translation": "我正在閱讀書籍。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 책(chaek)[名詞: 書] + 을[受格助詞] + 읽다(ilgda)[動詞: 閱讀] + 는[接續助詞] + 중(중)[名詞: 正在] + 이다(ida)[助動詞: 是]"
   }
 }
