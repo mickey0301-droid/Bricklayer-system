@@ -1438,5 +1438,11 @@
     "reading": "eoreun-eun chaegimi manh-aya hae.",
     "translation": "大人必須承擔很多責任。",
     "grammar": "어른(eoreun)[名詞: 大人] + 은[eun][主格助詞] + 책임(chaegim)[名詞: 責任] + 이(yi)[主格助詞] + 많다(manhda)[動詞: 多] + -아야(aya)[助動詞] + 하다(hada)[動詞: 做]"
+  },
+  "korean::159": {
+    "sentence": "이 집의 값은 억이다.",
+    "reading": "i jib-ui gabs-eun eog-ida.",
+    "translation": "這個家的價格是億。",
+    "grammar": "이(i)[代名詞: 這] + 집(jib)[名詞: 家] + 의(eui)[屬格助詞] + 값(gab)[名詞: 價格] + 은(eun)[主格助詞] + 억(eog)[名詞: 億] + 이다(ida)[助動詞: 是]"
   }
 }
