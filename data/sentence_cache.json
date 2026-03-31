@@ -1774,5 +1774,11 @@
     "reading": "",
     "translation": "她給我一些東西。",
     "grammar": "Ella[代名詞: 她] + me[代名詞: 我（受格）] + da[動詞: 給] + algo[名詞: 一些東西]"
+  },
+  "spanish::35": {
+    "sentence": "Ella tiene menos ahora.",
+    "reading": "",
+    "translation": "她現在有更少。",
+    "grammar": "Ella[代名詞: 她] + tiene(有)[動詞: 擁有] + menos[形容詞: 更少] + ahora[副詞: 現在]"
   }
 }
