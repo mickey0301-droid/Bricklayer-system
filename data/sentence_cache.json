@@ -1384,5 +1384,11 @@
     "reading": "mot-i pil-yohada.",
     "translation": "我需要釘子。",
     "grammar": "못(mot)[名詞: 釘子] + 이[主格助詞] + 필요해(pil-yohada)[動詞: 需要]"
+  },
+  "korean::150": {
+    "sentence": "나는 뭇을 좋아해.",
+    "reading": "naneun mut-eul joahae.",
+    "translation": "我喜歡把多的東西。",
+    "grammar": "나(na)[代名詞: 我] + 는[nun][主格助詞] + 뭇(mut)[名詞: 多] + 을(eul)[受格助詞] + 좋아하다(joahada)[動詞: 喜歡] + .[句點]"
   }
 }
