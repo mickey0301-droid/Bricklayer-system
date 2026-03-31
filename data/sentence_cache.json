@@ -1504,5 +1504,11 @@
     "reading": "bang ani teong bieo itda.",
     "translation": "房間裡空蕩蕩的。",
     "grammar": "방(bang)[名詞: 房間] + 안(an)[名詞: 裡面] + 이(i)[主格助詞] + 텅(teong)[形容詞: 空蕩蕩] + 비다(bida)[動詞: 空著] + 있다(itda)[助動詞: 在]"
+  },
+  "korean::170": {
+    "sentence": "이 물은 정말 푹 마셔야 해.",
+    "reading": "i mul-eun jeongmal puk masyeoya hae.",
+    "translation": "這水真的要充分地喝。",
+    "grammar": "이(i)[指示詞: 這] + 물(mul)[名詞: 水] + 은(eun)[主格助詞] + 정말(jjeongmal)[副詞: 真的] + 푹(puk)[副詞: 充分地] + 마셔야(masyeoya)[動詞: 喝] + 해(hae)[助動詞: 必須] + ."
   }
 }
