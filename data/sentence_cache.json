@@ -1356,9 +1356,9 @@
     "grammar": "그(geu)[代名詞: 她] + 녀(neun)[主格助詞] + 는(neun)[主格助詞] + 곧(got)[副詞: 很快] + 집(jib)[名詞: 家] + 에(e)[方向助詞] + 올(ol)[動詞: 來] + 거예요(geoyeyo)[助動詞: 將會]"
   },
   "korean::145": {
-    "sentence": "내 구두 굽이 부서졌다.",
-    "reading": "nae gudu gubi buseojyeotda.",
-    "translation": "我的鞋跟壞了。",
-    "grammar": "내(nae)[代名詞: 我] + 구두(gudu)[名詞: 鞋子] + 굽(gubi)[名詞: 鞋跟] + 이[主格助詞] + 부서지다(buseojida)[動詞: 壞] + 았다(atda)[助動詞: 過去式]"
+    "sentence": "내 굽이 너무 높아.",
+    "reading": "nae gubi neomu nopda.",
+    "translation": "我的鞋跟太高了。",
+    "grammar": "내(nae)[代名詞: 我的] + 굽(gub)[名詞: 鞋跟] + 이(i)[主格助詞] + 너무(neomu)[副詞: 太] + 높아(nopda)[形容詞: 高的] + ."
   }
 }
