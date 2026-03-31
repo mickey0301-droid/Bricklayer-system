@@ -1402,5 +1402,11 @@
     "reading": "naneun bogeul mid-eoyo.",
     "translation": "我相信福氣。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 복(bok)[名詞: 福、福氣] + 을[受格助詞] + 믿다(midda)[動詞: 相信] + 요[語尾: 結尾]"
+  },
+  "korean::153": {
+    "sentence": "나는 북쪽으로 가고 싶다.",
+    "reading": "naneun bukjjogeuro gago sipda.",
+    "translation": "我想往北方去。",
+    "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 북(buk)[名詞: 北方] + 쪽(jjok)[名詞: 方向] + 으로[euro][方向助詞] + 가고(gago)[動詞: 去] + 싶다(sipda)[動詞: 想]"
   }
 }
