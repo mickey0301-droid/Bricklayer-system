@@ -1492,5 +1492,11 @@
     "reading": "igeos-eun jeug uul-ui salm-eseo jungyohan munje-ida.",
     "translation": "這是一個即在我們的生活中重要的問題。",
     "grammar": "이것(igeos)[名詞: 這個] + 은[主格助詞] + 즉(jeug)[副詞: 也就是說] + 우리의(uli-ui)[名詞: 我們的] + 삶(salm)[名詞: 生活] + 에서[方向助詞] + 중요한(jungyohan)[形容詞: 重要的] + 문제(munje)[名詞: 問題] + 이다(ida)[助動詞: 是]"
+  },
+  "korean::168": {
+    "sentence": "그 아이의 턱이 예뻐요.",
+    "reading": "geu aiui teogi yeppeoyo.",
+    "translation": "那個孩子的下巴很美。",
+    "grammar": "그(geu)[代名詞: 那個] + 아이(ai)[名詞: 孩子] + 의[屬格助詞] + 턱(teok)[名詞: 下巴] + 이[主格助詞] + 예쁘다(yeppeuda)[形容詞: 美麗] + 요(yoyo)[終助詞]"
   }
 }
