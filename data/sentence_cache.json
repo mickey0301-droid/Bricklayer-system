@@ -1590,10 +1590,10 @@
     "grammar": "우리(uli)[代名詞: 我們] + 는(neun)[主格助詞] + 그(geu)[代名詞: 那個] + 모(mo)[名詞: 株] + 를(reul)[受格助詞] + 기르다(gireuda)[動詞: 養]"
   },
   "korean::184": {
-    "sentence": "무를 밥에 넣어 먹어야 해.",
-    "reading": "mu-reul bab-e neuh-eo meog-eoya hae.",
-    "translation": "必須把蘿蔔放進飯裡吃。",
-    "grammar": "무(mu)[名詞: 蘿蔔] + 를[受格助詞] + 밥(bab)[名詞: 飯] + 에[方向助詞] + 넣다(neohda)[動詞: 放進] + 먹다(meogda)[動詞: 吃] + -야[助動詞] + 해(hae)[動詞: 必須]"
+    "sentence": "무를 먹으면 건강에 좋다.",
+    "reading": "mureul meogeumyeon geongang-e johda.",
+    "translation": "吃蘿蔔對健康有好處。",
+    "grammar": "무(mu)[名詞: 蘿蔔] + 를[受格助詞] + 먹다(meogda)[動詞: 吃] + 면[條件助詞] + 건강(geongang)[名詞: 健康] + 에[方向助詞] + 좋다(johda)[動詞: 好] + .[句點]"
   },
   "korean::185": {
     "sentence": "밤에 별이 정말 아름답다.",
