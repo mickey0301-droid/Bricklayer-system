@@ -1714,5 +1714,11 @@
     "reading": "",
     "translation": "她在這裡。",
     "grammar": "Ella[代名詞: 她] + está(estar)[動詞: 處於] + aquí[副詞: 這裡]"
+  },
+  "spanish::25": {
+    "sentence": "Ellos han estado aquí.",
+    "reading": "",
+    "translation": "他們在這裡。",
+    "grammar": "Ellos[代名詞: 他們] + han[助動詞: 助動詞（構成完成式）] + estar[動詞: 在] + aquí[副詞: 這裡]"
   }
 }
