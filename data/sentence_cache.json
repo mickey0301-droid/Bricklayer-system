@@ -1756,5 +1756,11 @@
     "reading": "",
     "translation": "她今天看見她們。",
     "grammar": "Ella[代名詞: 她] + las[代名詞: 她們] + ve(ver)[動詞: 看] + hoy[副詞: 今天]"
+  },
+  "spanish::32": {
+    "sentence": "Los jóvenes van aquí.",
+    "reading": "",
+    "translation": "年輕人到這裡。",
+    "grammar": "Los[定冠詞: 陽性複數] + jóvenes[名詞: 年輕人] + van[動詞: 去] + aquí[副詞: 這裡]"
   }
 }
