@@ -1648,5 +1648,11 @@
     "reading": "naneun se sal-ieyo.",
     "translation": "我三歲。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 세(se)[名詞: 三、歲] + 살(sal)[名詞: 年齡] + 이에요(-ieyo)[助動詞: 是]"
+  },
+  "korean::194": {
+    "sentence": "숨을 깊이 쉬어야 한다.",
+    "reading": "sum-eul gipi swieoya handa.",
+    "translation": "需要深呼吸。",
+    "grammar": "숨(sum)[名詞: 呼吸] + 을[受格助詞] + 깊이(gipi)[副詞: 深] + 쉬다(swieuda)[動詞: 呼吸] + 어야(handa)[助動詞: 必須] + 한다(handa)[助動詞: 是]"
   }
 }
