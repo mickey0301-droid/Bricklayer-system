@@ -1408,5 +1408,11 @@
     "reading": "naneun bukjjogeuro gago sipda.",
     "translation": "我想往北方去。",
     "grammar": "나(na)[代名詞: 我] + 는[主格助詞] + 북(buk)[名詞: 北方] + 쪽(jjok)[名詞: 方向] + 으로[euro][方向助詞] + 가고(gago)[動詞: 去] + 싶다(sipda)[動詞: 想]"
+  },
+  "korean::154": {
+    "sentence": "그 색이 아주 예쁘다.",
+    "reading": "geu saek-i aju yeppeuda.",
+    "translation": "那個顏色非常漂亮。",
+    "grammar": "그(geu)[代名詞: 那個] + 색(saek)[名詞: 顏色] + 이[i][主格助詞] + 아주(aju)[副詞: 非常] + 예쁘다(yeppeuda)[形容詞: 漂亮]"
   }
 }
