@@ -2106,9 +2106,9 @@
     "grammar": "Yo[代名詞: 我] + oigo(oír)[動詞: 聽到] + algo[名詞: 一些東西] + aquí[副詞: 這裡]"
   },
   "spanish::90": {
-    "sentence": "",
+    "sentence": "Los números pares son buenos para contar.",
     "reading": "",
-    "translation": "",
-    "grammar": ""
+    "translation": "偶數對於計數是好的。",
+    "grammar": "Los[冠詞: 這些] + números[名詞: 數字] + pares[形容詞: 偶（數）的] + son[動詞: 是] + buenos[形容詞: 好的] + para[介詞: 為了] + contar[動詞: 計數]"
   }
 }
