@@ -1870,5 +1870,65 @@
     "reading": "",
     "translation": "誰在那裡？",
     "grammar": "¿Quién[代名詞: 誰] + está[動詞: 在] + allí[副詞: 那裡]"
+  },
+  "spanish::51": {
+    "sentence": "¿Qué tienes aquí?",
+    "reading": "",
+    "translation": "你這裡有什麼？",
+    "grammar": "¿Qué[代名詞: 什麼] + tienes[動詞: 有] + aquí[副詞: 這裡]"
+  },
+  "spanish::52": {
+    "sentence": "Yo quiero saber más.",
+    "reading": "",
+    "translation": "我想知道更多。",
+    "grammar": "Yo[代名詞: 我] + quiero(querer)[動詞: 想] + saber[動詞: 知道] + más[副詞: 更多]"
+  },
+  "spanish::53": {
+    "sentence": "Ellos se cuidan mucho.",
+    "reading": "",
+    "translation": "他們自己很照顧自己。",
+    "grammar": "Ellos[代名詞: 他們] + se[代名詞: 他們自己] + cuidan(cuidar)[動詞: 照顧] + mucho[副詞: 很多]"
+  },
+  "spanish::54": {
+    "sentence": "Ella tiene seis manzanas.",
+    "reading": "",
+    "translation": "她有六個蘋果。",
+    "grammar": "Ella[代名詞: 她] + tiene[動詞: 有] + seis[名詞: 六] + manzanas[名詞: 蘋果]"
+  },
+  "spanish::55": {
+    "sentence": "Ella es joven.",
+    "reading": "",
+    "translation": "她是年輕的。",
+    "grammar": "Ella[代名詞: 她] + es(ser)[動詞: 是] + joven[形容詞: 年輕的]"
+  },
+  "spanish::56": {
+    "sentence": "Tengo siete uvas.",
+    "reading": "",
+    "translation": "我有七顆葡萄。",
+    "grammar": "Tengo[動詞: 我有] + siete[名詞: 七] + uvas[名詞: 葡萄]"
+  },
+  "spanish::57": {
+    "sentence": "Yo estoy sin dinero.",
+    "reading": "",
+    "translation": "我沒有錢。",
+    "grammar": "Yo[代名詞: 我] + estoy[動詞: 是] + sin[副詞: 沒有] + dinero[名詞: 錢]"
+  },
+  "spanish::58": {
+    "sentence": "Te quiero mucho.",
+    "reading": "",
+    "translation": "我非常愛你。",
+    "grammar": "Te[代名詞: 你] + quiero(querer)[動詞: 愛] + mucho[副詞: 非常]"
+  },
+  "spanish::59": {
+    "sentence": "Ella tiene algo bueno.",
+    "reading": "",
+    "translation": "她有一些好的東西。",
+    "grammar": "Ella[代名詞: 她] + tiene(tener)[動詞: 有] + algo[名詞: 一些東西] + bueno[形容詞: 好的]"
+  },
+  "spanish::60": {
+    "sentence": "Yo tengo todo aquí.",
+    "reading": "",
+    "translation": "我在這裡有一切。",
+    "grammar": "Yo[代名詞: 我] + tengo( tener)[動詞: 擁有] + todo[名詞: 一切] + aquí[副詞: 這裡]"
   }
 }
