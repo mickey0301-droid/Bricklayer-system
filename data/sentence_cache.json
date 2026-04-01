@@ -1810,5 +1810,65 @@
     "reading": "",
     "translation": "她們今天給我們一些東西。",
     "grammar": "Ellas[代名詞: 她們] + nos[代名詞: 我們] + dan[動詞: 給] + algo[名詞: 一些東西] + hoy[副詞: 今天]"
+  },
+  "spanish::41": {
+    "sentence": "Hay nueve casas allí.",
+    "reading": "",
+    "translation": "那裡有九個房子。",
+    "grammar": "Hay[助動詞: 有] + nueve[nueve][名詞: 九] + casas[名詞: 房子] + allí[副詞: 那裡]"
+  },
+  "spanish::42": {
+    "sentence": "Yo nunca digo mentiras.",
+    "reading": "",
+    "translation": "我從不說謊。",
+    "grammar": "Yo[代名詞: 我] + nunca[副詞: 從不] + digo(decir)[動詞: 說] + mentiras[名詞: 謊言]"
+  },
+  "spanish::43": {
+    "sentence": "Yo tengo ocho libros.",
+    "reading": "",
+    "translation": "我有八本書。",
+    "grammar": "Yo[代名詞: 我] + tengo(tener)[動詞: 有] + ocho[名詞: 八] + libros[名詞: 書]"
+  },
+  "spanish::44": {
+    "sentence": "Ella tiene un plan para hoy.",
+    "reading": "",
+    "translation": "她今天有一個計劃。",
+    "grammar": "Ella[代名詞: 她] + tiene( иметь)[動詞: 有] + un[冠詞: 一] + plan[名詞: 計劃] + para[介詞: 為了] + hoy[名詞: 今天]"
+  },
+  "spanish::45": {
+    "sentence": "Pasar tiempo aquí es bueno.",
+    "reading": "",
+    "translation": "在這裡度過時間是好的。",
+    "grammar": "Pasar[動詞: 經過、發生、經過、度過、傳球] + tiempo[名詞: 時間] + aquí[副詞: 這裡] + es[助動詞: 是] + bueno[形容詞: 好的]"
+  },
+  "spanish::46": {
+    "sentence": "Hay poco tiempo para jugar.",
+    "reading": "",
+    "translation": "玩耍的時間很少。",
+    "grammar": "有[助動詞: 有] + 少[形容詞: 很少] + 時間[名詞: 時間] + 來[助詞: 來] + 玩[動詞: 玩耍]。"
+  },
+  "spanish::47": {
+    "sentence": "Yo puedo ir a la escuela.",
+    "reading": "",
+    "translation": "我能夠去學校。",
+    "grammar": "Yo[代名詞: 我] + puedo(poder)[動詞: 能夠] + ir[動詞: 去] + a[介詞: 到] + la[冠詞: 這個] + escuela[名詞: 學校]"
+  },
+  "spanish::48": {
+    "sentence": "Voy a pasar por el parque.",
+    "reading": "",
+    "translation": "我會經過公園。",
+    "grammar": "Voy[動詞: 去] + a[助動詞] + pasar[動詞: 經過] + por[助詞: 因為、經由、為了；經由、經過] + el[定冠詞: 這個] + parque[名詞: 公園]"
+  },
+  "spanish::49": {
+    "sentence": "El libro que tengo es bueno.",
+    "reading": "",
+    "translation": "我有的書很好。",
+    "grammar": "El[定冠詞: 這個] + libro[名詞: 書] + que[關係代名詞: 關係代名詞] + tengo[動詞: 有] + es[動詞: 是] + bueno[形容詞: 好]"
+  },
+  "spanish::50": {
+    "sentence": "¿Quién está allí?",
+    "reading": "",
+    "translation": "誰在那裡？",
+    "grammar": "¿Quién[代名詞: 誰] + está[動詞: 在] + allí[副詞: 那裡]"
   }
 }
