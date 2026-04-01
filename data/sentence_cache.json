@@ -2436,10 +2436,10 @@
     "grammar": "右(みぎ)[名詞: 右] + に[助詞] + 行く(いく)[動詞: 去]"
   },
   "japanese::98": {
-    "sentence": "",
-    "reading": "",
-    "translation": "",
-    "grammar": ""
+    "sentence": "今日は吉日だ。",
+    "reading": "きょうはきちにちだ。",
+    "translation": "今天是吉日。",
+    "grammar": "今日(きょう)[名詞: 今天] + は[主格助詞] + 吉日(きちにち)[名詞: 吉日] + だ[助動詞: 是]"
   },
   "japanese::99": {
     "sentence": "私の名は田中です。",
