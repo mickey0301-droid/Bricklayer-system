@@ -999,7 +999,11 @@ def study_page():
     # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
 
-    # ── 頂部進度列 + 跳號 ──────────────────────────────────
+    # ── 進度條（頁面最頂端第一個元素，點按後立即顯示）──────────────
+    _pct = st.session_state.study_index / max(len(study_df) - 1, 1)
+    st.progress(_pct)
+
+    # ── 頂部進度文字 + 跳號 ─────────────────────────────────
     progress_text = f"{st.session_state.study_index + 1} / {len(study_df)}"
     prog_col, jump_col = st.columns([3, 2])
     with prog_col:
@@ -1951,7 +1955,11 @@ def pattern_study_page():
     # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
 
-    # ── 頂部進度列 + 跳號 ──────────────────────────────────
+    # ── 進度條（頁面最頂端第一個元素，點按後立即顯示）──────────────
+    _pct = st.session_state.pattern_study_index / max(len(study_df) - 1, 1)
+    st.progress(_pct)
+
+    # ── 頂部進度文字 + 跳號 ─────────────────────────────────
     progress_text = f"{st.session_state.pattern_study_index + 1} / {len(study_df)}"
     prog_col, jump_col = st.columns([3, 2])
     with prog_col:
