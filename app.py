@@ -67,7 +67,7 @@ st.markdown("""
 <style>
 .block-container {
     max-width: 1200px;
-    padding-top: 2rem;
+    padding-top: 4.5rem;   /* 需蓋過 Streamlit 固定 header（約 3.5rem）*/
     padding-bottom: 2rem;
 }
 h1 { font-size: 2.4rem !important; }
@@ -999,30 +999,42 @@ def study_page():
     # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
 
-    # ── 進度條（頁面最頂端第一個元素，點按後立即顯示）──────────────
+    # ── 頂部導航列（第一個 UI 元素，點按後立即渲染）──────────────────
     _pct = st.session_state.study_index / max(len(study_df) - 1, 1)
-    st.progress(_pct)
+    _tnl, _tnm, _tnr = st.columns([2, 5, 2])
+    with _tnl:
+        if st.button("⬅ 上一個", key="study_prev_top", use_container_width=True):
+            save_current_sentence_before_leaving()
+            st.session_state.study_index = get_prev_index(study_df, st.session_state.study_index)
+            update_language_progress(language, st.session_state.study_index)
+            st.session_state.study_sentence_term = ""
+            st.rerun()
+    with _tnm:
+        st.progress(_pct)
+        st.caption(f"📚 {display_name}　{st.session_state.study_index + 1} / {len(study_df)}　｜　Available: {len(allowed_terms)}")
+    with _tnr:
+        if st.button("下一個 ➡", key="study_next_top", use_container_width=True):
+            save_current_sentence_before_leaving()
+            st.session_state.study_index = get_next_index(study_df, st.session_state.study_index)
+            update_language_progress(language, st.session_state.study_index)
+            st.session_state.study_sentence_term = ""
+            st.rerun()
 
-    # ── 頂部進度文字 + 跳號 ─────────────────────────────────
-    progress_text = f"{st.session_state.study_index + 1} / {len(study_df)}"
-    prog_col, jump_col = st.columns([3, 2])
-    with prog_col:
-        st.caption(f"📚 {display_name}　　Progress: {progress_text}　｜　Available words: {len(allowed_terms)}")
-    with jump_col:
-        jc1, jc2 = st.columns([2, 1])
-        with jc1:
-            jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
-                                       key="study_jump_input", label_visibility="collapsed")
-        with jc2:
-            if st.button("跳至", key="study_jump_btn", use_container_width=True):
-                if jump_val > 0:
-                    matches = study_df[study_df["code_num"] == int(jump_val)]
-                    if not matches.empty:
-                        st.session_state.study_index = int(matches.index[0])
-                        st.session_state.study_sentence_term = ""
-                        st.rerun()
-                    else:
-                        st.warning(f"找不到編號 {int(jump_val)}")
+    # ── 跳號 ──────────────────────────────────────────────────────
+    jc1, jc2 = st.columns([4, 1])
+    with jc1:
+        jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
+                                   key="study_jump_input", label_visibility="collapsed")
+    with jc2:
+        if st.button("跳至", key="study_jump_btn", use_container_width=True):
+            if jump_val > 0:
+                matches = study_df[study_df["code_num"] == int(jump_val)]
+                if not matches.empty:
+                    st.session_state.study_index = int(matches.index[0])
+                    st.session_state.study_sentence_term = ""
+                    st.rerun()
+                else:
+                    st.warning(f"找不到編號 {int(jump_val)}")
 
     # ══ 左右分欄（電腦左右、手機上下）══════════════════════
     col_left, col_right = st.columns([1, 1], gap="large")
@@ -1182,25 +1194,27 @@ def study_page():
 
     # ── 底部導航 ───────────────────────────────────────────
     st.divider()
-    if st.button("⬅ 上一個詞", use_container_width=True):
-        save_current_sentence_before_leaving()
-        st.session_state.study_index = get_prev_index(study_df, st.session_state.study_index)
-        update_language_progress(language, st.session_state.study_index)
-        st.session_state.study_sentence_term = ""
-        st.rerun()
-
-    if st.button("下一個詞 ➡", use_container_width=True):
-        save_current_sentence_before_leaving()
-        st.session_state.study_index = get_next_index(study_df, st.session_state.study_index)
-        update_language_progress(language, st.session_state.study_index)
-        st.session_state.study_sentence_term = ""
-        st.rerun()
-
-    if st.button("↩ 回到語言首頁", use_container_width=True):
-        save_current_sentence_before_leaving()
-        update_language_progress(language, st.session_state.study_index)
-        st.session_state.page = "language_home"
-        st.rerun()
+    _bnl, _bnm, _bnr = st.columns([2, 3, 2])
+    with _bnl:
+        if st.button("⬅ 上一個", key="study_prev_bot", use_container_width=True):
+            save_current_sentence_before_leaving()
+            st.session_state.study_index = get_prev_index(study_df, st.session_state.study_index)
+            update_language_progress(language, st.session_state.study_index)
+            st.session_state.study_sentence_term = ""
+            st.rerun()
+    with _bnm:
+        if st.button("↩ 回到語言首頁", key="study_home_bot", use_container_width=True):
+            save_current_sentence_before_leaving()
+            update_language_progress(language, st.session_state.study_index)
+            st.session_state.page = "language_home"
+            st.rerun()
+    with _bnr:
+        if st.button("下一個 ➡", key="study_next_bot", use_container_width=True):
+            save_current_sentence_before_leaving()
+            st.session_state.study_index = get_next_index(study_df, st.session_state.study_index)
+            update_language_progress(language, st.session_state.study_index)
+            st.session_state.study_sentence_term = ""
+            st.rerun()
 
     # ── 自動播放（放在頁面最後，確保詞彙卡和例句已先渲染完畢）──────
     # 頁面元素全部送出後才執行 TTS，用戶已能看到內容，不會空白等待
@@ -1955,30 +1969,38 @@ def pattern_study_page():
     # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
 
-    # ── 進度條（頁面最頂端第一個元素，點按後立即顯示）──────────────
+    # ── 頂部導航列（第一個 UI 元素，點按後立即渲染）──────────────────
     _pct = st.session_state.pattern_study_index / max(len(study_df) - 1, 1)
-    st.progress(_pct)
+    _tnl, _tnm, _tnr = st.columns([2, 5, 2])
+    with _tnl:
+        if st.button("⬅ 上一個", key="pat_study_prev_top", use_container_width=True):
+            st.session_state.pattern_study_index = get_prev_index(study_df, st.session_state.pattern_study_index)
+            st.session_state.pattern_study_sentence_term = ""
+            st.rerun()
+    with _tnm:
+        st.progress(_pct)
+        st.caption(f"🗣️ {display_name} 句型　{st.session_state.pattern_study_index + 1} / {len(study_df)}　｜　Available: {len(allowed_terms)}")
+    with _tnr:
+        if st.button("下一個 ➡", key="pat_study_next_top", use_container_width=True):
+            st.session_state.pattern_study_index = get_next_index(study_df, st.session_state.pattern_study_index)
+            st.session_state.pattern_study_sentence_term = ""
+            st.rerun()
 
-    # ── 頂部進度文字 + 跳號 ─────────────────────────────────
-    progress_text = f"{st.session_state.pattern_study_index + 1} / {len(study_df)}"
-    prog_col, jump_col = st.columns([3, 2])
-    with prog_col:
-        st.caption(f"🗣️ {display_name} 句型學習　　Progress: {progress_text}　｜　Available words: {len(allowed_terms)}")
-    with jump_col:
-        jc1, jc2 = st.columns([2, 1])
-        with jc1:
-            jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
-                                       key="pattern_study_jump_input", label_visibility="collapsed")
-        with jc2:
-            if st.button("跳至", key="pattern_study_jump_btn", use_container_width=True):
-                if jump_val > 0:
-                    matches = study_df[study_df["code_num"] == int(jump_val)]
-                    if not matches.empty:
-                        st.session_state.pattern_study_index = int(matches.index[0])
-                        st.session_state.pattern_study_sentence_term = ""
-                        st.rerun()
-                    else:
-                        st.warning(f"找不到編號 {int(jump_val)}")
+    # ── 跳號 ──────────────────────────────────────────────────────
+    jc1, jc2 = st.columns([4, 1])
+    with jc1:
+        jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
+                                   key="pattern_study_jump_input", label_visibility="collapsed")
+    with jc2:
+        if st.button("跳至", key="pattern_study_jump_btn", use_container_width=True):
+            if jump_val > 0:
+                matches = study_df[study_df["code_num"] == int(jump_val)]
+                if not matches.empty:
+                    st.session_state.pattern_study_index = int(matches.index[0])
+                    st.session_state.pattern_study_sentence_term = ""
+                    st.rerun()
+                else:
+                    st.warning(f"找不到編號 {int(jump_val)}")
 
     # ══ 左右分欄（電腦左右、手機上下）══════════════════════
     col_left, col_right = st.columns([1, 1], gap="large")
@@ -2138,19 +2160,21 @@ def pattern_study_page():
 
     # ── 底部導航 ───────────────────────────────────────────
     st.divider()
-    if st.button("⬅ 上一個詞", use_container_width=True, key="pat_study_prev"):
-        st.session_state.pattern_study_index = get_prev_index(study_df, st.session_state.pattern_study_index)
-        st.session_state.pattern_study_sentence_term = ""
-        st.rerun()
-
-    if st.button("下一個詞 ➡", use_container_width=True, key="pat_study_next"):
-        st.session_state.pattern_study_index = get_next_index(study_df, st.session_state.pattern_study_index)
-        st.session_state.pattern_study_sentence_term = ""
-        st.rerun()
-
-    if st.button("↩ 回到語言首頁", use_container_width=True, key="pat_study_back"):
-        st.session_state.page = "language_home"
-        st.rerun()
+    _bnl, _bnm, _bnr = st.columns([2, 3, 2])
+    with _bnl:
+        if st.button("⬅ 上一個", key="pat_study_prev_bot", use_container_width=True):
+            st.session_state.pattern_study_index = get_prev_index(study_df, st.session_state.pattern_study_index)
+            st.session_state.pattern_study_sentence_term = ""
+            st.rerun()
+    with _bnm:
+        if st.button("↩ 回到語言首頁", key="pat_study_back", use_container_width=True):
+            st.session_state.page = "language_home"
+            st.rerun()
+    with _bnr:
+        if st.button("下一個 ➡", key="pat_study_next_bot", use_container_width=True):
+            st.session_state.pattern_study_index = get_next_index(study_df, st.session_state.pattern_study_index)
+            st.session_state.pattern_study_sentence_term = ""
+            st.rerun()
 
     # ── 自動播放（放在頁面最後，確保詞彙卡和例句已先渲染完畢）──────
     _sentence_data_auto = st.session_state.pattern_study_sentence
