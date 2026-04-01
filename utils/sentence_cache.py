@@ -129,3 +129,21 @@ def set_cached_sentence(language: str, code: str, sentence_data: dict):
         "grammar":     sentence_data.get("grammar", ""),  # 包含 grammar
     }
     save_sentence_cache(cache)
+
+
+def set_cached_sentences_bulk(language: str, results: dict):
+    """一次儲存多筆例句，只呼叫一次 save_sentence_cache（一次 GitHub write）。
+    results: {code_str: sentence_data_dict}
+    """
+    if not results:
+        return
+    cache = load_sentence_cache()
+    for code, sentence_data in results.items():
+        key = _make_key(language, str(code))
+        cache[key] = {
+            "sentence":    sentence_data.get("sentence", ""),
+            "reading":     sentence_data.get("reading", ""),
+            "translation": sentence_data.get("translation", ""),
+            "grammar":     sentence_data.get("grammar", ""),
+        }
+    save_sentence_cache(cache)

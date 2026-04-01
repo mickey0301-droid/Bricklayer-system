@@ -28,7 +28,7 @@ from utils.tts_engine import (
     generate_tts_audio, audio_player, audio_player_dual, audio_player_pausable,
     get_cached_tts, set_cached_tts,
 )
-from utils.sentence_cache import get_cached_sentence, set_cached_sentence, sync_cache_from_github
+from utils.sentence_cache import get_cached_sentence, set_cached_sentence, set_cached_sentences_bulk, sync_cache_from_github
 from utils.progress_manager import (
     get_language_progress,
     update_language_progress,
@@ -953,6 +953,7 @@ def study_page():
             if not get_cached_sentence(language, str(get_current_row(study_df, i)["code"])).get("sentence")
         ]
         if _missing:
+            _batch_results = {}
             with st.spinner(f"AI 正在預先生成第 {_batch_start + 1}–{_batch_end} 個例句（共 {len(_missing)} 個）…"):
                 for _bi in _missing:
                     _row   = get_current_row(study_df, _bi)
@@ -970,9 +971,11 @@ def study_page():
                             current_code=_bcode_num,
                             allowed_vocab=_df_to_allowed_vocab(_b_allowed_df),
                         )
-                        set_cached_sentence(language, _bcode, _bresult)
+                        _batch_results[_bcode] = _bresult
                     except Exception:
                         pass
+            # 一次性存入快取（1 次 GitHub write，而非 N 次）
+            set_cached_sentences_bulk(language, _batch_results)
         st.session_state.study_batch_generated = _current_batch
 
     cached_sentence = get_cached_sentence(language, str(current["code"]))
@@ -1900,6 +1903,7 @@ def pattern_study_page():
             if not get_cached_sentence(_pattern_lang_key, str(get_current_row(study_df, i)["code"])).get("sentence")
         ]
         if _missing:
+            _batch_results = {}
             with st.spinner(f"AI 正在預先生成第 {_batch_start + 1}–{_batch_end} 個例句（共 {len(_missing)} 個）…"):
                 for _bi in _missing:
                     _row   = get_current_row(study_df, _bi)
@@ -1917,9 +1921,11 @@ def pattern_study_page():
                             current_code=_bcode_num,
                             allowed_vocab=_df_to_allowed_vocab(_b_allowed_df),
                         )
-                        set_cached_sentence(_pattern_lang_key, _bcode, _bresult)
+                        _batch_results[_bcode] = _bresult
                     except Exception:
                         pass
+            # 一次性存入快取（1 次 GitHub write，而非 N 次）
+            set_cached_sentences_bulk(_pattern_lang_key, _batch_results)
         st.session_state.pattern_study_batch_generated = _current_batch
 
     cached_sentence = get_cached_sentence(f"{language}_pattern", str(current["code"]))

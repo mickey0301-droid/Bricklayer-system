@@ -16,6 +16,15 @@ def _ensure_data_folder():
         os.makedirs(DATA_FOLDER)
 
 
+# ── 模組級記憶體快取（Streamlit 每次 rerun 不會重新載入模組）──────────
+_MEM_CACHE_PROGRESS: dict | None = None
+
+
+def _invalidate_progress_cache():
+    global _MEM_CACHE_PROGRESS
+    _MEM_CACHE_PROGRESS = None
+
+
 # ── GitHub helpers（reuse from vocab_manager）──────────────
 
 def _gh_read(gh_path: str):
@@ -64,8 +73,12 @@ def sync_history_from_github() -> bool:
 # ── Progress ───────────────────────────────────────────────
 
 def load_progress() -> dict:
-    """有 token → GitHub 為權威來源；無 token → 本地。"""
-    # 1. 有 token → 從 GitHub 拿最新版本（雲端環境）
+    """有 token → 首次從 GitHub 載入並記憶體快取；後續 rerun 直接走快取，不重複呼叫 GitHub API。"""
+    global _MEM_CACHE_PROGRESS
+    if _MEM_CACHE_PROGRESS is not None:
+        return _MEM_CACHE_PROGRESS
+
+    # 1. 有 token → 從 GitHub 拿最新版本（雲端環境，僅首次呼叫）
     gh_data = _gh_read(GH_PROGRESS_PATH)
     if gh_data is not None:
         _ensure_data_folder()
@@ -74,7 +87,8 @@ def load_progress() -> dict:
                 json.dump(gh_data, f, indent=2)
         except Exception:
             pass
-        return gh_data
+        _MEM_CACHE_PROGRESS = gh_data
+        return _MEM_CACHE_PROGRESS
 
     # 2. 無 token 或 GitHub 讀取失敗 → 本地檔案
     if os.path.exists(PROGRESS_FILE):
@@ -82,15 +96,19 @@ def load_progress() -> dict:
             with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
             if data:
-                return data
+                _MEM_CACHE_PROGRESS = data
+                return _MEM_CACHE_PROGRESS
         except Exception:
             pass
 
-    return {}
+    _MEM_CACHE_PROGRESS = {}
+    return _MEM_CACHE_PROGRESS
 
 
 def save_progress(progress: dict):
-    """同時存到本地和 GitHub。"""
+    """同時更新記憶體快取、存到本地和 GitHub。"""
+    global _MEM_CACHE_PROGRESS
+    _MEM_CACHE_PROGRESS = progress          # 立即更新記憶體，下一次 rerun 不需重讀
     _ensure_data_folder()
     try:
         with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
