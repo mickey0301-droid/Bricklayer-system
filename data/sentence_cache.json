@@ -2050,5 +2050,65 @@
     "reading": "",
     "translation": "那是什麼？",
     "grammar": "¿Qué[疑問詞: 什麼] + es[動詞: 是] + ese[指示代名詞: 那個（較近）]"
+  },
+  "spanish::81": {
+    "sentence": "Yo le doy un libro.",
+    "reading": "",
+    "translation": "我給他一本書。",
+    "grammar": "Yo[代名詞: 我] + le[代名詞: 給他/她/您] + doy(dar)[動詞: 給] + un[不定冠詞: 一] + libro[名詞: 書]"
+  },
+  "spanish::82": {
+    "sentence": "Ellas les dan algo bueno.",
+    "reading": "",
+    "translation": "她們給他們一些好的東西。",
+    "grammar": "Ellas[代名詞: 她們] + les[代名詞: 他們] + dan( dar)[動詞: 給] + algo[名詞: 一些東西] + bueno[形容詞: 好的]"
+  },
+  "spanish::83": {
+    "sentence": "Yo lo tengo aquí.",
+    "reading": "",
+    "translation": "我在這裡有他。",
+    "grammar": "Yo[代名詞: 我] + lo[代名詞: 他] + tengo(tener)[動詞: 有] + aquí[副詞: 這裡]"
+  },
+  "spanish::84": {
+    "sentence": "Esa es mi casa.",
+    "reading": "",
+    "translation": "那是我的家。",
+    "grammar": "Esa[代名詞: 那個] + es[動詞: 是] + mi[代名詞: 我的] + casa[名詞: 房子]"
+  },
+  "spanish::85": {
+    "sentence": "Hay mil cosas que hacer hoy.",
+    "reading": "",
+    "translation": "今天有一千件事情要做。",
+    "grammar": "Hay[動詞: 有] + mil[名詞: 一千] + cosas[名詞: 事情] + que[連接詞] + hacer[動詞: 做] + hoy[副詞: 今天]"
+  },
+  "spanish::86": {
+    "sentence": "Estos son mis libros.",
+    "reading": "",
+    "translation": "這些是我的書。",
+    "grammar": "Estos[代名詞: 這些] + son[動詞: 是] + mis[代名詞: 我的] + libros[名詞: 書]"
+  },
+  "spanish::87": {
+    "sentence": "No quiero ni comer ni beber.",
+    "reading": "",
+    "translation": "我什麼都不想吃，也不想喝。",
+    "grammar": "No[否定詞] + quiero[動詞: 想] + ni[連接詞: 甚至不] + comer[動詞: 吃] + ni[連接詞: 甚至不] + beber[動詞: 喝]"
+  },
+  "spanish::88": {
+    "sentence": "Hoy os voy a dar algo.",
+    "reading": "",
+    "translation": "今天我會給你們一些東西。",
+    "grammar": "Hoy[副詞: 今天] + os[代名詞: 你們（受格）] + voy[助動詞: 去] + a[助詞: 將] + dar[動詞: 給] + algo[名詞: 一些東西]"
+  },
+  "spanish::89": {
+    "sentence": "Yo oigo algo aquí.",
+    "reading": "",
+    "translation": "我在這裡聽到一些東西。",
+    "grammar": "Yo[代名詞: 我] + oigo(oír)[動詞: 聽到] + algo[名詞: 一些東西] + aquí[副詞: 這裡]"
+  },
+  "spanish::90": {
+    "sentence": "",
+    "reading": "",
+    "translation": "",
+    "grammar": ""
   }
 }
