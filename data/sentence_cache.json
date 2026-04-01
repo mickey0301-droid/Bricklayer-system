@@ -2110,5 +2110,65 @@
     "reading": "",
     "translation": "偶數對於計數是好的。",
     "grammar": "Los[冠詞: 這些] + números[名詞: 數字] + pares[形容詞: 偶（數）的] + son[動詞: 是] + buenos[形容詞: 好的] + para[介詞: 為了] + contar[動詞: 計數]"
+  },
+  "spanish::91": {
+    "sentence": "Tengo sed ahora.",
+    "reading": "",
+    "translation": "我現在口渴。",
+    "grammar": "Tengo[動詞: 擁有] + sed[名詞: 口渴] + ahora[副詞: 現在]"
+  },
+  "spanish::92": {
+    "sentence": "Si tú estás aquí, yo estoy allí.",
+    "reading": "",
+    "translation": "如果你在這裡，我在那裡。",
+    "grammar": "Si[連接詞: 如果] + tú[代名詞: 你] + estás[動詞: 在] + aquí[副詞: 這裡] + , + yo[代名詞: 我] + estoy[動詞: 在] + allí[副詞: 那裡] + ."
+  },
+  "spanish::93": {
+    "sentence": "Ella tiene su libro aquí.",
+    "reading": "",
+    "translation": "她在這裡有她的書。",
+    "grammar": "Ella[代名詞: 她] + tiene( Tener)[動詞: 有] + su[代名詞: 她的] + libro[名詞: 書] + aquí[副詞: 在這裡]"
+  },
+  "spanish::94": {
+    "sentence": "Ella tiene sus cosas.",
+    "reading": "",
+    "translation": "她有她的東西。",
+    "grammar": "Ella[代名詞: 她] + tiene(tener)[動詞: 有] + sus[代名詞: 她的] + cosas[名詞: 東西]"
+  },
+  "spanish::95": {
+    "sentence": "Yo tengo algo tal.",
+    "reading": "",
+    "translation": "我有那樣的東西。",
+    "grammar": "Yo[代名詞: 我] + tengo(tener)[動詞: 擁有] + algo[名詞: 一些東西] + tal[形容詞: 那樣的]"
+  },
+  "spanish::96": {
+    "sentence": "Ella es tan buena.",
+    "reading": "",
+    "translation": "她是如此好。",
+    "grammar": "Ella[代名詞: 她] + es[動詞: 是] + tan[副詞: 如此] + buena[形容詞: 好]"
+  },
+  "spanish::97": {
+    "sentence": "Esto es tu libro.",
+    "reading": "",
+    "translation": "這是你的書。",
+    "grammar": "Esto[代名詞: 這] + es[動詞: 是] + tu[代名詞: 你的] + libro[名詞: 書]"
+  },
+  "spanish::98": {
+    "sentence": "¿Dónde están tus cosas?",
+    "reading": "",
+    "translation": "你的東西在哪裡？",
+    "grammar": "Dónde[副詞: 哪裡] + están[動詞: 在] + tus[代名詞: 你的] + cosas[名詞: 物品]"
+  },
+  "spanish::99": {
+    "sentence": "Yo tengo una tía.",
+    "reading": "",
+    "translation": "我有一個阿姨。",
+    "grammar": "Yo[代名詞: 我] + tengo(tener)[動詞: 有] + una[不定冠詞: 一個] + tía[名詞: 阿姨]"
+  },
+  "spanish::100": {
+    "sentence": "Mi tío está aquí.",
+    "reading": "",
+    "translation": "我的叔叔在這裡。",
+    "grammar": "Mi[代名詞: 我] + tío[名詞: 叔叔] + está[動詞: 在] + aquí[副詞: 這裡]"
   }
 }
