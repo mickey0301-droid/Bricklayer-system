@@ -144,6 +144,64 @@ def _extract_json(text):
     return {}
 
 
+def _normalize_text_for_match(text: str, language: str) -> str:
+    if language in ("japanese", "korean", "chinese"):
+        return text
+    return text.lower()
+
+
+def _find_vocab_hits(sentence: str, vocab_items: list, language: str) -> list:
+    if not sentence or not vocab_items:
+        return []
+    haystack = _normalize_text_for_match(sentence, language)
+    hits = []
+    for item in sorted(vocab_items, key=lambda x: len(str(x.get("term", ""))), reverse=True):
+        term = str(item.get("term", "")).strip()
+        if not term:
+            continue
+        needle = _normalize_text_for_match(term, language)
+        if needle and needle in haystack:
+            hits.append(item)
+    return hits
+
+
+def _validate_vocab_usage(
+    sentence: str,
+    vocab_codes: list,
+    language: str,
+    current_code: int,
+    allowed_vocab: list = None,
+    full_vocab: list = None,
+    review_mode: bool = False,
+) -> tuple[bool, str]:
+    if not sentence.strip():
+        return False, "empty sentence"
+
+    allowed_codes = {
+        int(v["code"]) for v in (allowed_vocab or [])
+        if str(v.get("code", "")).strip().lstrip("-").isdigit()
+    }
+    reported_disallowed = sorted({c for c in vocab_codes if c not in allowed_codes})
+    if reported_disallowed:
+        return False, f"reported disallowed vocab codes: {reported_disallowed}"
+
+    if not full_vocab:
+        return True, ""
+
+    disallowed_items = [
+        v for v in full_vocab
+        if str(v.get("code", "")).strip().lstrip("-").isdigit() and int(v["code"]) > current_code
+    ]
+    matched_disallowed = _find_vocab_hits(sentence, disallowed_items, language)
+    matched_codes = sorted({int(v["code"]) for v in matched_disallowed})
+
+    allowed_outside = 1 if (not review_mode and 0 < current_code <= 100) else 0
+    if len(matched_codes) > allowed_outside:
+        return False, f"detected higher-code vocab in sentence: {matched_codes}"
+
+    return True, ""
+
+
 # ── 例句生成 ──────────────────────────────────────────────
 
 def generate_example_sentence(
@@ -156,6 +214,7 @@ def generate_example_sentence(
     current_code: int = 0,
     review_mode: bool = False,
     allowed_vocab: list = None,   # [{"code": int, "term": str}, ...] — 有值時詞表附帶編號
+    full_vocab: list = None,      # [{"code": int, "term": str}] — 用於生成後驗證
     ai_provider: str = "",
     ai_model: str = "",
 ) -> dict:
@@ -331,17 +390,33 @@ TARGET WORD（debe aparecer en la oración）: {current_term}{meaning_hint}{mean
 Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","vocab_codes":[códigos enteros usados de la lista]}}"""
 
-    content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
-    data = _extract_json(content)
-    raw_codes = data.get("vocab_codes", [])
-    vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
-    return {
-        "sentence":    data.get("sentence", ""),
-        "reading":     data.get("reading", ""),
-        "translation": data.get("translation", ""),
-        "grammar":     data.get("grammar", ""),
-        "vocab_codes": vocab_codes,
-    }
+    last_reason = "unknown validation failure"
+    for _ in range(3):
+        content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
+        data = _extract_json(content)
+        raw_codes = data.get("vocab_codes", [])
+        vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
+        sentence = data.get("sentence", "")
+        ok, reason = _validate_vocab_usage(
+            sentence=sentence,
+            vocab_codes=vocab_codes,
+            language=language,
+            current_code=current_code,
+            allowed_vocab=allowed_vocab,
+            full_vocab=full_vocab,
+            review_mode=review_mode,
+        )
+        if ok:
+            return {
+                "sentence":    sentence,
+                "reading":     data.get("reading", ""),
+                "translation": data.get("translation", ""),
+                "grammar":     data.get("grammar", ""),
+                "vocab_codes": vocab_codes,
+            }
+        last_reason = reason
+
+    raise RuntimeError(f"生成例句未通過詞彙驗證：{last_reason}")
 
 
 # ── FSI 搭配 / 句型變化生成 ──────────────────────────────
@@ -356,6 +431,7 @@ def generate_fsi_sentence(
     current_code: int = 0,
     allowed_vocab: list = None,    # [{"code": int, "term": str}]
     prev_drill_notes: list = None, # previously generated notes (to avoid repetition)
+    full_vocab: list = None,       # [{"code": int, "term": str}] — 用於生成後驗證
     ai_provider: str = "",
     ai_model: str = "",
 ) -> dict:
@@ -460,19 +536,35 @@ JSON 출력：
 Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[códigos enteros]}}"""
 
-    content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
-    data = _extract_json(content)
-    raw_codes = data.get("vocab_codes", [])
-    vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])
-                   if str(c).strip().lstrip("-").isdigit()]
-    return {
-        "sentence":    data.get("sentence", ""),
-        "reading":     data.get("reading", ""),
-        "translation": data.get("translation", ""),
-        "grammar":     data.get("grammar", ""),
-        "drill_note":  data.get("drill_note", ""),
-        "vocab_codes": vocab_codes,
-    }
+    last_reason = "unknown validation failure"
+    for _ in range(3):
+        content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
+        data = _extract_json(content)
+        raw_codes = data.get("vocab_codes", [])
+        vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])
+                       if str(c).strip().lstrip("-").isdigit()]
+        sentence = data.get("sentence", "")
+        ok, reason = _validate_vocab_usage(
+            sentence=sentence,
+            vocab_codes=vocab_codes,
+            language=language,
+            current_code=current_code,
+            allowed_vocab=allowed_vocab,
+            full_vocab=full_vocab,
+            review_mode=False,
+        )
+        if ok:
+            return {
+                "sentence":    sentence,
+                "reading":     data.get("reading", ""),
+                "translation": data.get("translation", ""),
+                "grammar":     data.get("grammar", ""),
+                "drill_note":  data.get("drill_note", ""),
+                "vocab_codes": vocab_codes,
+            }
+        last_reason = reason
+
+    raise RuntimeError(f"FSI 句子未通過詞彙驗證：{last_reason}")
 
 
 # ── 句型重組生成 ──────────────────────────────────────────

@@ -143,6 +143,7 @@ def start_sentence_prefetch_task(
     term_pos: str = "",
     current_code: int = 0,
     allowed_vocab: list | None = None,
+    full_vocab: list | None = None,
     ai_provider: str = "",
     ai_model: str = "",
 ) -> bool:
@@ -168,6 +169,7 @@ def start_sentence_prefetch_task(
                 term_pos=term_pos,
                 current_code=current_code,
                 allowed_vocab=allowed_vocab,
+                full_vocab=full_vocab,
                 ai_provider=ai_provider,
                 ai_model=ai_model,
             )

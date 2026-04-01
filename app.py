@@ -941,6 +941,7 @@ def study_page():
     current_term = current["term"]
     st.session_state.study_current_code = str(current["code"])
 
+    full_vocab_list = _df_to_allowed_vocab(study_df)
     allowed_df = get_allowed_vocab(study_df, current_code)
     allowed_terms = allowed_df["term"].astype(str).tolist()
 
@@ -971,6 +972,7 @@ def study_page():
                             term_pos=str(_row.get("pos", "")),
                             current_code=_bcode_num,
                             allowed_vocab=_df_to_allowed_vocab(_b_allowed_df),
+                            full_vocab=full_vocab_list,
                         )
                         _batch_results[_bcode] = _bresult
                     except Exception:
@@ -1126,6 +1128,7 @@ def study_page():
                         term_pos=str(current.get("pos", "")),
                         current_code=current_code,
                         allowed_vocab=_df_to_allowed_vocab(allowed_df),
+                        full_vocab=full_vocab_list,
                     )
                     st.session_state.study_sentence = result
                     set_cached_sentence(language, str(current["code"]), result)
@@ -1170,6 +1173,7 @@ def study_page():
                         term_pos=str(current.get("pos", "")),
                         current_code=current_code,
                         allowed_vocab=_df_to_allowed_vocab(allowed_df),
+                        full_vocab=full_vocab_list,
                     )
                     st.session_state.study_sentence = result
                     st.session_state.study_sentence_term = current_term
@@ -1239,6 +1243,7 @@ def study_page():
                     term_pos=str(_next_row.get("pos", "")),
                     current_code=_next_code_num,
                     allowed_vocab=_df_to_allowed_vocab(_next_allowed_df),
+                    full_vocab=full_vocab_list,
                     ai_provider=st.session_state.get("ai_provider", "openai"),
                     ai_model=st.session_state.get("ai_model", ""),
                 )
@@ -1283,6 +1288,7 @@ def review_page():
 
     raw_df   = get_current_vocab_df(language)
     study_df = prepare_study_df(raw_df)
+    review_full_vocab_list = _df_to_allowed_vocab(study_df)
 
     if study_df.empty:
         st.warning("詞庫是空的，請先新增詞彙。")
@@ -1387,6 +1393,7 @@ def review_page():
                 term_pos=pick_pos,
                 current_code=pick_code,
                 allowed_vocab=allowed_vocab_list,
+                full_vocab=review_full_vocab_list,
             )
             try:
                 with st.spinner("AI 正在生成搭配練習句..."):
@@ -1478,6 +1485,7 @@ def review_page():
                 term_pos=st.session_state.review_term_pos,
                 current_code=st.session_state.review_term_code,
                 allowed_vocab=allowed_vocab_list,
+                full_vocab=review_full_vocab_list,
             )
 
             # ===== Substitution 搭配練習 =====
@@ -1908,6 +1916,7 @@ def pattern_study_page():
 
     raw_df   = get_current_pattern_vocab_df(language)
     study_df = prepare_study_df(raw_df)
+    pattern_full_vocab_list = _df_to_allowed_vocab(study_df)
 
     if study_df.empty:
         st.warning("句型詞庫是空的。請先到「自訂句型」頁面新增詞彙。")
@@ -1955,6 +1964,7 @@ def pattern_study_page():
                             term_pos=str(_row.get("pos", "")),
                             current_code=_bcode_num,
                             allowed_vocab=_df_to_allowed_vocab(_b_allowed_df),
+                            full_vocab=pattern_full_vocab_list,
                         )
                         _batch_results[_bcode] = _bresult
                     except Exception:
@@ -2106,6 +2116,7 @@ def pattern_study_page():
                         term_pos=str(current.get("pos", "")),
                         current_code=current_code,
                         allowed_vocab=_df_to_allowed_vocab(allowed_df),
+                        full_vocab=pattern_full_vocab_list,
                     )
                     st.session_state.pattern_study_sentence = result
                     set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
@@ -2150,6 +2161,7 @@ def pattern_study_page():
                         term_pos=str(current.get("pos", "")),
                         current_code=current_code,
                         allowed_vocab=_df_to_allowed_vocab(allowed_df),
+                        full_vocab=pattern_full_vocab_list,
                     )
                     st.session_state.pattern_study_sentence = result
                     st.session_state.pattern_study_sentence_term = current_term
@@ -2241,6 +2253,7 @@ def pattern_review_page():
 
     raw_df = get_current_pattern_vocab_df(language)
     study_df = prepare_study_df(raw_df)
+    pattern_review_full_vocab_list = _df_to_allowed_vocab(study_df)
 
     if study_df.empty:
         st.warning("句型詞庫是空的。請先到「句型詞庫」頁面新增詞彙。")
@@ -2337,6 +2350,7 @@ def pattern_review_page():
                 term_pos=pick_pos,
                 current_code=pick_code,
                 allowed_vocab=allowed_vocab_list,
+                full_vocab=pattern_review_full_vocab_list,
             )
             try:
                 with st.spinner("AI 正在生成搭配練習句..."):
@@ -2428,6 +2442,7 @@ def pattern_review_page():
                 term_pos=st.session_state.pattern_review_term_pos,
                 current_code=st.session_state.pattern_review_term_code,
                 allowed_vocab=allowed_vocab_list,
+                full_vocab=pattern_review_full_vocab_list,
             )
 
             # ===== Substitution 搭配練習 =====
