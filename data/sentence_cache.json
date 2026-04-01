@@ -1990,5 +1990,65 @@
     "reading": "",
     "translation": "我在這裡。",
     "grammar": "Yo[代名詞: 我] + estoy[動詞: 在] + aquí[副詞: 這裡]"
+  },
+  "spanish::71": {
+    "sentence": "Él está aquí.",
+    "reading": "",
+    "translation": "他在這裡。",
+    "grammar": "Él[代名詞: 他] + está[動詞: 是] + aquí[副詞: 這裡]"
+  },
+  "spanish::72": {
+    "sentence": "Aló, ¿cómo estás?",
+    "reading": "",
+    "translation": "喂，你好嗎？",
+    "grammar": "Aló[名詞: 喂] + , + どう[副詞: 怎麼] + estar(estar)[動詞: 在] + ?"
+  },
+  "spanish::73": {
+    "sentence": "Leo es un signo de fuego.",
+    "reading": "",
+    "translation": "獅子座是一個火象星座。",
+    "grammar": "Leo[名詞: 獅子座] + es[動詞: 是] + un[冠詞: 一個] + signo[名詞: 星座] + de[介詞: 的] + fuego[名詞: 火]"
+  },
+  "spanish::74": {
+    "sentence": "Ella está acá.",
+    "reading": "",
+    "translation": "她在這邊。",
+    "grammar": "Ella[代名詞: 她] + está[動詞: 在] + acá[副詞: 這邊]"
+  },
+  "spanish::75": {
+    "sentence": "El libro está ahí.",
+    "reading": "",
+    "translation": "這本書在那裡。",
+    "grammar": "El[定冠詞: 這] + libro[名詞: 書] + está[動詞: 在] + ahí[副詞: 那裡]"
+  },
+  "spanish::76": {
+    "sentence": "Yo quiero hacerlo así.",
+    "reading": "",
+    "translation": "我想這樣做。",
+    "grammar": "Yo[代名詞: 我] + quiero[動詞: 想] + hacerlo[動詞: 做] + así[副詞: 如此]"
+  },
+  "spanish::77": {
+    "sentence": "Ella aún está aquí.",
+    "reading": "",
+    "translation": "她仍然在這裡。",
+    "grammar": "Ella[代名詞: 她] + aún[副詞: 仍然] + está[動詞: 是] + aquí[副詞: 這裡] "
+  },
+  "spanish::78": {
+    "sentence": "Tengo cuatro libros.",
+    "reading": "",
+    "translation": "我有四本書。",
+    "grammar": "Tengo[動詞: 有] + cuatro[名詞: 四] + libros[名詞: 書]"
+  },
+  "spanish::79": {
+    "sentence": "Esa chica está aquí.",
+    "reading": "",
+    "translation": "那個女孩在這裡。",
+    "grammar": "Esa[代名詞: 那個] + chica[名詞: 女孩] + está[動詞: 在] + aquí[副詞: 這裡]"
+  },
+  "spanish::80": {
+    "sentence": "¿Qué es ese?",
+    "reading": "",
+    "translation": "那是什麼？",
+    "grammar": "¿Qué[疑問詞: 什麼] + es[動詞: 是] + ese[指示代名詞: 那個（較近）]"
   }
 }
