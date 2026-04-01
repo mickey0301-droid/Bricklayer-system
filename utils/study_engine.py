@@ -21,10 +21,10 @@ def _ai_model() -> str:
     return st.session_state.get("ai_model") or defaults.get(provider, "gpt-4o-mini")
 
 
-def _call_ai(system_message: str, user_prompt: str) -> str:
+def _call_ai(system_message: str, user_prompt: str, ai_provider: str = "", ai_model: str = "") -> str:
     """統一 AI 呼叫介面，回傳模型的純文字回應。"""
-    provider = _ai_provider()
-    model    = _ai_model()
+    provider = ai_provider or _ai_provider()
+    model    = ai_model or _ai_model()
 
     if provider == "openai":
         from openai import OpenAI
@@ -156,6 +156,8 @@ def generate_example_sentence(
     current_code: int = 0,
     review_mode: bool = False,
     allowed_vocab: list = None,   # [{"code": int, "term": str}, ...] — 有值時詞表附帶編號
+    ai_provider: str = "",
+    ai_model: str = "",
 ) -> dict:
     """
     生成例句。
@@ -329,7 +331,7 @@ TARGET WORD（debe aparecer en la oración）: {current_term}{meaning_hint}{mean
 Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","vocab_codes":[códigos enteros usados de la lista]}}"""
 
-    content = _call_ai(system_message, prompt)
+    content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
     data = _extract_json(content)
     raw_codes = data.get("vocab_codes", [])
     vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
@@ -354,6 +356,8 @@ def generate_fsi_sentence(
     current_code: int = 0,
     allowed_vocab: list = None,    # [{"code": int, "term": str}]
     prev_drill_notes: list = None, # previously generated notes (to avoid repetition)
+    ai_provider: str = "",
+    ai_model: str = "",
 ) -> dict:
     """
     FSI drill sentence generator.
@@ -456,7 +460,7 @@ JSON 출력：
 Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[códigos enteros]}}"""
 
-    content = _call_ai(system_message, prompt)
+    content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
     data = _extract_json(content)
     raw_codes = data.get("vocab_codes", [])
     vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])

@@ -44,6 +44,7 @@ from utils.familiarity_manager import (
 from utils.background_tasks import (
     start_autocomplete_task,
     get_latest_task_for_language,
+    start_sentence_prefetch_task,
 )
 
 st.set_page_config(page_title="Bricklayer", layout="wide")
@@ -944,7 +945,7 @@ def study_page():
     allowed_terms = allowed_df["term"].astype(str).tolist()
 
     # ── 批次預生成例句（每 10 個單字一批，進入新批次時一次生成完畢）──
-    _current_batch = st.session_state.study_index // 10
+    _current_batch = st.session_state.get("study_batch_generated", -1)
     if _current_batch != st.session_state.get("study_batch_generated", -1):
         _batch_start = _current_batch * 10
         _batch_end   = min(_batch_start + 10, len(study_df))
@@ -1220,33 +1221,46 @@ def study_page():
     # 頁面元素全部送出後才執行 TTS，用戶已能看到內容，不會空白等待
     _sentence_data_auto = st.session_state.study_sentence
     _cur_sent_auto = _sentence_data_auto.get("sentence", "")
+    if _cur_sent_auto and not _gen_needed:
+        _next_index = get_next_index(study_df, st.session_state.study_index)
+        if _next_index != st.session_state.study_index:
+            _next_row = get_current_row(study_df, _next_index)
+            _next_code = str(_next_row["code"])
+            if not get_cached_sentence(language, _next_code).get("sentence"):
+                _next_code_num = int(_next_row["code_num"])
+                _next_allowed_df = get_allowed_vocab(study_df, _next_code_num)
+                start_sentence_prefetch_task(
+                    language=language,
+                    code=_next_code,
+                    current_term=str(_next_row["term"]),
+                    allowed_terms=_next_allowed_df["term"].astype(str).tolist(),
+                    term_meaning=str(_next_row.get("meaning", "")),
+                    term_reading=str(_next_row.get("reading", "")),
+                    term_pos=str(_next_row.get("pos", "")),
+                    current_code=_next_code_num,
+                    allowed_vocab=_df_to_allowed_vocab(_next_allowed_df),
+                    ai_provider=st.session_state.get("ai_provider", "openai"),
+                    ai_model=st.session_state.get("ai_model", ""),
+                )
     if _cur_sent_auto and not _gen_needed and st.session_state.auto_played_for != _cur_sent_auto:
         try:
-            # 單字音訊：磁碟快取 → session 快取 → API
+            # 自動播放只使用既有快取，避免頁面為了 TTS 再等待 API
             _term_audio = (
                 get_cached_tts(language, _code_str, "term")
                 or (st.session_state.tts_term_for == current_term and st.session_state.tts_term_audio)
             )
-            if not _term_audio:
-                with st.spinner("生成發音中..."):
-                    _term_audio = generate_tts_audio(current_term, language)
-                    set_cached_tts(language, _code_str, "term", _term_audio)
-            st.session_state.tts_term_audio = _term_audio
-            st.session_state.tts_term_for = current_term
-            # 例句音訊：磁碟快取 → session 快取 → API
             _sent_tts_val = _sent_tts_text(_sentence_data_auto, language)
             _sent_audio = (
                 get_cached_tts(language, _code_str, "sent", _sent_tts_val)
                 or (st.session_state.tts_sentence_for == _cur_sent_auto and st.session_state.tts_sentence_audio)
             )
-            if not _sent_audio:
-                with st.spinner("生成例句發音中..."):
-                    _sent_audio = generate_tts_audio(_sent_tts_val, language)
-                    set_cached_tts(language, _code_str, "sent", _sent_audio, _sent_tts_val)
-            st.session_state.tts_sentence_audio = _sent_audio
-            st.session_state.tts_sentence_for = _cur_sent_auto
-            components.html(audio_player_dual(_term_audio, _sent_audio), height=0)
-            st.session_state.auto_played_for = _cur_sent_auto
+            if _term_audio and _sent_audio:
+                st.session_state.tts_term_audio = _term_audio
+                st.session_state.tts_term_for = current_term
+                st.session_state.tts_sentence_audio = _sent_audio
+                st.session_state.tts_sentence_for = _cur_sent_auto
+                components.html(audio_player_dual(_term_audio, _sent_audio), height=0)
+                st.session_state.auto_played_for = _cur_sent_auto
         except Exception as e:
             st.warning(f"自動播放失敗：{e}")
 
@@ -1354,7 +1368,7 @@ def review_page():
         st.caption("隨機抽一個已學單字，透過 FSI 練習法觀察搭配詞（Substitution）與句型變化（Transformation）。")
 
         # ── 抽題 ──────────────────────────────────────
-        if st.button("🎲 抽新題目", use_container_width=True, key="word_draw") or not st.session_state.review_term:
+        if st.button("🎲 抽新題目", use_container_width=True, key="word_draw"):
             _weights = get_sample_weights(language, learned_df["code_num"].tolist())
             picked       = learned_df.sample(1, weights=_weights).iloc[0]
             pick_code    = int(picked["code_num"])
@@ -1400,6 +1414,7 @@ def review_page():
             st.rerun()
 
         if not st.session_state.review_term:
+            st.info("按「抽新題目」後才會產生 Substitution 和 Transformation 練習，避免一進頁面就等待 AI 生成。")
             return
 
         # ── 左右分欄 ──────────────────────────────────
@@ -2304,7 +2319,7 @@ def pattern_review_page():
         st.caption("隨機抽一個句型詞彙，透過 FSI 練習法觀察搭配詞（Substitution）與句型變化（Transformation）。")
 
         # ── 抽題 ──────────────────────────────────────
-        if st.button("🎲 抽新題目", use_container_width=True, key="pat_review_word_draw") or not st.session_state.pattern_review_term:
+        if st.button("🎲 抽新題目", use_container_width=True, key="pat_review_word_draw"):
             picked       = filtered_df.sample(1).iloc[0]
             pick_code    = int(picked["code_num"])
             pick_term    = str(picked["term"])
@@ -2349,6 +2364,7 @@ def pattern_review_page():
             st.rerun()
 
         if not st.session_state.pattern_review_term:
+            st.info("按「抽新題目」後才會產生 Substitution 和 Transformation 練習，避免一進頁面就等待 AI 生成。")
             return
 
         # ── 左右分欄 ──────────────────────────────

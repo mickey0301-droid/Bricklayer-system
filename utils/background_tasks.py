@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional
 
 from utils.vocab_manager import load_vocab, save_vocab, ensure_min_rows
+from utils.sentence_cache import get_cached_sentence, set_cached_sentence
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,6 +15,7 @@ TASKS_FILE = DATA_DIR / "background_tasks.json"
 
 _LOCK = threading.Lock()
 _WORKERS: Dict[str, threading.Thread] = {}
+_SENTENCE_PREFETCH_KEYS: set[str] = set()
 
 
 def _ensure_data_dir():
@@ -129,3 +131,55 @@ def start_autocomplete_task(language: str) -> str:
     _WORKERS[task_id] = worker
 
     return task_id
+
+
+def start_sentence_prefetch_task(
+    language: str,
+    code: str,
+    current_term: str,
+    allowed_terms: list,
+    term_meaning: str = "",
+    term_reading: str = "",
+    term_pos: str = "",
+    current_code: int = 0,
+    allowed_vocab: list | None = None,
+    ai_provider: str = "",
+    ai_model: str = "",
+) -> bool:
+    cache_key = f"{language}::{code}"
+    if get_cached_sentence(language, code).get("sentence"):
+        return False
+
+    with _LOCK:
+        if cache_key in _SENTENCE_PREFETCH_KEYS:
+            return False
+        _SENTENCE_PREFETCH_KEYS.add(cache_key)
+
+    def _worker():
+        try:
+            from utils.study_engine import generate_example_sentence
+
+            result = generate_example_sentence(
+                language=language,
+                current_term=current_term,
+                allowed_terms=allowed_terms,
+                term_meaning=term_meaning,
+                term_reading=term_reading,
+                term_pos=term_pos,
+                current_code=current_code,
+                allowed_vocab=allowed_vocab,
+                ai_provider=ai_provider,
+                ai_model=ai_model,
+            )
+            if result.get("sentence"):
+                set_cached_sentence(language, code, result)
+        except Exception:
+            pass
+        finally:
+            with _LOCK:
+                _SENTENCE_PREFETCH_KEYS.discard(cache_key)
+
+    worker = threading.Thread(target=_worker, daemon=True)
+    worker.start()
+    _WORKERS[cache_key] = worker
+    return True
