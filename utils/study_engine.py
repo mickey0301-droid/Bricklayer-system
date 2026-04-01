@@ -99,12 +99,16 @@ def prepare_study_df(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def get_allowed_vocab(df: pd.DataFrame, current_code: int):
-    df = prepare_study_df(df)
+    # 若 df 已含 code_num（已 prepare 過），直接過濾，避免重複 copy/sort
+    if "code_num" not in df.columns:
+        df = prepare_study_df(df)
     return df[df["code_num"] <= current_code]
 
 
 def get_current_row(df: pd.DataFrame, index: int):
-    df = prepare_study_df(df)
+    # 若 df 已含 code_num（已 prepare 過），直接取列，避免重複 copy/sort
+    if "code_num" not in df.columns:
+        df = prepare_study_df(df)
     if df.empty:
         return None
     if index >= len(df):

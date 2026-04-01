@@ -996,40 +996,8 @@ def study_page():
             st.session_state.study_current_code = str(current["code"])
             _gen_needed = True
 
-    # ── 自動播放：翻到新單字或產生新例句時，依序播放單字→例句 ──
-    # 以例句文字為 key，只要句子不同就自動播放（含按「新例句」的情況）
-    # _gen_needed 時例句還未就緒，跳過自動播放，等下一次 rerun 後再播
+    # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
-    sentence_data_ready = st.session_state.study_sentence
-    cur_sent = sentence_data_ready.get("sentence", "")
-    if cur_sent and not _gen_needed and st.session_state.auto_played_for != cur_sent:
-        try:
-            with st.spinner("自動播放中..."):
-                # 單字音訊：磁碟快取 → session 快取 → API
-                term_audio = (
-                    get_cached_tts(language, _code_str, "term")
-                    or (st.session_state.tts_term_for == current_term and st.session_state.tts_term_audio)
-                )
-                if not term_audio:
-                    term_audio = generate_tts_audio(current_term, language)
-                    set_cached_tts(language, _code_str, "term", term_audio)
-                st.session_state.tts_term_audio = term_audio
-                st.session_state.tts_term_for = current_term
-                # 例句音訊：磁碟快取 → session 快取 → API
-                _sent_tts = _sent_tts_text(sentence_data_ready, language)
-                sent_audio = (
-                    get_cached_tts(language, _code_str, "sent", _sent_tts)
-                    or (st.session_state.tts_sentence_for == cur_sent and st.session_state.tts_sentence_audio)
-                )
-                if not sent_audio:
-                    sent_audio = generate_tts_audio(_sent_tts, language)
-                    set_cached_tts(language, _code_str, "sent", sent_audio, _sent_tts)
-                st.session_state.tts_sentence_audio = sent_audio
-                st.session_state.tts_sentence_for = cur_sent
-            components.html(audio_player_dual(term_audio, sent_audio), height=64)
-            st.session_state.auto_played_for = cur_sent
-        except Exception as e:
-            st.warning(f"自動播放失敗：{e}")
 
     # ── 頂部進度列 + 跳號 ──────────────────────────────────
     progress_text = f"{st.session_state.study_index + 1} / {len(study_df)}"
@@ -1229,6 +1197,40 @@ def study_page():
         update_language_progress(language, st.session_state.study_index)
         st.session_state.page = "language_home"
         st.rerun()
+
+    # ── 自動播放（放在頁面最後，確保詞彙卡和例句已先渲染完畢）──────
+    # 頁面元素全部送出後才執行 TTS，用戶已能看到內容，不會空白等待
+    _sentence_data_auto = st.session_state.study_sentence
+    _cur_sent_auto = _sentence_data_auto.get("sentence", "")
+    if _cur_sent_auto and not _gen_needed and st.session_state.auto_played_for != _cur_sent_auto:
+        try:
+            # 單字音訊：磁碟快取 → session 快取 → API
+            _term_audio = (
+                get_cached_tts(language, _code_str, "term")
+                or (st.session_state.tts_term_for == current_term and st.session_state.tts_term_audio)
+            )
+            if not _term_audio:
+                with st.spinner("生成發音中..."):
+                    _term_audio = generate_tts_audio(current_term, language)
+                    set_cached_tts(language, _code_str, "term", _term_audio)
+            st.session_state.tts_term_audio = _term_audio
+            st.session_state.tts_term_for = current_term
+            # 例句音訊：磁碟快取 → session 快取 → API
+            _sent_tts_val = _sent_tts_text(_sentence_data_auto, language)
+            _sent_audio = (
+                get_cached_tts(language, _code_str, "sent", _sent_tts_val)
+                or (st.session_state.tts_sentence_for == _cur_sent_auto and st.session_state.tts_sentence_audio)
+            )
+            if not _sent_audio:
+                with st.spinner("生成例句發音中..."):
+                    _sent_audio = generate_tts_audio(_sent_tts_val, language)
+                    set_cached_tts(language, _code_str, "sent", _sent_audio, _sent_tts_val)
+            st.session_state.tts_sentence_audio = _sent_audio
+            st.session_state.tts_sentence_for = _cur_sent_auto
+            components.html(audio_player_dual(_term_audio, _sent_audio), height=0)
+            st.session_state.auto_played_for = _cur_sent_auto
+        except Exception as e:
+            st.warning(f"自動播放失敗：{e}")
 
 
 # ══════════════════════════════════════════════════════════
@@ -1946,40 +1948,8 @@ def pattern_study_page():
             st.session_state.pattern_study_current_code = str(current["code"])
             _gen_needed = True
 
-    # ── 自動播放：翻到新單字或產生新例句時，依序播放單字→例句 ──
-    # 以例句文字為 key，只要句子不同就自動播放（含按「新例句」的情況）
-    # _gen_needed 時例句還未就緒，跳過自動播放，等下一次 rerun 後再播
+    # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
-    sentence_data_ready = st.session_state.pattern_study_sentence
-    cur_sent = sentence_data_ready.get("sentence", "")
-    if cur_sent and not _gen_needed and st.session_state.pattern_study_auto_played_for != cur_sent:
-        try:
-            with st.spinner("自動播放中..."):
-                # 單字音訊：磁碟快取 → session 快取 → API
-                term_audio = (
-                    get_cached_tts(language, _code_str, "term")
-                    or (st.session_state.pattern_tts_term_for == current_term and st.session_state.pattern_tts_term_audio)
-                )
-                if not term_audio:
-                    term_audio = generate_tts_audio(current_term, language)
-                    set_cached_tts(language, _code_str, "term", term_audio)
-                st.session_state.pattern_tts_term_audio = term_audio
-                st.session_state.pattern_tts_term_for = current_term
-                # 例句音訊：磁碟快取 → session 快取 → API
-                _sent_tts = _sent_tts_text(sentence_data_ready, language)
-                sent_audio = (
-                    get_cached_tts(f"{language}_pattern", _code_str, "sent", _sent_tts)
-                    or (st.session_state.pattern_tts_sentence_for == cur_sent and st.session_state.pattern_tts_sentence_audio)
-                )
-                if not sent_audio:
-                    sent_audio = generate_tts_audio(_sent_tts, language)
-                    set_cached_tts(f"{language}_pattern", _code_str, "sent", sent_audio, _sent_tts)
-                st.session_state.pattern_tts_sentence_audio = sent_audio
-                st.session_state.pattern_tts_sentence_for = cur_sent
-            components.html(audio_player_dual(term_audio, sent_audio), height=64)
-            st.session_state.pattern_study_auto_played_for = cur_sent
-        except Exception as e:
-            st.warning(f"自動播放失敗：{e}")
 
     # ── 頂部進度列 + 跳號 ──────────────────────────────────
     progress_text = f"{st.session_state.pattern_study_index + 1} / {len(study_df)}"
@@ -2173,6 +2143,37 @@ def pattern_study_page():
     if st.button("↩ 回到語言首頁", use_container_width=True, key="pat_study_back"):
         st.session_state.page = "language_home"
         st.rerun()
+
+    # ── 自動播放（放在頁面最後，確保詞彙卡和例句已先渲染完畢）──────
+    _sentence_data_auto = st.session_state.pattern_study_sentence
+    _cur_sent_auto = _sentence_data_auto.get("sentence", "")
+    if _cur_sent_auto and not _gen_needed and st.session_state.pattern_study_auto_played_for != _cur_sent_auto:
+        try:
+            _term_audio = (
+                get_cached_tts(language, _code_str, "term")
+                or (st.session_state.pattern_tts_term_for == current_term and st.session_state.pattern_tts_term_audio)
+            )
+            if not _term_audio:
+                with st.spinner("生成發音中..."):
+                    _term_audio = generate_tts_audio(current_term, language)
+                    set_cached_tts(language, _code_str, "term", _term_audio)
+            st.session_state.pattern_tts_term_audio = _term_audio
+            st.session_state.pattern_tts_term_for = current_term
+            _sent_tts_val = _sent_tts_text(_sentence_data_auto, language)
+            _sent_audio = (
+                get_cached_tts(f"{language}_pattern", _code_str, "sent", _sent_tts_val)
+                or (st.session_state.pattern_tts_sentence_for == _cur_sent_auto and st.session_state.pattern_tts_sentence_audio)
+            )
+            if not _sent_audio:
+                with st.spinner("生成例句發音中..."):
+                    _sent_audio = generate_tts_audio(_sent_tts_val, language)
+                    set_cached_tts(f"{language}_pattern", _code_str, "sent", _sent_audio, _sent_tts_val)
+            st.session_state.pattern_tts_sentence_audio = _sent_audio
+            st.session_state.pattern_tts_sentence_for = _cur_sent_auto
+            components.html(audio_player_dual(_term_audio, _sent_audio), height=0)
+            st.session_state.pattern_study_auto_played_for = _cur_sent_auto
+        except Exception as e:
+            st.warning(f"自動播放失敗：{e}")
 
 
 # ══════════════════════════════════════════════════════════
