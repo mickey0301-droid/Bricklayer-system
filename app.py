@@ -383,26 +383,60 @@ def _is_ignorable_extra_vocab(item: dict, language: str) -> bool:
     return False
 
 
-def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_codes: list = None):
-    """在例句下方顯示使用到的詞彙 chip 清單。超出範圍的詞以橘色標示。
-    合併 vocab_codes（AI 回傳，處理變形）與 string matching（掃描全句，補漏），
-    以確保不遺漏任何使用到的詞彙。
-    """
-    # 方法一：AI 回傳的 vocab_codes（可正確處理動詞活用等變形）
-    if vocab_codes:
-        code_hits = _vocab_by_codes(vocab_codes, vocab_df, current_code)
-    else:
-        code_hits = []
-
-    # 方法二：字串掃描（補捉 AI 漏報的詞、以及原型直接出現在句中的詞）
+def _merge_used_vocab(sentence: str, vocab_df, current_code: int, vocab_codes: list = None) -> list:
+    """整合 AI 回傳編號與字串掃描結果，回傳去重後的詞彙命中清單。"""
+    code_hits = _vocab_by_codes(vocab_codes or [], vocab_df, current_code) if vocab_codes else []
     string_hits = find_used_vocab(sentence, vocab_df, current_code)
-
-    # 合併：以 vocab_codes 結果為主，string matching 補充未出現的詞
     seen_code_nums = {v["code_num"] for v in code_hits}
     merged = list(code_hits)
     for v in string_hits:
         if v["code_num"] not in seen_code_nums:
             merged.append(v)
+    return merged
+
+
+def _grammar_has_new_format(grammar: str) -> bool:
+    g = str(grammar or "").strip()
+    if not g:
+        return False
+    return ("文法重點" in g) and ("• " in g or "\n•" in g)
+
+
+def _is_cache_sentence_valid(sentence_data: dict, vocab_df, current_code: int, language: str) -> bool:
+    sentence = str(sentence_data.get("sentence", "")).strip()
+    if not sentence:
+        return False
+
+    merged = _merge_used_vocab(
+        sentence=sentence,
+        vocab_df=vocab_df,
+        current_code=current_code,
+        vocab_codes=sentence_data.get("vocab_codes"),
+    )
+    blocking_extras = [
+        v for v in merged
+        if v.get("is_extra") and not _is_ignorable_extra_vocab(v, language)
+    ]
+    if blocking_extras:
+        return False
+
+    grammar = str(sentence_data.get("grammar", "")).strip()
+    if grammar and not _grammar_has_new_format(grammar):
+        return False
+    return True
+
+
+def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_codes: list = None):
+    """在例句下方顯示使用到的詞彙 chip 清單。超出範圍的詞以橘色標示。
+    合併 vocab_codes（AI 回傳，處理變形）與 string matching（掃描全句，補漏），
+    以確保不遺漏任何使用到的詞彙。
+    """
+    merged = _merge_used_vocab(
+        sentence=sentence,
+        vocab_df=vocab_df,
+        current_code=current_code,
+        vocab_codes=vocab_codes,
+    )
 
     language = st.session_state.get("language", "")
     ignored_extras = [
@@ -1034,7 +1068,12 @@ def study_page():
     # 決定是否需要 AI 生成：有快取直接套用；無快取則延遲到右欄渲染後再生成
     _gen_needed = False
     if needs_switch:
-        if cached_sentence.get("sentence"):
+        if cached_sentence.get("sentence") and _is_cache_sentence_valid(
+            sentence_data=cached_sentence,
+            vocab_df=study_df,
+            current_code=current_code,
+            language=language,
+        ):
             # 有快取 → 立即套用，本次渲染就能顯示
             st.session_state.study_sentence = cached_sentence
             st.session_state.study_sentence_term = current_term
@@ -1045,6 +1084,14 @@ def study_page():
             st.session_state.study_sentence_term = current_term
             st.session_state.study_current_code = str(current["code"])
             _gen_needed = True
+    elif st.session_state.study_sentence.get("sentence") and not _is_cache_sentence_valid(
+        sentence_data=st.session_state.study_sentence,
+        vocab_df=study_df,
+        current_code=current_code,
+        language=language,
+    ):
+        st.session_state.study_sentence = {}
+        _gen_needed = True
 
     # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
@@ -2026,7 +2073,12 @@ def pattern_study_page():
     # 決定是否需要 AI 生成：有快取直接套用；無快取則延遲到右欄渲染後再生成
     _gen_needed = False
     if needs_switch:
-        if cached_sentence.get("sentence"):
+        if cached_sentence.get("sentence") and _is_cache_sentence_valid(
+            sentence_data=cached_sentence,
+            vocab_df=study_df,
+            current_code=current_code,
+            language=language,
+        ):
             # 有快取 → 立即套用，本次渲染就能顯示
             st.session_state.pattern_study_sentence = cached_sentence
             st.session_state.pattern_study_sentence_term = current_term
@@ -2037,6 +2089,14 @@ def pattern_study_page():
             st.session_state.pattern_study_sentence_term = current_term
             st.session_state.pattern_study_current_code = str(current["code"])
             _gen_needed = True
+    elif st.session_state.pattern_study_sentence.get("sentence") and not _is_cache_sentence_valid(
+        sentence_data=st.session_state.pattern_study_sentence,
+        vocab_df=study_df,
+        current_code=current_code,
+        language=language,
+    ):
+        st.session_state.pattern_study_sentence = {}
+        _gen_needed = True
 
     # _code_str 在整個頁面（TTS 按鈕）都會用到，保留在此
     _code_str = str(current["code"])
