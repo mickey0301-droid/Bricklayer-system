@@ -419,15 +419,29 @@ def _ensure_display_grammar_format(grammar: str) -> str:
     if not g:
         return ""
     if not _grammar_has_new_format(g):
+        parts = [p.strip() for p in g.split("+") if p.strip()]
+        specific_rules = []
+        for p in parts:
+            token = p.split("(", 1)[0].split("[", 1)[0].strip()
+            if not token:
+                continue
+            if ("[動詞" in p or "[形容詞" in p) and len(specific_rules) < 3:
+                specific_rules.append(f"• {token}：此詞在本句以當前詞形出現，對應本句語氣與時態。")
+            elif ("助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p) and len(specific_rules) < 3:
+                specific_rules.append(f"• {token}：此成分在本句標示語法關係（如主語、受詞、方向或連接）。")
+            elif "[名詞" in p and len(specific_rules) < 3:
+                specific_rules.append(f"• {token}：此名詞本身不活用，透過後接成分在句中承擔角色。")
+            if len(specific_rules) >= 3:
+                break
+        if not specific_rules:
+            specific_rules = ["• 目標詞彙：此詞在本句依語境採用當前形式。"]
         g = (
             f"{g}\n文法重點：\n"
             "• 活用/時態：本句動詞或形容詞採用此形式，是為了對應當前語境與語氣。\n"
             "• 助詞/連接：本句助詞、連接詞、介詞（或冠詞）負責建立語法關係與語意銜接。\n"
             "• 語氣/情境：本句採用中性敘述語氣，重點是自然呈現語意。\n"
             "變化規則：\n"
-            "• 動詞：以詞幹搭配語尾變化，語尾可呈現時態、敬語與語氣。\n"
-            "• 形容詞：依句型功能改變語尾，可用於敘述或修飾。\n"
-            "• 名詞：通常不活用，透過助詞標示主語、受詞與方向等角色。"
+            + "\n".join(specific_rules)
         )
     return g
 
