@@ -449,6 +449,36 @@ def _rule_level_by_code(current_code: int, review_mode: bool = False) -> str:
     return "strict2"
 
 
+def _sentence_length_limit_by_code(current_code: int, review_mode: bool = False) -> int:
+    """
+    編號越小，句子越短；逐步放寬。
+    CJK 用字元數，其他語言用單詞數。
+    """
+    if review_mode:
+        return 7
+    c = int(current_code or 0)
+    if c <= 120:
+        return 6
+    if c <= 300:
+        return 8
+    if c <= 700:
+        return 10
+    if c <= 1000:
+        return 12
+    if c <= 2000:
+        return 14
+    return 16
+
+
+def _count_sentence_units(sentence: str, language: str) -> int:
+    text = str(sentence or "").strip()
+    if not text:
+        return 0
+    if language in ("japanese", "korean", "chinese"):
+        return len(re.sub(r"\s", "", text))
+    return len(text.split())
+
+
 def _normalize_text_for_match(text: str, language: str) -> str:
     if language in ("japanese", "korean", "chinese"):
         return text
@@ -565,6 +595,8 @@ def _generate_example_sentence_staged(
 ) -> dict:
     """分級收緊模式：先鬆後嚴，避免一開始就卡死。"""
     level = _rule_level_by_code(current_code, review_mode=review_mode)
+    max_len = _sentence_length_limit_by_code(current_code, review_mode=review_mode)
+    unit_label = "字元（不含空白）" if language in ("japanese", "korean", "chinese") else "單詞"
     level_hint_map = {
         "relax0": "規則等級 L0：先求自然可用，不做詞彙限制。",
         "relax1": "規則等級 L1：儘量用已學詞，最多可用 3 個高編號內容詞。",
@@ -591,6 +623,7 @@ def _generate_example_sentence_staged(
 目標詞：{current_term}
 目標詞資訊：詞性={term_pos}，意思={term_meaning}，讀音={term_reading}
 {level_hint}
+句長限制：最多 {max_len} {unit_label}。
 已學詞表（可優先使用）：
 {vocab_list}
 
@@ -601,6 +634,7 @@ def _generate_example_sentence_staged(
 目標詞：{current_term}
 目標詞資訊：詞性={term_pos}，意思={term_meaning}，讀音={term_reading}
 {level_hint}
+句長限制：最多 {max_len} {unit_label}。
 已學詞表（可優先使用）：
 {vocab_list}
 
@@ -611,6 +645,7 @@ def _generate_example_sentence_staged(
 目標詞：{current_term}
 目標詞資訊：詞性={term_pos}，意思={term_meaning}
 {level_hint}
+句長限制：最多 {max_len} {unit_label}。
 已學詞表（可優先使用）：
 {vocab_list}
 
@@ -625,6 +660,9 @@ def _generate_example_sentence_staged(
             sentence = str(data.get("sentence", "")).strip()
             if not sentence:
                 last_reason = "empty sentence"
+                continue
+            if _count_sentence_units(sentence, language) > max_len:
+                last_reason = f"sentence too long: limit={max_len}{unit_label}"
                 continue
             reading = str(data.get("reading", "")).strip()
             translation = str(data.get("translation", "")).strip()
