@@ -36,7 +36,10 @@ from utils.progress_manager import (
     get_learning_history,
     sync_progress_from_github,
     sync_history_from_github,
+    get_progress_sync_status,
+    force_sync_progress,
 )
+from utils.app_logger import log_error, get_log_path
 from utils.language_manager import load_languages, add_language, get_language_config
 from utils.familiarity_manager import (
     get_familiarity, set_familiarity, get_sample_weights,
@@ -1111,6 +1114,9 @@ def study_page():
         st.session_state.study_index = min(saved_index, len(study_df) - 1)
     if st.session_state.study_index >= len(study_df):
         st.session_state.study_index = len(study_df) - 1
+    # 自動保存目前位置（避免 Reboot 後回到舊進度）
+    if st.session_state.study_index > saved_index:
+        update_language_progress(language, st.session_state.study_index)
 
     current = get_current_row(study_df, st.session_state.study_index)
     current_code = int(current["code_num"])
@@ -1205,6 +1211,11 @@ def study_page():
         st.progress(_pct)
         st.caption(f"📚 {display_name}　{st.session_state.study_index + 1} / {len(study_df)}　｜　Available: {len(allowed_terms)}")
         st.caption(f"Build: {_build_hash()}")
+        _sync_status = get_progress_sync_status()
+        if _sync_status.get("ok") is False:
+            st.caption(f"⚠️ 進度雲端同步失敗：{_sync_status.get('message', '')}")
+        elif _sync_status.get("ok") is True:
+            st.caption("✅ 進度已同步到 GitHub")
     with _tnr:
         if st.button("下一個 ➡", key="study_next_top", use_container_width=True):
             save_current_sentence_before_leaving()
@@ -1212,6 +1223,14 @@ def study_page():
             update_language_progress(language, st.session_state.study_index)
             st.session_state.study_sentence_term = ""
             st.rerun()
+    _sync_c1, _sync_c2 = st.columns([4, 1])
+    with _sync_c2:
+        if st.button("💾 同步進度", key="study_force_sync_progress", use_container_width=True):
+            ok = force_sync_progress(language, st.session_state.study_index)
+            if ok:
+                st.success("已手動同步目前進度。")
+            else:
+                st.error(f"同步失敗，請查看 log：{get_log_path()}")
 
     # ── 跳號 ──────────────────────────────────────────────────────
     jc1, jc2 = st.columns([4, 1])
@@ -1224,6 +1243,7 @@ def study_page():
                 matches = study_df[study_df["code_num"] == int(jump_val)]
                 if not matches.empty:
                     st.session_state.study_index = int(matches.index[0])
+                    update_language_progress(language, st.session_state.study_index)
                     st.session_state.study_sentence_term = ""
                     st.rerun()
                 else:
@@ -1325,6 +1345,7 @@ def study_page():
                     set_cached_sentence(language, str(current["code"]), result)
                     _generated_ok = True
                 except Exception as e:
+                    log_error(f"[study_page] auto generate failed lang={language} code={current.get('code','')}: {e}")
                     st.error(f"自動生成例句失敗：{e}")
             if _generated_ok:
                 st.rerun()
@@ -1374,6 +1395,7 @@ def study_page():
                     set_cached_sentence(language, str(current["code"]), result)
                 st.rerun()
             except Exception as e:
+                log_error(f"[study_page] new sentence failed lang={language} code={current.get('code','')}: {e}")
                 st.error(f"生成例句失敗：{e}")
 
         if st.button("🔊 播放例句", key="tts_sentence_btn", use_container_width=True):
@@ -2327,6 +2349,7 @@ def pattern_study_page():
                     set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
                     _generated_ok = True
                 except Exception as e:
+                    log_error(f"[pattern_study_page] auto generate failed lang={language} code={current.get('code','')}: {e}")
                     st.error(f"自動生成例句失敗：{e}")
             if _generated_ok:
                 st.rerun()
@@ -2376,6 +2399,7 @@ def pattern_study_page():
                     set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
                 st.rerun()
             except Exception as e:
+                log_error(f"[pattern_study_page] new sentence failed lang={language} code={current.get('code','')}: {e}")
                 st.error(f"生成例句失敗：{e}")
 
         if st.button("🔊 播放例句", key="pat_study_tts_sentence_btn", use_container_width=True):

@@ -1,6 +1,7 @@
 import os
 import json
 from datetime import date
+from utils.app_logger import log_error, log_info
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_FOLDER   = os.path.normpath(os.path.join(_HERE, "..", "data"))
@@ -18,11 +19,29 @@ def _ensure_data_folder():
 
 # ── 模組級記憶體快取（Streamlit 每次 rerun 不會重新載入模組）──────────
 _MEM_CACHE_PROGRESS: dict | None = None
+_MEM_LAST_PROGRESS_SYNC: dict = {
+    "ok": None,
+    "message": "",
+    "updated_at": "",
+}
 
 
 def _invalidate_progress_cache():
     global _MEM_CACHE_PROGRESS
     _MEM_CACHE_PROGRESS = None
+
+
+def _set_sync_status(ok: bool | None, message: str = "", updated_at: str = ""):
+    global _MEM_LAST_PROGRESS_SYNC
+    _MEM_LAST_PROGRESS_SYNC = {
+        "ok": ok,
+        "message": str(message or ""),
+        "updated_at": str(updated_at or date.today().isoformat()),
+    }
+
+
+def get_progress_sync_status() -> dict:
+    return dict(_MEM_LAST_PROGRESS_SYNC)
 
 
 # ── GitHub helpers（reuse from vocab_manager）──────────────
@@ -32,18 +51,27 @@ def _gh_read(gh_path: str):
         from utils.vocab_manager import _github_read
         data, sha = _github_read(gh_path)
         return data
-    except Exception:
+    except Exception as e:
+        log_error(f"[progress] github read error path={gh_path}: {e}")
         return None
 
 
 def _gh_write(gh_path: str, data: dict, message: str):
-    # 資料已存本地（local-first），GitHub 只是雲端備份，失敗不影響使用，靜默忽略
+    # local-first：本地一定先存；GitHub 是雲端備份
     try:
         from utils.vocab_manager import _github_write
         content_str = json.dumps(data, ensure_ascii=False, indent=2)
-        _github_write(gh_path, content_str, None, message)
-    except Exception:
-        pass
+        ok, err = _github_write(gh_path, content_str, None, message)
+        if ok:
+            _set_sync_status(True, "GitHub 進度同步成功")
+            return True
+        _set_sync_status(False, f"GitHub 進度同步失敗：{err}")
+        log_error(f"[progress] github write failed path={gh_path}: {err}")
+        return False
+    except Exception as e:
+        _set_sync_status(False, f"GitHub 進度同步例外：{e}")
+        log_error(f"[progress] github write exception path={gh_path}: {e}")
+        return False
 
 
 # ── 從 GitHub 強制同步到本地 ──────────────────────────────
@@ -55,7 +83,9 @@ def sync_progress_from_github() -> bool:
     if gh_data is not None:
         with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
             json.dump(gh_data, f, indent=2)
+        _set_sync_status(True, "已從 GitHub 拉取最新進度")
         return True
+    _set_sync_status(False, "從 GitHub 拉取進度失敗")
     return False
 
 
@@ -125,9 +155,24 @@ def get_language_progress(language: str) -> int:
 
 def update_language_progress(language: str, index: int):
     progress = load_progress()
-    progress[language] = index
+    prev = int(progress.get(language, 0))
+    progress[language] = int(index)
     save_progress(progress)
-    _log_daily_progress(language, index)
+    if int(index) >= prev:
+        _log_daily_progress(language, int(index))
+    log_info(f"[progress] update {language}: {prev} -> {int(index)}")
+
+
+def force_sync_progress(language: str, index: int | None = None) -> bool:
+    """
+    手動強制同步目前語言進度到 GitHub。
+    index 不提供時，使用目前記憶體/本地進度。
+    """
+    progress = load_progress()
+    if index is not None:
+        progress[language] = int(index)
+    save_progress(progress)
+    return bool(get_progress_sync_status().get("ok"))
 
 
 # ── History ────────────────────────────────────────────────
