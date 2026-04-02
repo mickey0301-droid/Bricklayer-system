@@ -165,6 +165,29 @@ def _find_vocab_hits(sentence: str, vocab_items: list, language: str) -> list:
     return hits
 
 
+def _is_function_word(item: dict) -> bool:
+    pos = str(item.get("pos", "")).strip().lower()
+    if not pos:
+        return False
+    function_pos_keywords = (
+        "助詞", "助动词", "助動詞", "連接詞", "接続詞", "冠詞", "介詞", "前置詞", "後置詞",
+        "代名詞", "語尾", "詞尾", "접속", "조사", "어미", "보조", "관형사", "감탄사", "대명사",
+        "particle", "auxiliary", "article", "preposition", "conjunction", "pronoun",
+        "determiner", "postposition", "suffix",
+    )
+    return any(k in pos for k in function_pos_keywords)
+
+
+def _is_ignorable_disallowed_item(item: dict, language: str) -> bool:
+    if _is_function_word(item):
+        return True
+    term = str(item.get("term", "")).strip()
+    # CJK 單字元常見於斷詞/詞素誤判，視為可忽略
+    if language in ("japanese", "korean", "chinese") and len(term) <= 1:
+        return True
+    return False
+
+
 def _validate_vocab_usage(
     sentence: str,
     vocab_codes: list,
@@ -190,13 +213,16 @@ def _validate_vocab_usage(
 
     disallowed_items = [
         v for v in full_vocab
-        if str(v.get("code", "")).strip().lstrip("-").isdigit() and int(v["code"]) > current_code
+        if (
+            str(v.get("code", "")).strip().lstrip("-").isdigit()
+            and int(v["code"]) > current_code
+            and not _is_ignorable_disallowed_item(v, language)
+        )
     ]
     matched_disallowed = _find_vocab_hits(sentence, disallowed_items, language)
     matched_codes = sorted({int(v["code"]) for v in matched_disallowed})
 
-    allowed_outside = 1 if (not review_mode and 0 < current_code <= 100) else 0
-    if len(matched_codes) > allowed_outside:
+    if matched_codes:
         return False, f"detected higher-code vocab in sentence: {matched_codes}"
 
     return True, ""
@@ -254,20 +280,9 @@ def generate_example_sentence(
             "3. Grammatical particles, conjugations, articles, pronouns do NOT count toward the 2-word limit.\n"
             "4. If the 7-character limit and naturalness conflict, prioritise the limit — use a shorter form.\n"
         )
-    elif current_code > 0 and current_code <= 100:
-        vocab_rule = (
-            "VOCABULARY RULE (BEGINNER — HARD LIMIT, NO EXCEPTIONS): "
-            "The learner has studied fewer than 100 words. "
-            "ALL content words (nouns, verbs, adjectives, adverbs) MUST come from the ALLOWED VOCABULARY list. "
-            "You are permitted AT MOST 1 (ONE) content word outside the list — "
-            "ONLY when it is literally impossible to form a grammatically natural sentence without it. "
-            "Using 2 or more words outside the list is STRICTLY FORBIDDEN regardless of any reason. "
-            "If you are tempted to use a second outside word, rephrase the sentence instead. "
-            "This limit is ABSOLUTE.\n"
-        )
     else:
         vocab_rule = (
-            "VOCABULARY RULE (STRICT): The learner has studied 100+ words. "
+            "VOCABULARY RULE (STRICT): "
             "ALL content words (nouns, verbs, adjectives, adverbs) MUST come from the ALLOWED VOCABULARY list. "
             "Do NOT use any content word outside the list.\n"
         )
@@ -299,6 +314,10 @@ def generate_example_sentence(
         "CRITICAL for the 'grammar' field: use the ACTUAL words from the sentence — never write '語' or "
         "any placeholder. For example if sentence is 春が来る then grammar is: "
         "春(はる)[名詞: 春天] + が[主格助詞] + 来る(くる)[動詞: 來] "
+        "After the word-by-word breakdown, append a section titled「文法重點」in Traditional Chinese with 2-4 bullet points. "
+        "Each bullet MUST start with '• '. Explain WHY the verb/adjective form is used "
+        "(for example tense, polarity, aspect, politeness, conjugation choice), and WHY any particle, conjunction, "
+        "preposition, article, or connector is chosen in that sentence. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer code numbers "
         "(the [N] prefix in the ALLOWED VOCABULARY list) of every content word you used from that list, "
@@ -317,9 +336,6 @@ def generate_example_sentence(
     content_word_rule_ja = "\n- 【複習モード】リストから使う内容語は最大2語。" if review_mode else ""
     content_word_rule_ko = "\n- 【복습 모드】목록에서 사용하는 내용어는 최대 2개." if review_mode else ""
     content_word_rule_es = "\n- 【Review mode】Usa como máximo 2 palabras de contenido de la lista." if review_mode else ""
-    loose_rule_ja = "\n- 【厳守・絶対ルール】リストにない内容語は最大1語のみ許可。2語以上の使用は絶対禁止。リストの語で言い換えられる場合はリストを使うこと。" if (not review_mode and current_code > 0 and current_code <= 100) else ""
-    loose_rule_ko = "\n- 【엄수·절대 규칙】목록에 없는 내용어는 최대 1개만 허용. 2개 이상은 절대 금지. 목록 단어로 바꿔 말할 수 있으면 반드시 목록을 사용할 것." if (not review_mode and current_code > 0 and current_code <= 100) else ""
-    loose_rule_es = "\n- 【OBLIGATORIO·ABSOLUTO】Solo se permite 1 (UNA) palabra de contenido fuera de la lista. 2 o más palabras fuera está ESTRICTAMENTE PROHIBIDO. Si se puede reformular con palabras de la lista, hazlo." if (not review_mode and current_code > 0 and current_code <= 100) else ""
 
     if language == "japanese":
         _reading_constraint = f"読みは必ず「{term_reading}」のみ — 他の読みは絶対に使わないこと。" if term_reading else ""
@@ -341,8 +357,11 @@ TARGET WORD（必ずこの単語を含める）: {current_term}{meaning_hint}{me
 - TARGET WORDは同音異義語に注意し、指定された品詞・意味で使うこと。
 - 文は自然な日本語であること。不自然な語順や不要な詰め込みは禁止。
 - 助詞・助動詞・活用語尾・接続詞などの文法要素は自由に使ってよい。
-- リストの語を無理に全部使う必要はない。自然な短文を一つだけ作ること。{content_word_rule_ja}{length_rule_ja}{loose_rule_ja}
+- リストの語を無理に全部使う必要はない。自然な短文を一つだけ作ること。{content_word_rule_ja}{length_rule_ja}
+- 【厳守】内容語は必ずリスト内の語のみ。リスト外の内容語は使用禁止。
 - grammarフィールドは文中の実際の単語をそのまま使うこと。「語」という文字は絶対に使わない。
+- grammarフィールドでは、単語分解のあとに「文法重點：」を付け、繁體中文の條列（各行「• 」開始）で2〜4点説明すること。
+  必ず「なぜその活用形なのか」「なぜその助詞・接続詞を使うのか」を含めること。
   文が「春が来る。」なら → 春(はる)[名詞: 春天] + が[主格助詞] + 来る(くる)[動詞: 來]
 
 JSON形式で出力：
@@ -362,8 +381,11 @@ TARGET WORD（반드시 포함）: {current_term}{meaning_hint}{meaning_line}
 - TARGET WORD는 동음이의어에 주의하여 지정된 품사·의미로 사용할 것.
 - 문장은 자연스러운 한국어여야 합니다.
 - 내용어（명사·동사·형용사·부사）는 목록에 있는 것을 사용.
-- 조사·어미·접속사·보조동사 등 문법 요소는 자유롭게 사용 가능.{content_word_rule_ko}{length_rule_ko}{loose_rule_ko}
+- 조사·어미·접속사·보조동사 등 문법 요소는 자유롭게 사용 가능.{content_word_rule_ko}{length_rule_ko}
+- 【엄수】내용어는 반드시 목록 안의 단어만 사용. 목록 밖 내용어는 사용 금지.
 - grammar 필드는 문장의 실제 단어만 사용（「단어」라는 글자 절대 금지）.
+- grammar 필드에서는 단어 분석 뒤에 「文法重點:」 섹션을 추가하고, 각 줄을 '• '로 시작하는繁體中文 불릿 2~4개로 설명할 것.
+  반드시 왜 그 활용형을 썼는지, 왜 그 조사·접속 표현을 썼는지를 포함할 것.
   예：나(na)[代名詞: 我] + 는[主格助詞] + 학교(hakgyo)[名詞: 學校] + 에[方向助詞] + 가요(gayo)[動詞: 去]
 
 JSON 출력：
@@ -383,8 +405,11 @@ TARGET WORD（debe aparecer en la oración）: {current_term}{meaning_hint}{mean
 - Usa la palabra objetivo en el sentido exacto indicado; no uses homónimos.
 - Las palabras de contenido（sustantivos, verbos, adjetivos, adverbios）deben venir de la lista.
 - Los elementos gramaticales（artículos, preposiciones, conjunciones, pronombres, conjugaciones）son libres.
-- No es necesario usar todas las palabras. Una oración corta y natural es mejor.{content_word_rule_es}{length_rule_es}{loose_rule_es}
+- No es necesario usar todas las palabras. Una oración corta y natural es mejor.{content_word_rule_es}{length_rule_es}
+- 【OBLIGATORIO】Todas las palabras de contenido deben salir de la lista. No uses contenido fuera de la lista.
 - grammar: usa siempre las palabras reales de la oración（nunca escribas «palabra»）.
+- Después del desglose, añade una sección titulada 「文法重點」 con 2-4 viñetas en chino tradicional; cada viñeta debe empezar con '• '.
+  Debes explicar por qué se usa esa forma verbal/adjetival y por qué se usan esas preposiciones, conjunciones o artículos.
   Ej：Yo[代名詞: 我] + como(comer)[動詞: 吃] + pan[名詞: 麵包]
 
 Responde solo con JSON：
@@ -462,7 +487,8 @@ def generate_fsi_sentence(
         prev_str = f" ALREADY USED — do NOT repeat these: [{joined}]."
 
     vocab_rule = (
-        "Content words (nouns, verbs, adjectives, adverbs) should come from the ALLOWED VOCABULARY list. "
+        "Content words (nouns, verbs, adjectives, adverbs) MUST come from the ALLOWED VOCABULARY list only. "
+        "Do NOT use content words outside the list. "
         "Grammatical elements (particles, articles, conjunctions, conjugations, pronouns) are always free. "
     ) if allowed_vocab else ""
 
@@ -505,6 +531,9 @@ def generate_fsi_sentence(
         "Grammar analysis ('grammar') must be ENTIRELY in Traditional Chinese (繁體中文) — "
         "use terms like 名詞、動詞、形容詞、副詞、助詞、主格助詞、否定詞 etc. "
         "Use ACTUAL words from the sentence in 'grammar' — never write '語' or any placeholder. "
+        "After the breakdown, append「文法重點」with 2-4 Traditional Chinese bullet points. "
+        "Each bullet MUST start with '• '. Explain WHY the target verb/adjective takes that form, "
+        "and WHY the sentence uses any particle, conjunction, preposition, article, or connector that appears. "
         f"{vocab_codes_instr}"
         "Respond only with a JSON object — no explanation, no markdown."
     )
@@ -609,6 +638,9 @@ def generate_recombination_sentence(
         "CRITICAL for the 'grammar' field: use the ACTUAL words from the sentence, never '語' or any placeholder. "
         "Grammar labels must be ENTIRELY in Traditional Chinese (繁體中文): "
         "名詞、動詞、形容詞、副詞、助詞、主格助詞、受格助詞、否定詞 etc. "
+        "After the word-by-word grammar breakdown, append「文法重點」with 2-4 Traditional Chinese bullet points. "
+        "Each bullet MUST start with '• '. Explain WHY the verb/adjective form is chosen "
+        "and WHY the sentence uses its particle, conjunction, preposition, or article choices. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer codes "
         "(the [N] prefix in the ALLOWED VOCABULARY list) of every content word used from that list, "
@@ -768,7 +800,8 @@ def generate_passage(
         "Spanish/French/German/Italian/Portuguese → leave empty string. "
         "(7) 'vocab_notes': list EVERY content word used from the allowed list. "
         "Each entry has: word (surface form), reading, meaning, pos (Traditional Chinese POS label). "
-        "(8) 'grammar_notes': in Traditional Chinese (繁體中文), explain 1–3 key grammar patterns used. "
+        "(8) 'grammar_notes': in Traditional Chinese (繁體中文), explain 1–3 key grammar patterns used, and explicitly mention "
+        "why any verb/adjective changes form the way it does, plus why important conjunctions, particles, or prepositions are used. "
         "(9) Respond ONLY with valid JSON — no markdown, no extra text."
     )
 
@@ -786,7 +819,7 @@ Output JSON:
   "vocab_notes": [
     {{"word": "單字", "reading": "讀音", "meaning": "意思", "pos": "詞性（繁體中文）"}}
   ],
-  "grammar_notes": "文法說明（繁體中文，1-3條）"
+  "grammar_notes": "文法說明（繁體中文，1-3條，需說明活用原因與連接詞/助詞/介系詞選用原因）"
 }}"""
 
     # ── First attempt ──────────────────────────────────────

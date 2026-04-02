@@ -249,6 +249,8 @@ _defaults = {
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
+    # 詞彙顯示偵錯：顯示被規則忽略的高編號詞
+    "debug_vocab_filter": False,
 }
 for k, v in _defaults.items():
     if k not in st.session_state:
@@ -284,6 +286,7 @@ def find_used_vocab(sentence: str, vocab_df, current_code: int = 9999) -> list:
                 "code_num": code_num,
                 "term":     term,
                 "meaning":  str(row.get("meaning", "")),
+                "pos":      str(row.get("pos", "")),
                 "is_extra": code_num > current_code,
                 "start":    idx,
                 "end":      idx + len(term),
@@ -309,10 +312,19 @@ def find_used_vocab(sentence: str, vocab_df, current_code: int = 9999) -> list:
 
 
 def _df_to_allowed_vocab(df) -> list:
-    """將 prepared vocab DataFrame 轉為 [{"code": int, "term": str}] 供 AI 使用。"""
+    """將 prepared vocab DataFrame 轉為供 AI 使用的詞彙陣列。"""
     if df is None or df.empty:
         return []
-    return [{"code": int(row["code_num"]), "term": str(row["term"])} for _, row in df.iterrows()]
+    return [
+        {
+            "code": int(row["code_num"]),
+            "term": str(row["term"]),
+            "pos": str(row.get("pos", "")),
+            "meaning": str(row.get("meaning", "")),
+            "reading": str(row.get("reading", "")),
+        }
+        for _, row in df.iterrows()
+    ]
 
 
 def _sent_tts_text(sentence_data: dict, language: str) -> str:
@@ -348,9 +360,27 @@ def _vocab_by_codes(codes: list, vocab_df, current_code: int) -> list:
                 "code_num": c_int,
                 "term":     str(r["term"]),
                 "meaning":  str(r.get("meaning", "")),
+                "pos":      str(r.get("pos", "")),
                 "is_extra": c_int > current_code,
             })
     return sorted(result, key=lambda x: x["code_num"])
+
+
+def _is_ignorable_extra_vocab(item: dict, language: str) -> bool:
+    pos = str(item.get("pos", "")).strip().lower()
+    function_pos_keywords = (
+        "助詞", "助动词", "助動詞", "連接詞", "接続詞", "冠詞", "介詞", "前置詞", "後置詞",
+        "代名詞", "語尾", "詞尾", "접속", "조사", "어미", "보조", "관형사", "감탄사", "대명사",
+        "particle", "auxiliary", "article", "preposition", "conjunction", "pronoun",
+        "determiner", "postposition", "suffix",
+    )
+    if any(k in pos for k in function_pos_keywords):
+        return True
+
+    term = str(item.get("term", "")).strip()
+    if language in ("japanese", "korean", "chinese") and len(term) <= 1:
+        return True
+    return False
 
 
 def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_codes: list = None):
@@ -374,7 +404,18 @@ def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_c
         if v["code_num"] not in seen_code_nums:
             merged.append(v)
 
-    used = sorted(merged, key=lambda x: x["code_num"])
+    language = st.session_state.get("language", "")
+    ignored_extras = [
+        v for v in merged
+        if v.get("is_extra") and _is_ignorable_extra_vocab(v, language)
+    ]
+    used = sorted(
+        [
+            v for v in merged
+            if not (v.get("is_extra") and _is_ignorable_extra_vocab(v, language))
+        ],
+        key=lambda x: x["code_num"]
+    )
     if not used:
         return
     st.markdown('<div class="study-label" style="margin-top:0.5rem;font-size:0.72rem;">例句使用的詞彙</div>', unsafe_allow_html=True)
@@ -392,6 +433,12 @@ def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_c
             f'<span style="color:{meaning_color};">{v["meaning"]}</span></span>'
         )
     st.markdown("".join(chips), unsafe_allow_html=True)
+
+    if st.session_state.get("debug_vocab_filter", False) and ignored_extras:
+        ignored_extras = sorted(ignored_extras, key=lambda x: x["code_num"])
+        with st.expander("🔍 偵錯：已忽略的高編號詞（功能詞 / 疑似斷詞）", expanded=False):
+            for v in ignored_extras:
+                st.caption(f"#{v['code']} {v['term']}（{v.get('meaning','')}｜{v.get('pos','')}）")
 
 
 # ── 導航函數 ───────────────────────────────────────────────
@@ -2822,6 +2869,11 @@ def settings_page():
         "- OpenAI → `OPENAI_API_KEY`\n"
         "- Gemini → `GEMINI_API_KEY`\n"
         "- Claude → `ANTHROPIC_API_KEY`"
+    )
+    st.checkbox(
+        "顯示詞彙過濾偵錯資訊",
+        key="debug_vocab_filter",
+        help="開啟後，會在「例句使用的詞彙」下方顯示被忽略的高編號詞（功能詞或疑似斷詞）。",
     )
 
     if st.button("💾 儲存設定", use_container_width=True, key="settings_save"):
