@@ -184,19 +184,44 @@ def _ensure_grammar_focus_bullets(grammar: str) -> str:
         )
 
     if "變化規則" not in g:
-        specific_rules = []
+        verb_tokens = []
+        particle_tokens = []
+        noun_tokens = []
         for p in parts:
             token = p.split("(", 1)[0].split("[", 1)[0].strip()
             if not token:
                 continue
-            if ("[動詞" in p or "[形容詞" in p) and len(specific_rules) < 3:
-                specific_rules.append(f"• {token}：此詞在本句以當前詞形出現，用來對應本句的時態與語氣。")
-            elif ("助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p) and len(specific_rules) < 3:
-                specific_rules.append(f"• {token}：此成分在本句負責標示語法關係（如主語、受詞、方向或連接）。")
-            elif "[名詞" in p and len(specific_rules) < 3:
-                specific_rules.append(f"• {token}：此名詞本身不活用，透過後接成分在句中承擔語法角色。")
+            if "[動詞" in p or "[形容詞" in p:
+                verb_tokens.append(token)
+            if "助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p:
+                particle_tokens.append(token)
+            if "[名詞" in p:
+                noun_tokens.append(token)
+
+        specific_rules = []
+        seen = set()
+        if verb_tokens:
+            t = verb_tokens[0]
+            specific_rules.append(f"• {t}：此詞在本句以當前詞形出現，對應本句的時態與語氣。")
+            seen.add(t)
+
+        for t in particle_tokens:
+            if t in seen:
+                continue
+            specific_rules.append(f"• {t}：此成分在本句標示語法關係（如主語、受詞、方向或連接）。")
+            seen.add(t)
             if len(specific_rules) >= 3:
                 break
+
+        if len(specific_rules) < 3:
+            for t in noun_tokens:
+                if t in seen:
+                    continue
+                specific_rules.append(f"• {t}：此名詞本身不活用，透過後接成分在句中承擔語法角色。")
+                seen.add(t)
+                if len(specific_rules) >= 3:
+                    break
+
         if not specific_rules:
             specific_rules = [f"• {current}：此詞在本句依語境採用當前形式。" for current in [verb_or_adj or "目標詞彙"]]
         g = f"{g}\n變化規則：\n" + "\n".join(specific_rules)
@@ -440,6 +465,7 @@ def generate_example_sentence(
         "Bullet 3 must be『語氣/情境』: explain sentence mood (statement/question/inference/request) and context effect. "
         "Then append「變化規則」with 1-3 concise bullets in Traditional Chinese. "
         "Each bullet MUST start with an ACTUAL word from this sentence and explain that word's change/function in THIS sentence. "
+        "PRIORITY: include at least 1 verb/adjective-form bullet and at least 1 particle/preposition/conjunction bullet when such words exist. "
         "Do NOT write generic textbook rules. Each rule bullet MUST be an answer statement, not a question. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer code numbers "
@@ -680,6 +706,7 @@ def generate_fsi_sentence(
         "Bullet 3:『語氣/情境』for mood and context effect. "
         "Then append「變化規則」with 1-3 concise Traditional Chinese bullets. "
         "Each bullet MUST start with an ACTUAL word from this sentence and explain that word's change/function in THIS sentence (no generic rules). "
+        "PRIORITY: include at least 1 verb/adjective-form bullet and at least 1 particle/preposition/conjunction bullet when available. "
         f"{vocab_codes_instr}"
         "Respond only with a JSON object — no explanation, no markdown."
     )
@@ -814,6 +841,7 @@ def generate_recombination_sentence(
         "Bullet 3:『語氣/情境』for mood and context effect. "
         "Then append「變化規則」with 1-3 concise Traditional Chinese bullets. "
         "Each bullet MUST start with an ACTUAL word from this sentence and explain that word's change/function in THIS sentence (no generic rules). "
+        "PRIORITY: include at least 1 verb/adjective-form bullet and at least 1 particle/preposition/conjunction bullet when available. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer codes "
         "(the [N] prefix in the ALLOWED VOCABULARY list) of every content word used from that list, "

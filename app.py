@@ -420,19 +420,38 @@ def _ensure_display_grammar_format(grammar: str) -> str:
         return ""
     if not _grammar_has_new_format(g):
         parts = [p.strip() for p in g.split("+") if p.strip()]
-        specific_rules = []
+        verb_tokens, particle_tokens, noun_tokens = [], [], []
         for p in parts:
             token = p.split("(", 1)[0].split("[", 1)[0].strip()
             if not token:
                 continue
-            if ("[動詞" in p or "[形容詞" in p) and len(specific_rules) < 3:
-                specific_rules.append(f"• {token}：此詞在本句以當前詞形出現，對應本句語氣與時態。")
-            elif ("助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p) and len(specific_rules) < 3:
-                specific_rules.append(f"• {token}：此成分在本句標示語法關係（如主語、受詞、方向或連接）。")
-            elif "[名詞" in p and len(specific_rules) < 3:
-                specific_rules.append(f"• {token}：此名詞本身不活用，透過後接成分在句中承擔角色。")
+            if "[動詞" in p or "[形容詞" in p:
+                verb_tokens.append(token)
+            if "助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p:
+                particle_tokens.append(token)
+            if "[名詞" in p:
+                noun_tokens.append(token)
+
+        specific_rules, seen = [], set()
+        if verb_tokens:
+            t = verb_tokens[0]
+            specific_rules.append(f"• {t}：此詞在本句以當前詞形出現，對應本句語氣與時態。")
+            seen.add(t)
+        for t in particle_tokens:
+            if t in seen:
+                continue
+            specific_rules.append(f"• {t}：此成分在本句標示語法關係（如主語、受詞、方向或連接）。")
+            seen.add(t)
             if len(specific_rules) >= 3:
                 break
+        if len(specific_rules) < 3:
+            for t in noun_tokens:
+                if t in seen:
+                    continue
+                specific_rules.append(f"• {t}：此名詞本身不活用，透過後接成分在句中承擔角色。")
+                seen.add(t)
+                if len(specific_rules) >= 3:
+                    break
         if not specific_rules:
             specific_rules = ["• 目標詞彙：此詞在本句依語境採用當前形式。"]
         g = (
