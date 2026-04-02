@@ -324,6 +324,78 @@ def _fallback_sentence_payload(
     }
 
 
+def _generate_grammar_explanation(
+    language: str,
+    sentence: str,
+    reading: str,
+    translation: str,
+    ai_provider: str = "",
+    ai_model: str = "",
+) -> str:
+    if not str(sentence or "").strip():
+        return _ensure_grammar_focus_bullets("")
+
+    system_message = (
+        "You are a precise grammar explainer for language learners. "
+        "Write grammar in Traditional Chinese only. "
+        "Use actual words from the sentence; no placeholders. "
+        "Output JSON only."
+    )
+
+    if language == "korean":
+        prompt = f"""請針對下面韓文句子生成文法解說，只輸出 JSON：
+{{"grammar":"..."}}
+
+句子：{sentence}
+羅馬拼音：{reading}
+翻譯：{translation}
+
+格式要求：
+1) 先做逐詞拆解：實際詞(讀音)[詞性:意思] + ...
+2) 接著寫「變化規則：」並用 1-3 個條列。
+- 每條必須以句中實際詞開頭。
+- 優先解釋：動詞/形容詞為什麼是這個詞形（或為何不變）、助詞是什麼意思與為何能這樣接。
+- 若有格標記，也要說明為何使用該格。"""
+    elif language == "japanese":
+        prompt = f"""請針對下面日文句子生成文法解說，只輸出 JSON：
+{{"grammar":"..."}}
+
+句子：{sentence}
+讀音：{reading}
+翻譯：{translation}
+
+格式要求：
+1) 先做逐詞拆解：実際の単語(よみ)[品詞: 意思] + ...
+2) 接著寫「變化規則：」並用 1-3 個條列。
+- 每條必須以句中實際詞開頭。
+- 優先解釋：動詞/形容詞為何採此形、助詞/接續為何這樣接。"""
+    else:
+        prompt = f"""請針對下面句子生成文法解說，只輸出 JSON：
+{{"grammar":"..."}}
+
+句子：{sentence}
+翻譯：{translation}
+
+格式要求：
+1) 先做逐詞拆解：實際詞[詞性:意思] + ...
+2) 接著寫「變化規則：」並用 1-3 個條列。
+- 每條必須以句中實際詞開頭。
+- 解釋該詞在本句中的變化或語法功能。"""
+
+    for _ in range(2):
+        try:
+            content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
+            data = _extract_json(content)
+            g = str(data.get("grammar", "")).strip()
+            if g:
+                return _ensure_grammar_focus_bullets(g)
+        except Exception:
+            pass
+
+    # 保底：至少給出規則區塊，避免空白
+    return _ensure_grammar_focus_bullets(f"{sentence}")
+
+
 def _normalize_text_for_match(text: str, language: str) -> str:
     if language in ("japanese", "korean", "chinese"):
         return text
@@ -634,7 +706,14 @@ Responde solo con JSON：
             review_mode=review_mode,
         )
         if ok:
-            normalized_grammar = _ensure_grammar_focus_bullets(data.get("grammar", ""))
+            normalized_grammar = _generate_grammar_explanation(
+                language=language,
+                sentence=sentence,
+                reading=data.get("reading", ""),
+                translation=data.get("translation", ""),
+                ai_provider=ai_provider,
+                ai_model=ai_model,
+            )
             return {
                 "sentence":    sentence,
                 "reading":     data.get("reading", ""),
@@ -813,7 +892,14 @@ Responde solo con JSON：
             review_mode=False,
         )
         if ok:
-            normalized_grammar = _ensure_grammar_focus_bullets(data.get("grammar", ""))
+            normalized_grammar = _generate_grammar_explanation(
+                language=language,
+                sentence=sentence,
+                reading=data.get("reading", ""),
+                translation=data.get("translation", ""),
+                ai_provider=ai_provider,
+                ai_model=ai_model,
+            )
             return {
                 "sentence":    sentence,
                 "reading":     data.get("reading", ""),
@@ -960,7 +1046,12 @@ Responde solo con JSON：
     data = _extract_json(content)
     raw_codes = data.get("vocab_codes", [])
     vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
-    normalized_grammar = _ensure_grammar_focus_bullets(data.get("grammar", ""))
+    normalized_grammar = _generate_grammar_explanation(
+        language=language,
+        sentence=data.get("sentence", ""),
+        reading=data.get("reading", ""),
+        translation=data.get("translation", ""),
+    )
     return {
         "sentence":    data.get("sentence", ""),
         "reading":     data.get("reading", ""),
