@@ -307,19 +307,14 @@ def _fallback_sentence_payload(
     term_meaning: str = "",
     allowed_vocab: list | None = None,
 ) -> dict:
+    # 保留函式簽名以避免其他呼叫點炸掉；但不再輸出不自然保底句。
+    # 由上層改為拋錯，讓 UI 顯示「生成失敗」而非假句。
     target_code = _infer_target_code(current_term, allowed_vocab)
-    grammar = (
-        f"{current_term}[目標詞彙]\n"
-        "文法重點：\n"
-        "• 活用/時態：本句採用最短安全形式呈現目標詞，避免超出已學詞彙範圍。\n"
-        "• 助詞/連接：本句未額外引入高風險內容詞，語法結構保持最精簡穩定。\n"
-        "• 語氣/情境：本句為中性陳述語氣，用於穩定展示目標詞基本用法。"
-    )
     return {
-        "sentence": str(current_term or "").strip(),
+        "sentence": "",
         "reading": str(term_reading or "").strip(),
-        "translation": str(term_meaning or "").strip() or "（保底例句）",
-        "grammar": grammar,
+        "translation": "",
+        "grammar": f"{current_term}[目標詞彙]",
         "vocab_codes": [target_code] if target_code is not None else [],
     }
 
@@ -601,6 +596,7 @@ def generate_example_sentence(
     system_message = (
         "You are a language learning assistant that writes natural, idiomatic example sentences. "
         "NATURALNESS IS THE TOP PRIORITY — the sentence must sound like something a native speaker would actually say. "
+        "The output sentence must be genuinely usable in real conversation or writing, not a placeholder fragment. "
         f"{vocab_rule}"
         "Grammatical elements required by the language — particles, articles, conjunctions, auxiliary verbs, "
         "verb conjugations, pronouns — are always permitted even if not in the list. "
@@ -785,13 +781,7 @@ Responde solo con JSON：
             bad_codes = _extract_codes_from_reason(reason)
             banned_terms.update(_terms_by_codes(bad_codes, full_vocab))
 
-    return _fallback_sentence_payload(
-        language=language,
-        current_term=current_term,
-        term_reading=term_reading,
-        term_meaning=term_meaning,
-        allowed_vocab=allowed_vocab,
-    )
+    raise RuntimeError(f"生成不到自然可用例句：{last_reason}")
 
 
 # ── FSI 搭配 / 句型變化生成 ──────────────────────────────
@@ -972,17 +962,7 @@ Responde solo con JSON：
             bad_codes = _extract_codes_from_reason(reason)
             banned_terms.update(_terms_by_codes(bad_codes, full_vocab))
 
-    fallback = _fallback_sentence_payload(
-        language=language,
-        current_term=current_term,
-        term_reading=term_reading,
-        term_meaning=term_meaning,
-        allowed_vocab=allowed_vocab,
-    )
-    return {
-        **fallback,
-        "drill_note": "保底句：已避開高編號詞，先穩定展示目標詞。",
-    }
+    raise RuntimeError(f"FSI 句子生成失敗（無自然可用句）：{last_reason}")
 
 
 # ── 句型重組生成 ──────────────────────────────────────────
