@@ -148,7 +148,20 @@ def _grammar_has_focus_bullets(grammar: str) -> bool:
     g = str(grammar or "").strip()
     if not g:
         return False
-    return ("文法重點" in g) and ("• " in g or "\n•" in g)
+    return ("變化規則" in g) and ("• " in g or "\n•" in g)
+
+
+def _strip_focus_section(grammar: str) -> str:
+    g = str(grammar or "")
+    i_focus = g.find("文法重點")
+    if i_focus < 0:
+        return g
+    i_rules = g.find("變化規則")
+    if i_rules > i_focus:
+        left = g[:i_focus].rstrip()
+        right = g[i_rules:].lstrip()
+        return f"{left}\n{right}".strip()
+    return g[:i_focus].rstrip()
 
 
 def _parse_grammar_parts(grammar: str) -> list[dict]:
@@ -230,7 +243,7 @@ def _build_specific_rule_notes(grammar: str) -> list[str]:
 
 
 def _ensure_grammar_focus_bullets(grammar: str) -> str:
-    g = str(grammar or "").strip()
+    g = _strip_focus_section(str(grammar or "")).strip()
     if not g:
         g = "（未提供逐詞拆解）"
 
@@ -239,24 +252,16 @@ def _ensure_grammar_focus_bullets(grammar: str) -> str:
     verb_or_adj = next((p["raw"] for p in parsed if "動詞" in p["pos"] or "形容詞" in p["pos"]), "")
     particle_like = next((p["raw"] for p in parsed if "助詞" in p["pos"] or "介詞" in p["pos"] or "連接詞" in p["pos"] or "冠詞" in p["pos"]), "")
 
-    # 只要缺少「文法重點」就補一段具體模板
-    if "文法重點" not in g:
-        g = f"{g}\n文法重點："
-
-    # 若沒有 bullet，補三段式且引用實際詞
-    if "• " not in g and "\n•" not in g:
-        v = verb_or_adj or "（上方拆解中的動詞／形容詞）"
-        p = particle_like or "（上方拆解中的助詞／介詞／連接詞）"
-        g = (
-            f"{g}\n"
-            f"• 活用/時態：{v}。此處採用該語尾或時態，是為了符合本句要表達的時間與語氣。\n"
-            f"• 助詞/連接：{p}。這些成分在句中負責標示主語、受詞、方向或連接關係。\n"
-            "• 語氣/情境：本句屬於自然敘述語氣，語意重點放在事件陳述與語境銜接。"
-        )
+    # 若沒有變化規則區塊，直接補逐詞規則（不再補「文法重點」）
+    if "變化規則" not in g:
+        g = g.rstrip() + "\n變化規則："
 
     if "變化規則" not in g:
         specific_rules = _build_specific_rule_notes(g)
-        g = f"{g}\n變化規則：\n" + "\n".join(specific_rules)
+        if "變化規則：" in g:
+            g = g.rstrip() + "\n" + "\n".join(specific_rules)
+        else:
+            g = f"{g}\n變化規則：\n" + "\n".join(specific_rules)
     return g
 
 

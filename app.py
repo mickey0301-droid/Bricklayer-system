@@ -411,11 +411,24 @@ def _grammar_has_new_format(grammar: str) -> bool:
     g = str(grammar or "").strip()
     if not g:
         return False
-    return ("文法重點" in g) and ("• " in g or "\n•" in g)
+    return ("變化規則" in g) and ("• " in g or "\n•" in g)
+
+
+def _strip_focus_section(grammar: str) -> str:
+    g = str(grammar or "")
+    i_focus = g.find("文法重點")
+    if i_focus < 0:
+        return g
+    i_rules = g.find("變化規則")
+    if i_rules > i_focus:
+        left = g[:i_focus].rstrip()
+        right = g[i_rules:].lstrip()
+        return f"{left}\n{right}".strip()
+    return g[:i_focus].rstrip()
 
 
 def _ensure_display_grammar_format(grammar: str) -> str:
-    g = str(grammar or "").strip()
+    g = _strip_focus_section(str(grammar or "")).strip()
     if not g:
         return ""
     if not _grammar_has_new_format(g):
@@ -465,11 +478,7 @@ def _ensure_display_grammar_format(grammar: str) -> str:
         if not specific_rules:
             specific_rules = ["• 目標詞彙：此詞在本句依語境採用當前形式。"]
         g = (
-            f"{g}\n文法重點：\n"
-            "• 活用/時態：本句動詞或形容詞採用此形式，是為了對應當前語境與語氣。\n"
-            "• 助詞/連接：本句助詞、連接詞、介詞（或冠詞）負責建立語法關係與語意銜接。\n"
-            "• 語氣/情境：本句採用中性敘述語氣，重點是自然呈現語意。\n"
-            "變化規則：\n"
+            f"{g}\n變化規則：\n"
             + "\n".join(specific_rules)
         )
     return g
