@@ -502,26 +502,9 @@ def _render_grammar_box(grammar: str):
 
 def _is_cache_sentence_valid(sentence_data: dict, vocab_df, current_code: int, language: str) -> bool:
     sentence = str(sentence_data.get("sentence", "")).strip()
-    if not sentence:
-        return False
-
-    merged = _merge_used_vocab(
-        sentence=sentence,
-        vocab_df=vocab_df,
-        current_code=current_code,
-        vocab_codes=sentence_data.get("vocab_codes"),
-    )
-    blocking_extras = [
-        v for v in merged
-        if v.get("is_extra") and not _is_ignorable_extra_vocab(v, language)
-    ]
-    if blocking_extras:
-        return False
-
-    grammar = str(sentence_data.get("grammar", "")).strip()
-    if grammar and not _grammar_has_new_format(grammar):
-        return False
-    return True
+    # 臨時測試模式：先確認「能穩定生成句子」，
+    # 不再用詞彙規則/文法格式把已生成句再判無效。
+    return bool(sentence)
 
 
 def render_used_vocab(sentence: str, vocab_df, current_code: int = 9999, vocab_codes: list = None):

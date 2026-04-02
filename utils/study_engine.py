@@ -500,6 +500,76 @@ def _validate_vocab_usage(
 
 # ── 例句生成 ──────────────────────────────────────────────
 
+def _generate_example_sentence_relaxed(
+    language: str,
+    current_term: str,
+    term_meaning: str = "",
+    term_reading: str = "",
+    term_pos: str = "",
+    ai_provider: str = "",
+    ai_model: str = "",
+) -> dict:
+    """臨時測試模式：移除詞彙規則與驗證，僅要求自然可用句。"""
+    system_message = (
+        "You are a language learning assistant. "
+        "Write one short, natural, real-usage sentence. "
+        "Output JSON only."
+    )
+
+    if language == "korean":
+        prompt = f"""請用韓文造一句自然、真實可用的短句，且必須包含目標詞。
+目標詞：{current_term}
+目標詞資訊：詞性={term_pos}，意思={term_meaning}，讀音={term_reading}
+
+只輸出 JSON：
+{{"sentence":"...","reading":"全句 Revised Romanization","translation":"繁體中文","vocab_codes":[]}}"""
+    elif language == "japanese":
+        prompt = f"""請用日文造一句自然、真實可用的短句，且必須包含目標詞。
+目標詞：{current_term}
+目標詞資訊：詞性={term_pos}，意思={term_meaning}，讀音={term_reading}
+
+只輸出 JSON：
+{{"sentence":"...","reading":"ひらがな","translation":"繁體中文","vocab_codes":[]}}"""
+    else:
+        prompt = f"""請造一句自然、真實可用的短句，且必須包含目標詞。
+目標詞：{current_term}
+目標詞資訊：詞性={term_pos}，意思={term_meaning}
+
+只輸出 JSON：
+{{"sentence":"...","reading":"","translation":"繁體中文","vocab_codes":[]}}"""
+
+    last_reason = "unknown"
+    for _ in range(5):
+        try:
+            content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
+            data = _extract_json(content)
+            sentence = str(data.get("sentence", "")).strip()
+            if not sentence:
+                last_reason = "empty sentence"
+                continue
+            reading = str(data.get("reading", "")).strip()
+            translation = str(data.get("translation", "")).strip()
+            grammar = _generate_grammar_explanation(
+                language=language,
+                sentence=sentence,
+                reading=reading,
+                translation=translation,
+                ai_provider=ai_provider,
+                ai_model=ai_model,
+            )
+            return {
+                "sentence": sentence,
+                "reading": reading,
+                "translation": translation,
+                "grammar": grammar,
+                "vocab_codes": [],
+            }
+        except Exception as e:
+            last_reason = str(e)
+            continue
+
+    raise RuntimeError(f"Relaxed 生成仍失敗：{last_reason}")
+
 def generate_example_sentence(
     language: str,
     current_term: str,
@@ -522,6 +592,17 @@ def generate_example_sentence(
     - review_mode=True：最多 2 個已學詞彙、句子不超過 7 個字
     - allowed_vocab：帶編號的詞表，AI 將在 vocab_codes 欄位回傳使用到的編號
     """
+    # 臨時全面放寬模式：先確認 AI 生成鏈路是否正常
+    return _generate_example_sentence_relaxed(
+        language=language,
+        current_term=current_term,
+        term_meaning=term_meaning,
+        term_reading=term_reading,
+        term_pos=term_pos,
+        ai_provider=ai_provider,
+        ai_model=ai_model,
+    )
+
     if allowed_vocab:
         vocab_list = "\n".join(f"- [{v['code']}] {v['term']}" for v in allowed_vocab)
     else:
