@@ -440,6 +440,34 @@ def _is_ignorable_disallowed_item(item: dict, language: str) -> bool:
     return False
 
 
+def _is_simple_bridge_candidate(item: dict, language: str, current_code: int) -> bool:
+    """
+    允許少量「簡單橋接內容詞」：
+    - 只在 code 略高於 current_code 時放寬
+    - 詞形短、語義通常基礎
+    - 功能詞仍走既有忽略規則
+    """
+    if _is_function_word(item):
+        return False
+    term = str(item.get("term", "")).strip()
+    if not term:
+        return False
+    c = str(item.get("code", "")).strip()
+    if not c.lstrip("-").isdigit():
+        return False
+    code_num = int(c)
+    if code_num <= current_code:
+        return False
+
+    # 只允許「略高」的詞，避免放寬過頭
+    if code_num > current_code + 180:
+        return False
+
+    if language in ("japanese", "korean", "chinese"):
+        return len(term) <= 2
+    return len(term) <= 5
+
+
 def _validate_vocab_usage(
     sentence: str,
     vocab_codes: list,
@@ -456,9 +484,28 @@ def _validate_vocab_usage(
         int(v["code"]) for v in (allowed_vocab or [])
         if str(v.get("code", "")).strip().lstrip("-").isdigit()
     }
+    # 允許少量「簡單橋接內容詞」：只在非 review mode 啟用，最多 1 個
+    max_simple_bridge = 0 if review_mode else 1
+    code_to_item = {}
+    for v in (full_vocab or []):
+        c = str(v.get("code", "")).strip()
+        if c.lstrip("-").isdigit():
+            code_to_item[int(c)] = v
+
     reported_disallowed = sorted({c for c in vocab_codes if c not in allowed_codes})
     if reported_disallowed:
-        return False, f"reported disallowed vocab codes: {reported_disallowed}"
+        allowed_bridge_codes = []
+        hard_disallowed_codes = []
+        for c in reported_disallowed:
+            item = code_to_item.get(int(c), {})
+            if _is_simple_bridge_candidate(item, language, current_code):
+                allowed_bridge_codes.append(int(c))
+            else:
+                hard_disallowed_codes.append(int(c))
+        if hard_disallowed_codes:
+            return False, f"reported disallowed vocab codes: {hard_disallowed_codes}"
+        if len(allowed_bridge_codes) > max_simple_bridge:
+            return False, f"too many simple bridge words: {allowed_bridge_codes}"
 
     if not full_vocab:
         return True, ""
@@ -475,7 +522,18 @@ def _validate_vocab_usage(
     matched_codes = sorted({int(v["code"]) for v in matched_disallowed})
 
     if matched_codes:
-        return False, f"detected higher-code vocab in sentence: {matched_codes}"
+        allowed_bridge_codes = []
+        hard_disallowed_codes = []
+        for c in matched_codes:
+            item = code_to_item.get(int(c), {})
+            if _is_simple_bridge_candidate(item, language, current_code):
+                allowed_bridge_codes.append(int(c))
+            else:
+                hard_disallowed_codes.append(int(c))
+        if hard_disallowed_codes:
+            return False, f"detected higher-code vocab in sentence: {hard_disallowed_codes}"
+        if len(allowed_bridge_codes) > max_simple_bridge:
+            return False, f"too many simple bridge words in sentence: {allowed_bridge_codes}"
 
     return True, ""
 
@@ -534,9 +592,10 @@ def generate_example_sentence(
         )
     else:
         vocab_rule = (
-            "VOCABULARY RULE (STRICT): "
-            "ALL content words (nouns, verbs, adjectives, adverbs) MUST come from the ALLOWED VOCABULARY list. "
-            "Do NOT use any content word outside the list.\n"
+            "VOCABULARY RULE (GUIDED): "
+            "Primary rule: content words (nouns, verbs, adjectives, adverbs) should come from the ALLOWED VOCABULARY list. "
+            "Inflected/conjugated forms of learned lemmas are allowed and still count as learned words. "
+            "If a sentence is unnatural with list-only words, allow at most ONE very basic bridge content word.\n"
         )
 
     system_message = (
