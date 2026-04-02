@@ -421,8 +421,8 @@ def _ensure_display_grammar_format(grammar: str) -> str:
     if not _grammar_has_new_format(g):
         g = (
             f"{g}\n文法重點：\n"
-            "• 說明本句動詞或形容詞採用此活用／時態的原因。\n"
-            "• 說明本句助詞、連接詞、介詞（或冠詞）為何這樣使用。"
+            "• 活用/時態：本句動詞或形容詞採用此形式，是為了對應當前語境與語氣。\n"
+            "• 助詞/連接：本句助詞、連接詞、介詞（或冠詞）負責建立語法關係與語意銜接。"
         )
     return g
 
