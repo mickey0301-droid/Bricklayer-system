@@ -2524,5 +2524,11 @@
     "reading": "urineun geu yul-eul al-a-ya hae.",
     "translation": "我們需要知道那個率。",
     "grammar": "우리(uri)[代名詞: 我們] + 는(neun)[主格助詞] + 그(geu)[代名詞: 那個] + 율(yul)[名詞: 率] + 을(eul)[受格助詞] + 알아야(al-a-ya)[動詞: 知道] + 해(hae)[助動詞: 必須]\n文法重點：\n• 本句使用自然敘述語氣，動詞或形容詞形式會依語境與句型需求選擇。\n• 句中的助詞／介詞／連接成分負責標示語法關係，讓句意更完整自然。"
+  },
+  "spanish::104": {
+    "sentence": "Yo quiero llevar eso.",
+    "reading": "",
+    "translation": "我想帶那個。",
+    "grammar": "逐詞拆解：\nYo[代名詞:我]\nquiero[動詞:想]\nllevar[動詞:帶]\neso[代名詞:那個]\n\n變化規則：\n- Yo 是第一人稱代名詞，表示說話者自己。\n- Quiero 是動詞 querer 的變化，表示願望或想要的行為。\n- Llevar 在這裡表達帶領或攜帶某物，為不定式形式。\n- Eso 作為代名詞，用來指稱前面提到的物品，具有指示性。"
   }
 }
