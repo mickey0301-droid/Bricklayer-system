@@ -1686,10 +1686,10 @@
     "grammar": "오[o][感嘆詞: 喔] + , + 오늘(oneul)[名詞: 今天] + 날씨(nalssi)[名詞: 天氣] + 가[主格助詞] + 좋다(johda)[形容詞: 好]"
   },
   "korean::200": {
-    "sentence": "너는 웬일로 여기 왔니?",
-    "reading": "neoneun wenildo yeogi watni?",
-    "translation": "你怎麼來這裡了？",
-    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 웬(wen)[名詞: 為何] + 일로(illo)[名詞: 事情] + 여기(yeogi)[名詞: 這裡] + 왔니(watni)[動詞: 來] + ?[標點符號]"
+    "sentence": "너는 웬 날에 나를 만날 거야?",
+    "reading": "neoneun wen nal-e na-reul mannal geoya?",
+    "translation": "你是哪一天會見到我？",
+    "grammar": "너(neo)[代名詞: 你] + 는[主格助詞] + 웬(wen)[疑問詞: 為何] + 날(nal)[名詞: 日子] + 에[方向助詞] + 나(na)[代名詞: 我] + 를[受格助詞] + 만날(mannal)[動詞: 會見] + 거야 ге(geoya)[助動詞: 將要]\n文法重點：\n• 本句使用自然敘述語氣，動詞或形容詞形式會依語境與句型需求選擇。\n• 句中的助詞／介詞／連接成分負責標示語法關係，讓句意更完整自然。"
   },
   "spanish::21": {
     "sentence": "Ellas están aquí.",
