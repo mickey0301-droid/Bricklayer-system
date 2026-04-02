@@ -153,16 +153,36 @@ def _grammar_has_focus_bullets(grammar: str) -> bool:
 
 def _ensure_grammar_focus_bullets(grammar: str) -> str:
     g = str(grammar or "").strip()
-    if _grammar_has_focus_bullets(g):
-        return g
+    if not g:
+        g = "（未提供逐詞拆解）"
 
-    base = g if g else "（未提供逐詞拆解）"
-    fallback = (
-        "\n文法重點：\n"
-        "• 本句使用自然敘述語氣，動詞或形容詞形式會依語境與句型需求選擇。\n"
-        "• 句中的助詞／介詞／連接成分負責標示語法關係，讓句意更完整自然。"
-    )
-    return f"{base}{fallback}"
+    # 從拆解中抓出最具體的詞：優先動詞/形容詞，再抓助詞/介詞/連接詞
+    parts = [p.strip() for p in g.split("+") if p.strip()]
+    verb_or_adj = ""
+    particle_like = ""
+    for p in parts:
+        if not verb_or_adj and ("[動詞" in p or "[形容詞" in p):
+            verb_or_adj = p
+        if not particle_like and ("助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p):
+            particle_like = p
+        if verb_or_adj and particle_like:
+            break
+
+    # 只要缺少「文法重點」就補一段具體模板
+    if "文法重點" not in g:
+        g = f"{g}\n文法重點："
+
+    # 若沒有 bullet，補三段式且引用實際詞
+    if "• " not in g and "\n•" not in g:
+        v = verb_or_adj or "（請依上方拆解中的動詞／形容詞）"
+        p = particle_like or "（請依上方拆解中的助詞／介詞／連接詞）"
+        g = (
+            f"{g}\n"
+            f"• 活用/時態：{v}。請說明它在本句為何用這個語尾或時態，而不是其他形式。\n"
+            f"• 助詞/連接：{p}。請說明它在句中的語法角色（如主語標記、受詞標記、方向、連接）。\n"
+            "• 語氣/情境：請說明本句是陳述、疑問、推測或請求，以及這個語氣如何影響表達。"
+        )
+    return g
 
 
 def _normalize_text_for_match(text: str, language: str) -> str:
@@ -335,10 +355,12 @@ def generate_example_sentence(
         "CRITICAL for the 'grammar' field: use the ACTUAL words from the sentence — never write '語' or "
         "any placeholder. For example if sentence is 春が来る then grammar is: "
         "春(はる)[名詞: 春天] + が[主格助詞] + 来る(くる)[動詞: 來] "
-        "After the word-by-word breakdown, append a section titled「文法重點」in Traditional Chinese with 2-4 bullet points. "
-        "Each bullet MUST start with '• '. Explain WHY the verb/adjective form is used "
-        "(for example tense, polarity, aspect, politeness, conjugation choice), and WHY any particle, conjunction, "
-        "preposition, article, or connector is chosen in that sentence. "
+        "After the word-by-word breakdown, append a section titled「文法重點」in Traditional Chinese with EXACTLY 3 bullet points. "
+        "Each bullet MUST start with '• ' and MUST quote ACTUAL words from the sentence (not abstract terms). "
+        "Bullet 1 must be『活用/時態』: explain why that concrete verb/adjective form is used "
+        "(tense, polarity, aspect, politeness, conjugation). "
+        "Bullet 2 must be『助詞/連接』: explain why those concrete particles/conjunctions/prepositions/articles are used. "
+        "Bullet 3 must be『語氣/情境』: explain sentence mood (statement/question/inference/request) and context effect. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer code numbers "
         "(the [N] prefix in the ALLOWED VOCABULARY list) of every content word you used from that list, "
@@ -553,9 +575,11 @@ def generate_fsi_sentence(
         "Grammar analysis ('grammar') must be ENTIRELY in Traditional Chinese (繁體中文) — "
         "use terms like 名詞、動詞、形容詞、副詞、助詞、主格助詞、否定詞 etc. "
         "Use ACTUAL words from the sentence in 'grammar' — never write '語' or any placeholder. "
-        "After the breakdown, append「文法重點」with 2-4 Traditional Chinese bullet points. "
-        "Each bullet MUST start with '• '. Explain WHY the target verb/adjective takes that form, "
-        "and WHY the sentence uses any particle, conjunction, preposition, article, or connector that appears. "
+        "After the breakdown, append「文法重點」with EXACTLY 3 Traditional Chinese bullet points. "
+        "Each bullet MUST start with '• ' and MUST cite ACTUAL words from the sentence. "
+        "Bullet 1:『活用/時態』for concrete verb/adjective form choice. "
+        "Bullet 2:『助詞/連接』for concrete particles/conjunctions/prepositions/articles. "
+        "Bullet 3:『語氣/情境』for mood and context effect. "
         f"{vocab_codes_instr}"
         "Respond only with a JSON object — no explanation, no markdown."
     )
@@ -661,9 +685,11 @@ def generate_recombination_sentence(
         "CRITICAL for the 'grammar' field: use the ACTUAL words from the sentence, never '語' or any placeholder. "
         "Grammar labels must be ENTIRELY in Traditional Chinese (繁體中文): "
         "名詞、動詞、形容詞、副詞、助詞、主格助詞、受格助詞、否定詞 etc. "
-        "After the word-by-word grammar breakdown, append「文法重點」with 2-4 Traditional Chinese bullet points. "
-        "Each bullet MUST start with '• '. Explain WHY the verb/adjective form is chosen "
-        "and WHY the sentence uses its particle, conjunction, preposition, or article choices. "
+        "After the word-by-word grammar breakdown, append「文法重點」with EXACTLY 3 Traditional Chinese bullet points. "
+        "Each bullet MUST start with '• ' and MUST cite ACTUAL words from the sentence. "
+        "Bullet 1:『活用/時態』for concrete verb/adjective form choice. "
+        "Bullet 2:『助詞/連接』for concrete particles/conjunctions/prepositions/articles. "
+        "Bullet 3:『語氣/情境』for mood and context effect. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer codes "
         "(the [N] prefix in the ALLOWED VOCABULARY list) of every content word used from that list, "
