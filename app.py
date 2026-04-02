@@ -402,6 +402,32 @@ def _grammar_has_new_format(grammar: str) -> bool:
     return ("文法重點" in g) and ("• " in g or "\n•" in g)
 
 
+def _ensure_display_grammar_format(grammar: str) -> str:
+    g = str(grammar or "").strip()
+    if not g:
+        return ""
+    if not _grammar_has_new_format(g):
+        g = (
+            f"{g}\n文法重點：\n"
+            "• 說明本句動詞或形容詞採用此活用／時態的原因。\n"
+            "• 說明本句助詞、連接詞、介詞（或冠詞）為何這樣使用。"
+        )
+    return g
+
+
+def _render_grammar_box(grammar: str):
+    g = _ensure_display_grammar_format(grammar)
+    if not g:
+        return
+    safe = (
+        g.replace("&", "&amp;")
+         .replace("<", "&lt;")
+         .replace(">", "&gt;")
+         .replace("\n", "<br>")
+    )
+    st.markdown(f'<div class="grammar-box">{safe}</div>', unsafe_allow_html=True)
+
+
 def _is_cache_sentence_valid(sentence_data: dict, vocab_df, current_code: int, language: str) -> bool:
     sentence = str(sentence_data.get("sentence", "")).strip()
     if not sentence:
@@ -1241,7 +1267,7 @@ def study_page():
 
             if sentence_data.get("grammar"):
                 st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
+                _render_grammar_box(sentence_data["grammar"])
 
             render_used_vocab(sentence_data["sentence"], study_df, current_code, vocab_codes=sentence_data.get("vocab_codes"))
             st.markdown('</div>', unsafe_allow_html=True)
@@ -1600,7 +1626,7 @@ def review_page():
                 st.markdown(f'<div class="study-value-md">{sub_data.get("translation","")}</div>', unsafe_allow_html=True)
                 if sub_data.get("grammar"):
                     st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{sub_data["grammar"]}</div>', unsafe_allow_html=True)
+                    _render_grammar_box(sub_data["grammar"])
                 render_used_vocab(sub_data["sentence"], study_df, st.session_state.review_term_code, vocab_codes=sub_data.get("vocab_codes"))
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1647,7 +1673,7 @@ def review_page():
                 st.markdown(f'<div class="study-value-md">{trans_data.get("translation","")}</div>', unsafe_allow_html=True)
                 if trans_data.get("grammar"):
                     st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{trans_data["grammar"]}</div>', unsafe_allow_html=True)
+                    _render_grammar_box(trans_data["grammar"])
                 render_used_vocab(trans_data["sentence"], study_df, st.session_state.review_term_code, vocab_codes=trans_data.get("vocab_codes"))
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1758,7 +1784,7 @@ def review_page():
 
                 if combo_data.get("grammar"):
                     st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
+                    _render_grammar_box(combo_data["grammar"])
 
                 # 顯示本題使用的所有目標單字
                 st.markdown('<div class="study-label">本題使用的單字</div>', unsafe_allow_html=True)
@@ -1905,10 +1931,7 @@ def review_page():
                 # ── 文法說明 ──────────────────────────────
                 if pdata.get("grammar_notes"):
                     st.markdown("**📝 文法說明**")
-                    st.markdown(
-                        f'<div class="grammar-box">{pdata["grammar_notes"]}</div>',
-                        unsafe_allow_html=True
-                    )
+                    _render_grammar_box(pdata["grammar_notes"])
 
     st.divider()
     if st.button("↩ 回到語言首頁", use_container_width=True):
@@ -2242,7 +2265,7 @@ def pattern_study_page():
 
             if sentence_data.get("grammar"):
                 st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                st.markdown(f'<div class="grammar-box">{sentence_data["grammar"]}</div>', unsafe_allow_html=True)
+                _render_grammar_box(sentence_data["grammar"])
 
             render_used_vocab(sentence_data["sentence"], study_df, current_code, vocab_codes=sentence_data.get("vocab_codes"))
             st.markdown('</div>', unsafe_allow_html=True)
@@ -2570,7 +2593,7 @@ def pattern_review_page():
                 st.markdown(f'<div class="study-value-md">{sub_data.get("translation","")}</div>', unsafe_allow_html=True)
                 if sub_data.get("grammar"):
                     st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{sub_data["grammar"]}</div>', unsafe_allow_html=True)
+                    _render_grammar_box(sub_data["grammar"])
                 render_used_vocab(sub_data["sentence"], study_df, st.session_state.pattern_review_term_code, vocab_codes=sub_data.get("vocab_codes"))
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -2617,7 +2640,7 @@ def pattern_review_page():
                 st.markdown(f'<div class="study-value-md">{trans_data.get("translation","")}</div>', unsafe_allow_html=True)
                 if trans_data.get("grammar"):
                     st.markdown(f'<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{trans_data["grammar"]}</div>', unsafe_allow_html=True)
+                    _render_grammar_box(trans_data["grammar"])
                 render_used_vocab(trans_data["sentence"], study_df, st.session_state.pattern_review_term_code, vocab_codes=trans_data.get("vocab_codes"))
                 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -2727,7 +2750,7 @@ def pattern_review_page():
 
                 if combo_data.get("grammar"):
                     st.markdown('<div class="study-label">文法分析</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div class="grammar-box">{combo_data["grammar"]}</div>', unsafe_allow_html=True)
+                    _render_grammar_box(combo_data["grammar"])
 
                 # 顯示本題使用的所有目標單字
                 st.markdown('<div class="study-label">本題使用的單字</div>', unsafe_allow_html=True)
@@ -2874,10 +2897,7 @@ def pattern_review_page():
                 # ── 文法說明 ──────────────────────────────
                 if pdata.get("grammar_notes"):
                     st.markdown("**📝 文法說明**")
-                    st.markdown(
-                        f'<div class="grammar-box">{pdata["grammar_notes"]}</div>',
-                        unsafe_allow_html=True
-                    )
+                    _render_grammar_box(pdata["grammar_notes"])
 
     st.divider()
     if st.button("↩ 回到語言首頁", use_container_width=True, key="pat_review_back"):
