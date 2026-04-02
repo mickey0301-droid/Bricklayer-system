@@ -362,7 +362,8 @@ def _generate_grammar_explanation(
 2) 接著寫「變化規則：」並用 1-3 個條列。
 - 每條必須以句中實際詞開頭。
 - 優先解釋：動詞/形容詞為什麼是這個詞形（或為何不變）、助詞是什麼意思與為何能這樣接。
-- 若有格標記，也要說明為何使用該格。"""
+- 若有格標記，也要說明為何使用該格。
+3) grammar 欄位必須是多行純文字，不要輸出 Python/JSON 字典格式。"""
     elif language == "japanese":
         prompt = f"""請針對下面日文句子生成文法解說，只輸出 JSON：
 {{"grammar":"..."}}
@@ -375,7 +376,8 @@ def _generate_grammar_explanation(
 1) 先做逐詞拆解：実際の単語(よみ)[品詞: 意思] + ...
 2) 接著寫「變化規則：」並用 1-3 個條列。
 - 每條必須以句中實際詞開頭。
-- 優先解釋：動詞/形容詞為何採此形、助詞/接續為何這樣接。"""
+- 優先解釋：動詞/形容詞為何採此形、助詞/接續為何這樣接。
+3) grammar 欄位必須是多行純文字，不要輸出 Python/JSON 字典格式。"""
     else:
         prompt = f"""請針對下面句子生成文法解說，只輸出 JSON：
 {{"grammar":"..."}}
@@ -387,7 +389,8 @@ def _generate_grammar_explanation(
 1) 先做逐詞拆解：實際詞[詞性:意思] + ...
 2) 接著寫「變化規則：」並用 1-3 個條列。
 - 每條必須以句中實際詞開頭。
-- 解釋該詞在本句中的變化或語法功能。"""
+- 解釋該詞在本句中的變化或語法功能。
+3) grammar 欄位必須是多行純文字，不要輸出 Python/JSON 字典格式。"""
 
     for _ in range(2):
         try:
@@ -395,12 +398,55 @@ def _generate_grammar_explanation(
             data = _extract_json(content)
             g = str(data.get("grammar", "")).strip()
             if g:
+                g = _normalize_grammar_text(g)
                 return _ensure_grammar_focus_bullets(g)
         except Exception:
             pass
 
     # 保底：至少給出規則區塊，避免空白
     return _ensure_grammar_focus_bullets(f"{sentence}")
+
+
+def _normalize_grammar_text(grammar: str) -> str:
+    """
+    清理模型偶爾輸出的「字典樣式」字串，轉為可讀段落。
+    """
+    g = str(grammar or "").strip()
+    if not g:
+        return g
+    # 把 {'逐詞拆解': '...', '變化規則': '...'} 這類輸出轉為純文字
+    if g.startswith("{") and g.endswith("}"):
+        text = g.strip("{}").replace("'", "")
+        text = text.replace('"', "")
+        text = text.replace("逐詞拆解:", "逐詞拆解：")
+        text = text.replace("變化規則:", "\n變化規則：")
+        text = text.replace(", 變化規則", "\n變化規則")
+        text = text.replace(", ", "\n")
+        return text.strip()
+    return g
+
+
+def _rule_level_by_code(current_code: int, review_mode: bool = False) -> str:
+    """
+    逐步收緊：
+    - relax0: <=300 幾乎不限制
+    - relax1: 301~700 允許最多 3 個高編號詞
+    - relax2: 701~1000 允許最多 2 個高編號詞
+    - strict1: 1001~2000 允許最多 1 個高編號詞
+    - strict2: >2000 嚴格 0 個
+    """
+    if review_mode:
+        return "strict2"
+    c = int(current_code or 0)
+    if c <= 300:
+        return "relax0"
+    if c <= 700:
+        return "relax1"
+    if c <= 1000:
+        return "relax2"
+    if c <= 2000:
+        return "strict1"
+    return "strict2"
 
 
 def _normalize_text_for_match(text: str, language: str) -> str:
@@ -463,18 +509,21 @@ def _validate_vocab_usage(
         int(v["code"]) for v in (allowed_vocab or [])
         if str(v.get("code", "")).strip().lstrip("-").isdigit()
     }
-    # 規則：前 1000 字可放寬為最多 1 個高編號內容詞；其餘維持嚴格 0 個
-    max_higher_code_words = 0
-    if (not review_mode) and int(current_code or 0) <= 1000:
-        max_higher_code_words = 1
+    level = _rule_level_by_code(current_code, review_mode=review_mode)
+    max_higher_code_words = {
+        "relax0": 99,   # 等同幾乎不限制（仍保留非空句檢查）
+        "relax1": 3,
+        "relax2": 2,
+        "strict1": 1,
+        "strict2": 0,
+    }.get(level, 0)
     reported_disallowed = sorted({c for c in vocab_codes if c not in allowed_codes})
     if reported_disallowed:
         if len(reported_disallowed) > max_higher_code_words:
             return False, f"too many higher-code vocab codes: {reported_disallowed}"
 
-    # 若模型有回傳 vocab_codes，優先採信結構化結果。
-    # 文字子字串比對在 CJK（尤其韓文）容易出現誤判，會讓可用句被錯殺。
-    if vocab_codes:
+    # 在較鬆等級時，優先採信模型結構化回傳，避免 CJK 子字串誤判。
+    if vocab_codes and level in ("relax0", "relax1", "relax2"):
         return True, ""
 
     if not full_vocab:
@@ -500,16 +549,37 @@ def _validate_vocab_usage(
 
 # ── 例句生成 ──────────────────────────────────────────────
 
-def _generate_example_sentence_relaxed(
+def _generate_example_sentence_staged(
     language: str,
     current_term: str,
     term_meaning: str = "",
     term_reading: str = "",
     term_pos: str = "",
+    current_code: int = 0,
+    review_mode: bool = False,
+    allowed_terms: list | None = None,
+    allowed_vocab: list | None = None,
+    full_vocab: list | None = None,
     ai_provider: str = "",
     ai_model: str = "",
 ) -> dict:
-    """臨時測試模式：移除詞彙規則與驗證，僅要求自然可用句。"""
+    """分級收緊模式：先鬆後嚴，避免一開始就卡死。"""
+    level = _rule_level_by_code(current_code, review_mode=review_mode)
+    level_hint_map = {
+        "relax0": "規則等級 L0：先求自然可用，不做詞彙限制。",
+        "relax1": "規則等級 L1：儘量用已學詞，最多可用 3 個高編號內容詞。",
+        "relax2": "規則等級 L2：儘量用已學詞，最多可用 2 個高編號內容詞。",
+        "strict1": "規則等級 L3：最多可用 1 個高編號內容詞。",
+        "strict2": "規則等級 L4：只用已學內容詞。",
+    }
+    level_hint = level_hint_map.get(level, "規則等級：一般")
+
+    vocab_list = ""
+    if allowed_vocab:
+        vocab_list = "\n".join(f"- [{v['code']}] {v['term']}" for v in allowed_vocab[:500])
+    elif allowed_terms:
+        vocab_list = "\n".join(f"- {t}" for t in allowed_terms[:500])
+
     system_message = (
         "You are a language learning assistant. "
         "Write one short, natural, real-usage sentence. "
@@ -520,26 +590,35 @@ def _generate_example_sentence_relaxed(
         prompt = f"""請用韓文造一句自然、真實可用的短句，且必須包含目標詞。
 目標詞：{current_term}
 目標詞資訊：詞性={term_pos}，意思={term_meaning}，讀音={term_reading}
+{level_hint}
+已學詞表（可優先使用）：
+{vocab_list}
 
 只輸出 JSON：
-{{"sentence":"...","reading":"全句 Revised Romanization","translation":"繁體中文","vocab_codes":[]}}"""
+{{"sentence":"...","reading":"全句 Revised Romanization","translation":"繁體中文","vocab_codes":[整數代碼]}}"""
     elif language == "japanese":
         prompt = f"""請用日文造一句自然、真實可用的短句，且必須包含目標詞。
 目標詞：{current_term}
 目標詞資訊：詞性={term_pos}，意思={term_meaning}，讀音={term_reading}
+{level_hint}
+已學詞表（可優先使用）：
+{vocab_list}
 
 只輸出 JSON：
-{{"sentence":"...","reading":"ひらがな","translation":"繁體中文","vocab_codes":[]}}"""
+{{"sentence":"...","reading":"ひらがな","translation":"繁體中文","vocab_codes":[整數代碼]}}"""
     else:
         prompt = f"""請造一句自然、真實可用的短句，且必須包含目標詞。
 目標詞：{current_term}
 目標詞資訊：詞性={term_pos}，意思={term_meaning}
+{level_hint}
+已學詞表（可優先使用）：
+{vocab_list}
 
 只輸出 JSON：
-{{"sentence":"...","reading":"","translation":"繁體中文","vocab_codes":[]}}"""
+{{"sentence":"...","reading":"","translation":"繁體中文","vocab_codes":[整數代碼]}}"""
 
     last_reason = "unknown"
-    for _ in range(5):
+    for _ in range(6):
         try:
             content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
             data = _extract_json(content)
@@ -549,6 +628,23 @@ def _generate_example_sentence_relaxed(
                 continue
             reading = str(data.get("reading", "")).strip()
             translation = str(data.get("translation", "")).strip()
+            raw_codes = data.get("vocab_codes", [])
+            vocab_codes = [
+                int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])
+                if str(c).strip().lstrip("-").isdigit()
+            ]
+            ok, reason = _validate_vocab_usage(
+                sentence=sentence,
+                vocab_codes=vocab_codes,
+                language=language,
+                current_code=current_code,
+                allowed_vocab=allowed_vocab,
+                full_vocab=full_vocab,
+                review_mode=review_mode,
+            )
+            if not ok:
+                last_reason = reason
+                continue
             grammar = _generate_grammar_explanation(
                 language=language,
                 sentence=sentence,
@@ -562,13 +658,13 @@ def _generate_example_sentence_relaxed(
                 "reading": reading,
                 "translation": translation,
                 "grammar": grammar,
-                "vocab_codes": [],
+                "vocab_codes": vocab_codes,
             }
         except Exception as e:
             last_reason = str(e)
             continue
 
-    raise RuntimeError(f"Relaxed 生成仍失敗：{last_reason}")
+    raise RuntimeError(f"例句生成失敗（{level}）：{last_reason}")
 
 def generate_example_sentence(
     language: str,
@@ -592,13 +688,18 @@ def generate_example_sentence(
     - review_mode=True：最多 2 個已學詞彙、句子不超過 7 個字
     - allowed_vocab：帶編號的詞表，AI 將在 vocab_codes 欄位回傳使用到的編號
     """
-    # 臨時全面放寬模式：先確認 AI 生成鏈路是否正常
-    return _generate_example_sentence_relaxed(
+    # 分級收緊：從最鬆逐步變嚴
+    return _generate_example_sentence_staged(
         language=language,
         current_term=current_term,
         term_meaning=term_meaning,
         term_reading=term_reading,
         term_pos=term_pos,
+        current_code=current_code,
+        review_mode=review_mode,
+        allowed_terms=allowed_terms,
+        allowed_vocab=allowed_vocab,
+        full_vocab=full_vocab,
         ai_provider=ai_provider,
         ai_model=ai_model,
     )
