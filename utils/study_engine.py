@@ -185,6 +185,65 @@ def _ensure_grammar_focus_bullets(grammar: str) -> str:
     return g
 
 
+def _extract_codes_from_reason(reason: str) -> list[int]:
+    text = str(reason or "")
+    m = re.search(r"\[(.*?)\]", text)
+    if not m:
+        return []
+    items = re.findall(r"-?\d+", m.group(1))
+    return [int(x) for x in items]
+
+
+def _terms_by_codes(codes: list[int], vocab_items: list | None) -> list[str]:
+    if not vocab_items or not codes:
+        return []
+    code_set = set(codes)
+    terms = []
+    for v in vocab_items:
+        c = str(v.get("code", "")).strip()
+        if c.lstrip("-").isdigit() and int(c) in code_set:
+            t = str(v.get("term", "")).strip()
+            if t:
+                terms.append(t)
+    return sorted(set(terms))
+
+
+def _infer_target_code(current_term: str, allowed_vocab: list | None) -> int | None:
+    if not allowed_vocab:
+        return None
+    term = str(current_term or "").strip()
+    for v in allowed_vocab:
+        if str(v.get("term", "")).strip() == term:
+            c = str(v.get("code", "")).strip()
+            if c.lstrip("-").isdigit():
+                return int(c)
+    return None
+
+
+def _fallback_sentence_payload(
+    language: str,
+    current_term: str,
+    term_reading: str = "",
+    term_meaning: str = "",
+    allowed_vocab: list | None = None,
+) -> dict:
+    target_code = _infer_target_code(current_term, allowed_vocab)
+    grammar = (
+        f"{current_term}[目標詞彙]\n"
+        "文法重點：\n"
+        "• 活用/時態：本句採用最短安全形式呈現目標詞，避免超出已學詞彙範圍。\n"
+        "• 助詞/連接：本句未額外引入高風險內容詞，語法結構保持最精簡穩定。\n"
+        "• 語氣/情境：本句為中性陳述語氣，用於穩定展示目標詞基本用法。"
+    )
+    return {
+        "sentence": str(current_term or "").strip(),
+        "reading": str(term_reading or "").strip(),
+        "translation": str(term_meaning or "").strip() or "（保底例句）",
+        "grammar": grammar,
+        "vocab_codes": [target_code] if target_code is not None else [],
+    }
+
+
 def _normalize_text_for_match(text: str, language: str) -> str:
     if language in ("japanese", "korean", "chinese"):
         return text
@@ -459,8 +518,17 @@ Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","vocab_codes":[códigos enteros usados de la lista]}}"""
 
     last_reason = "unknown validation failure"
-    for _ in range(3):
-        content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
+    banned_terms = set()
+    for _ in range(6):
+        dynamic_prompt = prompt
+        if banned_terms:
+            dynamic_prompt += (
+                "\n\n【額外嚴格限制】\n"
+                f"- 以下詞彙絕對禁止出現在 sentence：{', '.join(sorted(banned_terms))}\n"
+                "- 若會用到上述詞，請改寫成只使用 ALLOWED VOCABULARY 的句子。"
+            )
+
+        content = _call_ai(system_message, dynamic_prompt, ai_provider=ai_provider, ai_model=ai_model)
         data = _extract_json(content)
         raw_codes = data.get("vocab_codes", [])
         vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
@@ -484,8 +552,17 @@ Responde solo con JSON：
                 "vocab_codes": vocab_codes,
             }
         last_reason = reason
+        if "detected higher-code vocab" in reason:
+            bad_codes = _extract_codes_from_reason(reason)
+            banned_terms.update(_terms_by_codes(bad_codes, full_vocab))
 
-    raise RuntimeError(f"生成例句未通過詞彙驗證：{last_reason}")
+    return _fallback_sentence_payload(
+        language=language,
+        current_term=current_term,
+        term_reading=term_reading,
+        term_meaning=term_meaning,
+        allowed_vocab=allowed_vocab,
+    )
 
 
 # ── FSI 搭配 / 句型變化生成 ──────────────────────────────
@@ -612,8 +689,17 @@ Responde solo con JSON：
 {{"sentence":"oración en español","reading":"","translation":"繁體中文翻譯","grammar":"palabraReal[品詞: 意思] + ...","drill_note":"繁體中文說明","vocab_codes":[códigos enteros]}}"""
 
     last_reason = "unknown validation failure"
-    for _ in range(3):
-        content = _call_ai(system_message, prompt, ai_provider=ai_provider, ai_model=ai_model)
+    banned_terms = set()
+    for _ in range(6):
+        dynamic_prompt = prompt
+        if banned_terms:
+            dynamic_prompt += (
+                "\n\n【額外嚴格限制】\n"
+                f"- 以下詞彙絕對禁止出現在 sentence：{', '.join(sorted(banned_terms))}\n"
+                "- 若會用到上述詞，請改寫成只使用 ALLOWED VOCABULARY 的句子。"
+            )
+
+        content = _call_ai(system_message, dynamic_prompt, ai_provider=ai_provider, ai_model=ai_model)
         data = _extract_json(content)
         raw_codes = data.get("vocab_codes", [])
         vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])
@@ -639,8 +725,21 @@ Responde solo con JSON：
                 "vocab_codes": vocab_codes,
             }
         last_reason = reason
+        if "detected higher-code vocab" in reason:
+            bad_codes = _extract_codes_from_reason(reason)
+            banned_terms.update(_terms_by_codes(bad_codes, full_vocab))
 
-    raise RuntimeError(f"FSI 句子未通過詞彙驗證：{last_reason}")
+    fallback = _fallback_sentence_payload(
+        language=language,
+        current_term=current_term,
+        term_reading=term_reading,
+        term_meaning=term_meaning,
+        allowed_vocab=allowed_vocab,
+    )
+    return {
+        **fallback,
+        "drill_note": "保底句：已避開高編號詞，先穩定展示目標詞。",
+    }
 
 
 # ── 句型重組生成 ──────────────────────────────────────────
