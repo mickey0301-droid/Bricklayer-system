@@ -420,7 +420,7 @@ def _ensure_display_grammar_format(grammar: str) -> str:
         return ""
     if not _grammar_has_new_format(g):
         parts = [p.strip() for p in g.split("+") if p.strip()]
-        verb_tokens, particle_tokens, noun_tokens = [], [], []
+        verb_tokens, particle_tokens, noun_tokens, case_tokens = [], [], [], []
         for p in parts:
             token = p.split("(", 1)[0].split("[", 1)[0].strip()
             if not token:
@@ -431,19 +431,29 @@ def _ensure_display_grammar_format(grammar: str) -> str:
                 particle_tokens.append(token)
             if "[名詞" in p:
                 noun_tokens.append(token)
+            if any(k in p for k in ("主格", "受格", "與格", "屬格", "奪格", "工具格")):
+                case_tokens.append(token)
 
         specific_rules, seen = [], set()
         if verb_tokens:
             t = verb_tokens[0]
-            specific_rules.append(f"• {t}：此詞在本句以當前詞形出現，對應本句語氣與時態。")
+            if t.endswith(("다", "る", "ir", "ar", "er")):
+                specific_rules.append(f"• {t}：本句使用原形/辭書形，因為句型採簡潔敘述，未加入過去、敬語或否定標記。")
+            else:
+                specific_rules.append(f"• {t}：本句使用這個變化形，是為了配合句子的時態與語氣需求。")
             seen.add(t)
         for t in particle_tokens:
             if t in seen:
                 continue
-            specific_rules.append(f"• {t}：此成分在本句標示語法關係（如主語、受詞、方向或連接）。")
+            specific_rules.append(f"• {t}：此成分在本句有明確語意功能，並且可接在前詞後標示其語法角色。")
             seen.add(t)
             if len(specific_rules) >= 3:
                 break
+        if len(specific_rules) < 3 and case_tokens:
+            t = case_tokens[0]
+            if t not in seen:
+                specific_rules.append(f"• {t}：此格標記的選擇是為了對應該名詞在本句中的格功能。")
+                seen.add(t)
         if len(specific_rules) < 3:
             for t in noun_tokens:
                 if t in seen:

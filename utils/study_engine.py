@@ -151,22 +151,93 @@ def _grammar_has_focus_bullets(grammar: str) -> bool:
     return ("文法重點" in g) and ("• " in g or "\n•" in g)
 
 
+def _parse_grammar_parts(grammar: str) -> list[dict]:
+    parts = []
+    raw = str(grammar or "")
+    for p in [x.strip() for x in raw.split("+") if x.strip()]:
+        token = p.split("(", 1)[0].split("[", 1)[0].strip()
+        pos = ""
+        m = re.search(r"\[([^\]:]+)", p)
+        if m:
+            pos = m.group(1).strip()
+        if token:
+            parts.append({"token": token, "pos": pos, "raw": p})
+    return parts
+
+
+def _korean_particle_explanation(token: str) -> str:
+    m = {
+        "은": "主題/對比助詞，表示「就……而言」",
+        "는": "主題/對比助詞，表示「就……而言」",
+        "이": "主格助詞，標示動作或狀態的主語",
+        "가": "主格助詞，標示動作或狀態的主語",
+        "을": "受格助詞，標示動作直接作用的對象",
+        "를": "受格助詞，標示動作直接作用的對象",
+        "에": "方向/時間/靜態位置標記，依語境表示「到、在、於」",
+        "에서": "動作發生位置，表示「在……做」",
+        "로": "方向/手段標記，表示「往、用、作為」",
+        "으로": "方向/手段標記，表示「往、用、作為」",
+        "와": "並列助詞，表示「和」",
+        "과": "並列助詞，表示「和」",
+        "하고": "並列助詞，表示「和」",
+        "랑": "並列助詞，表示「和」",
+        "도": "添加助詞，表示「也」",
+        "만": "限定助詞，表示「只」",
+        "의": "屬格助詞，表示「的」",
+        "에게": "與格助詞，表示「給、對」",
+        "한테": "與格助詞，表示「給、對」",
+        "부터": "起點助詞，表示「從」",
+        "까지": "終點助詞，表示「到」",
+    }
+    return m.get(token, "此助詞用來標示句中語法關係")
+
+
+def _build_specific_rule_notes(grammar: str) -> list[str]:
+    parts = _parse_grammar_parts(grammar)
+    if not parts:
+        return ["• 目標詞：本句以最基本可理解形式呈現，並依語境保持自然。"]
+
+    verb = next((p for p in parts if "動詞" in p["pos"] or "形容詞" in p["pos"]), None)
+    particles = [p for p in parts if "助詞" in p["pos"] or "介詞" in p["pos"] or "連接詞" in p["pos"] or "冠詞" in p["pos"]]
+    nouns = [p for p in parts if "名詞" in p["pos"]]
+
+    rules = []
+    if verb:
+        t = verb["token"]
+        if re.search(r"(다|る|ir|ar|er)$", t):
+            rules.append(f"• {t}：這裡使用原形/辭書形，是因為本句採簡潔敘述句式，未加入過去、敬語或否定標記。")
+        else:
+            rules.append(f"• {t}：這裡不是原形，而是依本句語氣與時態需求做的詞形變化。")
+
+    if particles:
+        for p in particles[:2]:
+            token = p["token"]
+            explanation = _korean_particle_explanation(token)
+            rules.append(f"• {token}：{explanation}；接在前一個詞後，讓該詞在本句取得對應語法角色。")
+
+    # 若句中有格變化線索，補充一條明確說明（跨語言）
+    case_markers = [p for p in parts if any(k in p["pos"] for k in ("主格", "受格", "與格", "屬格", "奪格", "工具格"))]
+    if case_markers:
+        cm = case_markers[0]
+        rules.append(f"• {cm['token']}：本句採此格標記是為了表達該名詞在句中的格功能，而不是詞彙本體改義。")
+
+    # 若仍不足，補名詞連接理由
+    if len(rules) < 3 and nouns:
+        n = nouns[0]["token"]
+        rules.append(f"• {n}：名詞本身通常不做形態變化，主要透過後接標記來表達語法功能。")
+
+    return rules[:4]
+
+
 def _ensure_grammar_focus_bullets(grammar: str) -> str:
     g = str(grammar or "").strip()
     if not g:
         g = "（未提供逐詞拆解）"
 
-    # 從拆解中抓出最具體的詞：優先動詞/形容詞，再抓助詞/介詞/連接詞
-    parts = [p.strip() for p in g.split("+") if p.strip()]
-    verb_or_adj = ""
-    particle_like = ""
-    for p in parts:
-        if not verb_or_adj and ("[動詞" in p or "[形容詞" in p):
-            verb_or_adj = p
-        if not particle_like and ("助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p):
-            particle_like = p
-        if verb_or_adj and particle_like:
-            break
+    # 從拆解中抓出詞形資訊，補成「有答案」的具體解說
+    parsed = _parse_grammar_parts(g)
+    verb_or_adj = next((p["raw"] for p in parsed if "動詞" in p["pos"] or "形容詞" in p["pos"]), "")
+    particle_like = next((p["raw"] for p in parsed if "助詞" in p["pos"] or "介詞" in p["pos"] or "連接詞" in p["pos"] or "冠詞" in p["pos"]), "")
 
     # 只要缺少「文法重點」就補一段具體模板
     if "文法重點" not in g:
@@ -184,46 +255,7 @@ def _ensure_grammar_focus_bullets(grammar: str) -> str:
         )
 
     if "變化規則" not in g:
-        verb_tokens = []
-        particle_tokens = []
-        noun_tokens = []
-        for p in parts:
-            token = p.split("(", 1)[0].split("[", 1)[0].strip()
-            if not token:
-                continue
-            if "[動詞" in p or "[形容詞" in p:
-                verb_tokens.append(token)
-            if "助詞" in p or "介詞" in p or "連接詞" in p or "冠詞" in p:
-                particle_tokens.append(token)
-            if "[名詞" in p:
-                noun_tokens.append(token)
-
-        specific_rules = []
-        seen = set()
-        if verb_tokens:
-            t = verb_tokens[0]
-            specific_rules.append(f"• {t}：此詞在本句以當前詞形出現，對應本句的時態與語氣。")
-            seen.add(t)
-
-        for t in particle_tokens:
-            if t in seen:
-                continue
-            specific_rules.append(f"• {t}：此成分在本句標示語法關係（如主語、受詞、方向或連接）。")
-            seen.add(t)
-            if len(specific_rules) >= 3:
-                break
-
-        if len(specific_rules) < 3:
-            for t in noun_tokens:
-                if t in seen:
-                    continue
-                specific_rules.append(f"• {t}：此名詞本身不活用，透過後接成分在句中承擔語法角色。")
-                seen.add(t)
-                if len(specific_rules) >= 3:
-                    break
-
-        if not specific_rules:
-            specific_rules = [f"• {current}：此詞在本句依語境採用當前形式。" for current in [verb_or_adj or "目標詞彙"]]
+        specific_rules = _build_specific_rule_notes(g)
         g = f"{g}\n變化規則：\n" + "\n".join(specific_rules)
     return g
 
@@ -466,6 +498,9 @@ def generate_example_sentence(
         "Then append「變化規則」with 1-3 concise bullets in Traditional Chinese. "
         "Each bullet MUST start with an ACTUAL word from this sentence and explain that word's change/function in THIS sentence. "
         "PRIORITY: include at least 1 verb/adjective-form bullet and at least 1 particle/preposition/conjunction bullet when such words exist. "
+        "For verbs/adjectives, explicitly explain why this sentence uses this form (or why it stays base form). "
+        "For particles/prepositions/conjunctions, explicitly explain meaning and why this connection is valid in this sentence. "
+        "If noun case change exists, explicitly explain why that case is chosen. "
         "Do NOT write generic textbook rules. Each rule bullet MUST be an answer statement, not a question. "
         + (
         "CRITICAL for the 'vocab_codes' field: list the integer code numbers "
