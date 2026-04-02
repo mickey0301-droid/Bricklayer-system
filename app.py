@@ -2,6 +2,7 @@ import io
 import os
 import zipfile
 import random
+import subprocess
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -255,6 +256,17 @@ _defaults = {
 for k, v in _defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
+
+
+def _build_hash() -> str:
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=os.path.dirname(os.path.abspath(__file__)),
+            text=True
+        ).strip()
+    except Exception:
+        return "unknown"
 
 
 # ── 例句詞彙查找 ───────────────────────────────────────────
@@ -1135,6 +1147,7 @@ def study_page():
     with _tnm:
         st.progress(_pct)
         st.caption(f"📚 {display_name}　{st.session_state.study_index + 1} / {len(study_df)}　｜　Available: {len(allowed_terms)}")
+        st.caption(f"Build: {_build_hash()}")
     with _tnr:
         if st.button("下一個 ➡", key="study_next_top", use_container_width=True):
             save_current_sentence_before_leaving()
@@ -2135,6 +2148,7 @@ def pattern_study_page():
     with _tnm:
         st.progress(_pct)
         st.caption(f"🗣️ {display_name} 句型　{st.session_state.pattern_study_index + 1} / {len(study_df)}　｜　Available: {len(allowed_terms)}")
+        st.caption(f"Build: {_build_hash()}")
     with _tnr:
         if st.button("下一個 ➡", key="pat_study_next_top", use_container_width=True):
             st.session_state.pattern_study_index = get_next_index(study_df, st.session_state.pattern_study_index)
