@@ -615,7 +615,11 @@ Responde solo con JSON：
                 "- 若會用到上述詞，請改寫成只使用 ALLOWED VOCABULARY 的句子。"
             )
 
-        content = _call_ai(system_message, dynamic_prompt, ai_provider=ai_provider, ai_model=ai_model)
+        try:
+            content = _call_ai(system_message, dynamic_prompt, ai_provider=ai_provider, ai_model=ai_model)
+        except Exception as e:
+            last_reason = f"ai_call_failed: {e}"
+            continue
         data = _extract_json(content)
         raw_codes = data.get("vocab_codes", [])
         vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
@@ -789,7 +793,11 @@ Responde solo con JSON：
                 "- 若會用到上述詞，請改寫成只使用 ALLOWED VOCABULARY 的句子。"
             )
 
-        content = _call_ai(system_message, dynamic_prompt, ai_provider=ai_provider, ai_model=ai_model)
+        try:
+            content = _call_ai(system_message, dynamic_prompt, ai_provider=ai_provider, ai_model=ai_model)
+        except Exception as e:
+            last_reason = f"ai_call_failed: {e}"
+            continue
         data = _extract_json(content)
         raw_codes = data.get("vocab_codes", [])
         vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else [])

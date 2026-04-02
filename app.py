@@ -1307,6 +1307,7 @@ def study_page():
             # 詞彙卡已渲染，在右欄生成 AI 例句（用戶可看到左欄詞彙）
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
+            _generated_ok = False
             with st.spinner("AI 正在生成例句…"):
                 try:
                     result = generate_example_sentence(
@@ -1322,9 +1323,11 @@ def study_page():
                     )
                     st.session_state.study_sentence = result
                     set_cached_sentence(language, str(current["code"]), result)
+                    _generated_ok = True
                 except Exception as e:
                     st.error(f"自動生成例句失敗：{e}")
-            st.rerun()
+            if _generated_ok:
+                st.rerun()
         elif sentence_data.get("sentence"):
             st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
 
@@ -2306,6 +2309,7 @@ def pattern_study_page():
             # 詞彙卡已渲染，在右欄生成 AI 例句（用戶可看到左欄詞彙）
             st.markdown('<div class="study-value-md" style="color:#aaa;">正在生成例句…</div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
+            _generated_ok = False
             with st.spinner("AI 正在生成例句…"):
                 try:
                     result = generate_example_sentence(
@@ -2321,9 +2325,11 @@ def pattern_study_page():
                     )
                     st.session_state.pattern_study_sentence = result
                     set_cached_sentence(f"{language}_pattern", str(current["code"]), result)
+                    _generated_ok = True
                 except Exception as e:
                     st.error(f"自動生成例句失敗：{e}")
-            st.rerun()
+            if _generated_ok:
+                st.rerun()
         elif sentence_data.get("sentence"):
             st.markdown(f'<div class="study-value-md">{sentence_data["sentence"]}</div>', unsafe_allow_html=True)
 
