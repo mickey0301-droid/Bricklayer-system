@@ -274,6 +274,18 @@ def _extract_codes_from_reason(reason: str) -> list[int]:
     return [int(x) for x in items]
 
 
+def _reason_mentions_higher_code(reason: str) -> bool:
+    text = str(reason or "")
+    keys = (
+        "detected higher-code vocab",
+        "reported disallowed vocab codes",
+        "too many higher-code vocab codes",
+        "too many higher-code vocab",
+        "higher-code",
+    )
+    return any(k in text for k in keys)
+
+
 def _terms_by_codes(codes: list[int], vocab_items: list | None) -> list[str]:
     if not vocab_items or not codes:
         return []
@@ -459,6 +471,11 @@ def _validate_vocab_usage(
     if reported_disallowed:
         if len(reported_disallowed) > max_higher_code_words:
             return False, f"too many higher-code vocab codes: {reported_disallowed}"
+
+    # 若模型有回傳 vocab_codes，優先採信結構化結果。
+    # 文字子字串比對在 CJK（尤其韓文）容易出現誤判，會讓可用句被錯殺。
+    if vocab_codes:
+        return True, ""
 
     if not full_vocab:
         return True, ""
@@ -726,7 +743,7 @@ Responde solo con JSON：
                 "vocab_codes": vocab_codes,
             }
         last_reason = reason
-        if "detected higher-code vocab" in reason:
+        if _reason_mentions_higher_code(reason):
             bad_codes = _extract_codes_from_reason(reason)
             banned_terms.update(_terms_by_codes(bad_codes, full_vocab))
 
@@ -907,7 +924,7 @@ Responde solo con JSON：
                 "vocab_codes": vocab_codes,
             }
         last_reason = reason
-        if "detected higher-code vocab" in reason:
+        if _reason_mentions_higher_code(reason):
             bad_codes = _extract_codes_from_reason(reason)
             banned_terms.update(_terms_by_codes(bad_codes, full_vocab))
 
