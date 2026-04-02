@@ -37,9 +37,8 @@ from utils.progress_manager import (
     sync_progress_from_github,
     sync_history_from_github,
     get_progress_sync_status,
-    force_sync_progress,
 )
-from utils.app_logger import log_error, get_log_path
+from utils.app_logger import log_error
 from utils.language_manager import load_languages, add_language, get_language_config
 from utils.familiarity_manager import (
     get_familiarity, set_familiarity, get_sample_weights,
@@ -1206,31 +1205,6 @@ def study_page():
             update_language_progress(language, st.session_state.study_index)
             st.session_state.study_sentence_term = ""
             st.rerun()
-    _sync_c1, _sync_c2 = st.columns([4, 1])
-    with _sync_c2:
-        if st.button("💾 同步進度", key="study_force_sync_progress", use_container_width=True):
-            ok = force_sync_progress(language, st.session_state.study_index)
-            if ok:
-                st.success("已手動同步目前進度。")
-            else:
-                st.error(f"同步失敗，請查看 log：{get_log_path()}")
-
-    # ── 跳號 ──────────────────────────────────────────────────────
-    jc1, jc2 = st.columns([4, 1])
-    with jc1:
-        jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
-                                   key="study_jump_input", label_visibility="collapsed")
-    with jc2:
-        if st.button("跳至", key="study_jump_btn", use_container_width=True):
-            if jump_val > 0:
-                matches = study_df[study_df["code_num"] == int(jump_val)]
-                if not matches.empty:
-                    st.session_state.study_index = int(matches.index[0])
-                    update_language_progress(language, st.session_state.study_index)
-                    st.session_state.study_sentence_term = ""
-                    st.rerun()
-                else:
-                    st.warning(f"找不到編號 {int(jump_val)}")
 
     # ══ 左右分欄（電腦左右、手機上下）══════════════════════
     col_left, col_right = st.columns([1, 1], gap="large")
@@ -1418,6 +1392,23 @@ def study_page():
             update_language_progress(language, st.session_state.study_index)
             st.session_state.study_sentence_term = ""
             st.rerun()
+
+    # ── 跳號（移到底部）──────────────────────────────────────────
+    jc1, jc2 = st.columns([4, 1])
+    with jc1:
+        jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
+                                   key="study_jump_input", label_visibility="collapsed")
+    with jc2:
+        if st.button("跳至", key="study_jump_btn", use_container_width=True):
+            if jump_val > 0:
+                matches = study_df[study_df["code_num"] == int(jump_val)]
+                if not matches.empty:
+                    st.session_state.study_index = int(matches.index[0])
+                    update_language_progress(language, st.session_state.study_index)
+                    st.session_state.study_sentence_term = ""
+                    st.rerun()
+                else:
+                    st.warning(f"找不到編號 {int(jump_val)}")
 
     # ── 自動播放（放在頁面最後，確保詞彙卡和例句已先渲染完畢）──────
     # 頁面元素全部送出後才執行 TTS，用戶已能看到內容，不會空白等待
@@ -2220,22 +2211,6 @@ def pattern_study_page():
             st.session_state.pattern_study_sentence_term = ""
             st.rerun()
 
-    # ── 跳號 ──────────────────────────────────────────────────────
-    jc1, jc2 = st.columns([4, 1])
-    with jc1:
-        jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
-                                   key="pattern_study_jump_input", label_visibility="collapsed")
-    with jc2:
-        if st.button("跳至", key="pattern_study_jump_btn", use_container_width=True):
-            if jump_val > 0:
-                matches = study_df[study_df["code_num"] == int(jump_val)]
-                if not matches.empty:
-                    st.session_state.pattern_study_index = int(matches.index[0])
-                    st.session_state.pattern_study_sentence_term = ""
-                    st.rerun()
-                else:
-                    st.warning(f"找不到編號 {int(jump_val)}")
-
     # ══ 左右分欄（電腦左右、手機上下）══════════════════════
     col_left, col_right = st.columns([1, 1], gap="large")
 
@@ -2416,6 +2391,22 @@ def pattern_study_page():
             st.session_state.pattern_study_index = get_next_index(study_df, st.session_state.pattern_study_index)
             st.session_state.pattern_study_sentence_term = ""
             st.rerun()
+
+    # ── 跳號（移到底部）──────────────────────────────────────────
+    jc1, jc2 = st.columns([4, 1])
+    with jc1:
+        jump_val = st.number_input("跳到編號", min_value=0, value=0, step=1,
+                                   key="pattern_study_jump_input", label_visibility="collapsed")
+    with jc2:
+        if st.button("跳至", key="pattern_study_jump_btn", use_container_width=True):
+            if jump_val > 0:
+                matches = study_df[study_df["code_num"] == int(jump_val)]
+                if not matches.empty:
+                    st.session_state.pattern_study_index = int(matches.index[0])
+                    st.session_state.pattern_study_sentence_term = ""
+                    st.rerun()
+                else:
+                    st.warning(f"找不到編號 {int(jump_val)}")
 
     # ── 自動播放（放在頁面最後，確保詞彙卡和例句已先渲染完畢）──────
     _sentence_data_auto = st.session_state.pattern_study_sentence
