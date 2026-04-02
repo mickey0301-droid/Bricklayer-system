@@ -144,6 +144,27 @@ def _extract_json(text):
     return {}
 
 
+def _grammar_has_focus_bullets(grammar: str) -> bool:
+    g = str(grammar or "").strip()
+    if not g:
+        return False
+    return ("文法重點" in g) and ("• " in g or "\n•" in g)
+
+
+def _ensure_grammar_focus_bullets(grammar: str) -> str:
+    g = str(grammar or "").strip()
+    if _grammar_has_focus_bullets(g):
+        return g
+
+    base = g if g else "（未提供逐詞拆解）"
+    fallback = (
+        "\n文法重點：\n"
+        "• 本句使用自然敘述語氣，動詞或形容詞形式會依語境與句型需求選擇。\n"
+        "• 句中的助詞／介詞／連接成分負責標示語法關係，讓句意更完整自然。"
+    )
+    return f"{base}{fallback}"
+
+
 def _normalize_text_for_match(text: str, language: str) -> str:
     if language in ("japanese", "korean", "chinese"):
         return text
@@ -432,11 +453,12 @@ Responde solo con JSON：
             review_mode=review_mode,
         )
         if ok:
+            normalized_grammar = _ensure_grammar_focus_bullets(data.get("grammar", ""))
             return {
                 "sentence":    sentence,
                 "reading":     data.get("reading", ""),
                 "translation": data.get("translation", ""),
-                "grammar":     data.get("grammar", ""),
+                "grammar":     normalized_grammar,
                 "vocab_codes": vocab_codes,
             }
         last_reason = reason
@@ -583,11 +605,12 @@ Responde solo con JSON：
             review_mode=False,
         )
         if ok:
+            normalized_grammar = _ensure_grammar_focus_bullets(data.get("grammar", ""))
             return {
                 "sentence":    sentence,
                 "reading":     data.get("reading", ""),
                 "translation": data.get("translation", ""),
-                "grammar":     data.get("grammar", ""),
+                "grammar":     normalized_grammar,
                 "drill_note":  data.get("drill_note", ""),
                 "vocab_codes": vocab_codes,
             }
@@ -711,11 +734,12 @@ Responde solo con JSON：
     data = _extract_json(content)
     raw_codes = data.get("vocab_codes", [])
     vocab_codes = [int(c) for c in (raw_codes if isinstance(raw_codes, list) else []) if str(c).strip().lstrip("-").isdigit()]
+    normalized_grammar = _ensure_grammar_focus_bullets(data.get("grammar", ""))
     return {
         "sentence":    data.get("sentence", ""),
         "reading":     data.get("reading", ""),
         "translation": data.get("translation", ""),
-        "grammar":     data.get("grammar", ""),
+        "grammar":     normalized_grammar,
         "vocab_codes": vocab_codes,
     }
 
