@@ -145,3 +145,47 @@ def autocomplete_dataframe(df: pd.DataFrame, language: str) -> pd.DataFrame:
                 df.at[i, col] = result.get(col, "")
 
     return df
+
+
+def translate_chinese_sentence(language: str, language_label: str, chinese_sentence: str) -> dict:
+    client = _require_openai_client()
+
+    prompt = f"""
+Translate the following Traditional Chinese sentence into {language_label}.
+
+Target language key: {language}
+Chinese sentence: {chinese_sentence}
+
+Return JSON only:
+{{
+  "sentence": "natural translation in the target language",
+  "reading": "pronunciation guide if useful, otherwise empty string",
+  "note": "one short Traditional Chinese note about wording, otherwise empty string"
+}}
+
+Rules:
+1. Translate the meaning naturally, not word by word.
+2. Use the target language only in "sentence".
+3. For Japanese, put hiragana reading in "reading" when the sentence contains kanji.
+4. For Korean, put Revised Romanization in "reading".
+5. For languages that do not need a reading guide, leave "reading" empty.
+6. Use Traditional Chinese for "note".
+7. Output JSON only. Do not add Markdown.
+"""
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a precise translation assistant for language learners."},
+            {"role": "user", "content": prompt},
+        ],
+    )
+
+    content = response.choices[0].message.content or ""
+    data = _extract_json(content)
+
+    return {
+        "sentence": str(data.get("sentence", "") or "").strip(),
+        "reading": str(data.get("reading", "") or "").strip(),
+        "note": str(data.get("note", "") or "").strip(),
+    }

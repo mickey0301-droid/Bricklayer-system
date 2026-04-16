@@ -40,6 +40,7 @@ from utils.progress_manager import (
 )
 from utils.app_logger import log_error
 from utils.language_manager import load_languages, add_language, get_language_config
+from utils.ai_tools import translate_chinese_sentence
 from utils.familiarity_manager import (
     get_familiarity, set_familiarity, get_sample_weights,
     FAMILIAR, UNFAMILIAR,
@@ -249,6 +250,12 @@ _defaults = {
     # 批次例句預生成（記錄最近已生成的 batch 索引，-1 代表尚未生成）
     "study_batch_generated": -1,
     "pattern_study_batch_generated": -1,
+    "translation_input": "",
+    "translation_result": {"sentence": "", "reading": "", "note": ""},
+    "translation_source": "",
+    "translation_language": "",
+    "translation_tts_audio": None,
+    "translation_tts_for": "",
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -565,6 +572,9 @@ def go_language(lang: str):
 
 def go_custom_vocab():
     st.session_state.page = "custom_vocab"
+
+def go_translation_practice():
+    st.session_state.page = "translation_practice"
 
 def go_study():
     language = st.session_state.language
@@ -933,6 +943,10 @@ def language_home():
     if st.button("📚 自訂句型", use_container_width=True, key="lh_pv"):
         go_pattern_vocab(); st.rerun()
 
+    st.markdown("##### AI 翻譯")
+    if st.button("中文翻成目前語言", use_container_width=True, key="lh_translate"):
+        go_translation_practice(); st.rerun()
+
     # ── 返回 ────────────────────────────────────────────────
     st.divider()
     if st.button("← 返回首頁", use_container_width=True, key="lh_back"):
@@ -1070,6 +1084,87 @@ def custom_vocab_page():
 
 
 # ══════════════════════════════════════════════════════════
+def translation_practice_page():
+    language = st.session_state.language
+    if not language:
+        go_home(); st.rerun()
+
+    lang_config = get_language_config(language)
+    display_name = lang_config["label"] if lang_config else language.capitalize()
+    supports_reading = bool(lang_config.get("supports_reading")) if lang_config else False
+    reading_label = lang_config.get("reading_label", "Reading") if lang_config else "Reading"
+
+    st.title(f"中文翻成 {display_name}")
+    st.caption("輸入中文句子後，AI 會翻成你目前選擇的學習語言；翻譯結果可以手動播放語音。")
+
+    with st.form("translation_practice_form"):
+        source = st.text_area(
+            "中文句子",
+            value=st.session_state.get("translation_input", ""),
+            height=110,
+            placeholder="例如：我今天想去咖啡廳讀書。",
+        )
+        submitted = st.form_submit_button("翻譯", use_container_width=True)
+
+    if submitted:
+        source = source.strip()
+        st.session_state.translation_input = source
+        if not source:
+            st.warning("請先輸入中文句子。")
+        else:
+            try:
+                with st.spinner("AI 正在翻譯..."):
+                    result = translate_chinese_sentence(language, display_name, source)
+                st.session_state.translation_result = result
+                st.session_state.translation_source = source
+                st.session_state.translation_language = language
+                st.session_state.translation_tts_audio = None
+                st.session_state.translation_tts_for = ""
+            except Exception as e:
+                st.error(f"翻譯失敗：{e}")
+
+    result = st.session_state.get("translation_result", {})
+    sentence = str(result.get("sentence", "") or "").strip()
+    if sentence and st.session_state.get("translation_language") == language:
+        st.divider()
+        st.markdown("#### 翻譯結果")
+        st.markdown(
+            f'<div class="study-card"><div class="study-value-lg">{sentence}</div></div>',
+            unsafe_allow_html=True,
+        )
+
+        reading = str(result.get("reading", "") or "").strip()
+        if supports_reading and reading:
+            st.markdown(f"**{reading_label}：** {reading}")
+
+        note = str(result.get("note", "") or "").strip()
+        if note:
+            st.info(note)
+
+        play_key = f"{language}::{sentence}"
+        cached_audio = get_cached_tts(language, "translation", "sent", sentence)
+        if cached_audio:
+            st.session_state.translation_tts_audio = cached_audio
+            st.session_state.translation_tts_for = play_key
+
+        if st.button("播放翻譯語音", use_container_width=True, key="translation_play"):
+            try:
+                audio_bytes = cached_audio or generate_tts_audio(sentence, language)
+                set_cached_tts(language, "translation", "sent", audio_bytes, sentence)
+                st.session_state.translation_tts_audio = audio_bytes
+                st.session_state.translation_tts_for = play_key
+            except Exception as e:
+                st.error(f"語音產生失敗：{e}")
+
+        audio_bytes = st.session_state.get("translation_tts_audio")
+        if audio_bytes and st.session_state.get("translation_tts_for") == play_key:
+            components.html(audio_player_pausable(audio_bytes), height=70)
+
+    st.divider()
+    if st.button("← 回到語言首頁", use_container_width=True, key="translation_back"):
+        st.session_state.page = "language_home"; st.rerun()
+
+
 # 學習頁面（左：詞彙  右：例句＋文法）
 # ══════════════════════════════════════════════════════════
 def study_page():
@@ -3062,6 +3157,8 @@ elif page == "pattern_study":
     pattern_study_page()
 elif page == "pattern_review":
     pattern_review_page()
+elif page == "translation_practice":
+    translation_practice_page()
 elif page == "settings":
     settings_page()
 else:
