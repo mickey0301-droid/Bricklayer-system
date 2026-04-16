@@ -111,5 +111,32 @@
       }
     },
     "created_at": 1776356493.8606555
+  },
+  {
+    "id": "0516c929953c4d93abd807dc4fbcf57f",
+    "source": "我喜歡讀書",
+    "translations": {
+      "japanese": {
+        "sentence": "私は読書が好きです",
+        "reading": "わたしはどくしょがすきです",
+        "note": ""
+      },
+      "spanish": {
+        "sentence": "Me gusta leer.",
+        "reading": "",
+        "note": "這句話表達了對閱讀的喜好。"
+      },
+      "korean": {
+        "sentence": "나는 책 읽는 것을 좋아해요",
+        "reading": "naneun chaek ilneun geoseul joahaeyo",
+        "note": "自然的翻譯"
+      },
+      "__english__": {
+        "sentence": "I enjoy reading books.",
+        "reading": "",
+        "note": "這句話表達對閱讀的喜愛。"
+      }
+    },
+    "created_at": 1776358082.0895472
   }
 ]
