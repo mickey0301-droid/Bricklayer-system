@@ -84,5 +84,32 @@
       }
     },
     "created_at": 1776356090.4269195
+  },
+  {
+    "id": "9671ac0d454e4fd199137e29841800e7",
+    "source": "這是枕頭",
+    "translations": {
+      "japanese": {
+        "sentence": "これは枕です",
+        "reading": "これ は まくら です",
+        "note": ""
+      },
+      "spanish": {
+        "sentence": "Esto es una almohada",
+        "reading": "",
+        "note": "翻譯為自然的表達方式"
+      },
+      "korean": {
+        "sentence": "이것은 베개입니다.",
+        "reading": "igeos-eun begae-ibnida.",
+        "note": "「這是」可以翻譯為「이것은」表達物品的陳述"
+      },
+      "__english__": {
+        "sentence": "This is a pillow.",
+        "reading": "",
+        "note": "這句話很簡單。"
+      }
+    },
+    "created_at": 1776356493.8606555
   }
 ]
