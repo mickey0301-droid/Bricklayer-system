@@ -193,5 +193,32 @@
       }
     },
     "created_at": 1776358340.8186178
+  },
+  {
+    "id": "a0dc613d137145df88ada2683512bf35",
+    "source": "這是書櫃",
+    "translations": {
+      "japanese": {
+        "sentence": "これは本棚です。",
+        "reading": "これはほんだなです。",
+        "note": "書櫃在日語中通常指的是本棚。"
+      },
+      "spanish": {
+        "sentence": "Este es un estante de libros",
+        "reading": "",
+        "note": "書櫃指用來擺放書籍的家具。"
+      },
+      "korean": {
+        "sentence": "이건 책장이다",
+        "reading": "igeon chaekjangida",
+        "note": "日常表達自然"
+      },
+      "__english__": {
+        "sentence": "This is a bookshelf.",
+        "reading": "",
+        "note": ""
+      }
+    },
+    "created_at": 1776358398.164844
   }
 ]
