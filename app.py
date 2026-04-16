@@ -44,8 +44,10 @@ from utils.ai_tools import explain_translated_sentence_grammar, translate_chines
 from utils.translation_manager import (
     add_translation_sentence,
     load_translation_sentences,
+    save_translation_sentences,
     sync_translation_sentences_from_github,
     update_translation_grammar,
+    update_translation_sentence,
 )
 from utils.familiarity_manager import (
     get_familiarity, set_familiarity, get_sample_weights,
@@ -3190,8 +3192,75 @@ def _render_translation_grammar(entry: dict, lang: dict, result: dict, key_prefi
         _render_grammar_box(grammar)
 
 
-def _render_translation_entry(entry: dict, languages: list, key_prefix: str):
+def _translate_source_for_languages(source: str, languages: list) -> dict:
+    translations = {}
+    for lang in languages:
+        lang_key = lang["key"]
+        label = lang.get("label", lang_key.capitalize())
+        try:
+            translations[lang_key] = translate_chinese_sentence(lang_key, label, source)
+        except Exception as e:
+            translations[lang_key] = {
+                "sentence": "",
+                "reading": "",
+                "note": f"翻譯失敗：{e}",
+            }
+    return translations
+
+
+def _count_missing_translation_languages(sentences: list, languages: list) -> int:
+    missing = 0
+    for entry in sentences:
+        translations = entry.get("translations", {})
+        for lang in languages:
+            result = translations.get(lang["key"], {})
+            if not str(result.get("sentence", "") or "").strip():
+                missing += 1
+    return missing
+
+
+def _backfill_missing_translation_languages(sentences: list, languages: list) -> list:
+    changed = False
+    for entry in sentences:
+        source = str(entry.get("source", "") or "").strip()
+        if not source:
+            continue
+        translations = entry.setdefault("translations", {})
+        for lang in languages:
+            lang_key = lang["key"]
+            result = translations.get(lang_key, {})
+            if str(result.get("sentence", "") or "").strip():
+                continue
+            label = lang.get("label", lang_key.capitalize())
+            translations[lang_key] = translate_chinese_sentence(lang_key, label, source)
+            changed = True
+    if changed:
+        save_translation_sentences(sentences)
+    return sentences
+
+
+def _render_translation_entry(entry: dict, languages: list, key_prefix: str, editable: bool = False):
     st.markdown(f"**中文：** {entry.get('source', '')}")
+    if editable:
+        with st.form(f"{key_prefix}_{entry.get('id')}_edit_form"):
+            edited_source = st.text_area(
+                "編輯中文句子",
+                value=str(entry.get("source", "") or ""),
+                height=90,
+                key=f"{key_prefix}_{entry.get('id')}_edit_source",
+            )
+            submitted = st.form_submit_button("儲存並重新翻譯", use_container_width=True)
+        if submitted:
+            edited_source = edited_source.strip()
+            if not edited_source:
+                st.warning("中文句子不能是空白。")
+            else:
+                with st.spinner("AI 正在依照新句子重新翻譯..."):
+                    translations = _translate_source_for_languages(edited_source, languages)
+                update_translation_sentence(str(entry.get("id", "")), edited_source, translations)
+                st.success("已更新中文句子和翻譯。")
+                st.rerun()
+
     translations = entry.get("translations", {})
     for lang in languages:
         lang_key = lang["key"]
@@ -3219,6 +3288,18 @@ def translation_practice_page():
     st.title("中文句子翻譯練習")
     st.caption("在這裡建立共用中文句子庫；每一句會翻成目前所有學習語言，並可在新增列表或複習時播放語音。")
 
+    missing_count = _count_missing_translation_languages(sentences, languages)
+    if missing_count:
+        st.warning(f"偵測到 {missing_count} 個缺少的新語言翻譯。")
+        if st.button("補齊過去句子的新語言翻譯", use_container_width=True, key="translation_backfill_missing"):
+            try:
+                with st.spinner("AI 正在補齊過去句子的翻譯..."):
+                    sentences = _backfill_missing_translation_languages(sentences, languages)
+                st.success("已補齊缺少的語言翻譯。")
+                st.rerun()
+            except Exception as e:
+                st.error(f"補齊翻譯失敗：{e}")
+
     tab_add, tab_review = st.tabs(["新增句子", "複習句子"])
 
     with tab_add:
@@ -3239,19 +3320,8 @@ def translation_practice_page():
             elif not languages:
                 st.warning("目前還沒有學習語言，請先新增語言。")
             else:
-                translations = {}
                 with st.spinner("AI 正在翻譯成目前所有學習語言..."):
-                    for lang in languages:
-                        lang_key = lang["key"]
-                        label = lang.get("label", lang_key.capitalize())
-                        try:
-                            translations[lang_key] = translate_chinese_sentence(lang_key, label, source)
-                        except Exception as e:
-                            translations[lang_key] = {
-                                "sentence": "",
-                                "reading": "",
-                                "note": f"翻譯失敗：{e}",
-                            }
+                    translations = _translate_source_for_languages(source, languages)
                 sentences = add_translation_sentence(source, translations)
                 st.session_state.translation_input = ""
                 st.success("已加入句子列表。")
@@ -3263,7 +3333,7 @@ def translation_practice_page():
         else:
             for idx, entry in enumerate(reversed(sentences), start=1):
                 with st.expander(f"{idx}. {entry.get('source', '')}", expanded=idx == 1):
-                    _render_translation_entry(entry, languages, "add_list")
+                    _render_translation_entry(entry, languages, "add_list", editable=True)
 
     with tab_review:
         if not sentences:
