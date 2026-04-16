@@ -189,3 +189,39 @@ Rules:
         "reading": str(data.get("reading", "") or "").strip(),
         "note": str(data.get("note", "") or "").strip(),
     }
+
+
+def explain_translated_sentence_grammar(
+    language: str,
+    language_label: str,
+    source_chinese: str,
+    translated_sentence: str,
+) -> str:
+    client = _require_openai_client()
+
+    prompt = f"""
+Explain the grammar of this {language_label} sentence for a Traditional Chinese-speaking learner.
+
+Target language key: {language}
+Chinese source sentence: {source_chinese}
+Target sentence: {translated_sentence}
+
+Rules:
+1. Answer in Traditional Chinese using Taiwan wording.
+2. Explain the sentence structure clearly but concisely.
+3. Mention why important verbs or adjectives appear in their current form.
+4. Mention why important conjunctions, prepositions, particles, articles, or case markers are used.
+5. Point out any word order or expression that differs from Chinese.
+6. Do not rewrite the whole translation unless necessary.
+7. Keep the explanation under 180 Chinese characters if possible.
+"""
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a precise grammar explainer for language learners."},
+            {"role": "user", "content": prompt},
+        ],
+    )
+
+    return (response.choices[0].message.content or "").strip()

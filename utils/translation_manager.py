@@ -83,6 +83,19 @@ def add_translation_sentence(source: str, translations: dict) -> list:
     return sentences
 
 
+def update_translation_grammar(sentence_id: str, language: str, grammar: str) -> list:
+    sentences = load_translation_sentences()
+    for entry in sentences:
+        if entry["id"] != sentence_id:
+            continue
+        translations = entry.setdefault("translations", {})
+        lang_data = translations.setdefault(language, {})
+        lang_data["grammar"] = str(grammar or "").strip()
+        save_translation_sentences(sentences)
+        return sentences
+    return sentences
+
+
 def sync_translation_sentences_from_github() -> bool:
     ensure_data_folder()
     gh_data, _ = _github_read(GH_TRANSLATION_SENTENCES_PATH)

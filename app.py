@@ -40,11 +40,12 @@ from utils.progress_manager import (
 )
 from utils.app_logger import log_error
 from utils.language_manager import load_languages, add_language, get_language_config
-from utils.ai_tools import translate_chinese_sentence
+from utils.ai_tools import explain_translated_sentence_grammar, translate_chinese_sentence
 from utils.translation_manager import (
     add_translation_sentence,
     load_translation_sentences,
     sync_translation_sentences_from_github,
+    update_translation_grammar,
 )
 from utils.familiarity_manager import (
     get_familiarity, set_familiarity, get_sample_weights,
@@ -3161,6 +3162,34 @@ def _render_translation_audio(language: str, sentence: str, key: str):
         components.html(audio_player_pausable(audio_bytes), height=70)
 
 
+def _render_translation_grammar(entry: dict, lang: dict, result: dict, key_prefix: str):
+    lang_key = lang["key"]
+    sentence = str(result.get("sentence", "") or "").strip()
+    if not sentence:
+        return
+
+    grammar = str(result.get("grammar", "") or "").strip()
+    button_key = f"{key_prefix}_{entry.get('id')}_{lang_key}_grammar"
+    if st.button("文法解釋", use_container_width=True, key=button_key):
+        if not grammar:
+            try:
+                with st.spinner("AI 正在分析文法..."):
+                    grammar = explain_translated_sentence_grammar(
+                        lang_key,
+                        lang.get("label", lang_key.capitalize()),
+                        str(entry.get("source", "") or ""),
+                        sentence,
+                    )
+                update_translation_grammar(str(entry.get("id", "")), lang_key, grammar)
+                result["grammar"] = grammar
+            except Exception as e:
+                st.error(f"文法解釋產生失敗：{e}")
+                return
+
+    if grammar:
+        _render_grammar_box(grammar)
+
+
 def _render_translation_entry(entry: dict, languages: list, key_prefix: str):
     st.markdown(f"**中文：** {entry.get('source', '')}")
     translations = entry.get("translations", {})
@@ -3180,6 +3209,7 @@ def _render_translation_entry(entry: dict, languages: list, key_prefix: str):
         if note:
             st.caption(note)
         _render_translation_audio(lang_key, sentence, f"{key_prefix}_{entry.get('id')}_{lang_key}")
+        _render_translation_grammar(entry, lang, result, key_prefix)
 
 
 def translation_practice_page():
