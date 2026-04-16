@@ -166,5 +166,32 @@
       }
     },
     "created_at": 1776358216.553487
+  },
+  {
+    "id": "703c669ff5c8454ca25e1ca9685c2388",
+    "source": "這是電風扇",
+    "translations": {
+      "japanese": {
+        "sentence": "これは扇風機です。",
+        "reading": "これはせんぷうきです。",
+        "note": "扇風機是電風扇的常用表達方式。"
+      },
+      "spanish": {
+        "sentence": "Esto es un ventilador.",
+        "reading": "",
+        "note": "電風扇在西班牙語中可翻譯為ventilador。"
+      },
+      "korean": {
+        "sentence": "이건 선풍기예요.",
+        "reading": "igeon seonpunghieyo.",
+        "note": "句子簡單明瞭。"
+      },
+      "__english__": {
+        "sentence": "This is a fan.",
+        "reading": "",
+        "note": "常用的電器之一"
+      }
+    },
+    "created_at": 1776358340.8186178
   }
 ]
