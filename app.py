@@ -3358,7 +3358,7 @@ def translation_practice_page():
         if not sentences:
             st.info("目前還沒有句子。先在上方輸入一句中文吧。")
         else:
-            for idx, entry in enumerate(sentences, start=1):
+            for idx, entry in reversed(list(enumerate(sentences, start=1))):
                 with st.expander(f"{idx}. {entry.get('source', '')}", expanded=False):
                     _render_translation_entry(entry, languages, "add_list", editable=True)
 
