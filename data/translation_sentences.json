@@ -139,5 +139,32 @@
       }
     },
     "created_at": 1776358082.0895472
+  },
+  {
+    "id": "734bf3a564834ab8adddc61b9faabfa7",
+    "source": "這是被子",
+    "translations": {
+      "japanese": {
+        "sentence": "これは布団です",
+        "reading": "これ は ふとん です",
+        "note": "根據上下文，這裡是指一種床上用品"
+      },
+      "spanish": {
+        "sentence": "Esto es un edredón.",
+        "reading": "",
+        "note": "被子可指示各種類型的床上用品。"
+      },
+      "korean": {
+        "sentence": "이것은 이불입니다.",
+        "reading": "igeoseun ibulimnida.",
+        "note": ""
+      },
+      "__english__": {
+        "sentence": "This is a quilt.",
+        "reading": "",
+        "note": "被子通常指的是床上使用的被褥。"
+      }
+    },
+    "created_at": 1776358216.553487
   }
 ]
