@@ -129,7 +129,8 @@
       "korean": {
         "sentence": "나는 책 읽는 것을 좋아해요",
         "reading": "naneun chaek ilneun geoseul joahaeyo",
-        "note": "自然的翻譯"
+        "note": "自然的翻譯",
+        "grammar": "句子「나는 책 읽는 것을 좋아해요」的結構為主語-賓語-動詞。主語「나는」是「我」，後面接「책」(書)和「읽는 것」(讀的事)作為賓語。「것」為名詞化詞尾，將動作轉為名詞。動詞「좋아해요」是「喜歡」的敬語形式，顯示尊重。與中文不同，韓語句子為SOV（主賓動）結構，表達方式較為靈活。"
       },
       "__english__": {
         "sentence": "I enjoy reading books.",
