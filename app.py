@@ -3192,6 +3192,20 @@ def _render_translation_grammar(entry: dict, lang: dict, result: dict, key_prefi
         _render_grammar_box(grammar)
 
 
+ENGLISH_TRANSLATION_KEY = "__english__"
+
+
+def _translate_english_sentence(source: str) -> dict:
+    try:
+        return translate_chinese_sentence("english", "English", source)
+    except Exception as e:
+        return {
+            "sentence": "",
+            "reading": "",
+            "note": f"英文翻譯失敗：{e}",
+        }
+
+
 def _translate_source_for_languages(source: str, languages: list) -> dict:
     translations = {}
     for lang in languages:
@@ -3205,6 +3219,7 @@ def _translate_source_for_languages(source: str, languages: list) -> dict:
                 "reading": "",
                 "note": f"翻譯失敗：{e}",
             }
+    translations[ENGLISH_TRANSLATION_KEY] = _translate_english_sentence(source)
     return translations
 
 
@@ -3216,6 +3231,9 @@ def _count_missing_translation_languages(sentences: list, languages: list) -> in
             result = translations.get(lang["key"], {})
             if not str(result.get("sentence", "") or "").strip():
                 missing += 1
+        english_result = translations.get(ENGLISH_TRANSLATION_KEY, {})
+        if not str(english_result.get("sentence", "") or "").strip():
+            missing += 1
     return missing
 
 
@@ -3233,6 +3251,10 @@ def _backfill_missing_translation_languages(sentences: list, languages: list) ->
                 continue
             label = lang.get("label", lang_key.capitalize())
             translations[lang_key] = translate_chinese_sentence(lang_key, label, source)
+            changed = True
+        english_result = translations.get(ENGLISH_TRANSLATION_KEY, {})
+        if not str(english_result.get("sentence", "") or "").strip():
+            translations[ENGLISH_TRANSLATION_KEY] = _translate_english_sentence(source)
             changed = True
     if changed:
         save_translation_sentences(sentences)
@@ -3280,6 +3302,11 @@ def _render_translation_entry(entry: dict, languages: list, key_prefix: str, edi
         _render_translation_audio(lang_key, sentence, f"{key_prefix}_{entry.get('id')}_{lang_key}")
         _render_translation_grammar(entry, lang, result, key_prefix)
 
+    english_result = translations.get(ENGLISH_TRANSLATION_KEY, {})
+    english_sentence = str(english_result.get("sentence", "") or "").strip()
+    if english_sentence:
+        st.markdown(f"**English：** {english_sentence}")
+
 
 def translation_practice_page():
     languages = load_languages()
@@ -3290,8 +3317,8 @@ def translation_practice_page():
 
     missing_count = _count_missing_translation_languages(sentences, languages)
     if missing_count:
-        st.warning(f"偵測到 {missing_count} 個缺少的新語言翻譯。")
-        if st.button("補齊過去句子的新語言翻譯", use_container_width=True, key="translation_backfill_missing"):
+        st.warning(f"偵測到 {missing_count} 個缺少的翻譯。")
+        if st.button("補齊過去句子的缺少翻譯", use_container_width=True, key="translation_backfill_missing"):
             try:
                 with st.spinner("AI 正在補齊過去句子的翻譯..."):
                     sentences = _backfill_missing_translation_languages(sentences, languages)
