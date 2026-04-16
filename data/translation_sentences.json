@@ -220,5 +220,32 @@
       }
     },
     "created_at": 1776358398.164844
+  },
+  {
+    "id": "773501afb7d441a38bcf5c7f198e25df",
+    "source": "這是窗戶",
+    "translations": {
+      "japanese": {
+        "sentence": "これは窓です。",
+        "reading": "これはまどです。",
+        "note": "直接的な表現を使った。"
+      },
+      "spanish": {
+        "sentence": "Esta es una ventana.",
+        "reading": "",
+        "note": ""
+      },
+      "korean": {
+        "sentence": "이건 창문이에요",
+        "reading": "igeon changmun-ieyo",
+        "note": "常用的表達方式，適合日常對話"
+      },
+      "__english__": {
+        "sentence": "This is a window.",
+        "reading": "",
+        "note": "句子簡單明瞭。"
+      }
+    },
+    "created_at": 1776358448.9744394
   }
 ]
