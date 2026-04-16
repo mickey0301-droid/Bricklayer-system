@@ -23,5 +23,27 @@
       }
     },
     "created_at": 1776355180.701794
+  },
+  {
+    "id": "0068cd122f8b4a529c32cf7c1056b6f1",
+    "source": "我在看電影",
+    "translations": {
+      "japanese": {
+        "sentence": "映画を見ています",
+        "reading": "えいがをみています",
+        "note": "這句話在日文中常用於表達正在觀看電影的狀態。"
+      },
+      "spanish": {
+        "sentence": "Estoy viendo una película",
+        "reading": "",
+        "note": "自然的翻譯表達了正在進行的動作"
+      },
+      "korean": {
+        "sentence": "영화를 보고 있어요.",
+        "reading": "yeonghwareul bogo isseoyo.",
+        "note": "自然的翻譯"
+      }
+    },
+    "created_at": 1776355649.3887937
   }
 ]
