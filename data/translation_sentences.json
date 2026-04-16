@@ -1,0 +1,24 @@
+[
+  {
+    "id": "dec1bffe510c4a80b6706a776e2e04f2",
+    "source": "這是電腦",
+    "translations": {
+      "japanese": {
+        "sentence": "これはコンピュータです",
+        "reading": "これはこんぴゅーたです",
+        "note": "直訳ではなく自然な表現にした"
+      },
+      "spanish": {
+        "sentence": "Esto es una computadora.",
+        "reading": "",
+        "note": ""
+      },
+      "korean": {
+        "sentence": "이것은 컴퓨터입니다.",
+        "reading": "igeos-eun keompyuteo-ibnida.",
+        "note": "簡單的句子結構"
+      }
+    },
+    "created_at": 1776355180.701794
+  }
+]
