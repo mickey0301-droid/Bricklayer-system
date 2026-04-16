@@ -46,5 +46,32 @@
       }
     },
     "created_at": 1776355649.3887937
+  },
+  {
+    "id": "ee4cb259967d41ae8c36dc7bc1f532b6",
+    "source": "沙丘是一部好電影",
+    "translations": {
+      "japanese": {
+        "sentence": "『デューン/砂の惑星』は良い映画です。",
+        "reading": "『デューン/すなのわくせい』はよいえいがです。",
+        "note": ""
+      },
+      "spanish": {
+        "sentence": "Dune es una buena película.",
+        "reading": "",
+        "note": "「沙丘」是電影的名稱，翻譯時要注意名稱的使用。"
+      },
+      "korean": {
+        "sentence": "샌드박스는 좋은 영화입니다.",
+        "reading": "saendeubakseu-neun joheun yeonghwa-imnida.",
+        "note": "電影的評價"
+      },
+      "__english__": {
+        "sentence": "Dune is a great movie.",
+        "reading": "",
+        "note": ""
+      }
+    },
+    "created_at": 1776356090.4269195
   }
 ]
