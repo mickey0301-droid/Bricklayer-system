@@ -3359,7 +3359,7 @@ def translation_practice_page():
             st.info("目前還沒有句子。先在上方輸入一句中文吧。")
         else:
             for idx, entry in enumerate(sentences, start=1):
-                with st.expander(f"{idx}. {entry.get('source', '')}", expanded=idx == 1):
+                with st.expander(f"{idx}. {entry.get('source', '')}", expanded=False):
                     _render_translation_entry(entry, languages, "add_list", editable=True)
 
     with tab_review:
