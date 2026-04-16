@@ -247,5 +247,32 @@
       }
     },
     "created_at": 1776358448.9744394
+  },
+  {
+    "id": "f31d5b7904d948c6995b1474c3d21171",
+    "source": "我要去刷牙",
+    "translations": {
+      "japanese": {
+        "sentence": "歯を磨きに行きます",
+        "reading": "はをみがきにいきます",
+        "note": "「刷牙」在日語中通常用「歯を磨く」表達。"
+      },
+      "spanish": {
+        "sentence": "Voy a cepillarme los dientes.",
+        "reading": "",
+        "note": "常用語句，表示要進行的動作。"
+      },
+      "korean": {
+        "sentence": "이제 이를 닦으러 가요",
+        "reading": "ij-e il-eul dag-eureo gayo",
+        "note": ""
+      },
+      "__english__": {
+        "sentence": "I am going to brush my teeth",
+        "reading": "",
+        "note": "表達個人即將進行的動作"
+      }
+    },
+    "created_at": 1776380909.433617
   }
 ]
