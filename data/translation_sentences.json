@@ -437,5 +437,32 @@
       }
     },
     "created_at": 1776387214.6304882
+  },
+  {
+    "id": "8def4fa8dc1447ee9d54d40ce8dbf6bd",
+    "source": "這是燈",
+    "translations": {
+      "japanese": {
+        "sentence": "これが灯です。",
+        "reading": "これがとうです。",
+        "note": ""
+      },
+      "spanish": {
+        "sentence": "Esto es una lámpara.",
+        "reading": "",
+        "note": ""
+      },
+      "korean": {
+        "sentence": "이것은 등불입니다.",
+        "reading": "igeoseun deungbulimnida.",
+        "note": "簡短的句子，表達物品的存在。"
+      },
+      "__english__": {
+        "sentence": "This is a lamp.",
+        "reading": "",
+        "note": "燈在這裡指的是一種照明設備。"
+      }
+    },
+    "created_at": 1776387255.8307438
   }
 ]
