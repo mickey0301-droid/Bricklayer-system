@@ -600,5 +600,32 @@
       }
     },
     "created_at": 1776389193.9002728
+  },
+  {
+    "id": "e83337cb8f054e81a9fd34ab6f83cc1a",
+    "source": "我會準時到",
+    "translations": {
+      "japanese": {
+        "sentence": "時間通りに到着します",
+        "reading": "じかんどおりにとうちゃくします",
+        "note": "表達準時到達的意思"
+      },
+      "spanish": {
+        "sentence": "Llegaré a tiempo.",
+        "reading": "",
+        "note": ""
+      },
+      "korean": {
+        "sentence": "제때 도착할게요",
+        "reading": "je-ddae do-chak-hal-ge-yo",
+        "note": "「我會準時到」的意思是準時到達，表達準確性。"
+      },
+      "__english__": {
+        "sentence": "I will arrive on time.",
+        "reading": "",
+        "note": "表達準時的意思"
+      }
+    },
+    "created_at": 1776389311.763415
   }
 ]
