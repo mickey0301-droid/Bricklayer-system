@@ -301,5 +301,32 @@
       }
     },
     "created_at": 1776386132.983315
+  },
+  {
+    "id": "d3872ecaa5f04c5db3b997540b666dab",
+    "source": "這是手機",
+    "translations": {
+      "japanese": {
+        "sentence": "これは携帯電話です",
+        "reading": "これはけいたいでんわです",
+        "note": "「手機」は「携帯電話」と訳される。"
+      },
+      "spanish": {
+        "sentence": "Esto es un teléfono móvil.",
+        "reading": "",
+        "note": "手機指的是行動電話或智慧型手機。"
+      },
+      "korean": {
+        "sentence": "이건 휴대폰이에요",
+        "reading": "igeon hyudaepon-ieyo",
+        "note": "簡單的手機表達方式"
+      },
+      "__english__": {
+        "sentence": "This is a mobile phone.",
+        "reading": "",
+        "note": "此句應用於介紹手機的情況。"
+      }
+    },
+    "created_at": 1776386141.1950996
   }
 ]
