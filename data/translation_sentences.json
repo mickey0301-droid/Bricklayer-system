@@ -681,5 +681,32 @@
       }
     },
     "created_at": 1776389418.198288
+  },
+  {
+    "id": "627b128be67049a38653b0bf7a486338",
+    "source": "我搭電扶梯",
+    "translations": {
+      "japanese": {
+        "sentence": "エスカレーターに乗る",
+        "reading": "えすかれーたーにのる",
+        "note": "搭乘的動作用「乗る」表達"
+      },
+      "spanish": {
+        "sentence": "Estoy usando la escalera mecánica.",
+        "reading": "",
+        "note": "搭的意思是使用或者乘坐。"
+      },
+      "korean": {
+        "sentence": "나는 에스컬레이터를 타고 있어요.",
+        "reading": "naneun eseukeolleiteoreul tago isseoyo.",
+        "note": "「搭」可翻譯為「타고」"
+      },
+      "__english__": {
+        "sentence": "I take the escalator.",
+        "reading": "",
+        "note": "這句話的動詞用「搭」很自然。"
+      }
+    },
+    "created_at": 1776389564.7202992
   }
 ]
