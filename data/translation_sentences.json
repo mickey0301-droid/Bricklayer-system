@@ -735,5 +735,32 @@
       }
     },
     "created_at": 1776389729.3681035
+  },
+  {
+    "id": "81fb73fca0eb4aab892949c7b7ba0235",
+    "source": "我點了一杯咖啡",
+    "translations": {
+      "japanese": {
+        "sentence": "コーヒーを一杯頼みました。",
+        "reading": "こーひーをいっぱいたのみました。",
+        "note": "「點了」在日文中常用「頼む」來表達。"
+      },
+      "spanish": {
+        "sentence": "He pedido una taza de café",
+        "reading": "",
+        "note": "使用「杯」來表示量詞"
+      },
+      "korean": {
+        "sentence": "나는 커피 한 잔을 주문했어",
+        "reading": "naneun keopi han jjan-eul jumunhaess-eo",
+        "note": "「點」通常用於點餐或訂購"
+      },
+      "__english__": {
+        "sentence": "I ordered a cup of coffee.",
+        "reading": "",
+        "note": "「點」在這裡指的是「訂購」或「下單」。"
+      }
+    },
+    "created_at": 1776390045.7996902
   }
 ]
