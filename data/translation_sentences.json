@@ -328,5 +328,32 @@
       }
     },
     "created_at": 1776386141.1950996
+  },
+  {
+    "id": "0be03ebb98e846e3bcfef5a509f3d555",
+    "source": "這是耳機",
+    "translations": {
+      "japanese": {
+        "sentence": "これはヘッドフォンです",
+        "reading": "これはへっどふぉんです",
+        "note": "耳機可用ヘッドフォン或イヤフォン表示"
+      },
+      "spanish": {
+        "sentence": "Estos son los auriculares.",
+        "reading": "",
+        "note": "這句話指的是耳機的種類。"
+      },
+      "korean": {
+        "sentence": "이것은 헤드폰입니다.",
+        "reading": "igeos-eun hedeupon-imnida.",
+        "note": "簡單的描述物品"
+      },
+      "__english__": {
+        "sentence": "This is a headset.",
+        "reading": "",
+        "note": "耳機通常指耳罩式的聽音設備。"
+      }
+    },
+    "created_at": 1776386869.6449802
   }
 ]
