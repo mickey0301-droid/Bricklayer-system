@@ -491,5 +491,32 @@
       }
     },
     "created_at": 1776388828.1412513
+  },
+  {
+    "id": "a92f0c6dc6a04446804b49eb6cced5b5",
+    "source": "我在冥想",
+    "translations": {
+      "japanese": {
+        "sentence": "瞑想しています",
+        "reading": "めいそうしています",
+        "note": "句子中使用了日文中的「瞑想」一詞。"
+      },
+      "spanish": {
+        "sentence": "Estoy meditando.",
+        "reading": "",
+        "note": "反映冥想的狀態"
+      },
+      "korean": {
+        "sentence": "나는 명상하고 있어",
+        "reading": "naneun myeongsanghago isseo",
+        "note": ""
+      },
+      "__english__": {
+        "sentence": "I am meditating.",
+        "reading": "",
+        "note": ""
+      }
+    },
+    "created_at": 1776388893.1529152
   }
 ]
