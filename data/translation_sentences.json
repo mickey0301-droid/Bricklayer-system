@@ -395,7 +395,8 @@
       "spanish": {
         "sentence": "Esto es papel higiénico/pañuelos desechables",
         "reading": "",
-        "note": "衛生紙可指兩種不同的紙品。"
+        "note": "衛生紙可指兩種不同的紙品。",
+        "grammar": "這句西班牙文「Esto es papel higiénico/pañuelos desechables」的結構為「主詞 + 動詞 + 補語」。動詞「es」是「ser」的第三人稱單數形式，表示存在性。使用「esto」強調當前所指物品，與中文不同，西文名詞需搭配定冠詞「el」或不定冠詞「un」，在這裡省略了。"
       },
       "korean": {
         "sentence": "이것은 화장지/티슈입니다.",
