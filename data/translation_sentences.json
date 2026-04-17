@@ -654,5 +654,32 @@
       }
     },
     "created_at": 1776389357.943523
+  },
+  {
+    "id": "0b0dda323f13490b9e9e6a840ba4240f",
+    "source": "快到了",
+    "translations": {
+      "japanese": {
+        "sentence": "もうすぐ着きます",
+        "reading": "もうすぐつきます",
+        "note": ""
+      },
+      "spanish": {
+        "sentence": "Ya casi llegamos.",
+        "reading": "",
+        "note": "表示即將到達的狀態。"
+      },
+      "korean": {
+        "sentence": "곧 도착해요",
+        "reading": "god dochakhaeyo",
+        "note": "日常會話中常用的表達方式"
+      },
+      "__english__": {
+        "sentence": "It's almost here.",
+        "reading": "",
+        "note": "這個表達通常用於形容某事即將到來。"
+      }
+    },
+    "created_at": 1776389418.198288
   }
 ]
