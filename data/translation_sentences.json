@@ -274,5 +274,32 @@
       }
     },
     "created_at": 1776380909.433617
+  },
+  {
+    "id": "5a33e0de6ca846588fd2da87e6886a8d",
+    "source": "這是桌子",
+    "translations": {
+      "japanese": {
+        "sentence": "これはテーブルです",
+        "reading": "これはてーブルです",
+        "note": "自然な表現を使用"
+      },
+      "spanish": {
+        "sentence": "Esta es una mesa.",
+        "reading": "",
+        "note": "句子使用了簡單的描述性語言。"
+      },
+      "korean": {
+        "sentence": "이것은 탁자입니다",
+        "reading": "igeos-eun takja-imnida",
+        "note": ""
+      },
+      "__english__": {
+        "sentence": "This is a table.",
+        "reading": "",
+        "note": "句子結構簡單明確。"
+      }
+    },
+    "created_at": 1776386132.983315
   }
 ]
