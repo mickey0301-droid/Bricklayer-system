@@ -385,27 +385,27 @@
   },
   {
     "id": "2d318803cfd24b9cb28a3416343e96ea",
-    "source": "這是衛生紙",
+    "source": "這是衛生紙/面紙",
     "translations": {
       "japanese": {
-        "sentence": "これはトイレットペーパーです",
-        "reading": "これはトイレットペーパーです",
-        "note": "衛生紙在日語中通常稱為トイレットペーパー"
+        "sentence": "これはティッシュです",
+        "reading": "これはてぃっしゅです",
+        "note": "ティッシュ是外來語，衛生紙常用於日常生活中"
       },
       "spanish": {
-        "sentence": "Esto es papel higiénico.",
+        "sentence": "Esto es papel higiénico/pañuelos desechables",
         "reading": "",
-        "note": "常用於廁所的衛生用品。"
+        "note": "衛生紙可指兩種不同的紙品。"
       },
       "korean": {
-        "sentence": "이건 화장지입니다",
-        "reading": "igeon hwajangji imnida",
-        "note": "常用的生活用品名稱"
+        "sentence": "이것은 화장지/티슈입니다.",
+        "reading": "igeos-eun hwajangji/tisyu-ibnida.",
+        "note": "「面紙」可以指各種紙巾。"
       },
       "__english__": {
-        "sentence": "This is toilet paper.",
+        "sentence": "This is toilet paper/face tissue.",
         "reading": "",
-        "note": "衛生紙是常用的日用品。"
+        "note": ""
       }
     },
     "created_at": 1776386944.3246279
