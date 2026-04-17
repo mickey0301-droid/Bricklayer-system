@@ -545,5 +545,32 @@
       }
     },
     "created_at": 1776388929.7457461
+  },
+  {
+    "id": "ec6e3e64954b45de9c102cc1f5029bcf",
+    "source": "我去上班",
+    "translations": {
+      "japanese": {
+        "sentence": "仕事に行きます",
+        "reading": "しごとにいきます",
+        "note": "「上班」在日文里通常翻譯為「仕事に行く」"
+      },
+      "spanish": {
+        "sentence": "Voy a trabajar",
+        "reading": "",
+        "note": ""
+      },
+      "korean": {
+        "sentence": "나는 출근해요",
+        "reading": "naneun chulgeunhaeyo",
+        "note": "上班在韓文中通常說成出근"
+      },
+      "__english__": {
+        "sentence": "I am going to work",
+        "reading": "",
+        "note": "‘上班’表示去工作的意思。"
+      }
+    },
+    "created_at": 1776388991.2057843
   }
 ]
