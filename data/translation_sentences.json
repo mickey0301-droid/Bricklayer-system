@@ -518,5 +518,32 @@
       }
     },
     "created_at": 1776388893.1529152
+  },
+  {
+    "id": "de1260b4523c4e16962aae89875d1b9a",
+    "source": "我在騎機車",
+    "translations": {
+      "japanese": {
+        "sentence": "バイクに乗っています。",
+        "reading": "ばいくにのっています。",
+        "note": "「騎機車」は日本語では「バイク」と表現する。"
+      },
+      "spanish": {
+        "sentence": "Estoy montando una moto",
+        "reading": "",
+        "note": "「騎機車」可指小型摩托車或重型摩托車"
+      },
+      "korean": {
+        "sentence": "나는 오토바이를 타고 있어요.",
+        "reading": "naneun otobairi tago isseoyo.",
+        "note": "자연스러운 표현을 사용했습니다."
+      },
+      "__english__": {
+        "sentence": "I am riding a motorcycle.",
+        "reading": "",
+        "note": "機車在台灣通常指摩托車。"
+      }
+    },
+    "created_at": 1776388929.7457461
   }
 ]
