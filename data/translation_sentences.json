@@ -708,5 +708,32 @@
       }
     },
     "created_at": 1776389564.7202992
+  },
+  {
+    "id": "2afa7c424eb942d78653d18bc78774ab",
+    "source": "搭乘交通工具",
+    "translations": {
+      "japanese": {
+        "sentence": "交通機関を利用する",
+        "reading": "こうつうきかんをりようする",
+        "note": "搭乘的意思是利用交通工具"
+      },
+      "spanish": {
+        "sentence": "usar el transporte público",
+        "reading": "",
+        "note": "交通工具通常指公共交通設施。"
+      },
+      "korean": {
+        "sentence": "교통수단을 이용하다",
+        "reading": "gyotongsudaneul iyonghada",
+        "note": ""
+      },
+      "__english__": {
+        "sentence": "Taking public transportation",
+        "reading": "",
+        "note": "常用於指搭乘公共交通工具"
+      }
+    },
+    "created_at": 1776389729.3681035
   }
 ]
