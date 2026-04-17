@@ -572,5 +572,32 @@
       }
     },
     "created_at": 1776388991.2057843
+  },
+  {
+    "id": "5bc32d08cbb04429afea87f99a78edfb",
+    "source": "我注意到這件事",
+    "translations": {
+      "japanese": {
+        "sentence": "この件について気付きました。",
+        "reading": "このけんについてきづきました。",
+        "note": "「注意到」在日文中通常用「気付きました」來表達。"
+      },
+      "spanish": {
+        "sentence": "He notado esto.",
+        "reading": "",
+        "note": "這句話表達了注意或觀察到某事的意思。"
+      },
+      "korean": {
+        "sentence": "이 사실을 알게 되었습니다.",
+        "reading": "i sasireul alge doe-eossseumnida.",
+        "note": "表示注意到某件事情的禮貌表達"
+      },
+      "__english__": {
+        "sentence": "I've noticed this matter.",
+        "reading": "",
+        "note": "這裡的「注意到」可理解為「注意」或「發現」。"
+      }
+    },
+    "created_at": 1776389193.9002728
   }
 ]
