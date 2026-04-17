@@ -464,5 +464,32 @@
       }
     },
     "created_at": 1776387255.8307438
+  },
+  {
+    "id": "1496239da5f54ecf988bd338c50312d8",
+    "source": "這是貼紙",
+    "translations": {
+      "japanese": {
+        "sentence": "これはステッカーです。",
+        "reading": "これはすてっかーです。",
+        "note": "「貼紙」在日語中通常說作「ステッカー」。"
+      },
+      "spanish": {
+        "sentence": "Esto es una etiqueta",
+        "reading": "",
+        "note": "貼紙通常指的是貼在其他表面上的標籤或裝飾物"
+      },
+      "korean": {
+        "sentence": "이것은 스티커입니다.",
+        "reading": "igeos-eun seutik-eo imnida.",
+        "note": "貼紙在韓語中通常是用스티커表示。"
+      },
+      "__english__": {
+        "sentence": "This is a sticker.",
+        "reading": "",
+        "note": ""
+      }
+    },
+    "created_at": 1776388828.1412513
   }
 ]
