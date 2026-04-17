@@ -627,5 +627,32 @@
       }
     },
     "created_at": 1776389311.763415
+  },
+  {
+    "id": "c68ddf1636854cff9649fc67313da456",
+    "source": "我搭捷運",
+    "translations": {
+      "japanese": {
+        "sentence": "地下鉄に乗る",
+        "reading": "ちかてつにのる",
+        "note": "捷運是台灣的地鐵名詞"
+      },
+      "spanish": {
+        "sentence": "Voy en el metro.",
+        "reading": "",
+        "note": "捷運是指城市的地下鐵或輕軌系統。"
+      },
+      "korean": {
+        "sentence": "지하철을 타요",
+        "reading": "jihacheoreul tayo",
+        "note": "地鐵在台灣通常稱為捷運"
+      },
+      "__english__": {
+        "sentence": "I'm taking the MRT.",
+        "reading": "",
+        "note": "捷運是台灣的公共交通系統之一。"
+      }
+    },
+    "created_at": 1776389357.943523
   }
 ]
