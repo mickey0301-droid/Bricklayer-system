@@ -684,27 +684,27 @@
   },
   {
     "id": "627b128be67049a38653b0bf7a486338",
-    "source": "搭乘交通工具",
+    "source": "我搭電扶梯",
     "translations": {
       "japanese": {
-        "sentence": "交通機関を利用する",
-        "reading": "こうつうきかんをりようする",
-        "note": "搭乘有時也可使用利用，但在日常會話中更常用利用"
+        "sentence": "エスカレーターに乗る",
+        "reading": "えすかれーたーにのる",
+        "note": "自然な表現として行動を示す"
       },
       "spanish": {
-        "sentence": "utilizar medios de transporte",
+        "sentence": "Voy en la escalera mecánica.",
         "reading": "",
-        "note": "指的是使用各種交通方式"
+        "note": "搭乘電扶梯的表達方式"
       },
       "korean": {
-        "sentence": "교통수단 이용하기",
-        "reading": "gyotongsudan iyonghagi",
+        "sentence": "저는 에스컬레이터를 타고 있어요.",
+        "reading": "jeoneun eseukolleiteoreul tago isseoyo.",
         "note": ""
       },
       "__english__": {
-        "sentence": "Taking transportation",
+        "sentence": "I take the escalator.",
         "reading": "",
-        "note": "指的是使用各種交通工具的行為"
+        "note": "搭乘電扶梯的表達方式"
       }
     },
     "created_at": 1776389564.7202992
