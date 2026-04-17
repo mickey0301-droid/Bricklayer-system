@@ -382,5 +382,32 @@
       }
     },
     "created_at": 1776386910.2172172
+  },
+  {
+    "id": "2d318803cfd24b9cb28a3416343e96ea",
+    "source": "這是衛生紙",
+    "translations": {
+      "japanese": {
+        "sentence": "これはトイレットペーパーです",
+        "reading": "これはトイレットペーパーです",
+        "note": "衛生紙在日語中通常稱為トイレットペーパー"
+      },
+      "spanish": {
+        "sentence": "Esto es papel higiénico.",
+        "reading": "",
+        "note": "常用於廁所的衛生用品。"
+      },
+      "korean": {
+        "sentence": "이건 화장지입니다",
+        "reading": "igeon hwajangji imnida",
+        "note": "常用的生活用品名稱"
+      },
+      "__english__": {
+        "sentence": "This is toilet paper.",
+        "reading": "",
+        "note": "衛生紙是常用的日用品。"
+      }
+    },
+    "created_at": 1776386944.3246279
   }
 ]
