@@ -410,5 +410,32 @@
       }
     },
     "created_at": 1776386944.3246279
+  },
+  {
+    "id": "886aebf0e23b4bb4a472ed08b4cc3f11",
+    "source": "這是鏡子",
+    "translations": {
+      "japanese": {
+        "sentence": "これは鏡です。",
+        "reading": "これはかがみです。",
+        "note": "常用「これは〜です」來表達這種句型。"
+      },
+      "spanish": {
+        "sentence": "Esto es un espejo.",
+        "reading": "",
+        "note": ""
+      },
+      "korean": {
+        "sentence": "이것은 거울입니다.",
+        "reading": "igeos-eun geoulimnida.",
+        "note": "直接的描述物品的性質。"
+      },
+      "__english__": {
+        "sentence": "This is a mirror.",
+        "reading": "",
+        "note": "句子簡單明瞭。"
+      }
+    },
+    "created_at": 1776387214.6304882
   }
 ]
