@@ -243,3 +243,47 @@ def explain_translated_sentence_grammar(
         source_text=source_chinese,
         translated_sentence=translated_sentence,
     )
+
+
+def correct_sentence_text(language: str, language_label: str, source_text: str) -> dict:
+    client = _require_openai_client()
+
+    prompt = f"""
+You are a precise sentence-correction assistant for language learners.
+
+Language key: {language}
+Language label: {language_label}
+Learner sentence: {source_text}
+
+Return JSON only:
+{{
+  "sentence": "corrected natural sentence in the same language",
+  "reading": "pronunciation guide if useful, otherwise empty string",
+  "note": "short Traditional Chinese note about what was corrected, or '原句已正確' if no changes"
+}}
+
+Rules:
+1. Keep the same language as the learner sentence.
+2. If the learner sentence is already correct and natural, keep it unchanged.
+3. Fix grammar, spelling, punctuation, and unnatural wording when needed.
+4. For Japanese, put hiragana in "reading" when sentence contains kanji.
+5. For Korean, put Revised Romanization in "reading".
+6. Use Traditional Chinese in "note".
+7. Output JSON only.
+"""
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a precise sentence correction assistant for language learners."},
+            {"role": "user", "content": prompt},
+        ],
+    )
+
+    content = response.choices[0].message.content or ""
+    data = _extract_json(content)
+    return {
+        "sentence": str(data.get("sentence", "") or "").strip(),
+        "reading": str(data.get("reading", "") or "").strip(),
+        "note": str(data.get("note", "") or "").strip(),
+    }

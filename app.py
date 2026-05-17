@@ -41,6 +41,7 @@ from utils.progress_manager import (
 from utils.app_logger import log_error
 from utils.language_manager import load_languages, add_language, get_language_config
 from utils.ai_tools import (
+    correct_sentence_text,
     explain_translated_sentence_grammar,
     explain_translated_text_grammar,
     translate_chinese_sentence,
@@ -273,6 +274,9 @@ _defaults = {
     "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": ""},
     "home_translation_source": "",
     "home_translation_target_used": "english",
+    "home_practice_input": "",
+    "home_practice_language": "english",
+    "home_practice_result": {"sentence": "", "reading": "", "note": "", "grammar": ""},
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -736,19 +740,6 @@ def home_page():
     st.markdown("# 🧱 Bricklayer")
 
     languages = load_languages()
-    # ── 語言按鈕（含國旗）──────────────────────────────────
-    st.subheader("Select a language")
-    for lang in languages:
-        flag = LANGUAGE_FLAGS.get(lang["key"], "🌐")
-        if st.button(
-            f"{flag}  {lang['label']}",
-            use_container_width=True,
-            key=f"lang_btn_{lang['key']}"
-        ):
-            reset_vocab_state()
-            reset_study_state()
-            go_language(lang["key"])
-            st.rerun()
 
     st.divider()
     st.subheader("Translation")
@@ -898,6 +889,129 @@ def home_page():
                         st.rerun()
                     except Exception as e:
                         st.error(f"翻譯失敗：{e}")
+
+    st.markdown("### Translation Practice")
+    p_left_col, p_right_col = st.columns(2)
+    practice_options = [{"key": "english", "label": "English"}]
+    seen_practice = {"english"}
+    for lang in languages:
+        key = str(lang.get("key", "")).strip()
+        if not key or key in seen_practice:
+            continue
+        practice_options.append({"key": key, "label": lang.get("label", key.capitalize())})
+        seen_practice.add(key)
+
+    practice_labels = [f"{LANGUAGE_FLAGS.get(x['key'], '🌐')} {x['label']}" for x in practice_options]
+    practice_index = 0
+    for i, x in enumerate(practice_options):
+        if x["key"] == st.session_state.get("home_practice_language", "english"):
+            practice_index = i
+            break
+
+    with p_right_col:
+        practice_label = st.selectbox(
+            "練習句子語言",
+            practice_labels,
+            index=practice_index,
+            key="home_practice_language_select",
+        )
+        practice_selected = practice_options[practice_labels.index(practice_label)]
+        st.session_state.home_practice_language = practice_selected["key"]
+
+        p_result = st.session_state.get("home_practice_result", {})
+        p_sentence = str(p_result.get("sentence", "") or "").strip()
+        p_reading = str(p_result.get("reading", "") or "").strip()
+        p_note = str(p_result.get("note", "") or "").strip()
+        p_grammar = str(p_result.get("grammar", "") or "").strip()
+
+        st.markdown("**Correct Sentence**")
+        if p_sentence:
+            st.text_area(
+                "Corrected Text",
+                value=p_sentence,
+                height=170,
+                disabled=True,
+            )
+            if p_reading:
+                st.caption(p_reading)
+            if p_note:
+                st.caption(p_note)
+            _render_translation_audio(
+                practice_selected["key"],
+                p_sentence,
+                "home_practice_play_audio",
+            )
+        else:
+            st.text_area(
+                "Corrected Text",
+                value="",
+                height=170,
+                placeholder="修正後句子會顯示在這裡",
+                disabled=True,
+            )
+
+        st.markdown("**文法說明**")
+        if p_grammar:
+            _render_grammar_box(p_grammar)
+        else:
+            st.caption("完成句子修正後會在這裡顯示文法解析。")
+
+    with p_left_col:
+        with st.form("home_practice_form"):
+            practice_input = st.text_area(
+                "輸入任意語言句子",
+                value=st.session_state.get("home_practice_input", ""),
+                height=290,
+                placeholder="例如：He go to school yesterday.",
+            )
+            practice_submitted = st.form_submit_button("修正句子", use_container_width=True)
+
+        if practice_submitted:
+            practice_input = practice_input.strip()
+            st.session_state.home_practice_input = practice_input
+            if not practice_input:
+                st.warning("請先輸入句子。")
+            else:
+                try:
+                    with st.spinner("AI 正在修正句子與分析文法..."):
+                        corrected = correct_sentence_text(
+                            practice_selected["key"],
+                            practice_selected["label"],
+                            practice_input,
+                        )
+                        sentence = str(corrected.get("sentence", "") or "").strip()
+                        grammar = ""
+                        if sentence:
+                            grammar = explain_translated_text_grammar(
+                                practice_selected["key"],
+                                practice_selected["label"],
+                                practice_input,
+                                sentence,
+                            )
+                        st.session_state.home_practice_result = {
+                            "sentence": sentence,
+                            "reading": str(corrected.get("reading", "") or "").strip(),
+                            "note": str(corrected.get("note", "") or "").strip(),
+                            "grammar": str(grammar or "").strip(),
+                        }
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"句子修正失敗：{e}")
+
+    st.divider()
+    # ── 語言按鈕（含國旗）──────────────────────────────────
+    st.subheader("Select a language")
+    for lang in languages:
+        flag = LANGUAGE_FLAGS.get(lang["key"], "🌐")
+        if st.button(
+            f"{flag}  {lang['label']}",
+            use_container_width=True,
+            key=f"lang_btn_{lang['key']}"
+        ):
+            reset_vocab_state()
+            reset_study_state()
+            go_language(lang["key"])
+            st.rerun()
 
     # ── 學習統計 ────────────────────────────────────────────
     if False and languages:
