@@ -778,7 +778,45 @@ def home_page():
         )
         selected_idx = target_labels.index(selected_label)
         selected_target = target_options[selected_idx]
+        prev_target = st.session_state.get("home_translation_target", "english")
         st.session_state.home_translation_target = selected_target["key"]
+        current_input = str(st.session_state.get("home_translation_input", "") or "").strip()
+        if (
+            selected_target["key"] != prev_target
+            and current_input
+            and (
+                st.session_state.get("home_translation_source", "") != current_input
+                or st.session_state.get("home_translation_target_used", "") != selected_target["key"]
+            )
+        ):
+            try:
+                with st.spinner("正在切換語言並重新翻譯..."):
+                    translation = translate_text(
+                        selected_target["key"],
+                        selected_target["label"],
+                        current_input,
+                    )
+                    sentence = str(translation.get("sentence", "") or "").strip()
+                    grammar = ""
+                    if sentence:
+                        grammar = explain_translated_text_grammar(
+                            selected_target["key"],
+                            selected_target["label"],
+                            current_input,
+                            sentence,
+                        )
+                    st.session_state.home_translation_result = {
+                        "sentence": sentence,
+                        "reading": str(translation.get("reading", "") or "").strip(),
+                        "note": str(translation.get("note", "") or "").strip(),
+                        "grammar": str(grammar or "").strip(),
+                    }
+                    st.session_state.home_translation_source = current_input
+                    st.session_state.home_translation_target_used = selected_target["key"]
+                st.rerun()
+            except Exception as e:
+                st.error(f"切換語言自動翻譯失敗：{e}")
+
         result = st.session_state.get("home_translation_result", {})
         translated = str(result.get("sentence", "") or "").strip()
         reading = str(result.get("reading", "") or "").strip()
@@ -797,6 +835,11 @@ def home_page():
                 st.caption(reading)
             if note:
                 st.caption(note)
+            _render_translation_audio(
+                selected_target["key"],
+                translated,
+                "home_translation_play_audio",
+            )
         else:
             st.text_area(
                 "Translated Text",
