@@ -792,7 +792,6 @@ def home_page():
                 value=translated,
                 height=170,
                 disabled=True,
-                key="home_translation_output",
             )
             if reading:
                 st.caption(reading)
@@ -805,7 +804,6 @@ def home_page():
                 height=170,
                 placeholder="翻譯結果會顯示在這裡",
                 disabled=True,
-                key="home_translation_output_empty",
             )
 
         st.markdown("**文法說明**")
