@@ -18,6 +18,7 @@ def _ensure_data_folder():
 
 # ── 模組級記憶體快取（Streamlit 每次 rerun 不會重新載入模組）──────────
 _MEM_CACHE_PROGRESS: dict | None = None
+_LAST_PROGRESS_SYNC_STATUS = {"ok": None, "message": ""}
 
 
 def _invalidate_progress_cache():
@@ -38,12 +39,18 @@ def _gh_read(gh_path: str):
 
 def _gh_write(gh_path: str, data: dict, message: str):
     # 資料已存本地（local-first），GitHub 只是雲端備份，失敗不影響使用，靜默忽略
+    global _LAST_PROGRESS_SYNC_STATUS
     try:
         from utils.vocab_manager import _github_write
         content_str = json.dumps(data, ensure_ascii=False, indent=2)
         _github_write(gh_path, content_str, None, message)
+        _LAST_PROGRESS_SYNC_STATUS = {"ok": True, "message": ""}
     except Exception:
-        pass
+        _LAST_PROGRESS_SYNC_STATUS = {"ok": False, "message": "GitHub 寫入失敗"}
+
+
+def get_progress_sync_status() -> dict:
+    return dict(_LAST_PROGRESS_SYNC_STATUS)
 
 
 # ── 從 GitHub 強制同步到本地 ──────────────────────────────
