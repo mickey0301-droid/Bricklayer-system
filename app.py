@@ -271,12 +271,12 @@ _defaults = {
     "translation_tts_for": "",
     "home_translation_input": "",
     "home_translation_target": "english",
-    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": ""},
+    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
     "home_translation_source": "",
     "home_translation_target_used": "english",
     "home_practice_input": "",
     "home_practice_language": "english",
-    "home_practice_result": {"sentence": "", "reading": "", "note": "", "grammar": ""},
+    "home_practice_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -741,6 +741,24 @@ def home_page():
 
     languages = load_languages()
 
+    def _build_zh_en_translations(text: str) -> tuple[str, str]:
+        sentence = str(text or "").strip()
+        if not sentence:
+            return "", ""
+        zh_text = ""
+        en_text = ""
+        try:
+            zh_result = translate_text("chinese", "Traditional Chinese", sentence)
+            zh_text = str(zh_result.get("sentence", "") or "").strip()
+        except Exception:
+            zh_text = ""
+        try:
+            en_result = translate_text("english", "English", sentence)
+            en_text = str(en_result.get("sentence", "") or "").strip()
+        except Exception:
+            en_text = ""
+        return zh_text, en_text
+
     st.divider()
     st.subheader("Translation")
     left_col, right_col = st.columns(2)
@@ -801,6 +819,8 @@ def home_page():
                         "reading": str(translation.get("reading", "") or "").strip(),
                         "note": str(translation.get("note", "") or "").strip(),
                         "grammar": str(grammar or "").strip(),
+                        "zh_translation": zh_text,
+                        "en_translation": en_text,
                     }
                     st.session_state.home_translation_source = current_input
                     st.session_state.home_translation_target_used = selected_target["key"]
@@ -813,6 +833,8 @@ def home_page():
         reading = str(result.get("reading", "") or "").strip()
         note = str(result.get("note", "") or "").strip()
         grammar = str(result.get("grammar", "") or "").strip()
+        zh_translation = str(result.get("zh_translation", "") or "").strip()
+        en_translation = str(result.get("en_translation", "") or "").strip()
 
         st.markdown("**翻譯結果**")
         if translated:
@@ -826,6 +848,10 @@ def home_page():
                 st.caption(reading)
             if note:
                 st.caption(note)
+            if zh_translation:
+                st.caption(f"中文翻譯：{zh_translation}")
+            if en_translation:
+                st.caption(f"English Translation: {en_translation}")
             _render_translation_audio(
                 selected_target["key"],
                 translated,
@@ -878,11 +904,14 @@ def home_page():
                                 source_text,
                                 sentence,
                             )
+                        zh_text, en_text = _build_zh_en_translations(sentence)
                         st.session_state.home_translation_result = {
                             "sentence": sentence,
                             "reading": str(translation.get("reading", "") or "").strip(),
                             "note": str(translation.get("note", "") or "").strip(),
                             "grammar": str(grammar or "").strip(),
+                            "zh_translation": zh_text,
+                            "en_translation": en_text,
                         }
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
@@ -923,6 +952,8 @@ def home_page():
         p_reading = str(p_result.get("reading", "") or "").strip()
         p_note = str(p_result.get("note", "") or "").strip()
         p_grammar = str(p_result.get("grammar", "") or "").strip()
+        p_zh_translation = str(p_result.get("zh_translation", "") or "").strip()
+        p_en_translation = str(p_result.get("en_translation", "") or "").strip()
 
         st.markdown("**Correct Sentence**")
         if p_sentence:
@@ -936,6 +967,10 @@ def home_page():
                 st.caption(p_reading)
             if p_note:
                 st.caption(p_note)
+            if p_zh_translation:
+                st.caption(f"中文翻譯：{p_zh_translation}")
+            if p_en_translation:
+                st.caption(f"English Translation: {p_en_translation}")
             _render_translation_audio(
                 practice_selected["key"],
                 p_sentence,
@@ -988,11 +1023,14 @@ def home_page():
                                 practice_input,
                                 sentence,
                             )
+                        zh_text, en_text = _build_zh_en_translations(sentence)
                         st.session_state.home_practice_result = {
                             "sentence": sentence,
                             "reading": str(corrected.get("reading", "") or "").strip(),
                             "note": str(corrected.get("note", "") or "").strip(),
                             "grammar": str(grammar or "").strip(),
+                            "zh_translation": zh_text,
+                            "en_translation": en_text,
                         }
                     st.rerun()
                 except Exception as e:
