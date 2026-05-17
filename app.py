@@ -40,7 +40,12 @@ from utils.progress_manager import (
 )
 from utils.app_logger import log_error
 from utils.language_manager import load_languages, add_language, get_language_config
-from utils.ai_tools import explain_translated_sentence_grammar, translate_chinese_sentence
+from utils.ai_tools import (
+    explain_translated_sentence_grammar,
+    explain_translated_text_grammar,
+    translate_chinese_sentence,
+    translate_text,
+)
 from utils.translation_manager import (
     add_translation_sentence,
     load_translation_sentences,
@@ -263,6 +268,11 @@ _defaults = {
     "translation_review_order": "依序",
     "translation_tts_audio": None,
     "translation_tts_for": "",
+    "home_translation_input": "",
+    "home_translation_target": "english",
+    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": ""},
+    "home_translation_source": "",
+    "home_translation_target_used": "english",
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -739,6 +749,114 @@ def home_page():
             reset_study_state()
             go_language(lang["key"])
             st.rerun()
+
+    st.divider()
+    st.subheader("Translation")
+    left_col, right_col = st.columns(2)
+    target_options = [{"key": "english", "label": "English"}]
+    seen_lang = {"english"}
+    for lang in languages:
+        key = str(lang.get("key", "")).strip()
+        if not key or key in seen_lang:
+            continue
+        target_options.append({"key": key, "label": lang.get("label", key.capitalize())})
+        seen_lang.add(key)
+
+    target_labels = [f"{LANGUAGE_FLAGS.get(x['key'], '🌐')} {x['label']}" for x in target_options]
+    target_index = 0
+    for i, x in enumerate(target_options):
+        if x["key"] == st.session_state.get("home_translation_target", "english"):
+            target_index = i
+            break
+
+    with right_col:
+        selected_label = st.selectbox(
+            "翻譯目標語言",
+            target_labels,
+            index=target_index,
+            key="home_translation_target_select",
+        )
+        selected_idx = target_labels.index(selected_label)
+        selected_target = target_options[selected_idx]
+        st.session_state.home_translation_target = selected_target["key"]
+        result = st.session_state.get("home_translation_result", {})
+        translated = str(result.get("sentence", "") or "").strip()
+        reading = str(result.get("reading", "") or "").strip()
+        note = str(result.get("note", "") or "").strip()
+        grammar = str(result.get("grammar", "") or "").strip()
+
+        st.markdown("**翻譯結果**")
+        if translated:
+            st.text_area(
+                "Translated Text",
+                value=translated,
+                height=170,
+                disabled=True,
+                key="home_translation_output",
+            )
+            if reading:
+                st.caption(reading)
+            if note:
+                st.caption(note)
+        else:
+            st.text_area(
+                "Translated Text",
+                value="",
+                height=170,
+                placeholder="翻譯結果會顯示在這裡",
+                disabled=True,
+                key="home_translation_output_empty",
+            )
+
+        st.markdown("**文法說明**")
+        if grammar:
+            _render_grammar_box(grammar)
+        else:
+            st.caption("完成翻譯後會在這裡顯示文法解析。")
+
+    with left_col:
+        with st.form("home_translation_form"):
+            source_text = st.text_area(
+                "輸入中文或英文",
+                value=st.session_state.get("home_translation_input", ""),
+                height=290,
+                placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
+            )
+            submitted = st.form_submit_button("翻譯", use_container_width=True)
+
+        if submitted:
+            source_text = source_text.strip()
+            st.session_state.home_translation_input = source_text
+            if not source_text:
+                st.warning("請先輸入要翻譯的文字。")
+            else:
+                with st.spinner("AI 正在翻譯與分析文法..."):
+                    try:
+                        translation = translate_text(
+                            selected_target["key"],
+                            selected_target["label"],
+                            source_text,
+                        )
+                        sentence = str(translation.get("sentence", "") or "").strip()
+                        grammar = ""
+                        if sentence:
+                            grammar = explain_translated_text_grammar(
+                                selected_target["key"],
+                                selected_target["label"],
+                                source_text,
+                                sentence,
+                            )
+                        st.session_state.home_translation_result = {
+                            "sentence": sentence,
+                            "reading": str(translation.get("reading", "") or "").strip(),
+                            "note": str(translation.get("note", "") or "").strip(),
+                            "grammar": str(grammar or "").strip(),
+                        }
+                        st.session_state.home_translation_source = source_text
+                        st.session_state.home_translation_target_used = selected_target["key"]
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"翻譯失敗：{e}")
 
     # ── 學習統計 ────────────────────────────────────────────
     if False and languages:

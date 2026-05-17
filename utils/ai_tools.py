@@ -147,14 +147,14 @@ def autocomplete_dataframe(df: pd.DataFrame, language: str) -> pd.DataFrame:
     return df
 
 
-def translate_chinese_sentence(language: str, language_label: str, chinese_sentence: str) -> dict:
+def translate_text(language: str, language_label: str, source_text: str) -> dict:
     client = _require_openai_client()
 
     prompt = f"""
-Translate the following Traditional Chinese sentence into {language_label}.
+Translate the following sentence into {language_label}.
 
 Target language key: {language}
-Chinese sentence: {chinese_sentence}
+Source sentence: {source_text}
 
 Return JSON only:
 {{
@@ -191,10 +191,14 @@ Rules:
     }
 
 
-def explain_translated_sentence_grammar(
+def translate_chinese_sentence(language: str, language_label: str, chinese_sentence: str) -> dict:
+    return translate_text(language, language_label, chinese_sentence)
+
+
+def explain_translated_text_grammar(
     language: str,
     language_label: str,
-    source_chinese: str,
+    source_text: str,
     translated_sentence: str,
 ) -> str:
     client = _require_openai_client()
@@ -203,7 +207,7 @@ def explain_translated_sentence_grammar(
 Explain the grammar of this {language_label} sentence for a Traditional Chinese-speaking learner.
 
 Target language key: {language}
-Chinese source sentence: {source_chinese}
+Source sentence: {source_text}
 Target sentence: {translated_sentence}
 
 Rules:
@@ -211,7 +215,7 @@ Rules:
 2. Explain the sentence structure clearly but concisely.
 3. Mention why important verbs or adjectives appear in their current form.
 4. Mention why important conjunctions, prepositions, particles, articles, or case markers are used.
-5. Point out any word order or expression that differs from Chinese.
+5. Point out any word order or expression that differs from the source sentence.
 6. Do not rewrite the whole translation unless necessary.
 7. Keep the explanation under 180 Chinese characters if possible.
 """
@@ -225,3 +229,17 @@ Rules:
     )
 
     return (response.choices[0].message.content or "").strip()
+
+
+def explain_translated_sentence_grammar(
+    language: str,
+    language_label: str,
+    source_chinese: str,
+    translated_sentence: str,
+) -> str:
+    return explain_translated_text_grammar(
+        language=language,
+        language_label=language_label,
+        source_text=source_chinese,
+        translated_sentence=translated_sentence,
+    )
