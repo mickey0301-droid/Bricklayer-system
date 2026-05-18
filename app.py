@@ -876,40 +876,22 @@ def home_page():
             )
         ):
             try:
-                with st.spinner("正在切換語言並重新翻譯（Google + AI）..."):
+                with st.spinner("正在切換語言並重新翻譯（Google）..."):
                     g_translated = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
-                    translation = translate_text(
-                        selected_target["key"],
-                        selected_target["label"],
-                        current_input,
-                        japanese_mode=japanese_mode,
-                    )
-                    sentence = str(translation.get("sentence", "") or "").strip()
-                    grammar = ""
-                    if sentence:
-                        grammar = explain_translated_text_grammar(
-                            selected_target["key"],
-                            selected_target["label"],
-                            current_input,
-                            sentence,
-                        )
-                    zh_text, en_text = _build_zh_en_translations(sentence)
-                    st.session_state.home_translation_result = {
-                        "sentence": sentence,
-                        "reading": str(translation.get("reading", "") or "").strip(),
-                        "note": str(translation.get("note", "") or "").strip(),
-                        "grammar": str(grammar or "").strip(),
-                        "zh_translation": zh_text,
-                        "en_translation": en_text,
-                    }
-                    st.session_state.home_translation_source = current_input
-                    st.session_state.home_translation_target_used = selected_target["key"]
-                    st.session_state.home_translation_japanese_mode_used = japanese_mode
                     st.session_state.home_google_translation_input = current_input
                     st.session_state.home_google_translation_source = current_input
                     st.session_state.home_google_translation_target = selected_target["key"]
                     st.session_state.home_google_translation_target_used = selected_target["key"]
+                    # 目標語言/語氣改變時，清空舊 AI 結果，避免誤解為最新翻譯
+                    st.session_state.home_translation_result = {
+                        "sentence": "",
+                        "reading": "",
+                        "note": "",
+                        "grammar": "",
+                        "zh_translation": "",
+                        "en_translation": "",
+                    }
                 st.rerun()
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
@@ -979,17 +961,35 @@ def home_page():
                 height=290,
                 placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
             )
-            submitted = st.form_submit_button("翻譯（Google + AI）", use_container_width=True)
+            google_submitted = st.form_submit_button("Google 翻譯", use_container_width=True)
+            ai_submitted = st.form_submit_button("AI 翻譯", use_container_width=True)
 
-        if submitted:
+        if google_submitted:
             source_text = source_text.strip()
             st.session_state.home_translation_input = source_text
             if not source_text:
                 st.warning("請先輸入要翻譯的文字。")
             else:
-                with st.spinner("Google 與 AI 正在翻譯..."):
+                with st.spinner("Google 正在翻譯..."):
                     try:
                         g_translated = _google_translate_text(source_text, selected_target["key"])
+                        st.session_state.home_google_translation_result = g_translated
+                        st.session_state.home_google_translation_input = source_text
+                        st.session_state.home_google_translation_source = source_text
+                        st.session_state.home_google_translation_target = selected_target["key"]
+                        st.session_state.home_google_translation_target_used = selected_target["key"]
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Google 翻譯失敗：{e}")
+
+        if ai_submitted:
+            source_text = source_text.strip()
+            st.session_state.home_translation_input = source_text
+            if not source_text:
+                st.warning("請先輸入要翻譯的文字。")
+            else:
+                with st.spinner("AI 正在翻譯與分析文法..."):
+                    try:
                         translation = translate_text(
                             selected_target["key"],
                             selected_target["label"],
@@ -1017,14 +1017,9 @@ def home_page():
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
-                        st.session_state.home_google_translation_result = g_translated
-                        st.session_state.home_google_translation_input = source_text
-                        st.session_state.home_google_translation_source = source_text
-                        st.session_state.home_google_translation_target = selected_target["key"]
-                        st.session_state.home_google_translation_target_used = selected_target["key"]
                         st.rerun()
                     except Exception as e:
-                        st.error(f"翻譯失敗：{e}")
+                        st.error(f"AI 翻譯失敗：{e}")
 
     st.markdown("### Translation Practice")
     p_left_col, p_right_col = st.columns(2)
