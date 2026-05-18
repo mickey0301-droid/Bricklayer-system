@@ -114,6 +114,20 @@ div[data-testid="stDataEditor"] * {
     margin-bottom: 1rem;
     height: 100%;
 }
+.result-text {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #1f2937;
+    background: #ffffff;
+    border: 1px solid #d9e2ef;
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    margin-top: 0.35rem;
+    margin-bottom: 0.55rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
 .study-label {
     font-size: 0.85rem;
     color: #5b6575;
@@ -911,34 +925,30 @@ def home_page():
 
         st.markdown("**Google 翻譯結果**")
         if google_result:
-            st.text_area(
-                "Google Translated Text",
-                value=google_result,
-                height=120,
-                disabled=True,
+            safe_google = (
+                google_result.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\n", "<br>")
             )
+            st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
             _render_translation_audio(
                 selected_target["key"],
                 google_result,
                 "home_google_translation_play_audio",
             )
         else:
-            st.text_area(
-                "Google Translated Text",
-                value="",
-                height=120,
-                placeholder="Google 翻譯結果會顯示在這裡",
-                disabled=True,
-            )
+            st.caption("Google 翻譯結果會顯示在這裡")
 
         st.markdown("**AI 翻譯結果**")
         if translated:
-            st.text_area(
-                "Translated Text",
-                value=translated,
-                height=120,
-                disabled=True,
+            safe_ai = (
+                translated.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\n", "<br>")
             )
+            st.markdown(f'<div class="result-text">{safe_ai}</div>', unsafe_allow_html=True)
             if reading:
                 st.caption(reading)
             if note:
@@ -953,13 +963,7 @@ def home_page():
                 "home_translation_play_audio",
             )
         else:
-            st.text_area(
-                "Translated Text",
-                value="",
-                height=120,
-                placeholder="翻譯結果會顯示在這裡",
-                disabled=True,
-            )
+            st.caption("AI 翻譯結果會顯示在這裡")
 
         st.markdown("**文法說明**")
         if grammar:
