@@ -147,8 +147,22 @@ def autocomplete_dataframe(df: pd.DataFrame, language: str) -> pd.DataFrame:
     return df
 
 
-def translate_text(language: str, language_label: str, source_text: str) -> dict:
+def translate_text(
+    language: str,
+    language_label: str,
+    source_text: str,
+    japanese_mode: str = "normal",
+) -> dict:
     client = _require_openai_client()
+    jp_mode = str(japanese_mode or "normal").strip().lower()
+    if jp_mode not in ("polite", "normal", "casual"):
+        jp_mode = "normal"
+    japanese_style_rule = ""
+    if language == "japanese":
+        japanese_style_rule = (
+            f'\n8. Japanese style mode: "{jp_mode}". '
+            "polite = です/ます調；normal = neutral standard written/spoken style；casual = plain casual style."
+        )
 
     prompt = f"""
 Translate the following sentence into {language_label}.
@@ -171,6 +185,7 @@ Rules:
 5. For languages that do not need a reading guide, leave "reading" empty.
 6. Use Traditional Chinese for "note".
 7. Output JSON only. Do not add Markdown.
+{japanese_style_rule}
 """
 
     response = client.chat.completions.create(

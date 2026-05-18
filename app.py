@@ -274,9 +274,11 @@ _defaults = {
     "translation_tts_for": "",
     "home_translation_input": "",
     "home_translation_target": "english",
+    "home_translation_japanese_mode": "normal",
     "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
     "home_translation_source": "",
     "home_translation_target_used": "english",
+    "home_translation_japanese_mode_used": "normal",
     "home_google_translation_input": "",
     "home_google_translation_target": "english",
     "home_google_translation_result": "",
@@ -826,13 +828,37 @@ def home_page():
         selected_target = target_options[target_labels.index(selected_label)]
         prev_target = st.session_state.get("home_translation_target", "english")
         st.session_state.home_translation_target = selected_target["key"]
+        japanese_mode = st.session_state.get("home_translation_japanese_mode", "normal")
+        if selected_target["key"] == "japanese":
+            mode_options = [("polite", "Polite"), ("normal", "Normal"), ("casual", "Casual")]
+            mode_labels = [x[1] for x in mode_options]
+            mode_index = 1
+            for i, (mode_key, _) in enumerate(mode_options):
+                if mode_key == japanese_mode:
+                    mode_index = i
+                    break
+            selected_mode_label = st.selectbox(
+                "日文語氣",
+                mode_labels,
+                index=mode_index,
+                key="home_translation_japanese_mode_select",
+            )
+            label_to_mode = {label: mode for mode, label in mode_options}
+            japanese_mode = label_to_mode.get(selected_mode_label, "normal")
+            st.session_state.home_translation_japanese_mode = japanese_mode
         current_input = str(st.session_state.get("home_translation_input", "") or "").strip()
         if (
-            selected_target["key"] != prev_target
-            and current_input
-            and (
-                st.session_state.get("home_translation_source", "") != current_input
-                or st.session_state.get("home_translation_target_used", "") != selected_target["key"]
+            (selected_target["key"] != prev_target)
+            or (
+                selected_target["key"] == "japanese"
+                and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
+            )
+        ) and current_input and (
+            st.session_state.get("home_translation_source", "") != current_input
+            or st.session_state.get("home_translation_target_used", "") != selected_target["key"]
+            or (
+                selected_target["key"] == "japanese"
+                and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
             )
         ):
             try:
@@ -843,6 +869,7 @@ def home_page():
                         selected_target["key"],
                         selected_target["label"],
                         current_input,
+                        japanese_mode=japanese_mode,
                     )
                     sentence = str(translation.get("sentence", "") or "").strip()
                     grammar = ""
@@ -864,6 +891,7 @@ def home_page():
                     }
                     st.session_state.home_translation_source = current_input
                     st.session_state.home_translation_target_used = selected_target["key"]
+                    st.session_state.home_translation_japanese_mode_used = japanese_mode
                     st.session_state.home_google_translation_input = current_input
                     st.session_state.home_google_translation_source = current_input
                     st.session_state.home_google_translation_target = selected_target["key"]
@@ -962,6 +990,7 @@ def home_page():
                             selected_target["key"],
                             selected_target["label"],
                             source_text,
+                            japanese_mode=japanese_mode,
                         )
                         sentence = str(translation.get("sentence", "") or "").strip()
                         grammar = ""
@@ -983,6 +1012,7 @@ def home_page():
                         }
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
+                        st.session_state.home_translation_japanese_mode_used = japanese_mode
                         st.session_state.home_google_translation_result = g_translated
                         st.session_state.home_google_translation_input = source_text
                         st.session_state.home_google_translation_source = source_text
