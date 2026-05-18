@@ -879,19 +879,37 @@ def home_page():
                 with st.spinner("正在切換語言並重新翻譯（Google）..."):
                     g_translated = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
+                    translation = translate_text(
+                        selected_target["key"],
+                        selected_target["label"],
+                        current_input,
+                        japanese_mode=japanese_mode,
+                    )
+                    sentence = str(translation.get("sentence", "") or "").strip()
+                    grammar = ""
+                    if sentence:
+                        grammar = explain_translated_text_grammar(
+                            selected_target["key"],
+                            selected_target["label"],
+                            current_input,
+                            sentence,
+                        )
+                    zh_text, en_text = _build_zh_en_translations(sentence)
+                    st.session_state.home_translation_result = {
+                        "sentence": sentence,
+                        "reading": str(translation.get("reading", "") or "").strip(),
+                        "note": str(translation.get("note", "") or "").strip(),
+                        "grammar": str(grammar or "").strip(),
+                        "zh_translation": zh_text,
+                        "en_translation": en_text,
+                    }
+                    st.session_state.home_translation_source = current_input
+                    st.session_state.home_translation_target_used = selected_target["key"]
+                    st.session_state.home_translation_japanese_mode_used = japanese_mode
                     st.session_state.home_google_translation_input = current_input
                     st.session_state.home_google_translation_source = current_input
                     st.session_state.home_google_translation_target = selected_target["key"]
                     st.session_state.home_google_translation_target_used = selected_target["key"]
-                    # 目標語言/語氣改變時，清空舊 AI 結果，避免誤解為最新翻譯
-                    st.session_state.home_translation_result = {
-                        "sentence": "",
-                        "reading": "",
-                        "note": "",
-                        "grammar": "",
-                        "zh_translation": "",
-                        "en_translation": "",
-                    }
                 st.rerun()
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
