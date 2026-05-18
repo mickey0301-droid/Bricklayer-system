@@ -798,104 +798,7 @@ def home_page():
         return zh_text, en_text
 
     st.divider()
-    st.subheader("Google Translate")
-    g_left_col, g_right_col = st.columns(2)
-    g_target_options = [{"key": "english", "label": "English"}]
-    g_seen_lang = {"english"}
-    for lang in languages:
-        key = str(lang.get("key", "")).strip()
-        if not key or key in g_seen_lang:
-            continue
-        g_target_options.append({"key": key, "label": lang.get("label", key.capitalize())})
-        g_seen_lang.add(key)
-
-    g_target_labels = [f"{LANGUAGE_FLAGS.get(x['key'], '🌐')} {x['label']}" for x in g_target_options]
-    g_target_index = 0
-    for i, x in enumerate(g_target_options):
-        if x["key"] == st.session_state.get("home_google_translation_target", "english"):
-            g_target_index = i
-            break
-
-    with g_right_col:
-        g_selected_label = st.selectbox(
-            "Google 翻譯目標語言",
-            g_target_labels,
-            index=g_target_index,
-            key="home_google_translation_target_select",
-        )
-        g_selected_target = g_target_options[g_target_labels.index(g_selected_label)]
-        g_prev_target = st.session_state.get("home_google_translation_target", "english")
-        st.session_state.home_google_translation_target = g_selected_target["key"]
-        g_current_input = str(st.session_state.get("home_google_translation_input", "") or "").strip()
-        if (
-            g_selected_target["key"] != g_prev_target
-            and g_current_input
-            and (
-                st.session_state.get("home_google_translation_source", "") != g_current_input
-                or st.session_state.get("home_google_translation_target_used", "") != g_selected_target["key"]
-            )
-        ):
-            try:
-                with st.spinner("Google 正在重新翻譯..."):
-                    g_translated = _google_translate_text(g_current_input, g_selected_target["key"])
-                    st.session_state.home_google_translation_result = g_translated
-                    st.session_state.home_google_translation_source = g_current_input
-                    st.session_state.home_google_translation_target_used = g_selected_target["key"]
-                st.rerun()
-            except Exception as e:
-                st.error(f"Google 翻譯失敗：{e}")
-
-        g_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
-        st.markdown("**Google 翻譯結果**")
-        if g_result:
-            st.text_area(
-                "Google Translated Text",
-                value=g_result,
-                height=170,
-                disabled=True,
-            )
-            _render_translation_audio(
-                g_selected_target["key"],
-                g_result,
-                "home_google_translation_play_audio",
-            )
-        else:
-            st.text_area(
-                "Google Translated Text",
-                value="",
-                height=170,
-                placeholder="Google 翻譯結果會顯示在這裡",
-                disabled=True,
-            )
-
-    with g_left_col:
-        with st.form("home_google_translation_form"):
-            g_source_text = st.text_area(
-                "輸入要給 Google 翻譯的文字",
-                value=st.session_state.get("home_google_translation_input", ""),
-                height=290,
-                placeholder="例如：我們明天上午十點開會。",
-            )
-            g_submitted = st.form_submit_button("Google 翻譯", use_container_width=True)
-
-        if g_submitted:
-            g_source_text = g_source_text.strip()
-            st.session_state.home_google_translation_input = g_source_text
-            if not g_source_text:
-                st.warning("請先輸入要翻譯的文字。")
-            else:
-                try:
-                    with st.spinner("Google 正在翻譯..."):
-                        g_translated = _google_translate_text(g_source_text, g_selected_target["key"])
-                        st.session_state.home_google_translation_result = g_translated
-                        st.session_state.home_google_translation_source = g_source_text
-                        st.session_state.home_google_translation_target_used = g_selected_target["key"]
-                    st.rerun()
-                except Exception as e:
-                    st.error(f"Google 翻譯失敗：{e}")
-
-    st.divider()
-    st.subheader("AI Translation")
+    st.subheader("Translation (Google + AI)")
     left_col, right_col = st.columns(2)
     target_options = [{"key": "english", "label": "English"}]
     seen_lang = {"english"}
@@ -920,8 +823,7 @@ def home_page():
             index=target_index,
             key="home_translation_target_select",
         )
-        selected_idx = target_labels.index(selected_label)
-        selected_target = target_options[selected_idx]
+        selected_target = target_options[target_labels.index(selected_label)]
         prev_target = st.session_state.get("home_translation_target", "english")
         st.session_state.home_translation_target = selected_target["key"]
         current_input = str(st.session_state.get("home_translation_input", "") or "").strip()
@@ -934,7 +836,9 @@ def home_page():
             )
         ):
             try:
-                with st.spinner("正在切換語言並重新翻譯..."):
+                with st.spinner("正在切換語言並重新翻譯（Google + AI）..."):
+                    g_translated = _google_translate_text(current_input, selected_target["key"])
+                    st.session_state.home_google_translation_result = g_translated
                     translation = translate_text(
                         selected_target["key"],
                         selected_target["label"],
@@ -960,11 +864,16 @@ def home_page():
                     }
                     st.session_state.home_translation_source = current_input
                     st.session_state.home_translation_target_used = selected_target["key"]
+                    st.session_state.home_google_translation_input = current_input
+                    st.session_state.home_google_translation_source = current_input
+                    st.session_state.home_google_translation_target = selected_target["key"]
+                    st.session_state.home_google_translation_target_used = selected_target["key"]
                 st.rerun()
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
 
         result = st.session_state.get("home_translation_result", {})
+        google_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
         translated = str(result.get("sentence", "") or "").strip()
         reading = str(result.get("reading", "") or "").strip()
         note = str(result.get("note", "") or "").strip()
@@ -972,12 +881,34 @@ def home_page():
         zh_translation = str(result.get("zh_translation", "") or "").strip()
         en_translation = str(result.get("en_translation", "") or "").strip()
 
-        st.markdown("**翻譯結果**")
+        st.markdown("**Google 翻譯結果**")
+        if google_result:
+            st.text_area(
+                "Google Translated Text",
+                value=google_result,
+                height=120,
+                disabled=True,
+            )
+            _render_translation_audio(
+                selected_target["key"],
+                google_result,
+                "home_google_translation_play_audio",
+            )
+        else:
+            st.text_area(
+                "Google Translated Text",
+                value="",
+                height=120,
+                placeholder="Google 翻譯結果會顯示在這裡",
+                disabled=True,
+            )
+
+        st.markdown("**AI 翻譯結果**")
         if translated:
             st.text_area(
                 "Translated Text",
                 value=translated,
-                height=170,
+                height=120,
                 disabled=True,
             )
             if reading:
@@ -997,7 +928,7 @@ def home_page():
             st.text_area(
                 "Translated Text",
                 value="",
-                height=170,
+                height=120,
                 placeholder="翻譯結果會顯示在這裡",
                 disabled=True,
             )
@@ -1016,7 +947,7 @@ def home_page():
                 height=290,
                 placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
             )
-            submitted = st.form_submit_button("翻譯", use_container_width=True)
+            submitted = st.form_submit_button("翻譯（Google + AI）", use_container_width=True)
 
         if submitted:
             source_text = source_text.strip()
@@ -1024,8 +955,9 @@ def home_page():
             if not source_text:
                 st.warning("請先輸入要翻譯的文字。")
             else:
-                with st.spinner("AI 正在翻譯與分析文法..."):
+                with st.spinner("Google 與 AI 正在翻譯..."):
                     try:
+                        g_translated = _google_translate_text(source_text, selected_target["key"])
                         translation = translate_text(
                             selected_target["key"],
                             selected_target["label"],
@@ -1051,6 +983,11 @@ def home_page():
                         }
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
+                        st.session_state.home_google_translation_result = g_translated
+                        st.session_state.home_google_translation_input = source_text
+                        st.session_state.home_google_translation_source = source_text
+                        st.session_state.home_google_translation_target = selected_target["key"]
+                        st.session_state.home_google_translation_target_used = selected_target["key"]
                         st.rerun()
                     except Exception as e:
                         st.error(f"翻譯失敗：{e}")
