@@ -3,6 +3,9 @@ import os
 import zipfile
 import random
 import subprocess
+import json
+import urllib.parse
+import urllib.request
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -274,6 +277,11 @@ _defaults = {
     "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
     "home_translation_source": "",
     "home_translation_target_used": "english",
+    "home_google_translation_input": "",
+    "home_google_translation_target": "english",
+    "home_google_translation_result": "",
+    "home_google_translation_source": "",
+    "home_google_translation_target_used": "english",
     "home_practice_input": "",
     "home_practice_language": "english",
     "home_practice_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
@@ -740,6 +748,36 @@ def home_page():
     st.markdown("# 🧱 Bricklayer")
 
     languages = load_languages()
+    google_lang_map = {
+        "english": "en",
+        "chinese": "zh-TW",
+        "japanese": "ja",
+        "korean": "ko",
+        "spanish": "es",
+        "french": "fr",
+        "german": "de",
+        "italian": "it",
+        "portuguese": "pt",
+        "russian": "ru",
+        "arabic": "ar",
+    }
+
+    def _google_translate_text(text: str, target_lang_key: str) -> str:
+        source = str(text or "").strip()
+        if not source:
+            return ""
+        tl = google_lang_map.get(target_lang_key, "en")
+        q = urllib.parse.quote(source)
+        url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={tl}&dt=t&q={q}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+        parts = payload[0] if isinstance(payload, list) and payload else []
+        translated = "".join(
+            str(item[0]) for item in parts
+            if isinstance(item, list) and item and item[0] is not None
+        )
+        return translated.strip()
 
     def _build_zh_en_translations(text: str) -> tuple[str, str]:
         sentence = str(text or "").strip()
@@ -760,7 +798,104 @@ def home_page():
         return zh_text, en_text
 
     st.divider()
-    st.subheader("Translation")
+    st.subheader("Google Translate")
+    g_left_col, g_right_col = st.columns(2)
+    g_target_options = [{"key": "english", "label": "English"}]
+    g_seen_lang = {"english"}
+    for lang in languages:
+        key = str(lang.get("key", "")).strip()
+        if not key or key in g_seen_lang:
+            continue
+        g_target_options.append({"key": key, "label": lang.get("label", key.capitalize())})
+        g_seen_lang.add(key)
+
+    g_target_labels = [f"{LANGUAGE_FLAGS.get(x['key'], '🌐')} {x['label']}" for x in g_target_options]
+    g_target_index = 0
+    for i, x in enumerate(g_target_options):
+        if x["key"] == st.session_state.get("home_google_translation_target", "english"):
+            g_target_index = i
+            break
+
+    with g_right_col:
+        g_selected_label = st.selectbox(
+            "Google 翻譯目標語言",
+            g_target_labels,
+            index=g_target_index,
+            key="home_google_translation_target_select",
+        )
+        g_selected_target = g_target_options[g_target_labels.index(g_selected_label)]
+        g_prev_target = st.session_state.get("home_google_translation_target", "english")
+        st.session_state.home_google_translation_target = g_selected_target["key"]
+        g_current_input = str(st.session_state.get("home_google_translation_input", "") or "").strip()
+        if (
+            g_selected_target["key"] != g_prev_target
+            and g_current_input
+            and (
+                st.session_state.get("home_google_translation_source", "") != g_current_input
+                or st.session_state.get("home_google_translation_target_used", "") != g_selected_target["key"]
+            )
+        ):
+            try:
+                with st.spinner("Google 正在重新翻譯..."):
+                    g_translated = _google_translate_text(g_current_input, g_selected_target["key"])
+                    st.session_state.home_google_translation_result = g_translated
+                    st.session_state.home_google_translation_source = g_current_input
+                    st.session_state.home_google_translation_target_used = g_selected_target["key"]
+                st.rerun()
+            except Exception as e:
+                st.error(f"Google 翻譯失敗：{e}")
+
+        g_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
+        st.markdown("**Google 翻譯結果**")
+        if g_result:
+            st.text_area(
+                "Google Translated Text",
+                value=g_result,
+                height=170,
+                disabled=True,
+            )
+            _render_translation_audio(
+                g_selected_target["key"],
+                g_result,
+                "home_google_translation_play_audio",
+            )
+        else:
+            st.text_area(
+                "Google Translated Text",
+                value="",
+                height=170,
+                placeholder="Google 翻譯結果會顯示在這裡",
+                disabled=True,
+            )
+
+    with g_left_col:
+        with st.form("home_google_translation_form"):
+            g_source_text = st.text_area(
+                "輸入要給 Google 翻譯的文字",
+                value=st.session_state.get("home_google_translation_input", ""),
+                height=290,
+                placeholder="例如：我們明天上午十點開會。",
+            )
+            g_submitted = st.form_submit_button("Google 翻譯", use_container_width=True)
+
+        if g_submitted:
+            g_source_text = g_source_text.strip()
+            st.session_state.home_google_translation_input = g_source_text
+            if not g_source_text:
+                st.warning("請先輸入要翻譯的文字。")
+            else:
+                try:
+                    with st.spinner("Google 正在翻譯..."):
+                        g_translated = _google_translate_text(g_source_text, g_selected_target["key"])
+                        st.session_state.home_google_translation_result = g_translated
+                        st.session_state.home_google_translation_source = g_source_text
+                        st.session_state.home_google_translation_target_used = g_selected_target["key"]
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Google 翻譯失敗：{e}")
+
+    st.divider()
+    st.subheader("AI Translation")
     left_col, right_col = st.columns(2)
     target_options = [{"key": "english", "label": "English"}]
     seen_lang = {"english"}
@@ -814,6 +949,7 @@ def home_page():
                             current_input,
                             sentence,
                         )
+                    zh_text, en_text = _build_zh_en_translations(sentence)
                     st.session_state.home_translation_result = {
                         "sentence": sentence,
                         "reading": str(translation.get("reading", "") or "").strip(),
