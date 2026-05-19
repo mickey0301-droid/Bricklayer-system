@@ -861,51 +861,48 @@ def home_page():
             japanese_mode = label_to_mode.get(selected_mode_label, "normal")
             st.session_state.home_translation_japanese_mode = japanese_mode
         current_input = str(st.session_state.get("home_translation_input", "") or "").strip()
-        if (
-            (selected_target["key"] != prev_target)
-            or (
-                selected_target["key"] == "japanese"
-                and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
-            )
-        ) and current_input and (
-            st.session_state.get("home_translation_source", "") != current_input
-            or st.session_state.get("home_translation_target_used", "") != selected_target["key"]
-            or (
-                selected_target["key"] == "japanese"
-                and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
-            )
-        ):
+        target_changed = selected_target["key"] != prev_target
+        mode_changed = (
+            selected_target["key"] == "japanese"
+            and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
+        )
+        google_needs_refresh = current_input and (
+            st.session_state.get("home_google_translation_source", "") != current_input
+            or st.session_state.get("home_google_translation_target_used", "") != selected_target["key"]
+        )
+        if google_needs_refresh or target_changed:
             try:
-                with st.spinner("正在切換語言並重新翻譯（Google）..."):
+                with st.spinner("正在切換語言並重新翻譯（Google + AI）..."):
                     g_translated = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
-                    translation = translate_text(
-                        selected_target["key"],
-                        selected_target["label"],
-                        current_input,
-                        japanese_mode=japanese_mode,
-                    )
-                    sentence = str(translation.get("sentence", "") or "").strip()
-                    grammar = ""
-                    if sentence:
-                        grammar = explain_translated_text_grammar(
+                    if current_input:
+                        translation = translate_text(
                             selected_target["key"],
                             selected_target["label"],
                             current_input,
-                            sentence,
+                            japanese_mode=japanese_mode,
                         )
-                    zh_text, en_text = _build_zh_en_translations(sentence)
-                    st.session_state.home_translation_result = {
-                        "sentence": sentence,
-                        "reading": str(translation.get("reading", "") or "").strip(),
-                        "note": str(translation.get("note", "") or "").strip(),
-                        "grammar": str(grammar or "").strip(),
-                        "zh_translation": zh_text,
-                        "en_translation": en_text,
-                    }
-                    st.session_state.home_translation_source = current_input
-                    st.session_state.home_translation_target_used = selected_target["key"]
-                    st.session_state.home_translation_japanese_mode_used = japanese_mode
+                        sentence = str(translation.get("sentence", "") or "").strip()
+                        grammar = ""
+                        if sentence:
+                            grammar = explain_translated_text_grammar(
+                                selected_target["key"],
+                                selected_target["label"],
+                                current_input,
+                                sentence,
+                            )
+                        zh_text, en_text = _build_zh_en_translations(sentence)
+                        st.session_state.home_translation_result = {
+                            "sentence": sentence,
+                            "reading": str(translation.get("reading", "") or "").strip(),
+                            "note": str(translation.get("note", "") or "").strip(),
+                            "grammar": str(grammar or "").strip(),
+                            "zh_translation": zh_text,
+                            "en_translation": en_text,
+                        }
+                        st.session_state.home_translation_source = current_input
+                        st.session_state.home_translation_target_used = selected_target["key"]
+                        st.session_state.home_translation_japanese_mode_used = japanese_mode
                     st.session_state.home_google_translation_input = current_input
                     st.session_state.home_google_translation_source = current_input
                     st.session_state.home_google_translation_target = selected_target["key"]
@@ -972,32 +969,20 @@ def home_page():
             st.caption("完成翻譯後會在這裡顯示文法解析。")
 
     with left_col:
-        with st.form("home_translation_form"):
-            source_text = st.text_area(
-                "輸入中文或英文",
-                value=st.session_state.get("home_translation_input", ""),
-                height=290,
-                placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
-            )
-            submitted = st.form_submit_button("翻譯", use_container_width=True)
-
+        source_text = st.text_area(
+            "輸入中文或英文",
+            value=st.session_state.get("home_translation_input", ""),
+            height=290,
+            placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
+            key="home_translation_input",
+        )
+        submitted = st.button("翻譯", use_container_width=True, key="home_translation_submit")
         if submitted:
             source_text = source_text.strip()
             st.session_state.home_translation_input = source_text
             if not source_text:
                 st.warning("請先輸入要翻譯的文字。")
             else:
-                with st.spinner("Google 正在翻譯..."):
-                    try:
-                        g_translated = _google_translate_text(source_text, selected_target["key"])
-                        st.session_state.home_google_translation_input = source_text
-                        st.session_state.home_google_translation_source = source_text
-                        st.session_state.home_google_translation_target = selected_target["key"]
-                        st.session_state.home_google_translation_target_used = selected_target["key"]
-                        st.session_state.home_google_translation_result = g_translated
-                    except Exception as e:
-                        st.error(f"Google 翻譯失敗：{e}")
-
                 with st.spinner("AI 正在翻譯與分析文法..."):
                     try:
                         translation = translate_text(
