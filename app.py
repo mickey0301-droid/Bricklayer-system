@@ -982,15 +982,14 @@ def home_page():
     with left_col:
         source_text = st.text_area(
             "輸入中文或英文",
-            value=st.session_state.get("home_translation_input", ""),
             height=290,
             placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
             key="home_translation_input",
         )
         submitted = st.button("翻譯", use_container_width=True, key="home_translation_submit")
         if submitted:
-            source_text = source_text.strip()
-            st.session_state.home_translation_input = source_text
+            source_text_raw = str(source_text or "")
+            source_text = source_text_raw.strip()
             if not source_text:
                 st.warning("請先輸入要翻譯的文字。")
             else:
