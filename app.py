@@ -312,7 +312,7 @@ _defaults = {
     "home_translation_input": "",
     "home_translation_target": "english",
     "home_translation_japanese_mode": "normal",
-    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": "", "furigana": ""},
+    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": "", "furigana": "", "ruby_words": []},
     "home_translation_source": "",
     "home_translation_target_used": "english",
     "home_translation_japanese_mode_used": "normal",
@@ -855,7 +855,7 @@ def home_page():
             en_text = ""
         return zh_text, en_text
 
-    def _render_japanese_result(sentence: str, reading: str, furigana: str = ""):
+    def _render_japanese_result(sentence: str, reading: str, furigana: str = "", ruby_words: list | None = None):
         def _escape_html(text: str) -> str:
             return (
                 str(text or "")
@@ -866,6 +866,33 @@ def home_page():
 
         def _has_kanji(text: str) -> bool:
             return bool(re.search(r"[\u4e00-\u9fff]", str(text or "")))
+
+        ruby_words = ruby_words if isinstance(ruby_words, list) else []
+        sentence_text = str(sentence or "")
+        rendered_by_words = []
+        cursor_sentence = 0
+        for item in ruby_words:
+            if not isinstance(item, dict):
+                continue
+            base = str(item.get("base", "") or "").strip()
+            rt = re.sub(r"\s+", "", str(item.get("reading", "") or "").strip())
+            if not base or not rt or not _has_kanji(base):
+                continue
+            idx = sentence_text.find(base, cursor_sentence)
+            if idx < 0:
+                idx = sentence_text.find(base)
+                if idx < 0:
+                    continue
+            if idx > cursor_sentence:
+                rendered_by_words.append(_escape_html(sentence_text[cursor_sentence:idx]))
+            rendered_by_words.append(f"<ruby>{_escape_html(base)}<rt>{_escape_html(rt)}</rt></ruby>")
+            cursor_sentence = idx + len(base)
+        if rendered_by_words:
+            if cursor_sentence < len(sentence_text):
+                rendered_by_words.append(_escape_html(sentence_text[cursor_sentence:]))
+            ruby_html = "".join(rendered_by_words).replace("\n", "<br>")
+            st.markdown(f'<div class="jp-kanji-line">{ruby_html}</div>', unsafe_allow_html=True)
+            return
 
         f_text = str(furigana or "").strip()
         # AI 有時會在日文間夾空白，會讓 ruby 對位跑掉；這裡統一移除。
@@ -892,7 +919,7 @@ def home_page():
             ruby_html = "".join(ruby_parts).replace("\n", "<br>")
             st.markdown(f'<div class="jp-kanji-line">{ruby_html}</div>', unsafe_allow_html=True)
         else:
-            safe_sentence = _escape_html(sentence).replace("\n", "<br>")
+            safe_sentence = _escape_html(sentence_text).replace("\n", "<br>")
             st.markdown(f'<div class="jp-kanji-line">{safe_sentence}</div>', unsafe_allow_html=True)
             if reading:
                 safe_reading = _escape_html(reading).replace("\n", "<br>")
@@ -987,6 +1014,7 @@ def home_page():
                             "zh_translation": zh_text,
                             "en_translation": en_text,
                             "furigana": str(translation.get("furigana", "") or "").strip(),
+                            "ruby_words": translation.get("ruby_words", []),
                         }
                         st.session_state.home_translation_source = current_input_raw
                         st.session_state.home_translation_target_used = selected_target["key"]
@@ -1009,6 +1037,7 @@ def home_page():
         zh_translation = str(result.get("zh_translation", "") or "").strip()
         en_translation = str(result.get("en_translation", "") or "").strip()
         furigana = str(result.get("furigana", "") or "").strip()
+        ruby_words = result.get("ruby_words", [])
 
         st.markdown("**Google 翻譯結果**")
         if google_result:
@@ -1034,7 +1063,7 @@ def home_page():
         st.markdown("**AI 翻譯結果**")
         if translated:
             if selected_target["key"] == "japanese":
-                _render_japanese_result(translated, reading, furigana)
+                _render_japanese_result(translated, reading, furigana, ruby_words)
             else:
                 safe_ai = (
                     translated.replace("&", "&amp;")
@@ -1115,6 +1144,7 @@ def home_page():
                             "zh_translation": zh_text,
                             "en_translation": en_text,
                             "furigana": str(translation.get("furigana", "") or "").strip(),
+                            "ruby_words": translation.get("ruby_words", []),
                         }
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]

@@ -175,7 +175,8 @@ Return JSON only:
   "sentence": "natural translation in the target language",
   "reading": "pronunciation guide if useful, otherwise empty string",
   "note": "one short Traditional Chinese note about wording, otherwise empty string",
-  "furigana": "for Japanese only: annotate kanji WORDS as 漢字語(かな); leave non-kanji unannotated. For non-Japanese, empty string"
+  "furigana": "for Japanese only: annotate kanji WORDS as 漢字語(かな); leave non-kanji unannotated. For non-Japanese, empty string",
+  "ruby_words": [{{"base":"kanji word","reading":"hiragana"}}]
 }}
 
 Rules:
@@ -189,6 +190,9 @@ Rules:
 8. If target language is Japanese, "furigana" must keep the original sentence order and annotate only kanji words.
 9. Do NOT split a kanji compound into single-kanji readings. Use word-level annotation such as 政治的(せいじてき), 感受性(かんじゅせい), 持(も)って.
 10. Do NOT insert spaces between Japanese characters or inside readings in "furigana".
+11. For Japanese, "ruby_words" must list only kanji-containing words from sentence with their hiragana readings. Example:
+    [{{"base":"政治的","reading":"せいじてき"}},{{"base":"敏感","reading":"びんかん"}},{{"base":"持","reading":"も"}}]
+12. For non-Japanese languages, return "ruby_words": [].
 {japanese_style_rule}
 """
 
@@ -202,12 +206,25 @@ Rules:
 
     content = response.choices[0].message.content or ""
     data = _extract_json(content)
+    ruby_words = data.get("ruby_words", [])
+    if not isinstance(ruby_words, list):
+        ruby_words = []
+    normalized_ruby_words = []
+    for item in ruby_words:
+        if not isinstance(item, dict):
+            continue
+        base = str(item.get("base", "") or "").strip()
+        ruby = str(item.get("reading", "") or "").strip()
+        if not base or not ruby:
+            continue
+        normalized_ruby_words.append({"base": base, "reading": ruby})
 
     return {
         "sentence": str(data.get("sentence", "") or "").strip(),
         "reading": str(data.get("reading", "") or "").strip(),
         "note": str(data.get("note", "") or "").strip(),
         "furigana": str(data.get("furigana", "") or "").strip(),
+        "ruby_words": normalized_ruby_words,
     }
 
 
