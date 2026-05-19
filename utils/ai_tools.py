@@ -176,7 +176,8 @@ Return JSON only:
   "reading": "pronunciation guide if useful, otherwise empty string",
   "note": "one short Traditional Chinese note about wording, otherwise empty string",
   "furigana": "for Japanese only: annotate kanji WORDS as 漢字語(かな); leave non-kanji unannotated. For non-Japanese, empty string",
-  "ruby_words": [{{"base":"kanji word","reading":"hiragana"}}]
+  "ruby_words": [{{"base":"kanji word","reading":"hiragana"}}],
+  "ruby_html": "for Japanese only: full sentence with ruby tags, e.g. <ruby>政治的<rt>せいじてき</rt></ruby>な<ruby>感受性<rt>かんじゅせい</rt></ruby>..."
 }}
 
 Rules:
@@ -193,6 +194,8 @@ Rules:
 11. For Japanese, "ruby_words" must list only kanji-containing words from sentence with their hiragana readings. Example:
     [{{"base":"政治的","reading":"せいじてき"}},{{"base":"敏感","reading":"びんかん"}},{{"base":"持","reading":"も"}}]
 12. For non-Japanese languages, return "ruby_words": [].
+13. For Japanese, provide "ruby_html" that exactly matches "sentence" but only wraps kanji-containing words with <ruby><rt>.
+14. In "ruby_html", do not add spaces between Japanese characters.
 {japanese_style_rule}
 """
 
@@ -225,6 +228,7 @@ Rules:
         "note": str(data.get("note", "") or "").strip(),
         "furigana": str(data.get("furigana", "") or "").strip(),
         "ruby_words": normalized_ruby_words,
+        "ruby_html": str(data.get("ruby_html", "") or "").strip(),
     }
 
 

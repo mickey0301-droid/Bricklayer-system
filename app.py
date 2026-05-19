@@ -312,7 +312,7 @@ _defaults = {
     "home_translation_input": "",
     "home_translation_target": "english",
     "home_translation_japanese_mode": "normal",
-    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": "", "furigana": "", "ruby_words": []},
+    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": "", "furigana": "", "ruby_words": [], "ruby_html": ""},
     "home_translation_source": "",
     "home_translation_target_used": "english",
     "home_translation_japanese_mode_used": "normal",
@@ -855,7 +855,7 @@ def home_page():
             en_text = ""
         return zh_text, en_text
 
-    def _render_japanese_result(sentence: str, reading: str, furigana: str = "", ruby_words: list | None = None):
+    def _render_japanese_result(sentence: str, reading: str, furigana: str = "", ruby_words: list | None = None, ruby_html: str = ""):
         def _escape_html(text: str) -> str:
             return (
                 str(text or "")
@@ -866,6 +866,27 @@ def home_page():
 
         def _has_kanji(text: str) -> bool:
             return bool(re.search(r"[\u4e00-\u9fff]", str(text or "")))
+
+        raw_ruby_html = str(ruby_html or "").strip()
+        if raw_ruby_html:
+            # 只允許最小安全標記，避免任意 HTML 注入
+            safe_html = (
+                raw_ruby_html
+                .replace("&", "&amp;")
+                .replace("<ruby>", "__RUBY_OPEN__")
+                .replace("</ruby>", "__RUBY_CLOSE__")
+                .replace("<rt>", "__RT_OPEN__")
+                .replace("</rt>", "__RT_CLOSE__")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("__RUBY_OPEN__", "<ruby>")
+                .replace("__RUBY_CLOSE__", "</ruby>")
+                .replace("__RT_OPEN__", "<rt>")
+                .replace("__RT_CLOSE__", "</rt>")
+                .replace("\n", "<br>")
+            )
+            st.markdown(f'<div class="jp-kanji-line">{safe_html}</div>', unsafe_allow_html=True)
+            return
 
         ruby_words = ruby_words if isinstance(ruby_words, list) else []
         sentence_text = str(sentence or "")
@@ -1028,6 +1049,7 @@ def home_page():
                             "en_translation": en_text,
                             "furigana": str(translation.get("furigana", "") or "").strip(),
                             "ruby_words": translation.get("ruby_words", []),
+                            "ruby_html": str(translation.get("ruby_html", "") or "").strip(),
                         }
                         st.session_state.home_translation_source = current_input_raw
                         st.session_state.home_translation_target_used = selected_target["key"]
@@ -1051,6 +1073,7 @@ def home_page():
         en_translation = str(result.get("en_translation", "") or "").strip()
         furigana = str(result.get("furigana", "") or "").strip()
         ruby_words = result.get("ruby_words", [])
+        ruby_html = str(result.get("ruby_html", "") or "").strip()
 
         st.markdown("**Google 翻譯結果**")
         if google_result:
@@ -1076,7 +1099,7 @@ def home_page():
         st.markdown("**AI 翻譯結果**")
         if translated:
             if selected_target["key"] == "japanese":
-                _render_japanese_result(translated, reading, furigana, ruby_words)
+                _render_japanese_result(translated, reading, furigana, ruby_words, ruby_html)
             else:
                 safe_ai = (
                     translated.replace("&", "&amp;")
@@ -1158,6 +1181,7 @@ def home_page():
                             "en_translation": en_text,
                             "furigana": str(translation.get("furigana", "") or "").strip(),
                             "ruby_words": translation.get("ruby_words", []),
+                            "ruby_html": str(translation.get("ruby_html", "") or "").strip(),
                         }
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
