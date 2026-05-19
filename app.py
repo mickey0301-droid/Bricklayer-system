@@ -891,7 +891,7 @@ def home_page():
             st.session_state.get("home_google_translation_source", "") != current_input_raw
             or st.session_state.get("home_google_translation_target_used", "") != selected_target["key"]
         )
-        if google_needs_refresh or target_changed:
+        if google_needs_refresh or target_changed or mode_changed:
             try:
                 with st.spinner("正在切換語言並重新翻譯（Google + AI）..."):
                     g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
