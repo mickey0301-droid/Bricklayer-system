@@ -129,6 +129,27 @@ div[data-testid="stDataEditor"] * {
     white-space: pre-wrap;
     word-break: break-word;
 }
+.jp-reading-line {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-top: 0.2rem;
+    margin-bottom: 0.15rem;
+    line-height: 1.5;
+}
+.jp-kanji-line {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #1f2937;
+    background: #ffffff;
+    border: 1px solid #d9e2ef;
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.55rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
 .study-label {
     font-size: 0.85rem;
     color: #5b6575;
@@ -833,6 +854,23 @@ def home_page():
             en_text = ""
         return zh_text, en_text
 
+    def _render_japanese_result(sentence: str, reading: str):
+        safe_reading = (
+            str(reading or "").replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\n", "<br>")
+        )
+        safe_sentence = (
+            str(sentence or "").replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\n", "<br>")
+        )
+        if safe_reading:
+            st.markdown(f'<div class="jp-reading-line">{safe_reading}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="jp-kanji-line">{safe_sentence}</div>', unsafe_allow_html=True)
+
     st.divider()
     st.subheader("Translation (Google + AI)")
     left_col, right_col = st.columns(2)
@@ -945,15 +983,16 @@ def home_page():
 
         st.markdown("**Google 翻譯結果**")
         if google_result:
-            safe_google = (
-                google_result.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\n", "<br>")
-            )
-            st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
-            if google_reading:
-                st.caption(google_reading)
+            if selected_target["key"] == "japanese":
+                _render_japanese_result(google_result, google_reading)
+            else:
+                safe_google = (
+                    google_result.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\n", "<br>")
+                )
+                st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
             _render_translation_audio(
                 selected_target["key"],
                 google_result,
@@ -965,15 +1004,18 @@ def home_page():
 
         st.markdown("**AI 翻譯結果**")
         if translated:
-            safe_ai = (
-                translated.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\n", "<br>")
-            )
-            st.markdown(f'<div class="result-text">{safe_ai}</div>', unsafe_allow_html=True)
-            if reading:
-                st.caption(reading)
+            if selected_target["key"] == "japanese":
+                _render_japanese_result(translated, reading)
+            else:
+                safe_ai = (
+                    translated.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\n", "<br>")
+                )
+                st.markdown(f'<div class="result-text">{safe_ai}</div>', unsafe_allow_html=True)
+                if reading:
+                    st.caption(reading)
             if note:
                 st.caption(note)
             if zh_translation:
