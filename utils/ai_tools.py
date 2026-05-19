@@ -175,7 +175,7 @@ Return JSON only:
   "sentence": "natural translation in the target language",
   "reading": "pronunciation guide if useful, otherwise empty string",
   "note": "one short Traditional Chinese note about wording, otherwise empty string",
-  "furigana": "for Japanese only: annotate only kanji as 漢字(かな); leave non-kanji unannotated. For non-Japanese, empty string"
+  "furigana": "for Japanese only: annotate kanji WORDS as 漢字語(かな); leave non-kanji unannotated. For non-Japanese, empty string"
 }}
 
 Rules:
@@ -187,6 +187,8 @@ Rules:
 6. Use Traditional Chinese for "note".
 7. Output JSON only. Do not add Markdown.
 8. If target language is Japanese, "furigana" must keep the original sentence order and annotate only kanji words.
+9. Do NOT split a kanji compound into single-kanji readings. Use word-level annotation such as 政治的(せいじてき), 感受性(かんじゅせい), 持(も)って.
+10. Do NOT insert spaces between Japanese characters or inside readings in "furigana".
 {japanese_style_rule}
 """
 

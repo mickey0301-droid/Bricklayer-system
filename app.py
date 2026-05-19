@@ -868,6 +868,8 @@ def home_page():
             return bool(re.search(r"[\u4e00-\u9fff]", str(text or "")))
 
         f_text = str(furigana or "").strip()
+        # AI 有時會在日文間夾空白，會讓 ruby 對位跑掉；這裡統一移除。
+        f_text = re.sub(r"\s+", "", f_text)
         ruby_parts = []
         if f_text:
             pattern = re.compile(r"([^\s()（）]+)\(([^\(\)]+)\)")
@@ -877,7 +879,7 @@ def home_page():
                 if start > cursor:
                     ruby_parts.append(_escape_html(f_text[cursor:start]))
                 base = m.group(1)
-                rt = m.group(2)
+                rt = re.sub(r"\s+", "", m.group(2))
                 if _has_kanji(base):
                     ruby_parts.append(f"<ruby>{_escape_html(base)}<rt>{_escape_html(rt)}</rt></ruby>")
                 else:
