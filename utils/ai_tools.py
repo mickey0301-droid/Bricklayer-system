@@ -1,4 +1,5 @@
 import json
+import re
 import pandas as pd
 import streamlit as st
 from openai import OpenAI
@@ -28,6 +29,50 @@ def _extract_json(text: str) -> dict:
         return json.loads(text)
     except Exception:
         return {}
+
+
+def _normalize_japanese_text(text: str) -> str:
+    return re.sub(r"\s+", "", str(text or ""))
+
+
+def _ruby_html_to_plain_text(ruby_html: str) -> str:
+    s = str(ruby_html or "")
+    # remove ruby readings
+    s = re.sub(r"<rt>.*?</rt>", "", s, flags=re.IGNORECASE | re.DOTALL)
+    # remove other html tags
+    s = re.sub(r"<[^>]+>", "", s)
+    return s
+
+
+def _is_translation_semantically_consistent(client, source_text: str, translated_sentence: str) -> bool:
+    prompt = f"""
+Check whether the Japanese translation preserves the core meaning of the source sentence.
+
+Source sentence:
+{source_text}
+
+Japanese translation:
+{translated_sentence}
+
+Return JSON only:
+{{"ok": true or false}}
+
+Rules:
+1) Be strict about reversed meaning, added/removed major facts, or changed subject/object.
+2) Minor style differences are acceptable.
+"""
+    try:
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a strict semantic consistency checker."},
+                {"role": "user", "content": prompt},
+            ],
+        )
+        data = _extract_json(resp.choices[0].message.content or "")
+        return bool(data.get("ok", False))
+    except Exception:
+        return True
 
 
 def generate_vocab_info(language: str, term: str) -> dict:
@@ -199,16 +244,29 @@ Rules:
 {japanese_style_rule}
 """
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a precise translation assistant for language learners."},
-            {"role": "user", "content": prompt},
-        ],
-    )
+    def _run_translate(extra_rule: str = "") -> dict:
+        p = prompt
+        if extra_rule:
+            p = f"{prompt}\n{extra_rule}\n"
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a precise translation assistant for language learners."},
+                {"role": "user", "content": p},
+            ],
+        )
+        content = response.choices[0].message.content or ""
+        return _extract_json(content)
 
-    content = response.choices[0].message.content or ""
-    data = _extract_json(content)
+    data = _run_translate()
+    # Japanese only: one retry if semantic meaning seems off.
+    if language == "japanese":
+        candidate = str(data.get("sentence", "") or "").strip()
+        if candidate and not _is_translation_semantically_consistent(client, source_text, candidate):
+            data = _run_translate(
+                "CRITICAL: Keep the source meaning exactly. Do not reverse success/failure, "
+                "do not change who did what, and do not add/remove key facts."
+            )
     ruby_words = data.get("ruby_words", [])
     if not isinstance(ruby_words, list):
         ruby_words = []
@@ -222,13 +280,26 @@ Rules:
             continue
         normalized_ruby_words.append({"base": base, "reading": ruby})
 
+    sentence = str(data.get("sentence", "") or "").strip()
+    reading = str(data.get("reading", "") or "").strip()
+    note = str(data.get("note", "") or "").strip()
+    furigana = str(data.get("furigana", "") or "").strip()
+    ruby_html = str(data.get("ruby_html", "") or "").strip()
+
+    # Guardrail: ruby_html must preserve exact sentence text (ignoring spaces).
+    if language == "japanese" and ruby_html:
+        ruby_plain = _normalize_japanese_text(_ruby_html_to_plain_text(ruby_html))
+        sent_plain = _normalize_japanese_text(sentence)
+        if ruby_plain != sent_plain:
+            ruby_html = ""
+
     return {
-        "sentence": str(data.get("sentence", "") or "").strip(),
-        "reading": str(data.get("reading", "") or "").strip(),
-        "note": str(data.get("note", "") or "").strip(),
-        "furigana": str(data.get("furigana", "") or "").strip(),
+        "sentence": sentence,
+        "reading": reading,
+        "note": note,
+        "furigana": furigana,
         "ruby_words": normalized_ruby_words,
-        "ruby_html": str(data.get("ruby_html", "") or "").strip(),
+        "ruby_html": ruby_html,
     }
 
 
