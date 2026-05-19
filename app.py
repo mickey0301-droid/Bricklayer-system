@@ -865,14 +865,15 @@ def home_page():
             label_to_mode = {label: mode for mode, label in mode_options}
             japanese_mode = label_to_mode.get(selected_mode_label, "normal")
             st.session_state.home_translation_japanese_mode = japanese_mode
-        current_input = str(st.session_state.get("home_translation_input", "") or "").strip()
+        current_input_raw = str(st.session_state.get("home_translation_input", "") or "")
+        current_input = current_input_raw.strip()
         target_changed = selected_target["key"] != prev_target
         mode_changed = (
             selected_target["key"] == "japanese"
             and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
         )
         google_needs_refresh = current_input and (
-            st.session_state.get("home_google_translation_source", "") != current_input
+            st.session_state.get("home_google_translation_source", "") != current_input_raw
             or st.session_state.get("home_google_translation_target_used", "") != selected_target["key"]
         )
         if google_needs_refresh or target_changed:
@@ -906,14 +907,13 @@ def home_page():
                             "zh_translation": zh_text,
                             "en_translation": en_text,
                         }
-                        st.session_state.home_translation_source = current_input
+                        st.session_state.home_translation_source = current_input_raw
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
-                    st.session_state.home_google_translation_input = current_input
-                    st.session_state.home_google_translation_source = current_input
+                    st.session_state.home_google_translation_input = current_input_raw
+                    st.session_state.home_google_translation_source = current_input_raw
                     st.session_state.home_google_translation_target = selected_target["key"]
                     st.session_state.home_google_translation_target_used = selected_target["key"]
-                st.rerun()
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
 
