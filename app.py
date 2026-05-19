@@ -4,6 +4,7 @@ import zipfile
 import random
 import subprocess
 import json
+import re
 import urllib.parse
 import urllib.request
 from datetime import date
@@ -311,7 +312,7 @@ _defaults = {
     "home_translation_input": "",
     "home_translation_target": "english",
     "home_translation_japanese_mode": "normal",
-    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
+    "home_translation_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": "", "furigana": ""},
     "home_translation_source": "",
     "home_translation_target_used": "english",
     "home_translation_japanese_mode_used": "normal",
@@ -854,22 +855,46 @@ def home_page():
             en_text = ""
         return zh_text, en_text
 
-    def _render_japanese_result(sentence: str, reading: str):
-        safe_reading = (
-            str(reading or "").replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace("\n", "<br>")
-        )
-        safe_sentence = (
-            str(sentence or "").replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace("\n", "<br>")
-        )
-        if safe_reading:
-            st.markdown(f'<div class="jp-reading-line">{safe_reading}</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="jp-kanji-line">{safe_sentence}</div>', unsafe_allow_html=True)
+    def _render_japanese_result(sentence: str, reading: str, furigana: str = ""):
+        def _escape_html(text: str) -> str:
+            return (
+                str(text or "")
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+            )
+
+        def _has_kanji(text: str) -> bool:
+            return bool(re.search(r"[\u4e00-\u9fff]", str(text or "")))
+
+        f_text = str(furigana or "").strip()
+        ruby_parts = []
+        if f_text:
+            pattern = re.compile(r"([^\s()（）]+)\(([^\(\)]+)\)")
+            cursor = 0
+            for m in pattern.finditer(f_text):
+                start, end = m.span()
+                if start > cursor:
+                    ruby_parts.append(_escape_html(f_text[cursor:start]))
+                base = m.group(1)
+                rt = m.group(2)
+                if _has_kanji(base):
+                    ruby_parts.append(f"<ruby>{_escape_html(base)}<rt>{_escape_html(rt)}</rt></ruby>")
+                else:
+                    ruby_parts.append(_escape_html(m.group(0)))
+                cursor = end
+            if cursor < len(f_text):
+                ruby_parts.append(_escape_html(f_text[cursor:]))
+
+        if ruby_parts:
+            ruby_html = "".join(ruby_parts).replace("\n", "<br>")
+            st.markdown(f'<div class="jp-kanji-line">{ruby_html}</div>', unsafe_allow_html=True)
+        else:
+            safe_sentence = _escape_html(sentence).replace("\n", "<br>")
+            st.markdown(f'<div class="jp-kanji-line">{safe_sentence}</div>', unsafe_allow_html=True)
+            if reading:
+                safe_reading = _escape_html(reading).replace("\n", "<br>")
+                st.caption(safe_reading)
 
     st.divider()
     st.subheader("Translation (Google + AI)")
@@ -959,6 +984,7 @@ def home_page():
                             "grammar": str(grammar or "").strip(),
                             "zh_translation": zh_text,
                             "en_translation": en_text,
+                            "furigana": str(translation.get("furigana", "") or "").strip(),
                         }
                         st.session_state.home_translation_source = current_input_raw
                         st.session_state.home_translation_target_used = selected_target["key"]
@@ -980,6 +1006,7 @@ def home_page():
         grammar = str(result.get("grammar", "") or "").strip()
         zh_translation = str(result.get("zh_translation", "") or "").strip()
         en_translation = str(result.get("en_translation", "") or "").strip()
+        furigana = str(result.get("furigana", "") or "").strip()
 
         st.markdown("**Google 翻譯結果**")
         if google_result:
@@ -1005,7 +1032,7 @@ def home_page():
         st.markdown("**AI 翻譯結果**")
         if translated:
             if selected_target["key"] == "japanese":
-                _render_japanese_result(translated, reading)
+                _render_japanese_result(translated, reading, furigana)
             else:
                 safe_ai = (
                     translated.replace("&", "&amp;")
@@ -1085,6 +1112,7 @@ def home_page():
                             "grammar": str(grammar or "").strip(),
                             "zh_translation": zh_text,
                             "en_translation": en_text,
+                            "furigana": str(translation.get("furigana", "") or "").strip(),
                         }
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]

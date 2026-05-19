@@ -174,7 +174,8 @@ Return JSON only:
 {{
   "sentence": "natural translation in the target language",
   "reading": "pronunciation guide if useful, otherwise empty string",
-  "note": "one short Traditional Chinese note about wording, otherwise empty string"
+  "note": "one short Traditional Chinese note about wording, otherwise empty string",
+  "furigana": "for Japanese only: annotate only kanji as 漢字(かな); leave non-kanji unannotated. For non-Japanese, empty string"
 }}
 
 Rules:
@@ -185,6 +186,7 @@ Rules:
 5. For languages that do not need a reading guide, leave "reading" empty.
 6. Use Traditional Chinese for "note".
 7. Output JSON only. Do not add Markdown.
+8. If target language is Japanese, "furigana" must keep the original sentence order and annotate only kanji words.
 {japanese_style_rule}
 """
 
@@ -203,6 +205,7 @@ Rules:
         "sentence": str(data.get("sentence", "") or "").strip(),
         "reading": str(data.get("reading", "") or "").strip(),
         "note": str(data.get("note", "") or "").strip(),
+        "furigana": str(data.get("furigana", "") or "").strip(),
     }
 
 
