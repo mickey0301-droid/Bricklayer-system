@@ -868,6 +868,7 @@ def home_page():
             return bool(re.search(r"[\u4e00-\u9fff]", str(text or "")))
 
         raw_ruby_html = str(ruby_html or "").strip()
+        rendered = False
         if raw_ruby_html:
             # 只允許最小安全標記，避免任意 HTML 注入
             safe_html = (
@@ -886,7 +887,8 @@ def home_page():
                 .replace("\n", "<br>")
             )
             st.markdown(f'<div class="jp-kanji-line">{safe_html}</div>', unsafe_allow_html=True)
-            return
+            rendered = True
+            # 不 return，底下仍顯示整句平假名（使用者要求兩者都要）
 
         ruby_words = ruby_words if isinstance(ruby_words, list) else []
         sentence_text = str(sentence or "")
@@ -939,7 +941,7 @@ def home_page():
                 if _occupy(idx, end):
                     annotations.append((idx, end, base, rt))
 
-        if annotations:
+        if (not rendered) and annotations:
             annotations.sort(key=lambda x: x[0])
             ruby_parts = []
             cursor = 0
@@ -952,12 +954,15 @@ def home_page():
                 ruby_parts.append(_escape_html(sentence_text[cursor:]))
             ruby_html = "".join(ruby_parts).replace("\n", "<br>")
             st.markdown(f'<div class="jp-kanji-line">{ruby_html}</div>', unsafe_allow_html=True)
-        else:
+            rendered = True
+        elif not rendered:
             safe_sentence = _escape_html(sentence_text).replace("\n", "<br>")
             st.markdown(f'<div class="jp-kanji-line">{safe_sentence}</div>', unsafe_allow_html=True)
-            if reading:
-                safe_reading = _escape_html(reading).replace("\n", "<br>")
-                st.caption(safe_reading)
+            rendered = True
+
+        if reading:
+            safe_reading = _escape_html(reading).replace("\n", "<br>")
+            st.caption(safe_reading)
 
     st.divider()
     st.subheader("Translation (Google + AI)")
