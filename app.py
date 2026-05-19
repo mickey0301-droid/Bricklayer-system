@@ -296,6 +296,7 @@ _defaults = {
     "home_google_translation_input": "",
     "home_google_translation_target": "english",
     "home_google_translation_result": "",
+    "home_google_translation_reading": "",
     "home_google_translation_source": "",
     "home_google_translation_target_used": "english",
     "home_practice_input": "",
@@ -778,10 +779,10 @@ def home_page():
         "arabic": "ar",
     }
 
-    def _google_translate_text(text: str, target_lang_key: str) -> str:
+    def _google_translate_text(text: str, target_lang_key: str) -> tuple[str, str]:
         source = str(text or "").strip()
         if not source:
-            return ""
+            return "", ""
         tl = google_lang_map.get(target_lang_key, "en")
         q = urllib.parse.quote(source)
         url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={tl}&dt=t&q={q}"
@@ -793,7 +794,11 @@ def home_page():
             str(item[0]) for item in parts
             if isinstance(item, list) and item and item[0] is not None
         )
-        return translated.strip()
+        reading = "".join(
+            str(item[3]) for item in parts
+            if isinstance(item, list) and len(item) > 3 and item[3]
+        )
+        return translated.strip(), reading.strip()
 
     def _build_zh_en_translations(text: str) -> tuple[str, str]:
         sentence = str(text or "").strip()
@@ -873,8 +878,9 @@ def home_page():
         if google_needs_refresh or target_changed:
             try:
                 with st.spinner("正在切換語言並重新翻譯（Google + AI）..."):
-                    g_translated = _google_translate_text(current_input, selected_target["key"])
+                    g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
+                    st.session_state.home_google_translation_reading = g_reading
                     if current_input:
                         translation = translate_text(
                             selected_target["key"],
@@ -913,6 +919,7 @@ def home_page():
 
         result = st.session_state.get("home_translation_result", {})
         google_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
+        google_reading = str(st.session_state.get("home_google_translation_reading", "") or "").strip()
         translated = str(result.get("sentence", "") or "").strip()
         reading = str(result.get("reading", "") or "").strip()
         note = str(result.get("note", "") or "").strip()
@@ -929,10 +936,13 @@ def home_page():
                 .replace("\n", "<br>")
             )
             st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
+            if google_reading:
+                st.caption(google_reading)
             _render_translation_audio(
                 selected_target["key"],
                 google_result,
                 "home_google_translation_play_audio",
+                tts_text=google_reading if selected_target["key"] == "japanese" and google_reading else google_result,
             )
         else:
             st.caption("Google 翻譯結果會顯示在這裡")
@@ -958,6 +968,7 @@ def home_page():
                 selected_target["key"],
                 translated,
                 "home_translation_play_audio",
+                tts_text=reading if selected_target["key"] == "japanese" and reading else translated,
             )
         else:
             st.caption("AI 翻譯結果會顯示在這裡")
@@ -983,8 +994,16 @@ def home_page():
             if not source_text:
                 st.warning("請先輸入要翻譯的文字。")
             else:
-                with st.spinner("AI 正在翻譯與分析文法..."):
+                with st.spinner("Google 與 AI 正在翻譯..."):
                     try:
+                        g_translated, g_reading = _google_translate_text(source_text, selected_target["key"])
+                        st.session_state.home_google_translation_input = source_text
+                        st.session_state.home_google_translation_source = source_text
+                        st.session_state.home_google_translation_target = selected_target["key"]
+                        st.session_state.home_google_translation_target_used = selected_target["key"]
+                        st.session_state.home_google_translation_result = g_translated
+                        st.session_state.home_google_translation_reading = g_reading
+
                         translation = translate_text(
                             selected_target["key"],
                             selected_target["label"],
@@ -1072,6 +1091,7 @@ def home_page():
                 practice_selected["key"],
                 p_sentence,
                 "home_practice_play_audio",
+                tts_text=p_reading if practice_selected["key"] == "japanese" and p_reading else p_sentence,
             )
         else:
             st.text_area(
@@ -3550,19 +3570,20 @@ def settings_page():
 
 
 # ══════════════════════════════════════════════════════════
-def _render_translation_audio(language: str, sentence: str, key: str):
+def _render_translation_audio(language: str, sentence: str, key: str, tts_text: str = ""):
     sentence = str(sentence or "").strip()
     if not sentence:
         return
-    play_key = f"{language}::{sentence}"
-    cached_audio = get_cached_tts(language, "translation", "sent", sentence)
+    speak_text = str(tts_text or "").strip() or sentence
+    play_key = f"{language}::{speak_text}"
+    cached_audio = get_cached_tts(language, "translation", "sent", speak_text)
     if cached_audio:
         st.session_state.translation_tts_audio = cached_audio
         st.session_state.translation_tts_for = play_key
     if st.button("播放語音", use_container_width=True, key=key):
         try:
-            audio_bytes = cached_audio or generate_tts_audio(sentence, language)
-            set_cached_tts(language, "translation", "sent", audio_bytes, sentence)
+            audio_bytes = cached_audio or generate_tts_audio(speak_text, language)
+            set_cached_tts(language, "translation", "sent", audio_bytes, speak_text)
             st.session_state.translation_tts_audio = audio_bytes
             st.session_state.translation_tts_for = play_key
         except Exception as e:
@@ -3707,7 +3728,12 @@ def _render_translation_entry(entry: dict, languages: list, key_prefix: str, edi
             st.caption(reading)
         if note:
             st.caption(note)
-        _render_translation_audio(lang_key, sentence, f"{key_prefix}_{entry.get('id')}_{lang_key}")
+        _render_translation_audio(
+            lang_key,
+            sentence,
+            f"{key_prefix}_{entry.get('id')}_{lang_key}",
+            tts_text=reading if lang_key == "japanese" and reading else sentence,
+        )
         _render_translation_grammar(entry, lang, result, key_prefix)
 
     english_result = translations.get(ENGLISH_TRANSLATION_KEY, {})
