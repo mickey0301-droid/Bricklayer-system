@@ -869,7 +869,19 @@ def home_page():
 
         ruby_words = ruby_words if isinstance(ruby_words, list) else []
         sentence_text = str(sentence or "")
-        rendered_by_words = []
+        annotations = []
+        occupied = [False] * max(len(sentence_text), 1)
+
+        def _occupy(start: int, end: int) -> bool:
+            if start < 0 or end > len(sentence_text) or start >= end:
+                return False
+            if any(occupied[i] for i in range(start, end)):
+                return False
+            for i in range(start, end):
+                occupied[i] = True
+            return True
+
+        # 第一層：優先用詞級 ruby_words（對位最準）
         cursor_sentence = 0
         for item in ruby_words:
             if not isinstance(item, dict):
@@ -883,39 +895,40 @@ def home_page():
                 idx = sentence_text.find(base)
                 if idx < 0:
                     continue
-            if idx > cursor_sentence:
-                rendered_by_words.append(_escape_html(sentence_text[cursor_sentence:idx]))
-            rendered_by_words.append(f"<ruby>{_escape_html(base)}<rt>{_escape_html(rt)}</rt></ruby>")
-            cursor_sentence = idx + len(base)
-        if rendered_by_words:
-            if cursor_sentence < len(sentence_text):
-                rendered_by_words.append(_escape_html(sentence_text[cursor_sentence:]))
-            ruby_html = "".join(rendered_by_words).replace("\n", "<br>")
-            st.markdown(f'<div class="jp-kanji-line">{ruby_html}</div>', unsafe_allow_html=True)
-            return
+            end = idx + len(base)
+            if _occupy(idx, end):
+                annotations.append((idx, end, base, rt))
+                cursor_sentence = end
 
+        # 第二層：用 furigana 字串補上尚未標到的漢字詞（保底不漏）
         f_text = str(furigana or "").strip()
         # AI 有時會在日文間夾空白，會讓 ruby 對位跑掉；這裡統一移除。
         f_text = re.sub(r"\s+", "", f_text)
-        ruby_parts = []
         if f_text:
             pattern = re.compile(r"([^\s()（）]+)\(([^\(\)]+)\)")
-            cursor = 0
             for m in pattern.finditer(f_text):
-                start, end = m.span()
-                if start > cursor:
-                    ruby_parts.append(_escape_html(f_text[cursor:start]))
                 base = m.group(1)
                 rt = re.sub(r"\s+", "", m.group(2))
-                if _has_kanji(base):
-                    ruby_parts.append(f"<ruby>{_escape_html(base)}<rt>{_escape_html(rt)}</rt></ruby>")
-                else:
-                    ruby_parts.append(_escape_html(m.group(0)))
-                cursor = end
-            if cursor < len(f_text):
-                ruby_parts.append(_escape_html(f_text[cursor:]))
+                if not _has_kanji(base) or not rt:
+                    continue
+                idx = sentence_text.find(base)
+                if idx < 0:
+                    continue
+                end = idx + len(base)
+                if _occupy(idx, end):
+                    annotations.append((idx, end, base, rt))
 
-        if ruby_parts:
+        if annotations:
+            annotations.sort(key=lambda x: x[0])
+            ruby_parts = []
+            cursor = 0
+            for start, end, base, rt in annotations:
+                if start > cursor:
+                    ruby_parts.append(_escape_html(sentence_text[cursor:start]))
+                ruby_parts.append(f"<ruby>{_escape_html(base)}<rt>{_escape_html(rt)}</rt></ruby>")
+                cursor = end
+            if cursor < len(sentence_text):
+                ruby_parts.append(_escape_html(sentence_text[cursor:]))
             ruby_html = "".join(ruby_parts).replace("\n", "<br>")
             st.markdown(f'<div class="jp-kanji-line">{ruby_html}</div>', unsafe_allow_html=True)
         else:
