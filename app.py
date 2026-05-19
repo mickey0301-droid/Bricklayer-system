@@ -6,6 +6,7 @@ import subprocess
 import json
 import urllib.parse
 import urllib.request
+from datetime import date
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -302,6 +303,8 @@ _defaults = {
     "home_practice_input": "",
     "home_practice_language": "english",
     "home_practice_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
+    "home_translation_count_date": "",
+    "home_translation_count_today": 0,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -765,6 +768,18 @@ def home_page():
     st.markdown("# 🧱 Bricklayer")
 
     languages = load_languages()
+    today_str = str(date.today())
+    if st.session_state.get("home_translation_count_date", "") != today_str:
+        st.session_state.home_translation_count_date = today_str
+        st.session_state.home_translation_count_today = 0
+
+    def _mark_home_translation_done():
+        if st.session_state.get("home_translation_count_date", "") != today_str:
+            st.session_state.home_translation_count_date = today_str
+            st.session_state.home_translation_count_today = 0
+        st.session_state.home_translation_count_today = int(
+            st.session_state.get("home_translation_count_today", 0)
+        ) + 1
     google_lang_map = {
         "english": "en",
         "chinese": "zh-TW",
@@ -910,6 +925,7 @@ def home_page():
                         st.session_state.home_translation_source = current_input_raw
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
+                        _mark_home_translation_done()
                     st.session_state.home_google_translation_input = current_input_raw
                     st.session_state.home_google_translation_source = current_input_raw
                     st.session_state.home_google_translation_target = selected_target["key"]
@@ -980,6 +996,7 @@ def home_page():
             st.caption("完成翻譯後會在這裡顯示文法解析。")
 
     with left_col:
+        st.caption(f"今日已翻譯句數：{st.session_state.get('home_translation_count_today', 0)}")
         source_text = st.text_area(
             "輸入中文或英文",
             height=290,
@@ -1030,6 +1047,7 @@ def home_page():
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
+                        _mark_home_translation_done()
                     except Exception as e:
                         st.error(f"AI 翻譯失敗：{e}")
                 st.rerun()
