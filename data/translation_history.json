@@ -43,5 +43,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779370963.7286968
+  },
+  {
+    "id": "6d1d08c688324e5fabc3e3999d3cc2b6",
+    "original_text": "你喜歡看什麼電影呢？",
+    "translated_sentence": "どんな映画が好きですか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779370966.3556244
   }
 ]
