@@ -232,5 +232,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779392430.1911356
+  },
+  {
+    "id": "6b428e8688c446b98b2c9a5931303582",
+    "original_text": "時間也很晚了",
+    "translated_sentence": "それもとても遅いです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779392669.9356534
   }
 ]
