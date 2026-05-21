@@ -394,5 +394,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393951.9681637
+  },
+  {
+    "id": "66dda48afa7f400ea0a82082cef3953b",
+    "original_text": "請找出問題是怎麼造成的",
+    "translated_sentence": "問題の原因を調べてください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393984.4167063
   }
 ]
