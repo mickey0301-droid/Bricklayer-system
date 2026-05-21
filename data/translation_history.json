@@ -6,7 +6,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
   },
   {
     "id": "0ebde22e006446738db349294552919b",
@@ -15,7 +15,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
   },
   {
     "id": "f97162f5185a4181ba497d87ea640e35",
@@ -24,7 +24,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
   },
   {
     "id": "6d1d08c688324e5fabc3e3999d3cc2b6",
@@ -33,7 +33,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
   },
   {
     "id": "8e44da5dfd9f406e9c3d0cff4895442e",
@@ -42,7 +42,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
   },
   {
     "id": "dae13e7653084aa3a1439b1ea6704294",
@@ -51,7 +51,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
   },
   {
     "id": "f2911f86c88a47939bfb5da8fe03ba26",
@@ -60,6 +60,15 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779376269.210547
+    "updated_at": 1779376271.9664168
+  },
+  {
+    "id": "fc7526cd9acd4193aa0ec0aa8b078a2c",
+    "original_text": "很多人的第一反應是：不可能。",
+    "translated_sentence": "多くの人の第一反応は「不可能だ」ということです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779376271.9664168
   }
 ]
