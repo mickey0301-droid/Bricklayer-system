@@ -1100,6 +1100,27 @@ def home_page():
         furigana = str(result.get("furigana", "") or "").strip()
         ruby_words = result.get("ruby_words", [])
         ruby_html = str(result.get("ruby_html", "") or "").strip()
+        history_source_text = str(st.session_state.get("home_translation_input", "") or "").strip()
+
+        # Safety sync: if results are visible, ensure both Google/AI entries exist in history.
+        if history_source_text and selected_target.get("label"):
+            target_mode_value = japanese_mode if selected_target["key"] == "japanese" else ""
+            if google_result:
+                upsert_translation_history_entry(
+                    original_text=history_source_text,
+                    translated_sentence=google_result,
+                    translation_source="Google",
+                    target_language=selected_target.get("label", selected_target["key"]),
+                    target_mode=target_mode_value,
+                )
+            if translated:
+                upsert_translation_history_entry(
+                    original_text=history_source_text,
+                    translated_sentence=translated,
+                    translation_source="AI",
+                    target_language=selected_target.get("label", selected_target["key"]),
+                    target_mode=target_mode_value,
+                )
 
         st.markdown("**Google 翻譯結果**")
         if google_result:

@@ -93,6 +93,8 @@ def upsert_translation_history_entry(
             and item.get("target_language") == target_language
             and item.get("target_mode", "") == target_mode
         ):
+            if str(item.get("translated_sentence", "") or "").strip() == translated_sentence:
+                return entries
             item["translated_sentence"] = translated_sentence
             item["updated_at"] = now
             save_translation_history(entries)
