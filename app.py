@@ -1278,6 +1278,29 @@ def home_page():
             placeholder="例如：我今天想先完成這份報告。 / I want to finish this report first today.",
             key="home_translation_input",
         )
+        # Alt+Enter shortcut: trigger the same Translate button flow.
+        components.html(
+            """
+            <script>
+            (function() {
+              if (window.__bricklayerAltEnterBound) return;
+              window.__bricklayerAltEnterBound = true;
+              document.addEventListener('keydown', function(e) {
+                if (!(e.altKey && e.key === 'Enter')) return;
+                const active = document.activeElement;
+                if (!active || (active.tagName !== 'TEXTAREA' && active.tagName !== 'INPUT')) return;
+                const label = (active.getAttribute('aria-label') || '').trim();
+                if (label !== '輸入中文或英文') return;
+                e.preventDefault();
+                const buttons = Array.from(document.querySelectorAll('button'));
+                const btn = buttons.find(b => (b.innerText || '').trim() === '翻譯');
+                if (btn) btn.click();
+              }, true);
+            })();
+            </script>
+            """,
+            height=0,
+        )
         submitted = st.button("翻譯", use_container_width=True, key="home_translation_submit")
         if submitted:
             source_text_raw = str(source_text or "")
