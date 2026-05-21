@@ -349,5 +349,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393604.3207622
+  },
+  {
+    "id": "5477620554334d06b293cd493e6d6109",
+    "original_text": "你為什麼要說這種話傷害彼此",
+    "translated_sentence": "なぜお互いに傷つけるようなことを言うのですか。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393606.9144635
   }
 ]
