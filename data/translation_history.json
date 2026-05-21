@@ -61,5 +61,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779376595.492104
+  },
+  {
+    "id": "dda4de6d810440a79c62125328dd425c",
+    "original_text": "很多人的第一反應是：不可能。",
+    "translated_sentence": "多くの人の第一反応は「不可能だ」ということです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779376598.0208828
   }
 ]
