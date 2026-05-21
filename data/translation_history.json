@@ -97,5 +97,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391336.6169379
+  },
+  {
+    "id": "c154abad09254bafa9d557cd64b54f55",
+    "original_text": "不管要花多少時間",
+    "translated_sentence": "どれだけ時間がかかっても",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391338.9147334
   }
 ]
