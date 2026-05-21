@@ -60,6 +60,11 @@ from utils.translation_manager import (
     update_translation_grammar,
     update_translation_sentence,
 )
+from utils.translation_history_manager import (
+    load_translation_history,
+    save_translation_history,
+    upsert_translation_history_entry,
+)
 from utils.familiarity_manager import (
     get_familiarity, set_familiarity, get_sample_weights,
     FAMILIAR, UNFAMILIAR,
@@ -1059,6 +1064,12 @@ def home_page():
                         st.session_state.home_translation_source = current_input_raw
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
+                        upsert_translation_history_entry(
+                            original_text=current_input_raw,
+                            translated_sentence=sentence,
+                            target_language=selected_target.get("label", selected_target["key"]),
+                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                        )
                         _mark_home_translation_done()
                     st.session_state.home_google_translation_input = current_input_raw
                     st.session_state.home_google_translation_source = current_input_raw
@@ -1191,10 +1202,50 @@ def home_page():
                         st.session_state.home_translation_source = source_text
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
+                        upsert_translation_history_entry(
+                            original_text=source_text_raw,
+                            translated_sentence=sentence,
+                            target_language=selected_target.get("label", selected_target["key"]),
+                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                        )
                         _mark_home_translation_done()
                     except Exception as e:
                         st.error(f"AI 翻譯失敗：{e}")
                 st.rerun()
+
+    st.markdown("### Translation History")
+    history_entries = load_translation_history()
+    if not history_entries:
+        st.info("目前還沒有翻譯紀錄。完成翻譯後會自動累積在這裡。")
+    else:
+        history_df = pd.DataFrame(history_entries)
+        show_cols = ["original_text", "translated_sentence", "target_language", "target_mode"]
+        history_df = history_df[show_cols]
+        edited_df = st.data_editor(
+            history_df,
+            use_container_width=True,
+            num_rows="dynamic",
+            hide_index=True,
+            key="home_translation_history_editor",
+            column_config={
+                "original_text": "Original Text",
+                "translated_sentence": "Translated Sentence",
+                "target_language": "Target Language",
+                "target_mode": "Target Mode",
+            },
+        )
+        if st.button("儲存翻譯紀錄編輯", use_container_width=True, key="home_translation_history_save"):
+            rows = []
+            for _, row in edited_df.iterrows():
+                rows.append({
+                    "original_text": str(row.get("original_text", "") or "").strip(),
+                    "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
+                    "target_language": str(row.get("target_language", "") or "").strip(),
+                    "target_mode": str(row.get("target_mode", "") or "").strip(),
+                })
+            save_translation_history(rows)
+            st.success("已儲存翻譯紀錄。")
+            st.rerun()
 
     st.markdown("### Translation Practice")
     p_left_col, p_right_col = st.columns(2)
