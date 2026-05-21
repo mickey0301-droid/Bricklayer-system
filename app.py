@@ -1226,80 +1226,63 @@ def home_page():
             label_to_lang_key["Japanese"] = "japanese"
             label_to_lang_key["Korean"] = "korean"
             label_to_lang_key["Spanish"] = "spanish"
+            history_df["no"] = history_df.index + 1
+            history_df["recorded_time"] = history_df["updated_at"].apply(
+                lambda x: time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(float(x))) if str(x).strip() else ""
+            )
+            history_df["play"] = False
 
-            st.caption("可直接編輯欄位；每列右側可播放該翻譯句子的發音。")
-            edited_rows = []
-            for i, row in history_df.iterrows():
-                rid = str(row.get("id", f"row_{i}"))
-                rec_time = ""
-                try:
-                    rec_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(float(row.get("updated_at", ""))))
-                except Exception:
-                    rec_time = ""
+            st.caption("像 Excel 一樣每句一列；勾選一列後按播放。")
+            display_df = history_df[
+                ["play", "no", "original_text", "translated_sentence", "target_language", "target_mode", "recorded_time"]
+            ].copy()
+            edited_df = st.data_editor(
+                display_df,
+                use_container_width=True,
+                hide_index=True,
+                num_rows="dynamic",
+                key="home_translation_history_editor",
+                column_config={
+                    "play": st.column_config.CheckboxColumn("Play"),
+                    "no": st.column_config.NumberColumn("No.", disabled=True),
+                    "original_text": "Original Text",
+                    "translated_sentence": "Translated Sentence",
+                    "target_language": "Target Language",
+                    "target_mode": "Target Mode",
+                    "recorded_time": st.column_config.TextColumn("Recorded Time", disabled=True),
+                },
+                disabled=["no", "recorded_time"],
+            )
 
-                st.markdown(f"**{i + 1}.**")
-                c1, c2 = st.columns([5, 2])
-                with c1:
-                    original_text = st.text_area(
-                        "Original Text",
-                        value=str(row.get("original_text", "") or ""),
-                        key=f"hist_orig_{rid}",
-                        height=68,
-                    )
-                    translated_sentence = st.text_area(
-                        "Translated Sentence",
-                        value=str(row.get("translated_sentence", "") or ""),
-                        key=f"hist_trans_{rid}",
-                        height=68,
-                    )
-                    cmeta1, cmeta2, cmeta3 = st.columns(3)
-                    with cmeta1:
-                        target_language = st.text_input(
-                            "Target Language",
-                            value=str(row.get("target_language", "") or ""),
-                            key=f"hist_lang_{rid}",
+            play_col, save_col = st.columns(2)
+            with play_col:
+                if st.button("播放勾選列發音", use_container_width=True, key="home_translation_history_play_selected"):
+                    selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
+                    if selected_rows.empty:
+                        st.warning("請先勾選要播放的列。")
+                    else:
+                        row = selected_rows.iloc[0]
+                        lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
+                        _render_translation_audio(
+                            lang_key,
+                            str(row.get("translated_sentence", "") or "").strip(),
+                            key="home_translation_history_play_selected_audio",
                         )
-                    with cmeta2:
-                        target_mode = st.text_input(
-                            "Target Mode",
-                            value=str(row.get("target_mode", "") or ""),
-                            key=f"hist_mode_{rid}",
-                        )
-                    with cmeta3:
-                        st.text_input(
-                            "Recorded Time",
-                            value=rec_time,
-                            key=f"hist_time_{rid}",
-                            disabled=True,
-                        )
-
-                with c2:
-                    lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
-                    _render_translation_audio(
-                        lang_key,
-                        str(row.get("translated_sentence", "") or ""),
-                        key=f"hist_tts_{rid}",
-                    )
-
-                edited_rows.append({
-                    "id": rid,
-                    "original_text": original_text.strip(),
-                    "translated_sentence": translated_sentence.strip(),
-                    "target_language": target_language.strip(),
-                    "target_mode": target_mode.strip(),
-                    "updated_at": float(row.get("updated_at") or time.time()),
-                })
-                st.divider()
-
-            if st.button("儲存翻譯紀錄編輯", use_container_width=True, key="home_translation_history_save"):
-                now_ts = time.time()
-                rows = []
-                for row in edited_rows:
-                    row["updated_at"] = now_ts
-                    rows.append(row)
-                save_translation_history(rows)
-                st.success("已儲存翻譯紀錄。")
-                st.rerun()
+            with save_col:
+                if st.button("儲存翻譯紀錄編輯", use_container_width=True, key="home_translation_history_save"):
+                    now_ts = time.time()
+                    rows = []
+                    for _, row in edited_df.iterrows():
+                        rows.append({
+                            "original_text": str(row.get("original_text", "") or "").strip(),
+                            "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
+                            "target_language": str(row.get("target_language", "") or "").strip(),
+                            "target_mode": str(row.get("target_mode", "") or "").strip(),
+                            "updated_at": now_ts,
+                        })
+                    save_translation_history(rows)
+                    st.success("已儲存翻譯紀錄。")
+                    st.rerun()
 
     st.markdown("### Translation Practice")
     p_left_col, p_right_col = st.columns(2)
