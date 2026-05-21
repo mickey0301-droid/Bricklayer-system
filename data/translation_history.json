@@ -682,5 +682,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779397084.1526275
+  },
+  {
+    "id": "9b10cd90669641a0a4fb60cbb5ef4809",
+    "original_text": "新的一天又開始了",
+    "translated_sentence": "新しい一日が始まりました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779397101.422776
   }
 ]
