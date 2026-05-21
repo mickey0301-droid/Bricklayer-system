@@ -124,5 +124,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391535.8305874
+  },
+  {
+    "id": "78358edccf434f55b7d8f4c74508c361",
+    "original_text": "這也沒關係",
+    "translated_sentence": "それは問題ではありません",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391595.558223
   }
 ]
