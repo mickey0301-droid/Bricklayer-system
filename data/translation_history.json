@@ -151,5 +151,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391825.1995738
+  },
+  {
+    "id": "d9811bbd5dd84487a84c8c61054d5bd3",
+    "original_text": "我已經修改很多次了",
+    "translated_sentence": "もう何度も修正しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391827.4804585
   }
 ]
