@@ -342,6 +342,7 @@ _defaults = {
     "home_ai_task_id": "",
     "home_ai_task_status": "",
     "home_ai_earliest_show_at": 0.0,
+    "home_google_history_pending": None,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -1056,6 +1057,35 @@ def home_page():
             safe_reading = _escape_html(reading).replace("\n", "<br>")
             st.caption(safe_reading)
 
+    def _queue_google_history_write(original_text: str, translated_sentence: str, target_label: str, target_mode: str):
+        text = str(original_text or "")
+        translated = str(translated_sentence or "").strip()
+        if not text.strip() or not translated:
+            return
+        st.session_state.home_google_history_pending = {
+            "original_text": text,
+            "translated_sentence": translated,
+            "translation_source": "Google",
+            "target_language": target_label,
+            "target_mode": target_mode,
+            "due_at": time.time() + 0.45,
+        }
+
+    def _flush_google_history_if_due():
+        pending = st.session_state.get("home_google_history_pending")
+        if not isinstance(pending, dict):
+            return
+        if time.time() < float(pending.get("due_at", 0.0) or 0.0):
+            return
+        upsert_translation_history_entry(
+            original_text=str(pending.get("original_text", "") or ""),
+            translated_sentence=str(pending.get("translated_sentence", "") or ""),
+            translation_source="Google",
+            target_language=str(pending.get("target_language", "") or ""),
+            target_mode=str(pending.get("target_mode", "") or ""),
+        )
+        st.session_state.home_google_history_pending = None
+
     st.divider()
     st.subheader("Translation (Google + AI)")
     left_col, right_col = st.columns(2)
@@ -1115,6 +1145,7 @@ def home_page():
             or st.session_state.get("home_google_translation_target_used", "") != selected_target["key"]
         )
         _collect_home_ai_task()
+        _flush_google_history_if_due()
         if google_needs_refresh or target_changed or mode_changed:
             try:
                 if current_input:
@@ -1141,12 +1172,11 @@ def home_page():
                 st.session_state.home_google_translation_result = g_translated
                 st.session_state.home_google_translation_reading = g_reading
                 if current_input:
-                    upsert_translation_history_entry(
-                        original_text=current_input_raw,
-                        translated_sentence=g_translated,
-                        translation_source="Google",
-                        target_language=selected_target.get("label", selected_target["key"]),
-                        target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                    _queue_google_history_write(
+                        current_input_raw,
+                        g_translated,
+                        selected_target.get("label", selected_target["key"]),
+                        japanese_mode if selected_target["key"] == "japanese" else "",
                     )
                 st.session_state.home_google_translation_input = current_input_raw
                 st.session_state.home_google_translation_source = current_input_raw
@@ -1172,14 +1202,6 @@ def home_page():
         # Safety sync: if results are visible, ensure both Google/AI entries exist in history.
         if history_source_text and selected_target.get("label"):
             target_mode_value = japanese_mode if selected_target["key"] == "japanese" else ""
-            if google_result:
-                upsert_translation_history_entry(
-                    original_text=history_source_text,
-                    translated_sentence=google_result,
-                    translation_source="Google",
-                    target_language=selected_target.get("label", selected_target["key"]),
-                    target_mode=target_mode_value,
-                )
             if (
                 translated
                 and str(st.session_state.get("home_translation_source", "") or "").strip() == history_source_text
@@ -1304,12 +1326,11 @@ def home_page():
                         st.session_state.home_google_translation_result = g_translated
                         st.session_state.home_google_translation_reading = g_reading
 
-                        upsert_translation_history_entry(
-                            original_text=source_text_raw,
-                            translated_sentence=g_translated,
-                            translation_source="Google",
-                            target_language=selected_target.get("label", selected_target["key"]),
-                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                        _queue_google_history_write(
+                            source_text_raw,
+                            g_translated,
+                            selected_target.get("label", selected_target["key"]),
+                            japanese_mode if selected_target["key"] == "japanese" else "",
                         )
                     except Exception as e:
                         st.error(f"AI 翻譯失敗：{e}")
