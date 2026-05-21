@@ -214,5 +214,14 @@
     "target_language": "English",
     "target_mode": "",
     "updated_at": 1779392409.7299151
+  },
+  {
+    "id": "a7455f8647924492bf8d85aecbafe99b",
+    "original_text": "就是要透過不斷地嘗試來調整",
+    "translated_sentence": "継続的な試みを通じて調整することが重要です。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779392422.883144
   }
 ]
