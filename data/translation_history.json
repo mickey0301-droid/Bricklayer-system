@@ -169,5 +169,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391934.998145
+  },
+  {
+    "id": "d5c6d8f002d5429d933428be718e0520",
+    "original_text": "現在再試一次",
+    "translated_sentence": "もう一度試してください",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391937.1851125
   }
 ]
