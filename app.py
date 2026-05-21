@@ -1243,96 +1243,130 @@ def home_page():
             label_to_lang_key["Japanese"] = "japanese"
             label_to_lang_key["Korean"] = "korean"
             label_to_lang_key["Spanish"] = "spanish"
-            history_df["no"] = history_df.index + 1
-            tw_tz = ZoneInfo("Asia/Taipei")
-            history_df["recorded_time"] = history_df["updated_at"].apply(
-                lambda x: datetime.fromtimestamp(float(x), tw_tz).strftime("%Y-%m-%d %H:%M:%S") if str(x).strip() else ""
+
+            # ── filters ─────────────────────────────────────
+            source_options = ["All"] + sorted(
+                [x for x in history_df.get("translation_source", pd.Series([], dtype=str)).dropna().astype(str).unique().tolist() if x.strip()]
             )
-            history_df["play"] = False
-
-            st.caption("像 Excel 一樣每句一列；勾選一列後按播放。")
-            display_df = history_df[
-                ["play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
-            ].copy()
-            edited_df = st.data_editor(
-                display_df,
-                use_container_width=True,
-                hide_index=True,
-                num_rows="dynamic",
-                key="home_translation_history_editor",
-                column_config={
-                    "play": st.column_config.CheckboxColumn("Play"),
-                    "no": st.column_config.NumberColumn("No.", disabled=True),
-                    "original_text": "Original Text",
-                    "translated_sentence": "Translated Sentence",
-                    "translation_source": "Source",
-                    "target_language": "Target Language",
-                    "target_mode": "Target Mode",
-                    "recorded_time": st.column_config.TextColumn("Recorded Time", disabled=True),
-                },
-                disabled=["no", "recorded_time"],
+            lang_options = ["All"] + sorted(
+                [x for x in history_df.get("target_language", pd.Series([], dtype=str)).dropna().astype(str).unique().tolist() if x.strip()]
             )
+            f1, f2 = st.columns(2)
+            with f1:
+                selected_source = st.selectbox(
+                    "Source Filter",
+                    source_options,
+                    index=0,
+                    key="history_filter_source",
+                )
+            with f2:
+                selected_language = st.selectbox(
+                    "Target Language Filter",
+                    lang_options,
+                    index=0,
+                    key="history_filter_target_language",
+                )
 
-            # Auto-save on any cell edit (excluding play/no/recorded_time helper columns)
-            auto_rows = []
-            for _, row in edited_df.iterrows():
-                auto_rows.append({
-                    "original_text": str(row.get("original_text", "") or "").strip(),
-                    "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
-                    "translation_source": str(row.get("translation_source", "") or "AI").strip() or "AI",
-                    "target_language": str(row.get("target_language", "") or "").strip(),
-                    "target_mode": str(row.get("target_mode", "") or "").strip(),
-                })
-            auto_sig = json.dumps(auto_rows, ensure_ascii=False, sort_keys=True)
-            if st.session_state.get("home_translation_history_last_sig", "") != auto_sig:
-                now_ts = time.time()
-                rows_to_save = []
-                for row in auto_rows:
-                    row["updated_at"] = now_ts
-                    rows_to_save.append(row)
-                save_translation_history(rows_to_save)
-                st.session_state.home_translation_history_last_sig = auto_sig
-                st.caption("已自動儲存")
+            filtered_df = history_df.copy()
+            if selected_source != "All":
+                filtered_df = filtered_df[filtered_df["translation_source"] == selected_source]
+            if selected_language != "All":
+                filtered_df = filtered_df[filtered_df["target_language"] == selected_language]
 
-            selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
-            if not selected_rows.empty:
-                row = selected_rows.iloc[0]
-                lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
-                sentence_to_play = str(row.get("translated_sentence", "") or "").strip()
-                if sentence_to_play:
-                    play_key = f"history::{lang_key}::{sentence_to_play}"
-                    if st.session_state.get("history_tts_auto_played_for") != play_key:
-                        try:
-                            cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
-                            audio_bytes = cached_audio or generate_tts_audio(sentence_to_play, lang_key)
-                            set_cached_tts(lang_key, "translation", "sent", audio_bytes, sentence_to_play)
-                            st.session_state.history_tts_auto_played_for = play_key
-                            components.html(audio_player_autoplay_silent(audio_bytes), height=1)
-                        except Exception as e:
-                            st.error(f"語音產生失敗：{e}")
-                    else:
-                        cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
-                        if cached_audio:
-                            components.html(audio_player_autoplay_silent(cached_audio), height=1)
+            if filtered_df.empty:
+                st.info("目前篩選條件下沒有資料。")
+            else:
+                history_df = filtered_df.reset_index(drop=True)
+                history_df["no"] = history_df.index + 1
+                tw_tz = ZoneInfo("Asia/Taipei")
+                history_df["recorded_time"] = history_df["updated_at"].apply(
+                    lambda x: datetime.fromtimestamp(float(x), tw_tz).strftime("%Y-%m-%d %H:%M:%S") if str(x).strip() else ""
+                )
+                history_df["play"] = False
 
-            if st.button("播放全部句子發音", use_container_width=True, key="home_translation_history_play_all"):
-                audio_items = []
+                st.caption("像 Excel 一樣每句一列；勾選一列後按播放。")
+                display_df = history_df[
+                    ["play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
+                ].copy()
+                edited_df = st.data_editor(
+                    display_df,
+                    use_container_width=True,
+                    hide_index=True,
+                    num_rows="dynamic",
+                    key="home_translation_history_editor",
+                    column_config={
+                        "play": st.column_config.CheckboxColumn("Play"),
+                        "no": st.column_config.NumberColumn("No.", disabled=True),
+                        "original_text": "Original Text",
+                        "translated_sentence": "Translated Sentence",
+                        "translation_source": "Source",
+                        "target_language": "Target Language",
+                        "target_mode": "Target Mode",
+                        "recorded_time": st.column_config.TextColumn("Recorded Time", disabled=True),
+                    },
+                    disabled=["no", "recorded_time"],
+                )
+
+                # Auto-save on any cell edit (excluding play/no/recorded_time helper columns)
+                auto_rows = []
                 for _, row in edited_df.iterrows():
-                    sentence = str(row.get("translated_sentence", "") or "").strip()
-                    if not sentence:
-                        continue
+                    auto_rows.append({
+                        "original_text": str(row.get("original_text", "") or "").strip(),
+                        "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
+                        "translation_source": str(row.get("translation_source", "") or "AI").strip() or "AI",
+                        "target_language": str(row.get("target_language", "") or "").strip(),
+                        "target_mode": str(row.get("target_mode", "") or "").strip(),
+                    })
+                auto_sig = json.dumps(auto_rows, ensure_ascii=False, sort_keys=True)
+                if st.session_state.get("home_translation_history_last_sig", "") != auto_sig:
+                    now_ts = time.time()
+                    rows_to_save = []
+                    for row in auto_rows:
+                        row["updated_at"] = now_ts
+                        rows_to_save.append(row)
+                    save_translation_history(rows_to_save)
+                    st.session_state.home_translation_history_last_sig = auto_sig
+                    st.caption("已自動儲存")
+
+                selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
+                if not selected_rows.empty:
+                    row = selected_rows.iloc[0]
                     lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
-                    try:
-                        cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence)
-                        audio_bytes = cached_audio or generate_tts_audio(sentence, lang_key)
-                        set_cached_tts(lang_key, "translation", "sent", audio_bytes, sentence)
-                        audio_items.append(audio_bytes)
-                    except Exception:
-                        continue
-                if audio_items:
-                    components.html(audio_player_autoplay_playlist(audio_items), height=1)
-                else:
-                    st.warning("沒有可播放的句子。")
+                    sentence_to_play = str(row.get("translated_sentence", "") or "").strip()
+                    if sentence_to_play:
+                        play_key = f"history::{lang_key}::{sentence_to_play}"
+                        if st.session_state.get("history_tts_auto_played_for") != play_key:
+                            try:
+                                cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
+                                audio_bytes = cached_audio or generate_tts_audio(sentence_to_play, lang_key)
+                                set_cached_tts(lang_key, "translation", "sent", audio_bytes, sentence_to_play)
+                                st.session_state.history_tts_auto_played_for = play_key
+                                components.html(audio_player_autoplay_silent(audio_bytes), height=1)
+                            except Exception as e:
+                                st.error(f"語音產生失敗：{e}")
+                        else:
+                            cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
+                            if cached_audio:
+                                components.html(audio_player_autoplay_silent(cached_audio), height=1)
+
+                if st.button("播放全部句子發音", use_container_width=True, key="home_translation_history_play_all"):
+                    audio_items = []
+                    for _, row in edited_df.iterrows():
+                        sentence = str(row.get("translated_sentence", "") or "").strip()
+                        if not sentence:
+                            continue
+                        lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
+                        try:
+                            cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence)
+                            audio_bytes = cached_audio or generate_tts_audio(sentence, lang_key)
+                            set_cached_tts(lang_key, "translation", "sent", audio_bytes, sentence)
+                            audio_items.append(audio_bytes)
+                        except Exception:
+                            continue
+                    if audio_items:
+                        components.html(audio_player_autoplay_playlist(audio_items), height=1)
+                    else:
+                        st.warning("沒有可播放的句子。")
 
     st.markdown("### Translation Practice")
     p_left_col, p_right_col = st.columns(2)
