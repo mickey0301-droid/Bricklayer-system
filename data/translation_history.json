@@ -268,5 +268,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393031.5144098
+  },
+  {
+    "id": "65e0d5e9129f479788da3906e3e1d48d",
+    "original_text": "Do you want to try it?",
+    "translated_sentence": "試してみますか?",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393048.2039702
   }
 ]
