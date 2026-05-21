@@ -385,5 +385,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393867.2440197
+  },
+  {
+    "id": "714aa092f1e54517bde629dba0862a01",
+    "original_text": "結束了嗎",
+    "translated_sentence": "結束しましたか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393869.605998
   }
 ]
