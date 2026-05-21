@@ -370,8 +370,11 @@ _defaults = {
     "debug_vocab_filter": False,
 }
 _ui_prefs = _load_ui_preferences()
+_saved_home_default_target = str(_ui_prefs.get("home_translation_default_target", "") or "").strip().lower()
 _saved_home_target = str(_ui_prefs.get("home_translation_target", "english") or "english").strip().lower()
-if _saved_home_target:
+if _saved_home_default_target:
+    _defaults["home_translation_target"] = _saved_home_default_target
+elif _saved_home_target:
     _defaults["home_translation_target"] = _saved_home_target
 _saved_home_jp_mode = str(_ui_prefs.get("home_translation_japanese_mode", "normal") or "normal").strip().lower()
 if _saved_home_jp_mode in {"polite", "normal", "casual"}:
@@ -383,7 +386,9 @@ for k, v in _defaults.items():
 # Ensure persisted UI preferences are applied once per app session,
 # even when session_state already contains old default values.
 if not st.session_state.get("_ui_prefs_applied_once", False):
-    if _saved_home_target:
+    if _saved_home_default_target:
+        st.session_state.home_translation_target = _saved_home_default_target
+    elif _saved_home_target:
         st.session_state.home_translation_target = _saved_home_target
     if _saved_home_jp_mode in {"polite", "normal", "casual"}:
         st.session_state.home_translation_japanese_mode = _saved_home_jp_mode
@@ -1142,6 +1147,23 @@ def home_page():
             break
 
     with right_col:
+        default_target_index = 0
+        saved_default_target = str(_load_ui_preferences().get("home_translation_default_target", "") or "").strip().lower()
+        for i, x in enumerate(target_options):
+            if x["key"] == (saved_default_target or st.session_state.get("home_translation_target", "english")):
+                default_target_index = i
+                break
+        default_selected_label = st.selectbox(
+            "預設目標語言（下次進入系統時使用）",
+            target_labels,
+            index=default_target_index,
+            key="home_translation_default_target_select",
+        )
+        default_selected_target = target_options[target_labels.index(default_selected_label)]
+        _prefs = _load_ui_preferences()
+        _prefs["home_translation_default_target"] = default_selected_target["key"]
+        _save_ui_preferences(_prefs)
+
         selected_label = st.selectbox(
             "翻譯目標語言",
             target_labels,
