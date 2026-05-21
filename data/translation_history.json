@@ -439,5 +439,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395097.3020604
+  },
+  {
+    "id": "037cb948e90f48bca6ac3387768421e6",
+    "original_text": "看來是沒事了",
+    "translated_sentence": "もう大丈夫そうです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395099.6117303
   }
 ]
