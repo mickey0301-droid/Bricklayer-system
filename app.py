@@ -84,6 +84,26 @@ st.set_page_config(page_title="Bricklayer", layout="wide")
 _HOME_AI_TASK_LOCK = threading.Lock()
 _HOME_AI_TASK_RESULTS: dict[str, dict] = {}
 
+
+def _load_ui_preferences() -> dict:
+    path = os.path.join(DATA_FOLDER, "ui_preferences.json")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_ui_preferences(prefs: dict):
+    ensure_data_folder()
+    path = os.path.join(DATA_FOLDER, "ui_preferences.json")
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(prefs, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
 # ── 語言對應國旗 ──────────────────────────────────────────
 LANGUAGE_FLAGS = {
     "japanese": "🇯🇵",
@@ -349,6 +369,13 @@ _defaults = {
     # 詞彙顯示偵錯：顯示被規則忽略的高編號詞
     "debug_vocab_filter": False,
 }
+_ui_prefs = _load_ui_preferences()
+_saved_home_target = str(_ui_prefs.get("home_translation_target", "english") or "english").strip().lower()
+if _saved_home_target:
+    _defaults["home_translation_target"] = _saved_home_target
+_saved_home_jp_mode = str(_ui_prefs.get("home_translation_japanese_mode", "normal") or "normal").strip().lower()
+if _saved_home_jp_mode in {"polite", "normal", "casual"}:
+    _defaults["home_translation_japanese_mode"] = _saved_home_jp_mode
 for k, v in _defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
@@ -1115,6 +1142,9 @@ def home_page():
         selected_target = target_options[target_labels.index(selected_label)]
         prev_target = st.session_state.get("home_translation_target", "english")
         st.session_state.home_translation_target = selected_target["key"]
+        _prefs = _load_ui_preferences()
+        _prefs["home_translation_target"] = selected_target["key"]
+        _save_ui_preferences(_prefs)
         japanese_mode = st.session_state.get("home_translation_japanese_mode", "normal")
         if selected_target["key"] == "japanese":
             mode_options = [("polite", "Polite"), ("normal", "Normal"), ("casual", "Casual")]
@@ -1133,6 +1163,9 @@ def home_page():
             label_to_mode = {label: mode for mode, label in mode_options}
             japanese_mode = label_to_mode.get(selected_mode_label, "normal")
             st.session_state.home_translation_japanese_mode = japanese_mode
+            _prefs = _load_ui_preferences()
+            _prefs["home_translation_japanese_mode"] = japanese_mode
+            _save_ui_preferences(_prefs)
         current_input_raw = str(st.session_state.get("home_translation_input", "") or "")
         current_input = current_input_raw.strip()
         target_changed = selected_target["key"] != prev_target
