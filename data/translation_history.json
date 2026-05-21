@@ -556,5 +556,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395834.1779213
+  },
+  {
+    "id": "4836a5a24eee4068b6372b5cfbecdca1",
+    "original_text": "我們要慎重行事",
+    "translated_sentence": "私たちは慎重に行動しなければなりません",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395860.230332
   }
 ]
