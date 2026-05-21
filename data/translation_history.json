@@ -637,5 +637,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396828.62731
+  },
+  {
+    "id": "1b4a3afe483844529dd80e18ad298b21",
+    "original_text": "發生什麼事了？",
+    "translated_sentence": "どうしたの？",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779396878.3836787
   }
 ]
