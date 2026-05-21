@@ -664,5 +664,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396999.0308661
+  },
+  {
+    "id": "22e07ea0f5414deabb28bf3f85853ef6",
+    "original_text": "天漸漸亮了",
+    "translated_sentence": "空が明るくなってきた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779397011.7661536
   }
 ]
