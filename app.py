@@ -1282,11 +1282,12 @@ def home_page():
                 history_df["recorded_time"] = history_df["updated_at"].apply(
                     lambda x: datetime.fromtimestamp(float(x), tw_tz).strftime("%Y-%m-%d %H:%M:%S") if str(x).strip() else ""
                 )
+                history_df["select"] = False
                 history_df["play"] = False
 
                 st.caption("像 Excel 一樣每句一列；勾選一列後按播放。")
                 display_df = history_df[
-                    ["play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
+                    ["select", "play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
                 ].copy()
                 edited_df = st.data_editor(
                     display_df,
@@ -1295,6 +1296,7 @@ def home_page():
                     num_rows="dynamic",
                     key="home_translation_history_editor",
                     column_config={
+                        "select": st.column_config.CheckboxColumn("Select"),
                         "play": st.column_config.CheckboxColumn("Play"),
                         "no": st.column_config.NumberColumn("No.", disabled=True),
                         "original_text": "Original Text",
@@ -1327,6 +1329,37 @@ def home_page():
                     save_translation_history(rows_to_save)
                     st.session_state.home_translation_history_last_sig = auto_sig
                     st.caption("已自動儲存")
+
+                if st.button("刪除勾選列", use_container_width=True, key="home_translation_history_delete_selected"):
+                    remain_rows = edited_df[edited_df["select"] != True].copy()  # noqa: E712
+                    now_ts = time.time()
+                    rows_to_save = []
+                    for _, row in remain_rows.iterrows():
+                        rows_to_save.append({
+                            "original_text": str(row.get("original_text", "") or "").strip(),
+                            "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
+                            "translation_source": str(row.get("translation_source", "") or "AI").strip() or "AI",
+                            "target_language": str(row.get("target_language", "") or "").strip(),
+                            "target_mode": str(row.get("target_mode", "") or "").strip(),
+                            "updated_at": now_ts,
+                        })
+                    save_translation_history(rows_to_save)
+                    st.session_state.home_translation_history_last_sig = json.dumps(
+                        [
+                            {
+                                "original_text": r["original_text"],
+                                "translated_sentence": r["translated_sentence"],
+                                "translation_source": r["translation_source"],
+                                "target_language": r["target_language"],
+                                "target_mode": r["target_mode"],
+                            }
+                            for r in rows_to_save
+                        ],
+                        ensure_ascii=False,
+                        sort_keys=True,
+                    )
+                    st.success("已刪除勾選列。")
+                    st.rerun()
 
                 selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
                 if not selected_rows.empty:
