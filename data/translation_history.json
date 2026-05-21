@@ -619,5 +619,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396799.6372736
+  },
+  {
+    "id": "3ac972280eb5467786d4e43623386e3b",
+    "original_text": "我聽到鳥叫聲",
+    "translated_sentence": "鳥のさえずりが聞こえる",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779396812.895124
   }
 ]
