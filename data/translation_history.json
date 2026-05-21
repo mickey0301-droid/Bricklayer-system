@@ -448,5 +448,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395209.329119
+  },
+  {
+    "id": "e4564f5dffc64b87a9daa6ef90b6faaa",
+    "original_text": "Now everything is fine.",
+    "translated_sentence": "今はすべて順調です。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395237.674117
   }
 ]
