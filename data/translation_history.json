@@ -250,5 +250,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779392730.9905262
+  },
+  {
+    "id": "fbe69d07e0f84a649176ac7f361a53f9",
+    "original_text": "我沒有看到這個規定",
+    "translated_sentence": "この条項を見ていませんでした",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779392840.8734038
   }
 ]
