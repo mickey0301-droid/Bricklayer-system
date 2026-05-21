@@ -1236,7 +1236,8 @@ def home_page():
         if not history_entries:
             st.info("目前還沒有翻譯紀錄。完成翻譯後會自動累積在這裡。")
         else:
-            history_df = pd.DataFrame(history_entries).sort_values(by="updated_at", ascending=True).reset_index(drop=True)
+            full_df = pd.DataFrame(history_entries).sort_values(by="updated_at", ascending=True).reset_index(drop=True)
+            history_df = full_df.copy()
             label_to_lang_key = {"English": "english"}
             for _lang in languages:
                 label_to_lang_key[_lang.get("label", "")] = _lang.get("key", "")
@@ -1277,6 +1278,7 @@ def home_page():
                 st.info("目前篩選條件下沒有資料。")
             else:
                 history_df = filtered_df.reset_index(drop=True)
+                filtered_ids = history_df["id"].astype(str).tolist()
                 history_df["no"] = history_df.index + 1
                 tw_tz = ZoneInfo("Asia/Taipei")
                 history_df["recorded_time"] = history_df["updated_at"].apply(
@@ -1286,16 +1288,16 @@ def home_page():
                 history_df["play"] = False
 
                 st.caption("像 Excel 一樣每句一列；勾選一列後按播放。")
-            display_df = history_df[
-                ["select", "play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
-            ].copy()
-            editor_key = f"home_translation_history_editor_{selected_source}_{selected_language}"
-            edited_df = st.data_editor(
-                display_df,
-                use_container_width=True,
-                hide_index=True,
-                num_rows="dynamic",
-                key=editor_key,
+                display_df = history_df[
+                    ["select", "play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
+                ].copy()
+                editor_key = f"home_translation_history_editor_{selected_source}_{selected_language}"
+                edited_df = st.data_editor(
+                    display_df,
+                    use_container_width=True,
+                    hide_index=True,
+                    num_rows="fixed",
+                    key=editor_key,
                 column_config={
                         "select": st.column_config.CheckboxColumn("Select"),
                         "play": st.column_config.CheckboxColumn("Play"),
@@ -1323,42 +1325,47 @@ def home_page():
             auto_sig = json.dumps(auto_rows, ensure_ascii=False, sort_keys=True)
             if st.session_state.get("home_translation_history_last_sig", "") != auto_sig:
                 now_ts = time.time()
-                rows_to_save = []
-                for row in auto_rows:
-                    row["updated_at"] = now_ts
-                    rows_to_save.append(row)
-                save_translation_history(rows_to_save)
+                full_update_df = full_df.copy()
+                for i, row in enumerate(auto_rows):
+                    if i >= len(filtered_ids):
+                        continue
+                    rid = filtered_ids[i]
+                    m = full_update_df["id"].astype(str) == str(rid)
+                    if not m.any():
+                        continue
+                    full_update_df.loc[m, "original_text"] = row["original_text"]
+                    full_update_df.loc[m, "translated_sentence"] = row["translated_sentence"]
+                    full_update_df.loc[m, "translation_source"] = row["translation_source"]
+                    full_update_df.loc[m, "target_language"] = row["target_language"]
+                    full_update_df.loc[m, "target_mode"] = row["target_mode"]
+                    full_update_df.loc[m, "updated_at"] = now_ts
+                save_translation_history(full_update_df.to_dict(orient="records"))
                 st.session_state.home_translation_history_last_sig = auto_sig
                 st.caption("已自動儲存")
 
-            if st.button("刪除勾選列", use_container_width=True, key="home_translation_history_delete_selected"):
-                remain_rows = edited_df[edited_df["select"] != True].copy()  # noqa: E712
-                now_ts = time.time()
-                rows_to_save = []
-                for _, row in remain_rows.iterrows():
-                    rows_to_save.append({
-                        "original_text": str(row.get("original_text", "") or "").strip(),
-                        "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
-                        "translation_source": str(row.get("translation_source", "") or "AI").strip() or "AI",
-                        "target_language": str(row.get("target_language", "") or "").strip(),
-                        "target_mode": str(row.get("target_mode", "") or "").strip(),
-                        "updated_at": now_ts,
-                    })
-                save_translation_history(rows_to_save)
-                st.session_state.home_translation_history_last_sig = json.dumps(
-                    [
-                        {
-                            "original_text": r["original_text"],
-                            "translated_sentence": r["translated_sentence"],
-                            "translation_source": r["translation_source"],
-                            "target_language": r["target_language"],
-                            "target_mode": r["target_mode"],
-                        }
-                        for r in rows_to_save
-                    ],
-                    ensure_ascii=False,
-                    sort_keys=True,
-                )
+                if st.button("刪除勾選列", use_container_width=True, key="home_translation_history_delete_selected"):
+                    delete_ids = []
+                    for i, row in edited_df.iterrows():
+                        if bool(row.get("select", False)) and i < len(filtered_ids):
+                            delete_ids.append(str(filtered_ids[i]))
+                    remain_df = full_df.copy()
+                    if delete_ids:
+                        remain_df = remain_df[~remain_df["id"].astype(str).isin(delete_ids)].reset_index(drop=True)
+                    save_translation_history(remain_df.to_dict(orient="records"))
+                    st.session_state.home_translation_history_last_sig = json.dumps(
+                        [
+                            {
+                                "original_text": r["original_text"],
+                                "translated_sentence": r["translated_sentence"],
+                                "translation_source": r["translation_source"],
+                                "target_language": r["target_language"],
+                                "target_mode": r["target_mode"],
+                            }
+                            for r in remain_df.to_dict(orient="records")
+                        ],
+                        ensure_ascii=False,
+                        sort_keys=True,
+                    )
                 st.success("已刪除勾選列。")
                 st.rerun()
 
