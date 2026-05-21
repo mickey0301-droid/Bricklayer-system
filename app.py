@@ -1031,11 +1031,41 @@ def home_page():
         )
         if google_needs_refresh or target_changed or mode_changed:
             try:
-                with st.spinner("正在切換語言並重新翻譯（Google）..."):
+                with st.spinner("正在切換語言並重新翻譯（Google + AI）..."):
                     g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
                     st.session_state.home_google_translation_reading = g_reading
                     if current_input:
+                        translation = translate_text(
+                            selected_target["key"],
+                            selected_target["label"],
+                            current_input,
+                            japanese_mode=japanese_mode,
+                        )
+                        sentence = str(translation.get("sentence", "") or "").strip()
+                        grammar = ""
+                        if sentence:
+                            grammar = explain_translated_text_grammar(
+                                selected_target["key"],
+                                selected_target["label"],
+                                current_input,
+                                sentence,
+                            )
+                        zh_text, en_text = _build_zh_en_translations(sentence)
+                        st.session_state.home_translation_result = {
+                            "sentence": sentence,
+                            "reading": str(translation.get("reading", "") or "").strip(),
+                            "note": str(translation.get("note", "") or "").strip(),
+                            "grammar": str(grammar or "").strip(),
+                            "zh_translation": zh_text,
+                            "en_translation": en_text,
+                            "furigana": str(translation.get("furigana", "") or "").strip(),
+                            "ruby_words": translation.get("ruby_words", []),
+                            "ruby_html": str(translation.get("ruby_html", "") or "").strip(),
+                        }
+                        st.session_state.home_translation_source = current_input_raw
+                        st.session_state.home_translation_target_used = selected_target["key"]
+                        st.session_state.home_translation_japanese_mode_used = japanese_mode
                         upsert_translation_history_entry(
                             original_text=current_input_raw,
                             translated_sentence=g_translated,
@@ -1043,27 +1073,18 @@ def home_page():
                             target_language=selected_target.get("label", selected_target["key"]),
                             target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
                         )
+                        upsert_translation_history_entry(
+                            original_text=current_input_raw,
+                            translated_sentence=sentence,
+                            translation_source="AI",
+                            target_language=selected_target.get("label", selected_target["key"]),
+                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                        )
+                        _mark_home_translation_done()
                     st.session_state.home_google_translation_input = current_input_raw
                     st.session_state.home_google_translation_source = current_input_raw
                     st.session_state.home_google_translation_target = selected_target["key"]
                     st.session_state.home_google_translation_target_used = selected_target["key"]
-                    # input/target/mode 改變時，清空舊 AI 結果，避免看起來像 AI 也自動翻譯了
-                    if (
-                        current_input_raw != str(st.session_state.get("home_translation_source", "") or "")
-                        or target_changed
-                        or mode_changed
-                    ):
-                        st.session_state.home_translation_result = {
-                            "sentence": "",
-                            "reading": "",
-                            "note": "",
-                            "grammar": "",
-                            "zh_translation": "",
-                            "en_translation": "",
-                            "furigana": "",
-                            "ruby_words": [],
-                            "ruby_html": "",
-                        }
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
 
