@@ -502,5 +502,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395527.266114
+  },
+  {
+    "id": "3e001b4717904adaa8ee214a39998bc5",
+    "original_text": "Anything change?",
+    "translated_sentence": "何か変化はありますか？",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395557.1920118
   }
 ]
