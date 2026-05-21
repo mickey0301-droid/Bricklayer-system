@@ -234,3 +234,40 @@ def audio_player_autoplay_silent(audio_bytes: bytes) -> str:
 }})();
 </script>
 </body></html>"""
+
+
+def audio_player_autoplay_playlist(audio_items: list[bytes]) -> str:
+    """Autoplay multiple audio clips sequentially with no visible controls.
+    If autoplay is blocked by browser policy, it fails silently.
+    """
+    if not audio_items:
+        return "<html><body></body></html>"
+    sources = []
+    for i, b in enumerate(audio_items):
+        b64 = base64.b64encode(b).decode()
+        sources.append(f"<audio id='a{i}'><source src='data:audio/mp3;base64,{b64}' type='audio/mp3'></audio>")
+    audios_html = "".join(sources)
+    uid = int(time.time() * 1000)
+    return f"""<!DOCTYPE html>
+<html><body style="margin:0;padding:0;overflow:hidden;height:1px">
+{audios_html}
+<script>
+(function(){{
+  var arr = [];
+  for (var i=0; i<{len(audio_items)}; i++) {{
+    arr.push(document.getElementById('a'+i));
+  }}
+  function playAt(idx) {{
+    if (idx >= arr.length) return;
+    var a = arr[idx];
+    a.currentTime = 0;
+    a.onended = function() {{ playAt(idx + 1); }};
+    var p = a.play();
+    if (p !== undefined) {{
+      p.catch(function(){{}});
+    }}
+  }}
+  playAt(0);
+}})();
+</script>
+</body></html>"""
