@@ -700,5 +700,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779397620.048803
+  },
+  {
+    "id": "e104cf03caef48edbedeede27a63ece5",
+    "original_text": "感覺感冒快要好了",
+    "translated_sentence": "風邪がもうすぐ治りそうです",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779397633.8902848
   }
 ]
