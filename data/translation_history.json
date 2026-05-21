@@ -79,5 +79,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391260.9417043
+  },
+  {
+    "id": "db8996a4c84543f199bb38631db413c9",
+    "original_text": "但是我還是想試試看",
+    "translated_sentence": "でも、やっぱり試してみたいです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391263.1506865
   }
 ]
