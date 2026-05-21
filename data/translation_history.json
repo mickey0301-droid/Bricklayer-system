@@ -196,5 +196,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779392369.9247322
+  },
+  {
+    "id": "119f58e8a65b4714a49b54d45e608fd7",
+    "original_text": "就是要透過不斷地嘗試來調整",
+    "translated_sentence": "It’s about adjusting through constant attempts.",
+    "translation_source": "Google",
+    "target_language": "English",
+    "target_mode": "",
+    "updated_at": 1779392402.0867271
   }
 ]
