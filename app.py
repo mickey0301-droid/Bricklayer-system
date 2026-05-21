@@ -355,8 +355,6 @@ _defaults = {
     "home_translation_count_today": 0,
     "home_ai_task_status": "",
     "home_ai_pending_request": None,
-    "home_translation_progress": 0,
-    "home_translation_progress_label": "",
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -903,8 +901,6 @@ def home_page():
         req = st.session_state.get("home_ai_pending_request")
         if not isinstance(req, dict):
             return
-        st.session_state.home_translation_progress = 60
-        st.session_state.home_translation_progress_label = "AI 翻譯中..."
         source_text_raw = str(req.get("source_text_raw", "") or "")
         source_text = source_text_raw.strip()
         if not source_text:
@@ -954,8 +950,6 @@ def home_page():
                     target_mode=st.session_state.home_translation_japanese_mode_used,
                 )
                 _mark_home_translation_done()
-                st.session_state.home_translation_progress = 100
-                st.session_state.home_translation_progress_label = "完成"
         except Exception as e:
             st.error(f"AI 翻譯失敗：{e}")
         finally:
@@ -1137,14 +1131,10 @@ def home_page():
         )
         if google_needs_refresh or target_changed or mode_changed:
             try:
-                st.session_state.home_translation_progress = 10
-                st.session_state.home_translation_progress_label = "Google 翻譯中..."
                 with st.spinner("正在更新 Google 翻譯..."):
                     g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
                     st.session_state.home_google_translation_reading = g_reading
-                    st.session_state.home_translation_progress = 50
-                    st.session_state.home_translation_progress_label = "Google 完成，準備 AI 翻譯..."
                     if current_input:
                         st.session_state.home_translation_result = {
                             "sentence": "",
@@ -1285,10 +1275,6 @@ def home_page():
             _render_grammar_box(grammar)
         else:
             st.caption("完成翻譯後會在這裡顯示文法解析。")
-        progress_value = int(st.session_state.get("home_translation_progress", 0) or 0)
-        progress_label = str(st.session_state.get("home_translation_progress_label", "") or "").strip()
-        if progress_value > 0:
-            st.progress(max(0, min(100, progress_value)), text=progress_label or "翻譯中...")
         if str(st.session_state.get("home_ai_task_status", "") or "") == "running":
             st.rerun()
 
