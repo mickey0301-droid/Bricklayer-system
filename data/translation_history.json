@@ -520,5 +520,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395570.3860276
+  },
+  {
+    "id": "3a3e78b6ed644d858e1922c6f524aa3b",
+    "original_text": "試幾次都沒問題",
+    "translated_sentence": "何度か試しても問題なし",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395596.7645197
   }
 ]
