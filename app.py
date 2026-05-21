@@ -1111,6 +1111,7 @@ def home_page():
             st.session_state.get("home_google_translation_source", "") != current_input_raw
             or st.session_state.get("home_google_translation_target_used", "") != selected_target["key"]
         )
+        _collect_home_ai_task()
         if google_needs_refresh or target_changed or mode_changed:
             try:
                 with st.spinner("正在更新翻譯結果..."):
@@ -1140,7 +1141,6 @@ def home_page():
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
 
-        _collect_home_ai_task()
         result = st.session_state.get("home_translation_result", {})
         google_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
         google_reading = str(st.session_state.get("home_google_translation_reading", "") or "").strip()
@@ -1241,6 +1241,10 @@ def home_page():
             _render_grammar_box(grammar)
         else:
             st.caption("完成翻譯後會在這裡顯示文法解析。")
+
+        if str(st.session_state.get("home_ai_task_status", "") or "") == "running":
+            time.sleep(0.35)
+            st.rerun()
 
     with left_col:
         st.caption(f"今日已翻譯句數：{st.session_state.get('home_translation_count_today', 0)}")
