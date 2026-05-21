@@ -3,6 +3,7 @@
     "id": "da6769d951c64103bfa03eeb5b20e7db",
     "original_text": "我還是覺得全身無力",
     "translated_sentence": "全身がだるいと感じます。",
+    "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779366384.4513478
@@ -11,8 +12,18 @@
     "id": "36c584cd939a48e19b358ea8217eaa6c",
     "original_text": "心情很不好，感覺今年做什麼都不順利",
     "translated_sentence": "今年は何をしても上手くいかない気がする",
+    "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779367184.3671823
+  },
+  {
+    "id": "82c3b4e70c3049ec8993b2c6f5042e24",
+    "original_text": "下禮拜一我要開始在電視台的工作了",
+    "translated_sentence": "私は来週の月曜日からテレビ局で働き始める予定です",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779367379.1572962
   }
 ]
