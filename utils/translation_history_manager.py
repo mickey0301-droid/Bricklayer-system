@@ -15,6 +15,7 @@ def _normalize_entry(entry: dict) -> dict:
         "id": str(entry.get("id") or uuid.uuid4().hex),
         "original_text": str(entry.get("original_text", "") or "").strip(),
         "translated_sentence": str(entry.get("translated_sentence", "") or "").strip(),
+        "translation_source": str(entry.get("translation_source", "AI") or "AI").strip(),
         "target_language": str(entry.get("target_language", "") or "").strip(),
         "target_mode": str(entry.get("target_mode", "") or "").strip(),
         "updated_at": float(entry.get("updated_at") or time.time()),
@@ -73,11 +74,13 @@ def upsert_translation_history_entry(
     translated_sentence: str,
     target_language: str,
     target_mode: str = "",
+    translation_source: str = "AI",
 ) -> list:
     original_text = str(original_text or "").strip()
     translated_sentence = str(translated_sentence or "").strip()
     target_language = str(target_language or "").strip()
     target_mode = str(target_mode or "").strip()
+    translation_source = str(translation_source or "AI").strip() or "AI"
     if not original_text or not translated_sentence or not target_language:
         return load_translation_history()
 
@@ -86,6 +89,7 @@ def upsert_translation_history_entry(
     for item in entries:
         if (
             item.get("original_text") == original_text
+            and item.get("translation_source", "AI") == translation_source
             and item.get("target_language") == target_language
             and item.get("target_mode", "") == target_mode
         ):
@@ -98,6 +102,7 @@ def upsert_translation_history_entry(
         "id": uuid.uuid4().hex,
         "original_text": original_text,
         "translated_sentence": translated_sentence,
+        "translation_source": translation_source,
         "target_language": target_language,
         "target_mode": target_mode,
         "updated_at": now,

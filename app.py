@@ -1068,7 +1068,15 @@ def home_page():
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
                         upsert_translation_history_entry(
                             original_text=current_input_raw,
+                            translated_sentence=g_translated,
+                            translation_source="Google",
+                            target_language=selected_target.get("label", selected_target["key"]),
+                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                        )
+                        upsert_translation_history_entry(
+                            original_text=current_input_raw,
                             translated_sentence=sentence,
+                            translation_source="AI",
                             target_language=selected_target.get("label", selected_target["key"]),
                             target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
                         )
@@ -1206,7 +1214,15 @@ def home_page():
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
                         upsert_translation_history_entry(
                             original_text=source_text_raw,
+                            translated_sentence=g_translated,
+                            translation_source="Google",
+                            target_language=selected_target.get("label", selected_target["key"]),
+                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                        )
+                        upsert_translation_history_entry(
+                            original_text=source_text_raw,
                             translated_sentence=sentence,
+                            translation_source="AI",
                             target_language=selected_target.get("label", selected_target["key"]),
                             target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
                         )
@@ -1236,7 +1252,7 @@ def home_page():
 
             st.caption("像 Excel 一樣每句一列；勾選一列後按播放。")
             display_df = history_df[
-                ["play", "no", "original_text", "translated_sentence", "target_language", "target_mode", "recorded_time"]
+                ["play", "no", "original_text", "translated_sentence", "translation_source", "target_language", "target_mode", "recorded_time"]
             ].copy()
             edited_df = st.data_editor(
                 display_df,
@@ -1249,6 +1265,7 @@ def home_page():
                     "no": st.column_config.NumberColumn("No.", disabled=True),
                     "original_text": "Original Text",
                     "translated_sentence": "Translated Sentence",
+                    "translation_source": "Source",
                     "target_language": "Target Language",
                     "target_mode": "Target Mode",
                     "recorded_time": st.column_config.TextColumn("Recorded Time", disabled=True),
@@ -1284,6 +1301,7 @@ def home_page():
                     rows.append({
                         "original_text": str(row.get("original_text", "") or "").strip(),
                         "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
+                        "translation_source": str(row.get("translation_source", "") or "AI").strip() or "AI",
                         "target_language": str(row.get("target_language", "") or "").strip(),
                         "target_mode": str(row.get("target_mode", "") or "").strip(),
                         "updated_at": now_ts,
