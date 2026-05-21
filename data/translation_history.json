@@ -115,5 +115,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391512.195203
+  },
+  {
+    "id": "ec2f0cb42c3944ec97cf7c07bfb5d229",
+    "original_text": "今天我似乎沒有花太多時間學日文",
+    "translated_sentence": "今日はあまり日本語の勉強に時間をかけなかったようです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391533.190461
   }
 ]
