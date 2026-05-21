@@ -187,5 +187,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779392208.8144753
+  },
+  {
+    "id": "01789d0e113147019a7316256ab595ec",
+    "original_text": "我感覺好多了",
+    "translated_sentence": "私はずっと気分が良くなりました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779392210.8908584
   }
 ]
