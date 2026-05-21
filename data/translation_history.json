@@ -421,5 +421,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779394887.0124638
+  },
+  {
+    "id": "01eb665170cd47589d6a5ff6cc98394c",
+    "original_text": "看來剛剛是搞錯了",
+    "translated_sentence": "どうやらさっきは勘違いしていたようです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779394889.5563295
   }
 ]
