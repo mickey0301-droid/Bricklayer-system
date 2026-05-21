@@ -380,6 +380,15 @@ for k, v in _defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
 
+# Ensure persisted UI preferences are applied once per app session,
+# even when session_state already contains old default values.
+if not st.session_state.get("_ui_prefs_applied_once", False):
+    if _saved_home_target:
+        st.session_state.home_translation_target = _saved_home_target
+    if _saved_home_jp_mode in {"polite", "normal", "casual"}:
+        st.session_state.home_translation_japanese_mode = _saved_home_jp_mode
+    st.session_state["_ui_prefs_applied_once"] = True
+
 
 def _build_hash() -> str:
     try:
