@@ -341,6 +341,7 @@ _defaults = {
     "home_translation_count_today": 0,
     "home_ai_task_id": "",
     "home_ai_task_status": "",
+    "home_ai_earliest_show_at": 0.0,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -921,6 +922,8 @@ def home_page():
         task_id = str(st.session_state.get("home_ai_task_id", "") or "")
         if not task_id:
             return
+        if time.time() < float(st.session_state.get("home_ai_earliest_show_at", 0.0) or 0.0):
+            return
         with _HOME_AI_TASK_LOCK:
             payload = _HOME_AI_TASK_RESULTS.pop(task_id, None)
         if not payload:
@@ -1114,30 +1117,41 @@ def home_page():
         _collect_home_ai_task()
         if google_needs_refresh or target_changed or mode_changed:
             try:
-                with st.spinner("正在更新翻譯結果..."):
-                    if current_input:
-                        st.session_state.home_ai_task_id = _start_home_ai_task(
-                            current_input_raw,
-                            selected_target["key"],
-                            selected_target["label"],
-                            japanese_mode,
-                        )
-                        st.session_state.home_ai_task_status = "running"
-                    g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
-                    st.session_state.home_google_translation_result = g_translated
-                    st.session_state.home_google_translation_reading = g_reading
-                    if current_input:
-                        upsert_translation_history_entry(
-                            original_text=current_input_raw,
-                            translated_sentence=g_translated,
-                            translation_source="Google",
-                            target_language=selected_target.get("label", selected_target["key"]),
-                            target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
-                        )
-                    st.session_state.home_google_translation_input = current_input_raw
-                    st.session_state.home_google_translation_source = current_input_raw
-                    st.session_state.home_google_translation_target = selected_target["key"]
-                    st.session_state.home_google_translation_target_used = selected_target["key"]
+                if current_input:
+                    st.session_state.home_ai_task_id = _start_home_ai_task(
+                        current_input_raw,
+                        selected_target["key"],
+                        selected_target["label"],
+                        japanese_mode,
+                    )
+                    st.session_state.home_ai_task_status = "running"
+                    st.session_state.home_ai_earliest_show_at = time.time() + 0.9
+                    st.session_state.home_translation_result = {
+                        "sentence": "",
+                        "reading": "",
+                        "note": "",
+                        "grammar": "",
+                        "zh_translation": "",
+                        "en_translation": "",
+                        "furigana": "",
+                        "ruby_words": [],
+                        "ruby_html": "",
+                    }
+                g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
+                st.session_state.home_google_translation_result = g_translated
+                st.session_state.home_google_translation_reading = g_reading
+                if current_input:
+                    upsert_translation_history_entry(
+                        original_text=current_input_raw,
+                        translated_sentence=g_translated,
+                        translation_source="Google",
+                        target_language=selected_target.get("label", selected_target["key"]),
+                        target_mode=japanese_mode if selected_target["key"] == "japanese" else "",
+                    )
+                st.session_state.home_google_translation_input = current_input_raw
+                st.session_state.home_google_translation_source = current_input_raw
+                st.session_state.home_google_translation_target = selected_target["key"]
+                st.session_state.home_google_translation_target_used = selected_target["key"]
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
 
@@ -1270,6 +1284,18 @@ def home_page():
                             japanese_mode,
                         )
                         st.session_state.home_ai_task_status = "running"
+                        st.session_state.home_ai_earliest_show_at = time.time() + 0.9
+                        st.session_state.home_translation_result = {
+                            "sentence": "",
+                            "reading": "",
+                            "note": "",
+                            "grammar": "",
+                            "zh_translation": "",
+                            "en_translation": "",
+                            "furigana": "",
+                            "ruby_words": [],
+                            "ruby_html": "",
+                        }
                         g_translated, g_reading = _google_translate_text(source_text, selected_target["key"])
                         st.session_state.home_google_translation_input = source_text
                         st.session_state.home_google_translation_source = source_text
