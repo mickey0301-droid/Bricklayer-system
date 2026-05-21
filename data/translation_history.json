@@ -6,7 +6,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "0ebde22e006446738db349294552919b",
@@ -15,7 +15,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "f97162f5185a4181ba497d87ea640e35",
@@ -24,7 +24,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "6d1d08c688324e5fabc3e3999d3cc2b6",
@@ -33,7 +33,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "8e44da5dfd9f406e9c3d0cff4895442e",
@@ -42,7 +42,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "dae13e7653084aa3a1439b1ea6704294",
@@ -51,7 +51,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "f2911f86c88a47939bfb5da8fe03ba26",
@@ -60,7 +60,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "dda4de6d810440a79c62125328dd425c",
@@ -69,16 +69,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391276.6580474
-  },
-  {
-    "id": "db8996a4c84543f199bb38631db413c9",
-    "original_text": "但是我還是想試試看",
-    "translated_sentence": "でも、やっぱり試してみたいです。",
-    "translation_source": "AI",
-    "target_language": "Japanese",
-    "target_mode": "normal",
-    "updated_at": 1779391281.516584
+    "updated_at": 1779391283.9794762
   },
   {
     "id": "68c8cff4b390410e824764b93bac0bcc",
@@ -87,6 +78,15 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391279.2038422
+    "updated_at": 1779391283.9794762
+  },
+  {
+    "id": "db8996a4c84543f199bb38631db413c9",
+    "original_text": "但是我還是想試試看",
+    "translated_sentence": "でも、やっぱり試してみたいです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391283.9794762
   }
 ]
