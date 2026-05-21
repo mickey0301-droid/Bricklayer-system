@@ -376,5 +376,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393746.2697053
+  },
+  {
+    "id": "a0197b3fddad45dd99ad627867a6570a",
+    "original_text": "結束了嗎",
+    "translated_sentence": "もう終わりですか？",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393867.2440197
   }
 ]
