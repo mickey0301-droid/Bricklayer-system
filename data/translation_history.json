@@ -160,5 +160,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391832.1270654
+  },
+  {
+    "id": "42c8ebb7069240fbbcbe126d11dbd5b6",
+    "original_text": "現在再試一次",
+    "translated_sentence": "今すぐもう一度試してください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391934.998145
   }
 ]
