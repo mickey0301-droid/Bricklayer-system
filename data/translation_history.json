@@ -574,5 +574,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396196.7706215
+  },
+  {
+    "id": "d8d1a29dc6964e6bb541e9619b386c99",
+    "original_text": "我也差不多要去睡了",
+    "translated_sentence": "私もそろそろ寝る時間です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779396215.7197442
   }
 ]
