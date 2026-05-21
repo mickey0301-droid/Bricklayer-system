@@ -358,5 +358,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393694.257998
+  },
+  {
+    "id": "c9071e7e52a04156bcd2baa36ed6f6ca",
+    "original_text": "問題一直都沒有解決",
+    "translated_sentence": "問題は決して解決されていません",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393721.5887032
   }
 ]
