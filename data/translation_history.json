@@ -601,5 +601,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396405.5928519
+  },
+  {
+    "id": "e7fa619694ad4d5892d7ae4501fdc9ef",
+    "original_text": "咳嗽的話，就喝溫開水吧。",
+    "translated_sentence": "咳が出る場合は、ぬるま湯を飲みましょう。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779396427.8769982
   }
 ]
