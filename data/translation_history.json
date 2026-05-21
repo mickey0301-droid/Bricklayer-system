@@ -547,5 +547,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395791.1582897
+  },
+  {
+    "id": "6e2502ebcb674f63b923555e3e20b2af",
+    "original_text": "我對結果還不是很滿意",
+    "translated_sentence": "結果にはまだあまり満足していません。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395793.422582
   }
 ]
