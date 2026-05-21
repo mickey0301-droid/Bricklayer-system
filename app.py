@@ -1033,6 +1033,9 @@ def home_page():
         selected_target = target_options[target_labels.index(selected_label)]
         prev_target = st.session_state.get("home_translation_target", "english")
         st.session_state.home_translation_target = selected_target["key"]
+        _prefs = _load_ui_preferences()
+        _prefs["home_translation_target"] = selected_target["key"]
+        _save_ui_preferences(_prefs)
         japanese_mode = st.session_state.get("home_translation_japanese_mode", "normal")
         if selected_target["key"] == "japanese":
             mode_options = [("polite", "Polite"), ("normal", "Normal"), ("casual", "Casual")]
@@ -1051,6 +1054,9 @@ def home_page():
             label_to_mode = {label: mode for mode, label in mode_options}
             japanese_mode = label_to_mode.get(selected_mode_label, "normal")
             st.session_state.home_translation_japanese_mode = japanese_mode
+            _prefs = _load_ui_preferences()
+            _prefs["home_translation_japanese_mode"] = japanese_mode
+            _save_ui_preferences(_prefs)
         current_input_raw = str(st.session_state.get("home_translation_input", "") or "")
         current_input = current_input_raw.strip()
         target_changed = selected_target["key"] != prev_target
