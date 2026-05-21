@@ -295,5 +295,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393306.404581
+  },
+  {
+    "id": "b3d247c67b1248259b8da27942076fb1",
+    "original_text": "Yes, I want to try it.",
+    "translated_sentence": "はい、やってみたいです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393308.8352258
   }
 ]
