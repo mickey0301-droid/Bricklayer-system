@@ -655,5 +655,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396893.5384345
+  },
+  {
+    "id": "3d90416ef0a2456383a0f39a98eaf46c",
+    "original_text": "天漸漸亮了",
+    "translated_sentence": "明るくなってきました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779396999.0308661
   }
 ]
