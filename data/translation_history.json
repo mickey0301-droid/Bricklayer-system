@@ -322,5 +322,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393505.9872096
+  },
+  {
+    "id": "0025deefe4c04044b61dd804d8096500",
+    "original_text": "我無法承受這種關注",
+    "translated_sentence": "こんな注目に耐えられない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393531.400039
   }
 ]
