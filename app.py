@@ -79,6 +79,25 @@ from utils.background_tasks import (
 
 st.set_page_config(page_title="Bricklayer", layout="wide")
 
+def _load_ui_preferences() -> dict:
+    path = os.path.join(DATA_FOLDER, "ui_preferences.json")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_ui_preferences(prefs: dict):
+    ensure_data_folder()
+    path = os.path.join(DATA_FOLDER, "ui_preferences.json")
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(prefs, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
 # ── 語言對應國旗 ──────────────────────────────────────────
 LANGUAGE_FLAGS = {
     "japanese": "🇯🇵",
@@ -340,9 +359,28 @@ _defaults = {
     # 詞彙顯示偵錯：顯示被規則忽略的高編號詞
     "debug_vocab_filter": False,
 }
+_ui_prefs = _load_ui_preferences()
+_saved_home_default_target = str(_ui_prefs.get("home_translation_default_target", "") or "").strip().lower()
+_saved_home_target = str(_ui_prefs.get("home_translation_target", "english") or "english").strip().lower()
+if _saved_home_default_target:
+    _defaults["home_translation_target"] = _saved_home_default_target
+elif _saved_home_target:
+    _defaults["home_translation_target"] = _saved_home_target
+_saved_home_jp_mode = str(_ui_prefs.get("home_translation_japanese_mode", "normal") or "normal").strip().lower()
+if _saved_home_jp_mode in {"polite", "normal", "casual"}:
+    _defaults["home_translation_japanese_mode"] = _saved_home_jp_mode
 for k, v in _defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
+
+if not st.session_state.get("_ui_prefs_applied_once", False):
+    if _saved_home_default_target:
+        st.session_state.home_translation_target = _saved_home_default_target
+    elif _saved_home_target:
+        st.session_state.home_translation_target = _saved_home_target
+    if _saved_home_jp_mode in {"polite", "normal", "casual"}:
+        st.session_state.home_translation_japanese_mode = _saved_home_jp_mode
+    st.session_state["_ui_prefs_applied_once"] = True
 
 
 def _build_hash() -> str:
@@ -991,6 +1029,24 @@ def home_page():
             break
 
     with right_col:
+        default_target_index = 0
+        saved_default_target = str(_load_ui_preferences().get("home_translation_default_target", "") or "").strip().lower()
+        for i, x in enumerate(target_options):
+            if x["key"] == (saved_default_target or st.session_state.get("home_translation_target", "english")):
+                default_target_index = i
+                break
+        default_selected_label = st.selectbox(
+            "Default Target Language (used next time you enter)",
+            target_labels,
+            index=default_target_index,
+            key="home_translation_default_target_select",
+        )
+        default_selected_target = target_options[target_labels.index(default_selected_label)]
+        _prefs = _load_ui_preferences()
+        _prefs["home_translation_default_target"] = default_selected_target["key"]
+        _save_ui_preferences(_prefs)
+        st.caption(f"Current default: {default_selected_target['label']}")
+
         selected_label = st.selectbox(
             "翻譯目標語言",
             target_labels,
