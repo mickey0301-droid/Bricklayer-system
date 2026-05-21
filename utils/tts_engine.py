@@ -211,3 +211,26 @@ def audio_player_pausable(audio_bytes: bytes) -> str:
 }})();
 </script>
 </body></html>"""
+
+
+def audio_player_autoplay_silent(audio_bytes: bytes) -> str:
+    """Autoplay immediately with no visible controls/button.
+    If autoplay is blocked by browser policy, it fails silently.
+    """
+    b64 = base64.b64encode(audio_bytes).decode()
+    uid = int(time.time() * 1000)
+    return f"""<!DOCTYPE html>
+<html><body style="margin:0;padding:0;overflow:hidden;height:1px">
+<audio id="a{uid}">
+  <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+</audio>
+<script>
+(function(){{
+  var a = document.getElementById('a{uid}');
+  var p = a.play();
+  if (p !== undefined) {{
+    p.catch(function(){{}});
+  }}
+}})();
+</script>
+</body></html>"""

@@ -33,7 +33,7 @@ from utils.study_engine import (
     GRAMMAR_PATTERNS,
 )
 from utils.tts_engine import (
-    generate_tts_audio, audio_player, audio_player_dual, audio_player_pausable,
+    generate_tts_audio, audio_player, audio_player_dual, audio_player_pausable, audio_player_autoplay_silent,
     get_cached_tts, set_cached_tts,
 )
 from utils.sentence_cache import get_cached_sentence, set_cached_sentence, set_cached_sentences_bulk, sync_cache_from_github
@@ -1269,13 +1269,13 @@ def home_page():
                             audio_bytes = cached_audio or generate_tts_audio(sentence_to_play, lang_key)
                             set_cached_tts(lang_key, "translation", "sent", audio_bytes, sentence_to_play)
                             st.session_state.history_tts_auto_played_for = play_key
-                            components.html(audio_player_pausable(audio_bytes), height=70)
+                            components.html(audio_player_autoplay_silent(audio_bytes), height=1)
                         except Exception as e:
                             st.error(f"語音產生失敗：{e}")
                     else:
                         cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
                         if cached_audio:
-                            components.html(audio_player_pausable(cached_audio), height=70)
+                            components.html(audio_player_autoplay_silent(cached_audio), height=1)
 
             if st.button("儲存翻譯紀錄編輯", use_container_width=True, key="home_translation_history_save"):
                 now_ts = time.time()
