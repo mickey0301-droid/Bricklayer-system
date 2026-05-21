@@ -133,5 +133,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779391597.8157558
+  },
+  {
+    "id": "21a060898c3f4f16bf3e6966a57fe765",
+    "original_text": "這也沒關係",
+    "translated_sentence": "それも大丈夫です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779391619.0482707
   }
 ]
