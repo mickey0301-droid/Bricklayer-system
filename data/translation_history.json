@@ -6,7 +6,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "0ebde22e006446738db349294552919b",
@@ -15,7 +15,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "f97162f5185a4181ba497d87ea640e35",
@@ -24,7 +24,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "6d1d08c688324e5fabc3e3999d3cc2b6",
@@ -33,7 +33,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "8e44da5dfd9f406e9c3d0cff4895442e",
@@ -42,7 +42,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "dae13e7653084aa3a1439b1ea6704294",
@@ -51,7 +51,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "f2911f86c88a47939bfb5da8fe03ba26",
@@ -60,7 +60,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "dda4de6d810440a79c62125328dd425c",
@@ -69,7 +69,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "68c8cff4b390410e824764b93bac0bcc",
@@ -78,7 +78,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "db8996a4c84543f199bb38631db413c9",
@@ -87,7 +87,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "d3a2a278cfa54dd1af3d849b2f179392",
@@ -96,7 +96,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "c154abad09254bafa9d557cd64b54f55",
@@ -105,7 +105,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "951540eb59c7440196d00e6e87a79cc4",
@@ -114,7 +114,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "ec2f0cb42c3944ec97cf7c07bfb5d229",
@@ -123,7 +123,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "78358edccf434f55b7d8f4c74508c361",
@@ -132,7 +132,7 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "21a060898c3f4f16bf3e6966a57fe765",
@@ -141,7 +141,7 @@
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391621.383437
   },
   {
     "id": "150abe7c68b64a4a859643f66c7fd8b0",
@@ -150,15 +150,15 @@
     "translation_source": "Google",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391825.1995738
   },
   {
-    "id": "d9811bbd5dd84487a84c8c61054d5bd3",
+    "id": "0cd5ddbcc24a4498baca33fb4de1428f",
     "original_text": "我已經修改很多次了",
     "translated_sentence": "もう何度も修正しました。",
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779391829.6677716
+    "updated_at": 1779391832.1270654
   }
 ]
