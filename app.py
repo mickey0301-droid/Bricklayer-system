@@ -8,7 +8,8 @@ import re
 import time
 import urllib.parse
 import urllib.request
-from datetime import date
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -1227,8 +1228,9 @@ def home_page():
             label_to_lang_key["Korean"] = "korean"
             label_to_lang_key["Spanish"] = "spanish"
             history_df["no"] = history_df.index + 1
+            tw_tz = ZoneInfo("Asia/Taipei")
             history_df["recorded_time"] = history_df["updated_at"].apply(
-                lambda x: time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(float(x))) if str(x).strip() else ""
+                lambda x: datetime.fromtimestamp(float(x), tw_tz).strftime("%Y-%m-%d %H:%M:%S") if str(x).strip() else ""
             )
             history_df["play"] = False
 
@@ -1254,35 +1256,41 @@ def home_page():
                 disabled=["no", "recorded_time"],
             )
 
-            play_col, save_col = st.columns(2)
-            with play_col:
-                if st.button("播放勾選列發音", use_container_width=True, key="home_translation_history_play_selected"):
-                    selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
-                    if selected_rows.empty:
-                        st.warning("請先勾選要播放的列。")
+            selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
+            if not selected_rows.empty:
+                row = selected_rows.iloc[0]
+                lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
+                sentence_to_play = str(row.get("translated_sentence", "") or "").strip()
+                if sentence_to_play:
+                    play_key = f"history::{lang_key}::{sentence_to_play}"
+                    if st.session_state.get("history_tts_auto_played_for") != play_key:
+                        try:
+                            cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
+                            audio_bytes = cached_audio or generate_tts_audio(sentence_to_play, lang_key)
+                            set_cached_tts(lang_key, "translation", "sent", audio_bytes, sentence_to_play)
+                            st.session_state.history_tts_auto_played_for = play_key
+                            components.html(audio_player_pausable(audio_bytes), height=70)
+                        except Exception as e:
+                            st.error(f"語音產生失敗：{e}")
                     else:
-                        row = selected_rows.iloc[0]
-                        lang_key = label_to_lang_key.get(str(row.get("target_language", "") or "").strip(), "english")
-                        _render_translation_audio(
-                            lang_key,
-                            str(row.get("translated_sentence", "") or "").strip(),
-                            key="home_translation_history_play_selected_audio",
-                        )
-            with save_col:
-                if st.button("儲存翻譯紀錄編輯", use_container_width=True, key="home_translation_history_save"):
-                    now_ts = time.time()
-                    rows = []
-                    for _, row in edited_df.iterrows():
-                        rows.append({
-                            "original_text": str(row.get("original_text", "") or "").strip(),
-                            "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
-                            "target_language": str(row.get("target_language", "") or "").strip(),
-                            "target_mode": str(row.get("target_mode", "") or "").strip(),
-                            "updated_at": now_ts,
-                        })
-                    save_translation_history(rows)
-                    st.success("已儲存翻譯紀錄。")
-                    st.rerun()
+                        cached_audio = get_cached_tts(lang_key, "translation", "sent", sentence_to_play)
+                        if cached_audio:
+                            components.html(audio_player_pausable(cached_audio), height=70)
+
+            if st.button("儲存翻譯紀錄編輯", use_container_width=True, key="home_translation_history_save"):
+                now_ts = time.time()
+                rows = []
+                for _, row in edited_df.iterrows():
+                    rows.append({
+                        "original_text": str(row.get("original_text", "") or "").strip(),
+                        "translated_sentence": str(row.get("translated_sentence", "") or "").strip(),
+                        "target_language": str(row.get("target_language", "") or "").strip(),
+                        "target_mode": str(row.get("target_mode", "") or "").strip(),
+                        "updated_at": now_ts,
+                    })
+                save_translation_history(rows)
+                st.success("已儲存翻譯紀錄。")
+                st.rerun()
 
     st.markdown("### Translation Practice")
     p_left_col, p_right_col = st.columns(2)
