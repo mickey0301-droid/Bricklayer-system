@@ -304,5 +304,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779393424.6012633
+  },
+  {
+    "id": "b524e9c04c364b6db4b884c3744f3201",
+    "original_text": "所有人都在看我",
+    "translated_sentence": "みんなが私を見ている",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779393499.0280955
   }
 ]
