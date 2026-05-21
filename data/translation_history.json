@@ -592,5 +592,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779396384.6214733
+  },
+  {
+    "id": "7560fd69639846518927b485ee3ab83c",
+    "original_text": "喉嚨感覺癢癢的",
+    "translated_sentence": "喉がかゆい",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779396403.1790369
   }
 ]
