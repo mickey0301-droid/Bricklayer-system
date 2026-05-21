@@ -1154,7 +1154,7 @@ def home_page():
                 default_target_index = i
                 break
         default_selected_label = st.selectbox(
-            "預設目標語言（下次進入系統時使用）",
+            "Default Target Language (used next time you enter)",
             target_labels,
             index=default_target_index,
             key="home_translation_default_target_select",
@@ -1163,6 +1163,7 @@ def home_page():
         _prefs = _load_ui_preferences()
         _prefs["home_translation_default_target"] = default_selected_target["key"]
         _save_ui_preferences(_prefs)
+        st.caption(f"Current default: {default_selected_target['label']}")
 
         selected_label = st.selectbox(
             "翻譯目標語言",
