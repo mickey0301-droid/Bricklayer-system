@@ -1,47 +1,29 @@
 [
   {
-    "id": "ccfac7eb239641da8b91baf653631b6e",
+    "id": "f97162f5185a4181ba497d87ea640e35",
     "original_text": "我還是覺得全身無力",
     "translated_sentence": "全身がだるいと感じます。",
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779371014.2035062
+    "updated_at": 1779371033.3105757
   },
   {
-    "id": "f463bb7a46054944aa2a931dd607592b",
+    "id": "dae13e7653084aa3a1439b1ea6704294",
     "original_text": "心情很不好，感覺今年做什麼都不順利",
     "translated_sentence": "今年は何をしても上手くいかない気がする",
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779371014.2035062
+    "updated_at": 1779371033.3105757
   },
   {
-    "id": "4379f2b3d0254012929b78dd94d40094",
-    "original_text": "下禮拜一我要開始在電視台的工作了",
-    "translated_sentence": "私は来週の月曜日からテレビ局で働き始める予定です",
-    "translation_source": "Google",
-    "target_language": "Japanese",
-    "target_mode": "normal",
-    "updated_at": 1779371014.2035062
-  },
-  {
-    "id": "967d01a1d1bf4f25bec53e91336ab15b",
+    "id": "8e44da5dfd9f406e9c3d0cff4895442e",
     "original_text": "下禮拜一我要開始在電視台的工作了",
     "translated_sentence": "来週の月曜日からテレビ局での仕事が始まります。",
     "translation_source": "AI",
     "target_language": "Japanese",
     "target_mode": "normal",
-    "updated_at": 1779371014.2035062
-  },
-  {
-    "id": "f85f801e21584c8194dcfa4b6bf2b429",
-    "original_text": "你喜歡看什麼電影呢？",
-    "translated_sentence": "どのような映画を見るのが好きですか?",
-    "translation_source": "Google",
-    "target_language": "Japanese",
-    "target_mode": "normal",
-    "updated_at": 1779371014.2035062
+    "updated_at": 1779371033.3105757
   }
 ]
