@@ -466,5 +466,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395242.3752222
+  },
+  {
+    "id": "a4ea39b28c494d0dbbbf8470697d39e0",
+    "original_text": "Let's try something news.",
+    "translated_sentence": "何かニュースを試してみましょう。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395434.646172
   }
 ]
