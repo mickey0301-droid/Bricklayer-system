@@ -484,5 +484,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779395442.7374194
+  },
+  {
+    "id": "9b1ddc9885384912b950e0553c521ddd",
+    "original_text": "Let's try something new.",
+    "translated_sentence": "何か新しいことを試してみましょう。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779395462.776366
   }
 ]
