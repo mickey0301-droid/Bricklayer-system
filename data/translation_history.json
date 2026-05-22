@@ -1015,5 +1015,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779474173.3839936
+  },
+  {
+    "id": "84471ca272d047bc8af106eea01e5cd2",
+    "original_text": "台灣人總是習慣把「日本精神」這個詞掛在嘴上。",
+    "translated_sentence": "台湾人はいつも「日本精神」という言葉について話すことに慣れています。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779474315.9550362
   }
 ]
