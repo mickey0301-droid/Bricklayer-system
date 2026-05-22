@@ -970,5 +970,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473865.0031626
+  },
+  {
+    "id": "6a83fb43b6974f0fbd73b15de618fd23",
+    "original_text": "電影是根據這段歷史拍攝而成。",
+    "translated_sentence": "この映画はこの歴史に基づいて作られました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473880.279029
   }
 ]
