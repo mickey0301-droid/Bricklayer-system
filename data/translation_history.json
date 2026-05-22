@@ -988,5 +988,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473930.8758848
+  },
+  {
+    "id": "af88376387394b83a016c663bd035cf1",
+    "original_text": "教練近藤兵太郎，讓這個原本羸弱不堪的球隊得以浴火重生。",
+    "translated_sentence": "教練の近藤兵太郎は、この元々弱く無様なチームを復活させることができました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473954.1930232
   }
 ]
