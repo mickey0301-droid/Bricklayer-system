@@ -1069,5 +1069,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779474642.756785
+  },
+  {
+    "id": "602093adf8d2486eb9d5530660f1474a",
+    "original_text": "看完KANO後，我和妻子又聊起「日本教育真的很了不起」的話題。",
+    "translated_sentence": "『KANO』を観た後、妻と「日本の教育って本当にすごいね」という話題になりました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779474709.9981105
   }
 ]
