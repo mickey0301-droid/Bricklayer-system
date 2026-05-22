@@ -1033,5 +1033,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779474335.381395
+  },
+  {
+    "id": "1afa673b123e4ecfbfe1d12060c0d77b",
+    "original_text": "這是台灣人在接受日本統治時學到的，也是日本戰敗後從中國過來的中國人身上看不到，台灣人引以為傲的精神。",
+    "translated_sentence": "これは台湾の人々が日本の統治を受け入れたときに学んだことです。それは日本の敗戦後に中国から渡ってきた中国人には見られなかった精神でもあり、台湾人の誇りでもある。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779474490.9079866
   }
 ]
