@@ -835,5 +835,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779470355.8974302
+  },
+  {
+    "id": "0b0be9fc6d484c3eac27259fa007d1c5",
+    "original_text": "首先，說到癌症治療，台灣和日本一樣，死因排名第一都是癌症。",
+    "translated_sentence": "まず、がん治療に関して言えば、台湾と日本では、死因の第1位はがんです。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470425.4113874
   }
 ]
