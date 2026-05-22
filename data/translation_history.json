@@ -1087,5 +1087,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779474727.2728875
+  },
+  {
+    "id": "2be4b3d7c4c34e32a08bfee27dc6c55c",
+    "original_text": "感謝KANO，讓我再度回想起昔日的自己和家族的點點滴滴。",
+    "translated_sentence": "KANOのおかげで、私は過去の自分と家族のすべてをもう一度思い出すことができます。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779474845.0341885
   }
 ]
