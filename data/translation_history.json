@@ -916,5 +916,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473658.3891742
+  },
+  {
+    "id": "bcb19991d24b43f6b1ce9a1abf59374c",
+    "original_text": "這部電影就是《KANO》。",
+    "translated_sentence": "この映画は《KANO》です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473685.2953007
   }
 ]
