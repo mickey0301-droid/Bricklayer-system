@@ -763,5 +763,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779470033.3769464
+  },
+  {
+    "id": "d1ac0ce65dbd441e96ff2978c29492d8",
+    "original_text": "回顧七十年前，我在京都帝國大學就學。",
+    "translated_sentence": "70年前を振り返ると、私は京都帝国大学に留学していました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470062.3791275
   }
 ]
