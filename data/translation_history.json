@@ -871,5 +871,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473493.8313453
+  },
+  {
+    "id": "a5d5027cb4184115a8ede15faeb587d1",
+    "original_text": "看完這部三小時又五分鐘的電影之後，我哭了。",
+    "translated_sentence": "この3時間5分の映画を観て泣きました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473536.4753914
   }
 ]
