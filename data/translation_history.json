@@ -889,5 +889,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473557.5222366
+  },
+  {
+    "id": "94b27b9eef3f475787912dd3063c864e",
+    "original_text": "長年陪伴我的妻子，就坐在我旁邊。",
+    "translated_sentence": "長年連れ添った妻が私の隣に座っています。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473583.546445
   }
 ]
