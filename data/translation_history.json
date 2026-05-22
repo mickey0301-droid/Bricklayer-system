@@ -961,5 +961,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473810.6718993
+  },
+  {
+    "id": "266d20e9ed5f4026baae04b9168b3e4f",
+    "original_text": "電影是根據這段歷史拍攝而成。",
+    "translated_sentence": "この映画はこの時代の歴史に基づいています。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473865.0031626
   }
 ]
