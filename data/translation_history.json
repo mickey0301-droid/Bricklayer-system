@@ -745,5 +745,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779469965.5204883
+  },
+  {
+    "id": "edf740dda1074d739fe6cb8659b0fe44",
+    "original_text": "我到日本進行七天的訪問。",
+    "translated_sentence": "私は7日間の訪問のために日本に行きました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470016.796847
   }
 ]
