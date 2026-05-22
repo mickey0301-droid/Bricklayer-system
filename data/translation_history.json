@@ -817,5 +817,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779470264.6756222
+  },
+  {
+    "id": "dab4d564feeb4b228a46c23a6a3bec26",
+    "original_text": "此行主要目的是為了更深入了解日本最先進的癌症治療方法，還有能源政策與畜牧業等領域。",
+    "translated_sentence": "今回の訪問の主な目的は、日本の最先端のがん治療法やエネルギー政策、畜産などの分野について理解を深めることです。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470325.350373
   }
 ]
