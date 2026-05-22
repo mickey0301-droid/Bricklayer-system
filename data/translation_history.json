@@ -736,5 +736,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779469939.5028615
+  },
+  {
+    "id": "88dd16507487435d8cab6b622cb68c16",
+    "original_text": "從桃園機場出發，抵達關西機場後，搭乘座車前往大阪市區飯店途中，我這麼想著。",
+    "translated_sentence": "桃園空港を出発し、関西空港に到着した後、大阪市内のホテルへ向かう車に乗っている間、私はそんなことを考えていた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779469963.122655
   }
 ]
