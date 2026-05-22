@@ -925,5 +925,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473687.6904907
+  },
+  {
+    "id": "cf6dcb356f7e4f1eb5bb4063c5f99123",
+    "original_text": "KANO是指嘉農，正式的名稱是台南州立嘉義農林學校。",
+    "translated_sentence": "KANOとは嘉農のことで、正式名称は台南国立嘉義農林学校です。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473717.8413987
   }
 ]
