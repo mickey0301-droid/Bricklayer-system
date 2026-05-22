@@ -862,5 +862,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473468.5693493
+  },
+  {
+    "id": "144fd3c74f664b309102ffcf0ab89a7a",
+    "original_text": "我想從一部電影著手，描繪台日之間的歷史與羈絆。",
+    "translated_sentence": "映画を通じて台日間の歴史と絆を描きたい。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473486.227238
   }
 ]
