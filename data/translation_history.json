@@ -952,5 +952,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473792.2901232
+  },
+  {
+    "id": "c3bf2d4f06b14332a3133dd63f25536f",
+    "original_text": "這座學校於1931年代表台灣，首度進軍甲子園，最終榮獲亞軍。",
+    "translated_sentence": "この学校は1931年に台湾を代表して初めて甲子園に進出し、最終的に準優勝を果たしました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473808.226151
   }
 ]
