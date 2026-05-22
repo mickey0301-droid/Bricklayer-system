@@ -709,5 +709,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779469861.8072968
+  },
+  {
+    "id": "9e21e9a9a7994a06bcde245ee6d7df02",
+    "original_text": "日本又進步了",
+    "translated_sentence": "日本はまた進歩した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779469875.9474056
   }
 ]
