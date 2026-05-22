@@ -826,5 +826,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779470325.350373
+  },
+  {
+    "id": "a3f95a51755c4009b17b7be50cfd0b49",
+    "original_text": "此行主要目的是為了更深入了解日本最先進的癌症治療方法，還有能源政策與畜牧業等領域。",
+    "translated_sentence": "この行の主な目的は、日本の最先端の癌治療法やエネルギー政策、畜産業などの分野をより深く理解することです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470344.2487519
   }
 ]
