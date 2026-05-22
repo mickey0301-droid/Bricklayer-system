@@ -853,5 +853,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779473455.7728238
+  },
+  {
+    "id": "8b1b07779c3f47ea8b58096f262f46e3",
+    "original_text": "我想從一部電影著手，描繪台日之間的歷史與羈絆。",
+    "translated_sentence": "台湾と日本の歴史と絆を描く映画から始めたいと思いました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779473468.5693493
   }
 ]
