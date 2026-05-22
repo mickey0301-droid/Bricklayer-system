@@ -790,5 +790,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779470131.1338317
+  },
+  {
+    "id": "69c6195f183c48c39b988a2a0aa263bd",
+    "original_text": "大阪現在的市容與二次大戰時已經完全不一樣，令我感到非常驚訝。",
+    "translated_sentence": "大阪は現在の市容が第二次世界大戦の時とは完全に異なっていて、非常に驚きました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470146.9131584
   }
 ]
