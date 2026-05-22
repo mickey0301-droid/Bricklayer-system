@@ -1060,5 +1060,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779474604.93162
+  },
+  {
+    "id": "08fe0f3c81b5470f8a01483c2a40d8ae",
+    "original_text": "日本精神代表「勇氣」、「誠實」、「勤勉」、「奉公」、「自我犧牲」、「責任感」、「守法」、及「清潔」的精神。",
+    "translated_sentence": "日本精神を代表する「勇気」、「誠実」、「勤勉」、「奉公」、「自己犠牲」、「責任感」、「法を守ること」、及び「清潔」の精神。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779474640.27571
   }
 ]
