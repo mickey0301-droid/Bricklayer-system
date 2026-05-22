@@ -799,5 +799,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779470149.2552888
+  },
+  {
+    "id": "0de521b72b9b4276a4520af8158b9a44",
+    "original_text": "這次訪問距離上次訪日，已經睽違五年，而且是第一次由兩位女兒陪同到日本。",
+    "translated_sentence": "今回の訪問は前回の日本訪問から5年ぶりであり、娘2人を連れての日本訪問は初めてです。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779470249.9324465
   }
 ]
