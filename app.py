@@ -182,6 +182,13 @@ div[data-testid="stDataEditor"] * {
     white-space: pre-wrap;
     word-break: break-word;
 }
+.jp-kanji-line ruby {
+    ruby-position: under;
+}
+.jp-kanji-line rt {
+    font-size: 0.72em;
+    letter-spacing: 0.01em;
+}
 .study-label {
     font-size: 0.85rem;
     color: #5b6575;
@@ -351,6 +358,7 @@ _defaults = {
     "home_google_translation_target": "english",
     "home_google_translation_result": "",
     "home_google_translation_reading": "",
+    "home_google_translation_romanized": "",
     "home_google_translation_source": "",
     "home_google_translation_target_used": "english",
     "home_google_translation_japanese_mode_used": "normal",
@@ -868,10 +876,10 @@ def home_page():
         "arabic": "ar",
     }
 
-    def _google_translate_text(text: str, target_lang_key: str) -> tuple[str, str]:
+    def _google_translate_text(text: str, target_lang_key: str) -> tuple[str, str, str]:
         source = str(text or "").strip()
         if not source:
-            return "", ""
+            return "", "", ""
         tl = google_lang_map.get(target_lang_key, "en")
         q = urllib.parse.quote(source)
         url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={tl}&dt=t&q={q}"
@@ -887,7 +895,11 @@ def home_page():
             str(item[3]) for item in parts
             if isinstance(item, list) and len(item) > 3 and item[3]
         )
-        return translated.strip(), reading.strip()
+        romanized = "".join(
+            str(item[2]) for item in parts
+            if isinstance(item, list) and len(item) > 2 and item[2]
+        )
+        return translated.strip(), reading.strip(), romanized.strip()
 
     def _build_zh_en_translations(text: str) -> tuple[str, str]:
         sentence = str(text or "").strip()
@@ -1205,9 +1217,10 @@ def home_page():
         if google_needs_refresh or target_changed or mode_changed:
             try:
                 with st.spinner("翻譯中（Google + AI）..."):
-                    g_translated, g_reading = _google_translate_text(current_input, selected_target["key"])
+                    g_translated, g_reading, g_romanized = _google_translate_text(current_input, selected_target["key"])
                     st.session_state.home_google_translation_result = g_translated
                     st.session_state.home_google_translation_reading = g_reading
+                    st.session_state.home_google_translation_romanized = g_romanized
                     if current_input:
                         st.session_state.home_translation_input = current_input_raw
                         st.session_state.home_translation_result = {
@@ -1280,6 +1293,7 @@ def home_page():
         result = st.session_state.get("home_translation_result", {})
         google_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
         google_reading = str(st.session_state.get("home_google_translation_reading", "") or "").strip()
+        google_romanized = str(st.session_state.get("home_google_translation_romanized", "") or "").strip()
         translated = str(result.get("sentence", "") or "").strip()
         reading = str(result.get("reading", "") or "").strip()
         note = str(result.get("note", "") or "").strip()
@@ -1339,6 +1353,8 @@ def home_page():
                     "home_google_translation_play_audio",
                     tts_text=google_reading if selected_target["key"] == "japanese" and google_reading else google_result,
                 )
+                if selected_target["key"] == "japanese" and google_romanized:
+                    st.caption(f"Romanized: {google_romanized}")
             else:
                 st.caption("Google 翻譯結果會顯示在這裡")
 
@@ -1431,7 +1447,7 @@ def home_page():
                 st.session_state.home_translation_input = source_text_raw
                 with st.spinner("Google 與 AI 已開始翻譯..."):
                     try:
-                        g_translated, g_reading = _google_translate_text(source_text, selected_target["key"])
+                        g_translated, g_reading, g_romanized = _google_translate_text(source_text, selected_target["key"])
                         st.session_state.home_google_translation_input = source_text
                         st.session_state.home_google_translation_source = source_text
                         st.session_state.home_google_translation_target = selected_target["key"]
@@ -1441,6 +1457,7 @@ def home_page():
                         )
                         st.session_state.home_google_translation_result = g_translated
                         st.session_state.home_google_translation_reading = g_reading
+                        st.session_state.home_google_translation_romanized = g_romanized
 
                         st.session_state.home_ai_pending_request = {
                             "source_text_raw": source_text_raw,
