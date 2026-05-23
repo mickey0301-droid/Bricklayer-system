@@ -2635,5 +2635,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529316.368339
+  },
+  {
+    "id": "4c6c3c7ed8514eb8b7aa23344a132b81",
+    "original_text": "製糖業",
+    "translated_sentence": "製糖業",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529325.6861537
   }
 ]
