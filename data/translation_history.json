@@ -2986,5 +2986,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531096.3860517
+  },
+  {
+    "id": "d11910f7c9e242e78d2979abe77db75d",
+    "original_text": "台灣製糖業正面臨日漸衰退的危機",
+    "translated_sentence": "台湾の砂糖産業は衰退危機に直面している",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531112.3411176
   }
 ]
