@@ -2068,5 +2068,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524056.9608152
+  },
+  {
+    "id": "6087b0217bad401897eab9c9f3aa033d",
+    "original_text": "包含高級官員在內",
+    "translated_sentence": "高級官員を含む",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524068.1772952
   }
 ]
