@@ -2905,5 +2905,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529944.0173821
+  },
+  {
+    "id": "3e38a5448bf14167928f3fcc2155151f",
+    "original_text": "這份意見書獲得長官的支持",
+    "translated_sentence": "この意見書は長官の支持を得ました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529958.3164291
   }
 ]
