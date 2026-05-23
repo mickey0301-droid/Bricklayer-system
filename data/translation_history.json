@@ -4093,5 +4093,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779535029.707202
+  },
+  {
+    "id": "5001fa688e9849fe837d1ad22cb66299",
+    "original_text": "我想到台北買書",
+    "translated_sentence": "台北で本を買いたいです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779535058.9682102
   }
 ]
