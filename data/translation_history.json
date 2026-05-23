@@ -1366,5 +1366,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511221.6524296
+  },
+  {
+    "id": "3300a39041aa4e0e9c883de44d7a1b16",
+    "original_text": "台灣總督以「軍政、行政最高負責人」的角色到任。",
+    "translated_sentence": "台湾総督は「軍政、行政の最高責任者」として任命された。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511236.2831151
   }
 ]
