@@ -4228,5 +4228,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541814.16204
+  },
+  {
+    "id": "21550be9393540338c25d1872d28f02b",
+    "original_text": "一時之間",
+    "translated_sentence": "一時の間",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541825.1447756
   }
 ]
