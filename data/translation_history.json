@@ -4381,5 +4381,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542219.760978
+  },
+  {
+    "id": "a36a083a6a7d4223b8a0d26898cf2de2",
+    "original_text": "原來，父親找了很多親戚",
+    "translated_sentence": "父はたくさんの親戚を見つけたことが判明しました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542241.7566366
   }
 ]
