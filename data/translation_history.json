@@ -4543,5 +4543,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542618.8981996
+  },
+  {
+    "id": "758628aabf494649ba0a5ab48ba73afd",
+    "original_text": "可見得",
+    "translated_sentence": "見える",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542632.0169384
   }
 ]
