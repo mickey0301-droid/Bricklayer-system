@@ -1924,5 +1924,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523658.2693694
+  },
+  {
+    "id": "d54de9f8d41447aa88b8e6cd891260aa",
+    "original_text": "在建立台灣近代化基礎上，後藤居功厥偉。",
+    "translated_sentence": "後藤は台湾の近代化の基礎を築く上で大きな功績を残した。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523674.726195
   }
 ]
