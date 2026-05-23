@@ -1555,5 +1555,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779521972.0837586
+  },
+  {
+    "id": "376898c82a504d14b7d7277f46206c30",
+    "original_text": "日本統治的方式可說是獨樹一格",
+    "translated_sentence": "日本の統治方法は独特と言える",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522044.6628246
   }
 ]
