@@ -3607,5 +3607,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533816.842366
+  },
+  {
+    "id": "88e0b654011c4838bda968a5eea1f8a3",
+    "original_text": "每當我在學校與朋友吵架",
+    "translated_sentence": "学校で友達と喧嘩するたびに",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533832.9660788
   }
 ]
