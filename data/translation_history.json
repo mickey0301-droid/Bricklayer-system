@@ -2887,5 +2887,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529917.7135482
+  },
+  {
+    "id": "301738e25e6d4668b5dabc84d603521d",
+    "original_text": "獲得長官的支持",
+    "translated_sentence": "長官の支持を得る",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529931.3582187
   }
 ]
