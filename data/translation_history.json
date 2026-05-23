@@ -4786,5 +4786,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546677.1130402
+  },
+  {
+    "id": "97dc13a3d4564c068c8e1bb0d054a32a",
+    "original_text": "讓我吃了不少苦頭",
+    "translated_sentence": "苦労をたくさんしました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546689.9522972
   }
 ]
