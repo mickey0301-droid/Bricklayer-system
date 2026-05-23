@@ -3229,5 +3229,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531637.8764095
+  },
+  {
+    "id": "a96a90823791487d9e3aac799f54b54e",
+    "original_text": "總督府公布以意見書為本制訂的規則",
+    "translated_sentence": "政府議会が提出に基づいて規則を発表",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531661.7164078
   }
 ]
