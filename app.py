@@ -1301,14 +1301,8 @@ def home_page():
         else:
             st.caption("完成翻譯後會在這裡顯示文法解析。")
         if str(st.session_state.get("home_ai_task_status", "") or "") == "running":
-            components.html(
-                """
-                <script>
-                setTimeout(function () { window.parent.location.reload(); }, 350);
-                </script>
-                """,
-                height=0,
-            )
+            time.sleep(0.35)
+            st.rerun()
 
     with left_col:
         st.caption(f"今日已翻譯句數：{st.session_state.get('home_translation_count_today', 0)}")
