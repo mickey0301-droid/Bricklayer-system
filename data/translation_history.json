@@ -4345,5 +4345,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542122.160645
+  },
+  {
+    "id": "d90c0ea977f741918ecb8e6f3fc0984e",
+    "original_text": "我問：爸，怎麼了？",
+    "translated_sentence": "私は尋ねました：お父さん、どうしたのですか？",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542144.1701717
   }
 ]
