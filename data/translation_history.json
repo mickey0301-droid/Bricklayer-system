@@ -2653,5 +2653,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529350.7339087
+  },
+  {
+    "id": "f71fbc4d125445e988826944f23bbdce",
+    "original_text": "振興產業的關鍵",
+    "translated_sentence": "産業振興の鍵",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529364.2935157
   }
 ]
