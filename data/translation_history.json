@@ -5119,5 +5119,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547503.6484601
+  },
+  {
+    "id": "fd92f73d4c3943ce8039dac74c8475b8",
+    "original_text": "待在鄉下念小學",
+    "translated_sentence": "田舎で小学校に通っています",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547509.778718
   }
 ]
