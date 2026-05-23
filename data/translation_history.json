@@ -2293,5 +2293,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524771.2914448
+  },
+  {
+    "id": "43e3075f8fe64116bd32319285f9b9bb",
+    "original_text": "結果什麼事都動不了",
+    "translated_sentence": "その結果、何も動かなくなります。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524823.520034
   }
 ]
