@@ -5092,5 +5092,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547452.3174562
+  },
+  {
+    "id": "ce903b7cecae4ad9a17ae4fdf39aaa33",
+    "original_text": "待在鄉下",
+    "translated_sentence": "その国に滞在する",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547459.328612
   }
 ]
