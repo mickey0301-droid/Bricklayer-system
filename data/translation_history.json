@@ -1888,5 +1888,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523445.8546343
+  },
+  {
+    "id": "742002692b0f4fa7ab0ea9c7acc17d8e",
+    "original_text": "他的施政成果讓台灣從未開發社會邁入近代化社會",
+    "translated_sentence": "彼の施政成果は台湾を未開発社会から近代化社会へと導いた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523462.695116
   }
 ]
