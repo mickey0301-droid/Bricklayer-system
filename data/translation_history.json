@@ -2491,5 +2491,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525391.892031
+  },
+  {
+    "id": "3e1ea3fcd165463f9b8cc7b23b05af1f",
+    "original_text": "在他到達台灣的前一年",
+    "translated_sentence": "台湾に来る1年前",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525450.6200964
   }
 ]
