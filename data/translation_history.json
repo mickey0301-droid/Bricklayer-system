@@ -5452,5 +5452,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551665.7358644
+  },
+  {
+    "id": "b5826a50d69b429e8f7dc471852aff28",
+    "original_text": "他們講過的話",
+    "translated_sentence": "彼らが言ったこと",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551685.8602
   }
 ]
