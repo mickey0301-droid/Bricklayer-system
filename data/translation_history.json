@@ -1519,5 +1519,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779521850.9017255
+  },
+  {
+    "id": "9640d77ee561499abd4be6cbfe80976e",
+    "original_text": "相對於歐美各國",
+    "translated_sentence": "欧米諸国と比べて",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779521902.7323024
   }
 ]
