@@ -1375,5 +1375,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511238.5109975
+  },
+  {
+    "id": "0b5caec231a549f792501a0a413f2589",
+    "original_text": "首任總督為樺山資紀",
+    "translated_sentence": "初代総督は華山子路であった",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511292.841427
   }
 ]
