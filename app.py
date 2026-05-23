@@ -183,7 +183,7 @@ div[data-testid="stDataEditor"] * {
     word-break: break-word;
 }
 .jp-kanji-line ruby {
-    ruby-position: under;
+    ruby-position: over;
 }
 .jp-kanji-line rt {
     font-size: 0.72em;
@@ -1347,14 +1347,16 @@ def home_page():
                         .replace("\n", "<br>")
                     )
                     st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
+                if selected_target["key"] == "japanese":
+                    romanized_text = google_romanized or google_reading
+                    if romanized_text:
+                        st.caption(f"Romanized: {romanized_text}")
                 _render_translation_audio(
                     selected_target["key"],
                     google_result,
                     "home_google_translation_play_audio",
                     tts_text=google_reading if selected_target["key"] == "japanese" and google_reading else google_result,
                 )
-                if selected_target["key"] == "japanese" and google_romanized:
-                    st.caption(f"Romanized: {google_romanized}")
             else:
                 st.caption("Google 翻譯結果會顯示在這裡")
 
