@@ -5218,5 +5218,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547684.8138466
+  },
+  {
+    "id": "943a601d01234d69a0174ae64b5cf71b",
+    "original_text": "嚐到寄人籬下的悲哀",
+    "translated_sentence": "他人の屋根の下で生きる悲しみを味わう",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547722.5201108
   }
 ]
