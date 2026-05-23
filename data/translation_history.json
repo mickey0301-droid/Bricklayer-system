@@ -3724,5 +3724,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534189.59465
+  },
+  {
+    "id": "55c5df6ffb85425ab239cc8281bb6449",
+    "original_text": "他會責怪我的不是",
+    "translated_sentence": "彼は私のせいにするだろう",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534202.110892
   }
 ]
