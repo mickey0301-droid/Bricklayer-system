@@ -2374,5 +2374,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525044.0266058
+  },
+  {
+    "id": "42dd8dee156c42c99ae76afebbf3e6a3",
+    "original_text": "他採取的方法是實地造訪、研究",
+    "translated_sentence": "他の採取方法は実地訪問と研究です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525057.3132482
   }
 ]
