@@ -2509,5 +2509,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525463.9052136
+  },
+  {
+    "id": "5f21e97bb225421b8e17fa5815f43891",
+    "original_text": "他在美國出版「武士道」一書",
+    "translated_sentence": "彼は米国で『Bushido』という本を出版した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525516.1279764
   }
 ]
