@@ -5605,5 +5605,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552054.5719306
+  },
+  {
+    "id": "83a462c2e8584748a3a35cbd72d6f549",
+    "original_text": "別人討厭的事我都率先去做",
+    "translated_sentence": "誰も嫌がることは私が最初にやる",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552068.917725
   }
 ]
