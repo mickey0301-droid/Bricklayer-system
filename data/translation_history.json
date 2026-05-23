@@ -3301,5 +3301,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533050.548636
+  },
+  {
+    "id": "39ea6c8f582144b295b9867a1513d509",
+    "original_text": "我接受教育的時候",
+    "translated_sentence": "私が教育を受けていたとき",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533066.2261026
   }
 ]
