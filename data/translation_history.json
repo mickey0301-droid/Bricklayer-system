@@ -3931,5 +3931,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534665.5400963
+  },
+  {
+    "id": "74aa7dfe65dd4926bbab68f67fcf3390",
+    "original_text": "應該更理性地處理自己內在澎湃的情感",
+    "translated_sentence": "自分の内に湧き上がる感情をもっと理性的に処理すべきだ",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534682.098398
   }
 ]
