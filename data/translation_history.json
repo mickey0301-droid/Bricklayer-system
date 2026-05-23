@@ -1501,5 +1501,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779521791.2199047
+  },
+  {
+    "id": "6a6e6006b00f4796a096ac7136d6f851",
+    "original_text": "台灣得以從傳統農業社會蛻變為近代社會",
+    "translated_sentence": "台湾は伝統的な農業社会から近代社会への転換を果たした",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779521828.6472604
   }
 ]
