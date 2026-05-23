@@ -2572,5 +2572,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525705.2721043
+  },
+  {
+    "id": "ae464d9804a54f9f94f73434f9f2ecf6",
+    "original_text": "日文版《武士道》則在數年後才出版。",
+    "translated_sentence": "日文版《武士道》は数年後に出版されました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525720.2084503
   }
 ]
