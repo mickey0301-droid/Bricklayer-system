@@ -1951,5 +1951,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523731.5900798
+  },
+  {
+    "id": "61ca1eacebef4796bda9c160312561a2",
+    "original_text": "他率先實施了這項制度",
+    "translated_sentence": "彼はこのシステムを最初に導入した人でした",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523762.357691
   }
 ]
