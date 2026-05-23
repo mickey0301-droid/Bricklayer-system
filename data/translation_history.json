@@ -5947,5 +5947,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779558398.3022249
+  },
+  {
+    "id": "0d828b98cd1447c98d0fd43b7db2f4bd",
+    "original_text": "大家都和樂融融的",
+    "translated_sentence": "みんな和気あいあいとしている",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779558409.7929003
   }
 ]
