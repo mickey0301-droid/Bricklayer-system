@@ -4030,5 +4030,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534913.9836051
+  },
+  {
+    "id": "897d0dd49d7a4a009a47297754c72cb8",
+    "original_text": "旅行前夕",
+    "translated_sentence": "旅行前夜",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534925.3382552
   }
 ]
