@@ -898,6 +898,8 @@ def home_page():
         return zh_text, en_text
 
     def _run_pending_home_ai_if_needed(selected_target: dict):
+        if str(st.session_state.get("home_ai_task_status", "") or "") != "running":
+            return
         req = st.session_state.get("home_ai_pending_request")
         if not isinstance(req, dict):
             return
@@ -1157,7 +1159,7 @@ def home_page():
                             "target_label": selected_target["label"],
                             "japanese_mode": japanese_mode,
                         }
-                        st.session_state.home_ai_task_status = "running"
+                        st.session_state.home_ai_task_status = "queued"
                         upsert_translation_history_entry(
                             original_text=current_input_raw,
                             translated_sentence=g_translated,
@@ -1174,6 +1176,9 @@ def home_page():
             except Exception as e:
                 st.error(f"切換語言自動翻譯失敗：{e}")
         else:
+            if str(st.session_state.get("home_ai_task_status", "") or "") == "queued":
+                st.session_state.home_ai_task_status = "running"
+                st.rerun()
             _run_pending_home_ai_if_needed(selected_target)
 
         result = st.session_state.get("home_translation_result", {})
@@ -1218,65 +1223,68 @@ def home_page():
                     target_mode=target_mode_value,
                 )
 
-        st.markdown("**Google 翻譯結果**")
-        if google_result:
-            if selected_target["key"] == "japanese":
-                _render_japanese_result(google_result, google_reading)
-            else:
-                safe_google = (
-                    google_result.replace("&", "&amp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
-                    .replace("\n", "<br>")
+        g_col, ai_col = st.columns(2)
+        with g_col:
+            st.markdown("**Google 翻譯結果（獨立區塊）**")
+            if google_result:
+                if selected_target["key"] == "japanese":
+                    _render_japanese_result(google_result, google_reading)
+                else:
+                    safe_google = (
+                        google_result.replace("&", "&amp;")
+                        .replace("<", "&lt;")
+                        .replace(">", "&gt;")
+                        .replace("\n", "<br>")
+                    )
+                    st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
+                _render_translation_audio(
+                    selected_target["key"],
+                    google_result,
+                    "home_google_translation_play_audio",
+                    tts_text=google_reading if selected_target["key"] == "japanese" and google_reading else google_result,
                 )
-                st.markdown(f'<div class="result-text">{safe_google}</div>', unsafe_allow_html=True)
-            _render_translation_audio(
-                selected_target["key"],
-                google_result,
-                "home_google_translation_play_audio",
-                tts_text=google_reading if selected_target["key"] == "japanese" and google_reading else google_result,
-            )
-        else:
-            st.caption("Google 翻譯結果會顯示在這裡")
+            else:
+                st.caption("Google 翻譯結果會顯示在這裡")
 
-        st.markdown("**AI 翻譯結果**")
-        if translated:
-            if selected_target["key"] == "japanese":
-                _render_japanese_result(translated, reading, furigana, ruby_words, ruby_html)
-            else:
-                safe_ai = (
-                    translated.replace("&", "&amp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
-                    .replace("\n", "<br>")
+        with ai_col:
+            st.markdown("**AI 翻譯結果（獨立區塊）**")
+            if translated:
+                if selected_target["key"] == "japanese":
+                    _render_japanese_result(translated, reading, furigana, ruby_words, ruby_html)
+                else:
+                    safe_ai = (
+                        translated.replace("&", "&amp;")
+                        .replace("<", "&lt;")
+                        .replace(">", "&gt;")
+                        .replace("\n", "<br>")
+                    )
+                    st.markdown(f'<div class="result-text">{safe_ai}</div>', unsafe_allow_html=True)
+                    if reading:
+                        st.caption(reading)
+                if note:
+                    st.caption(note)
+                if zh_translation:
+                    st.caption(f"中文翻譯：{zh_translation}")
+                if en_translation:
+                    st.caption(f"English Translation: {en_translation}")
+                _render_translation_audio(
+                    selected_target["key"],
+                    translated,
+                    "home_translation_play_audio",
+                    tts_text=reading if selected_target["key"] == "japanese" and reading else translated,
                 )
-                st.markdown(f'<div class="result-text">{safe_ai}</div>', unsafe_allow_html=True)
-                if reading:
-                    st.caption(reading)
-            if note:
-                st.caption(note)
-            if zh_translation:
-                st.caption(f"中文翻譯：{zh_translation}")
-            if en_translation:
-                st.caption(f"English Translation: {en_translation}")
-            _render_translation_audio(
-                selected_target["key"],
-                translated,
-                "home_translation_play_audio",
-                tts_text=reading if selected_target["key"] == "japanese" and reading else translated,
-            )
-        else:
-            if str(st.session_state.get("home_ai_task_status", "") or "") == "running":
-                st.caption("AI 翻譯中...")
             else:
-                st.caption("AI 翻譯結果會顯示在這裡")
+                if str(st.session_state.get("home_ai_task_status", "") or "") in ("queued", "running"):
+                    st.caption("AI 翻譯中...")
+                else:
+                    st.caption("AI 翻譯結果會顯示在這裡")
 
         st.markdown("**文法說明**")
         if grammar:
             _render_grammar_box(grammar)
         else:
             st.caption("完成翻譯後會在這裡顯示文法解析。")
-        if str(st.session_state.get("home_ai_task_status", "") or "") == "running":
+        if str(st.session_state.get("home_ai_task_status", "") or "") in ("queued", "running"):
             st.rerun()
 
     with left_col:
@@ -1334,7 +1342,7 @@ def home_page():
                             "target_label": selected_target["label"],
                             "japanese_mode": japanese_mode,
                         }
-                        st.session_state.home_ai_task_status = "running"
+                        st.session_state.home_ai_task_status = "queued"
                         st.session_state.home_translation_result = {
                             "sentence": "",
                             "reading": "",
