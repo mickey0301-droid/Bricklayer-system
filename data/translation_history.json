@@ -1582,5 +1582,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522176.7974305
+  },
+  {
+    "id": "69f126f6a755430a9f39263c6cabdabb",
+    "original_text": "尤其是台灣割讓給日本之後幾個月",
+    "translated_sentence": "特に台湾が日本に割譲された後の数ヶ月",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522191.1367984
   }
 ]
