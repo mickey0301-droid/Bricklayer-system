@@ -5038,5 +5038,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547324.6418152
+  },
+  {
+    "id": "58202ea8e21d4e32b2502eae03c8401c",
+    "original_text": "我不想讓母親難過",
+    "translated_sentence": "母を悲しませたくない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547369.5803268
   }
 ]
