@@ -1699,5 +1699,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522628.4504633
+  },
+  {
+    "id": "db9f3214926c4213becc90e64a0f48eb",
+    "original_text": "日本統治初期",
+    "translated_sentence": "日本統治時代の初期",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522856.330995
   }
 ]
