@@ -2239,5 +2239,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524573.634563
+  },
+  {
+    "id": "b2cf2cf2874f4932ad689e65e9d5d766",
+    "original_text": "有些人唸過一些法律",
+    "translated_sentence": "法律を勉強した人もいる",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524591.056377
   }
 ]
