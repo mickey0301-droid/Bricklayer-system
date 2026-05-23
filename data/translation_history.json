@@ -2410,5 +2410,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525122.9113061
+  },
+  {
+    "id": "3aff228ac1154bb3a6020c103c11240c",
+    "original_text": "然後制訂所需的法律",
+    "translated_sentence": "必要な法律を制定する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525136.3787673
   }
 ]
