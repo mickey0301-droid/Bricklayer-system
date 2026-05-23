@@ -5308,5 +5308,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547879.496959
+  },
+  {
+    "id": "20ecdd927c7c43ad9db0c48a917c6a55",
+    "original_text": "不幸在一年級時罹患傷寒",
+    "translated_sentence": "残念なことに、私は小学1年生の時に腸チフスにかかりました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547894.4162054
   }
 ]
