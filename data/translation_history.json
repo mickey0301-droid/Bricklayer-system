@@ -3490,5 +3490,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533487.0230784
+  },
+  {
+    "id": "e579a0a58acb4ebb8b6a2a642b977369",
+    "original_text": "我讀小學期間就經歷了四次轉學",
+    "translated_sentence": "私は小学校の期間中に四度転校しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533499.7213633
   }
 ]
