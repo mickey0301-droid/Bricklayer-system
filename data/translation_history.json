@@ -4849,5 +4849,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546807.2506003
+  },
+  {
+    "id": "bb4a38128a3148dfa2af799b377a1988",
+    "original_text": "小學高年級",
+    "translated_sentence": "小学校高学年",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546824.472121
   }
 ]
