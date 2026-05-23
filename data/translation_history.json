@@ -5821,5 +5821,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557888.6165361
+  },
+  {
+    "id": "63c15cd81cef43eab298a0dfd3b3b1df",
+    "original_text": "拍手能創造節奏",
+    "translated_sentence": "拍手はリズムを生み出すことができる。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557900.5070686
   }
 ]
