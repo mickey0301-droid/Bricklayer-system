@@ -1321,5 +1321,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511041.9803834
+  },
+  {
+    "id": "272a3908468f4aecbdaa4a4cd2c5ed1b",
+    "original_text": "同年，日本設立台灣總督府",
+    "translated_sentence": "同年、日本は台湾総督府を設置した。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511089.2774615
   }
 ]
