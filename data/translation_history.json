@@ -4102,5 +4102,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779535058.9682102
+  },
+  {
+    "id": "9ad3adbd1c004acfa6de877a111fde93",
+    "original_text": "我想到台北買書",
+    "translated_sentence": "台北で本を買いたいです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779535070.1604762
   }
 ]
