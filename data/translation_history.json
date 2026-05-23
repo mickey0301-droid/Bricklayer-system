@@ -5011,5 +5011,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547192.2517643
+  },
+  {
+    "id": "92657babb6ab4bd6af5c5cc6afdf052d",
+    "original_text": "我就完蛋了",
+    "translated_sentence": "私はもうだめだ。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547201.640997
   }
 ]
