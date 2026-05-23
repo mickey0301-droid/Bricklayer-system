@@ -4219,5 +4219,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541795.9639497
+  },
+  {
+    "id": "508aa795f99041ee8dabe9a409da07c6",
+    "original_text": "一時之間",
+    "translated_sentence": "突然",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541814.16204
   }
 ]
