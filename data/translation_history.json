@@ -4831,5 +4831,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546761.6594348
+  },
+  {
+    "id": "39f40c2d705343f0933c333ceb345583",
+    "original_text": "我的母親非常溺愛我",
+    "translated_sentence": "私の母はとても私を甘やかしています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546776.0769086
   }
 ]
