@@ -2455,5 +2455,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525264.9947045
+  },
+  {
+    "id": "03fa5d749b544a9983a87331a6f8a68c",
+    "original_text": "他接受兩年任期的邀約抵達台灣",
+    "translated_sentence": "彼は2年間奉仕するよう招待を受け入れ、台湾に到着した。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525300.4499283
   }
 ]
