@@ -4588,5 +4588,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542707.5877237
+  },
+  {
+    "id": "c59e68c1048645dab83a5ffaccbddc63",
+    "original_text": "從頭到尾",
+    "translated_sentence": "最初から最後まで",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542729.4956217
   }
 ]
