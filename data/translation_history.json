@@ -2383,5 +2383,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525059.4190001
+  },
+  {
+    "id": "a9d9a156cee340779f1a8cf1f3fedc31",
+    "original_text": "然後指定所需的法律",
+    "translated_sentence": "次に、必要な法律を指定します",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525095.6830733
   }
 ]
