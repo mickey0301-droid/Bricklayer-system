@@ -3841,5 +3841,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534463.7877662
+  },
+  {
+    "id": "f8ad8fdb48b54d9882f11e2c937f04c5",
+    "original_text": "何不稍微理性一些？",
+    "translated_sentence": "もう少し合理的に考えてみませんか?",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534484.342694
   }
 ]
