@@ -5713,5 +5713,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552315.5144615
+  },
+  {
+    "id": "7ccdefe5bbb540e9bc7091cf3a5e6191",
+    "original_text": "成爲我寶貴的參考經驗",
+    "translated_sentence": "私にとって貴重な参考経験になります。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552329.5815947
   }
 ]
