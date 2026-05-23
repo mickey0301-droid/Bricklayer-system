@@ -5317,5 +5317,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547894.4162054
+  },
+  {
+    "id": "0ec06de4b4ab431da51bf424ac0493fd",
+    "original_text": "不幸在一年級時罹患傷寒",
+    "translated_sentence": "一年生の時に傷寒にかかりました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547911.2173016
   }
 ]
