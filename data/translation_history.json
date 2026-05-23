@@ -4327,5 +4327,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542059.8309066
+  },
+  {
+    "id": "a064e8176bd9443bbc0e4549a03a9eaa",
+    "original_text": "轉頭一看，竟然是父親。",
+    "translated_sentence": "振り向くと、それは私の父でした。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542099.8384755
   }
 ]
