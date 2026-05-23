@@ -1105,5 +1105,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510255.2446425
+  },
+  {
+    "id": "1b349c9d65044ea19531f031151f448f",
+    "original_text": "KANO在台灣很賣座",
+    "translated_sentence": "KANOは台湾でも大人気",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510303.3580265
   }
 ]
