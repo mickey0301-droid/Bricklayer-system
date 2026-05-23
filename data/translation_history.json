@@ -5137,5 +5137,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547531.755899
+  },
+  {
+    "id": "2d549a4536594ed885f003cc17b398a7",
+    "original_text": "恐怕無法升上中學",
+    "translated_sentence": "中学に進学できないかもしれない",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547542.4575727
   }
 ]
