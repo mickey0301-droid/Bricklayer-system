@@ -2113,5 +2113,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524146.3920028
+  },
+  {
+    "id": "7d36b1ea6bc14b0faa1a73b93efb3584",
+    "original_text": "排除這些人之後，",
+    "translated_sentence": "そういう人たちを排除した上で、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524191.9120698
   }
 ]
