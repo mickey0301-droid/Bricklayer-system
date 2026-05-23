@@ -353,6 +353,7 @@ _defaults = {
     "home_google_translation_reading": "",
     "home_google_translation_source": "",
     "home_google_translation_target_used": "english",
+    "home_google_translation_japanese_mode_used": "normal",
     "home_practice_input": "",
     "home_practice_language": "english",
     "home_practice_result": {"sentence": "", "reading": "", "note": "", "grammar": "", "zh_translation": "", "en_translation": ""},
@@ -1143,7 +1144,7 @@ def home_page():
         target_changed = selected_target["key"] != prev_target
         mode_changed = (
             selected_target["key"] == "japanese"
-            and st.session_state.get("home_translation_japanese_mode_used", "normal") != japanese_mode
+            and st.session_state.get("home_google_translation_japanese_mode_used", "normal") != japanese_mode
         )
         google_needs_refresh = current_input and (
             st.session_state.get("home_google_translation_source", "") != current_input_raw
@@ -1190,6 +1191,9 @@ def home_page():
                     st.session_state.home_google_translation_source = current_input_raw
                     st.session_state.home_google_translation_target = selected_target["key"]
                     st.session_state.home_google_translation_target_used = selected_target["key"]
+                    st.session_state.home_google_translation_japanese_mode_used = (
+                        japanese_mode if selected_target["key"] == "japanese" else "normal"
+                    )
                     if current_input:
                         st.rerun()
             except Exception as e:
@@ -1350,6 +1354,9 @@ def home_page():
                         st.session_state.home_google_translation_source = source_text
                         st.session_state.home_google_translation_target = selected_target["key"]
                         st.session_state.home_google_translation_target_used = selected_target["key"]
+                        st.session_state.home_google_translation_japanese_mode_used = (
+                            japanese_mode if selected_target["key"] == "japanese" else "normal"
+                        )
                         st.session_state.home_google_translation_result = g_translated
                         st.session_state.home_google_translation_reading = g_reading
 
