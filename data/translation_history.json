@@ -3121,5 +3121,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531392.6507556
+  },
+  {
+    "id": "f8109a498c274a9eb171ee69d193bc00",
+    "original_text": "因此，他將相應對策寫進意見書",
+    "translated_sentence": "したがって、彼は対応策を意見書に書き入れました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531405.3555248
   }
 ]
