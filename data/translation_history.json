@@ -5524,5 +5524,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551846.5088756
+  },
+  {
+    "id": "88c2c1a6f0554867ad6f972ebef6606a",
+    "original_text": "青年團的活動之一是打禪",
+    "translated_sentence": "青年団の活動の一つに瞑想があります。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551853.9883919
   }
 ]
