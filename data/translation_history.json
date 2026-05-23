@@ -5893,5 +5893,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779558246.406966
+  },
+  {
+    "id": "4dd864892c5942bbbdb00d60fda6d01f",
+    "original_text": "我們要舉辦一場特別的派對",
+    "translated_sentence": "特別なパーティーを開きます。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779558258.696988
   }
 ]
