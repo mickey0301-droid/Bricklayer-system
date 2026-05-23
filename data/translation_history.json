@@ -1312,5 +1312,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511026.728921
+  },
+  {
+    "id": "749b946524474bce86c05206a98b5cf0",
+    "original_text": "清朝將台灣割讓給日本",
+    "translated_sentence": "清朝は台湾を日本に割譲した。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511039.9550319
   }
 ]
