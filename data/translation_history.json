@@ -3994,5 +3994,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534855.167538
+  },
+  {
+    "id": "a6d878f093a447d5808c4c0b05802afd",
+    "original_text": "小學四年級的時候",
+    "translated_sentence": "小学4年生のとき",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534866.644317
   }
 ]
