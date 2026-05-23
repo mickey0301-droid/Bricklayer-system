@@ -1492,5 +1492,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779521773.5536788
+  },
+  {
+    "id": "9371fbb2e7a34337abb4bb4d2708f6dd",
+    "original_text": "因為日本的統治",
+    "translated_sentence": "日本の統治のために",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779521789.168271
   }
 ]
