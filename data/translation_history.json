@@ -4561,5 +4561,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542649.0296323
+  },
+  {
+    "id": "2c1bcdbb6dc448d495e6686bf3965ce6",
+    "original_text": "可見當時的日本確實存在一股「教育熱」。",
+    "translated_sentence": "当時の日本には確かに「教育ブーム」があったことがわかります。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542667.8010762
   }
 ]
