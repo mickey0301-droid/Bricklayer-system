@@ -2473,5 +2473,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525318.3780992
+  },
+  {
+    "id": "60a84a9a82304c709efdea384c116c0a",
+    "original_text": "這時日本已經統治台灣六年。",
+    "translated_sentence": "この時、日本は台湾を6年間統治していた。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525371.435888
   }
 ]
