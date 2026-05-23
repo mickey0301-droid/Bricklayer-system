@@ -2221,5 +2221,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524506.4726737
+  },
+  {
+    "id": "f5c381ab22f5403d82e2c08660c7fa9b",
+    "original_text": "他並不是法律專家",
+    "translated_sentence": "彼は法律の専門家ではありません",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524558.276066
   }
 ]
