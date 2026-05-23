@@ -1402,5 +1402,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511351.4297295
+  },
+  {
+    "id": "16127fa87ed74db8b63d4264be1c95bc",
+    "original_text": "此後到1945年為止",
+    "translated_sentence": "この後1945年まで",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511362.537929
   }
 ]
