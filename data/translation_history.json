@@ -5785,5 +5785,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557327.8319173
+  },
+  {
+    "id": "bf62c3657ac348f9858eacdd43206864",
+    "original_text": "不能讓他改變心意",
+    "translated_sentence": "彼の気持ちを変えさせてはいけない。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557344.485226
   }
 ]
