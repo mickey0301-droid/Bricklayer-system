@@ -3535,5 +3535,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533582.4853466
+  },
+  {
+    "id": "d4fbac42fd4a4a5ab9ece0d99673cf1a",
+    "original_text": "我變成了喜歡自己看書、塗鴉",
+    "translated_sentence": "一人で本を読んだり落書きしたりするのが好きです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533599.5385756
   }
 ]
