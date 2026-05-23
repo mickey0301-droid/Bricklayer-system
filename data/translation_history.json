@@ -1672,5 +1672,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522533.3790698
+  },
+  {
+    "id": "7ece5030e4d948e7b3931612e8313cb2",
+    "original_text": "將來很可能會對殖民統治提出不滿的訴求",
+    "translated_sentence": "将来、植民地支配に対して不満の声が上がる可能性があります",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522554.3808646
   }
 ]
