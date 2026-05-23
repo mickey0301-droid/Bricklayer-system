@@ -5794,5 +5794,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557346.8484159
+  },
+  {
+    "id": "ccb00e2700664ed6a7e405662af49804",
+    "original_text": "我和他難得達成共識",
+    "translated_sentence": "私と彼が合意に達するのは珍しい",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557374.7627456
   }
 ]
