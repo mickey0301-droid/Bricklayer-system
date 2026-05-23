@@ -2869,5 +2869,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529882.9000435
+  },
+  {
+    "id": "8727387ad8f94672b6ac880575185a68",
+    "original_text": "他提出「糖業改良意見書」。",
+    "translated_sentence": "他は「糖業改良意見書」を提出した。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529896.0157852
   }
 ]
