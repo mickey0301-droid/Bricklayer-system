@@ -3049,5 +3049,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531216.3307767
+  },
+  {
+    "id": "929fe08b9bf54f5cb4c52f34340086e2",
+    "original_text": "勞動力的欠缺與課稅問題之類的人為因素",
+    "translated_sentence": "労働力の欠如や課税問題などの人為的な要因",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531229.7413645
   }
 ]
