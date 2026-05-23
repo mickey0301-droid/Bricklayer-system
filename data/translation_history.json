@@ -5506,5 +5506,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551797.4744937
+  },
+  {
+    "id": "22a21cb1032745bbb1fa9e42d6e2c5ff",
+    "original_text": "他加入地區的青年團",
+    "translated_sentence": "彼は地元の青年グループに参加した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551817.5700724
   }
 ]
