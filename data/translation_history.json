@@ -5380,5 +5380,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551470.894294
+  },
+  {
+    "id": "a2cfeb5836564cc6b3c3fa7e62fe116a",
+    "original_text": "他幫我辦好手續",
+    "translated_sentence": "彼は手続きを完了するのを手伝ってくれました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551488.3364606
   }
 ]
