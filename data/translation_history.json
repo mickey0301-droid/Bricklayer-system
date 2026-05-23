@@ -2725,5 +2725,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529546.1451912
+  },
+  {
+    "id": "a63cd5f92587409f81a5514376fdceb7",
+    "original_text": "返台之際",
+    "translated_sentence": "台湾に戻る時",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529556.3559148
   }
 ]
