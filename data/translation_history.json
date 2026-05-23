@@ -3553,5 +3553,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533619.668576
+  },
+  {
+    "id": "65173d14549147828228584e9b46071e",
+    "original_text": "非常內向",
+    "translated_sentence": "一人で本を読んだり落書きしたりするのが好きです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533648.6176016
   }
 ]
