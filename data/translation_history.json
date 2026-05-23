@@ -5488,5 +5488,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551757.5219798
+  },
+  {
+    "id": "d85f8d3a4be14026a41ce31241d759ef",
+    "original_text": "哥哥的存在成了我的救贖",
+    "translated_sentence": "兄の存在が私の救いになった",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551783.348524
   }
 ]
