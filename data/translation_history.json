@@ -5569,5 +5569,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551932.8708615
+  },
+  {
+    "id": "a47e8a56cc4b48498a6332f86bc6d08d",
+    "original_text": "我開始閱讀文化之類的書籍",
+    "translated_sentence": "私は文化に関する本を読み始めました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551945.3103209
   }
 ]
