@@ -4957,5 +4957,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547070.5664508
+  },
+  {
+    "id": "48d2bb0de7f14494b2399ede6b739544",
+    "original_text": "漸漸地腦海裡會閃過「墮落」的念頭",
+    "translated_sentence": "徐々に脳裏に「堕落」という考えが浮かんでくることがある。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547091.2881892
   }
 ]
