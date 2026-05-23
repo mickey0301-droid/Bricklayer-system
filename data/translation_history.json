@@ -4444,5 +4444,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542371.7861319
+  },
+  {
+    "id": "bcaa7b95df294d09beddc372ed38bfac",
+    "original_text": "彷彿飛上天的喜悅",
+    "translated_sentence": "空に舞い上がるような喜び",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542387.0565746
   }
 ]
