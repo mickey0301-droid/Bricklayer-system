@@ -4363,5 +4363,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542160.3457952
+  },
+  {
+    "id": "c7f982e5b8e141d99ffdc12896c37bfa",
+    "original_text": "父親回答：「你買書的錢，我給你帶來了。」",
+    "translated_sentence": "父親は「本を買うために払ったお金を持ってきたよ」と答えました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542194.4273121
   }
 ]
