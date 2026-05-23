@@ -1202,7 +1202,7 @@ def home_page():
             st.session_state.get("home_google_translation_source", "") != current_input_raw
             or st.session_state.get("home_google_translation_target_used", "") != selected_target["key"]
         )
-        _collect_home_ai_task(selected_target)
+        # Legacy background-task collector disabled for two-step flow stability.
         if google_needs_refresh or target_changed or mode_changed:
             try:
                 with st.spinner("翻譯中（Google + AI）..."):
@@ -1233,6 +1233,8 @@ def home_page():
                             "target_label": selected_target["label"],
                             "japanese_mode": japanese_mode,
                         }
+                        st.session_state.home_ai_task_id = ""
+                        st.session_state.home_ai_task_status = ""
                         st.session_state.home_ai_pending_step = 1
                         st.session_state.home_ai_pending_ready_at = time.time() + 0.8
                         upsert_translation_history_entry(
@@ -1456,6 +1458,8 @@ def home_page():
                             "target_label": selected_target["label"],
                             "japanese_mode": japanese_mode,
                         }
+                        st.session_state.home_ai_task_id = ""
+                        st.session_state.home_ai_task_status = ""
                         st.session_state.home_ai_pending_step = 1
                         st.session_state.home_ai_pending_ready_at = time.time() + 0.8
                         upsert_translation_history_entry(
