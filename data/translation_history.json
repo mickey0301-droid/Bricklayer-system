@@ -1249,5 +1249,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510872.5219018
+  },
+  {
+    "id": "aae4b29065f846f3af0ac779dbd079db",
+    "original_text": "台灣人應該看這部電影",
+    "translated_sentence": "台湾人はこの映画を見るべきだ",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510895.990366
   }
 ]
