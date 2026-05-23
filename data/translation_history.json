@@ -4012,5 +4012,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534888.0193465
+  },
+  {
+    "id": "054013b00bbe40b78d20ac840d500c40",
+    "original_text": "有一次到台北教學旅行",
+    "translated_sentence": "台北への教育旅行があった。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534894.791856
   }
 ]
