@@ -1906,5 +1906,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523545.6454446
+  },
+  {
+    "id": "e73189f41f4e485ab5b6a214fe7fe4ad",
+    "original_text": "有人說幾乎是「相當於一世紀」的開發與發展",
+    "translated_sentence": "ほぼ「一世紀」に相当する開発と発展が行われたと言われている。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523570.5303628
   }
 ]
