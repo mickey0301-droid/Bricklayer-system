@@ -1528,5 +1528,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779521902.7323024
+  },
+  {
+    "id": "da358fa5d15344f2beea5057fc7736e8",
+    "original_text": "相對於歐美各國",
+    "translated_sentence": "欧米各国に対して",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779521912.7590997
   }
 ]
