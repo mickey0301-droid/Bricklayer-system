@@ -1204,5 +1204,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510794.500627
+  },
+  {
+    "id": "ff0516af432a4ed6b23934a701c2d6be",
+    "original_text": "建立民主社會",
+    "translated_sentence": "民主社会を築く",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510803.4547114
   }
 ]
