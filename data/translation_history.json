@@ -2194,5 +2194,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524407.2203834
+  },
+  {
+    "id": "2d7cbc187ad744748d224db07762296e",
+    "original_text": "讓他們得以適材適用",
+    "translated_sentence": "彼らが適材適所で活躍できるように",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524419.439239
   }
 ]
