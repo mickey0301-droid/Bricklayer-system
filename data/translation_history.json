@@ -3769,5 +3769,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534304.6674447
+  },
+  {
+    "id": "e9133fe311174ac2812209cd052d69a0",
+    "original_text": "對於我這種個性",
+    "translated_sentence": "私の性格のために",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534351.3001916
   }
 ]
