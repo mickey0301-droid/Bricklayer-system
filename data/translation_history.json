@@ -4489,5 +4489,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542491.0268974
+  },
+  {
+    "id": "d0ef19694d624e58af1a953887a3c778",
+    "original_text": "在書裡我也提到這件事",
+    "translated_sentence": "これも本の中で触れましたが、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542506.6222777
   }
 ]
