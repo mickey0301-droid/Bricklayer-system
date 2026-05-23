@@ -3346,5 +3346,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533210.1319084
+  },
+  {
+    "id": "2a13e316208049b884d0e02ab8b45adb",
+    "original_text": "就我個人而言，",
+    "translated_sentence": "私個人としては、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533220.377779
   }
 ]
