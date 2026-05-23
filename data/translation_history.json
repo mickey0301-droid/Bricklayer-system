@@ -5614,5 +5614,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552071.378871
+  },
+  {
+    "id": "22af2d0eed3d47ac96373efb44b83af1",
+    "original_text": "早上六點宿舍起床",
+    "translated_sentence": "朝6時に寮に起床",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552103.1548717
   }
 ]
