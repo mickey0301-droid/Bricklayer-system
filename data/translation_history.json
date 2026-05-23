@@ -1618,5 +1618,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522329.1228118
+  },
+  {
+    "id": "762b781b3f0a472684603e239bdc6bc8",
+    "original_text": "從教育工作開始實行殖民地政策",
+    "translated_sentence": "教育から植民地政策を実施する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522350.4550617
   }
 ]
