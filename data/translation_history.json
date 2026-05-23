@@ -5533,5 +5533,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551853.9883919
+  },
+  {
+    "id": "dbd7294bcd3e4bcf9e4b1d0e2fdaea93",
+    "original_text": "青年團的活動之一是打禪",
+    "translated_sentence": "青年団の活動の一つは禅を打つことです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551868.6079695
   }
 ]
