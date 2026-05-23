@@ -3445,5 +3445,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533390.2139466
+  },
+  {
+    "id": "9d679f449e54498abcdcb6d7f38b54d5",
+    "original_text": "父親因擔任警察經常調動",
+    "translated_sentence": "私の父は警察官だったので転勤が多かったです。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533401.8478827
   }
 ]
