@@ -3904,5 +3904,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534623.0273705
+  },
+  {
+    "id": "a74373f185d4489097c301799ffeef5a",
+    "original_text": "自己內在澎湃的情感",
+    "translated_sentence": "内なる感情の高まり",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534634.7136402
   }
 ]
