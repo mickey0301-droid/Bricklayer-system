@@ -1168,5 +1168,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510651.9043064
+  },
+  {
+    "id": "5e5c2fcde9c645b7a8a42a0dd66dd9ee",
+    "original_text": "脫離中華思想的束縛",
+    "translated_sentence": "中華思想の束縛から脱却する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510663.44418
   }
 ]
