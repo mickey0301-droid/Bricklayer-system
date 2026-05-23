@@ -3796,5 +3796,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534372.8287125
+  },
+  {
+    "id": "32e52e2b0b66444088b04fd2f51ced4a",
+    "original_text": "母親曾經教誨",
+    "translated_sentence": "母親が教えたこと",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534386.6575046
   }
 ]
