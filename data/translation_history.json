@@ -2329,5 +2329,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524899.229317
+  },
+  {
+    "id": "260af15e4a87475089563de6f8c75dec",
+    "original_text": "應該如何開發國土",
+    "translated_sentence": "国を発展させる方法",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524946.5310898
   }
 ]
