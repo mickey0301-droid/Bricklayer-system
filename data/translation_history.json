@@ -4462,5 +4462,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542408.2389126
+  },
+  {
+    "id": "49e8bc1d68d74d769bc33b3a88fca728",
+    "original_text": "當下那種彷彿飛上天的喜悅",
+    "translated_sentence": "まるで天に舞い上がるような喜び",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542424.1660795
   }
 ]
