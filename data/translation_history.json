@@ -1150,5 +1150,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510546.9661214
+  },
+  {
+    "id": "c0cb7d80933a499fa2108ff73f2eb8b1",
+    "original_text": "但是，當台灣快要被中國併吞，台灣人應該回首反思的，就是這部電影裡所描繪的「日本精神」。",
+    "translated_sentence": "しかし、中国に飲み込まれそうになっている台湾において、台湾人が振り返り考えるべきことは、この映画で描かれている「日本精神」です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510565.4041185
   }
 ]
