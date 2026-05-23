@@ -4597,5 +4597,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542731.719555
+  },
+  {
+    "id": "313c0e30db64477db7f909135c7e5df7",
+    "original_text": "後來我從頭到尾仔細閱讀了父親幫我買的百科全書。",
+    "translated_sentence": "その後、父が買ってくれた百科事典を最初から最後まで注意深く読みました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542755.5635338
   }
 ]
