@@ -4471,5 +4471,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542429.577282
+  },
+  {
+    "id": "9d671810c5f0432bb6c3d83e33804ac2",
+    "original_text": "至今仍然記憶猶新",
+    "translated_sentence": "まだ記憶に新しい",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542460.0577605
   }
 ]
