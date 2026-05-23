@@ -5371,5 +5371,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551452.3456917
+  },
+  {
+    "id": "adc32bf71f014c279b586e06dfad7170",
+    "original_text": "校長擔心我的未來出路",
+    "translated_sentence": "校長は私の将来について心配しています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551468.5896575
   }
 ]
