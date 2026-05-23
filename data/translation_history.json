@@ -4651,5 +4651,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542925.5850873
+  },
+  {
+    "id": "e44abd4f7455465b91c869e9c6d99177",
+    "original_text": "內心產生了一種「我什麼都知道」「同學沒什麼了不起」的驕傲心態",
+    "translated_sentence": "心の中には「自分は何でも知っている」「クラスメイトは何も特別ではない」というある種の誇りがある",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542991.6368384
   }
 ]
