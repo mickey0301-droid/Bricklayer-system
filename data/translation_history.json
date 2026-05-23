@@ -3364,5 +3364,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533242.4197712
+  },
+  {
+    "id": "3538d61e0c004f039dd39fe957db9483",
+    "original_text": "家庭因素與我的個性",
+    "translated_sentence": "家庭の要因と私の性格",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533255.8760316
   }
 ]
