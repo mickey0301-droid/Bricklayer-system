@@ -5182,5 +5182,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547618.1191175
+  },
+  {
+    "id": "c1128b75f48546ca8f23e2b8dea0f22c",
+    "original_text": "借住在老師和朋友家",
+    "translated_sentence": "先生や友達と一緒に泊まる",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547628.9421191
   }
 ]
