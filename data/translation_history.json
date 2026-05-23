@@ -1411,5 +1411,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511365.008317
+  },
+  {
+    "id": "70326db3346949ffa28a7abd486ed679",
+    "original_text": "台灣接受日本統治期間共任命了19位總督",
+    "translated_sentence": "台湾が日本の統治を受け入れた間に、合計19人の総督が任命された。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511443.549635
   }
 ]
