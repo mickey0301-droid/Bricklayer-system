@@ -4066,5 +4066,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534988.5113049
+  },
+  {
+    "id": "959c3cb8a7ac4099940045b2bd8a860c",
+    "original_text": "不敢開口的願望",
+    "translated_sentence": "口に出せない願望",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779535001.6412816
   }
 ]
