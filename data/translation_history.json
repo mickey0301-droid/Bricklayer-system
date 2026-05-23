@@ -4480,5 +4480,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542460.0577605
+  },
+  {
+    "id": "9253c2d454f64ded907a6c190eadc022",
+    "original_text": "至今仍然記憶猶新",
+    "translated_sentence": "今でも鮮明に覚えている",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542485.3596532
   }
 ]
