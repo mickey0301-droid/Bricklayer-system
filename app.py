@@ -1136,6 +1136,7 @@ def home_page():
                     st.session_state.home_google_translation_result = g_translated
                     st.session_state.home_google_translation_reading = g_reading
                     if current_input:
+                        st.session_state.home_translation_input = current_input_raw
                         st.session_state.home_translation_result = {
                             "sentence": "",
                             "reading": "",
@@ -1316,6 +1317,7 @@ def home_page():
             if not source_text:
                 st.warning("請先輸入要翻譯的文字。")
             else:
+                st.session_state.home_translation_input = source_text_raw
                 with st.spinner("Google 與 AI 已開始翻譯..."):
                     try:
                         g_translated, g_reading = _google_translate_text(source_text, selected_target["key"])
@@ -1467,14 +1469,16 @@ def home_page():
                 st.session_state.home_translation_history_last_sig = auto_sig
                 st.caption("已自動儲存")
 
-                if st.button("刪除勾選列", use_container_width=True, key="home_translation_history_delete_selected"):
-                    delete_ids = []
-                    for i, row in edited_df.iterrows():
-                        if bool(row.get("select", False)) and i < len(filtered_ids):
-                            delete_ids.append(str(filtered_ids[i]))
+            if st.button("刪除勾選列", use_container_width=True, key="home_translation_history_delete_selected"):
+                delete_ids = []
+                for i, row in edited_df.iterrows():
+                    if bool(row.get("select", False)) and i < len(filtered_ids):
+                        delete_ids.append(str(filtered_ids[i]))
+                if not delete_ids:
+                    st.warning("請先勾選要刪除的列。")
+                else:
                     remain_df = full_df.copy()
-                    if delete_ids:
-                        remain_df = remain_df[~remain_df["id"].astype(str).isin(delete_ids)].reset_index(drop=True)
+                    remain_df = remain_df[~remain_df["id"].astype(str).isin(delete_ids)].reset_index(drop=True)
                     save_translation_history(remain_df.to_dict(orient="records"))
                     st.session_state.home_translation_history_last_sig = json.dumps(
                         [
@@ -1490,8 +1494,8 @@ def home_page():
                         ensure_ascii=False,
                         sort_keys=True,
                     )
-                st.success("已刪除勾選列。")
-                st.rerun()
+                    st.success("已刪除勾選列。")
+                    st.rerun()
 
             selected_rows = edited_df[edited_df["play"] == True]  # noqa: E712
             if not selected_rows.empty:
