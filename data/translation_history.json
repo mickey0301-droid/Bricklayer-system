@@ -5101,5 +5101,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547459.328612
+  },
+  {
+    "id": "8efbd0f3b99340ddb0b17858656f9eae",
+    "original_text": "待在鄉下",
+    "translated_sentence": "田舎で待つ",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547475.4929621
   }
 ]
