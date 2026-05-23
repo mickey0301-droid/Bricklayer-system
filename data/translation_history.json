@@ -4552,5 +4552,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542632.0169384
+  },
+  {
+    "id": "ba4bc847df244479b3cbf1bc27af7d2f",
+    "original_text": "可見得",
+    "translated_sentence": "分かりやすい",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542646.7967303
   }
 ]
