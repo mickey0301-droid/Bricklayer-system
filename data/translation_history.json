@@ -4210,5 +4210,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541772.0920222
+  },
+  {
+    "id": "fc499249466d4e40bfa2298b25d06d38",
+    "original_text": "你臨時提出這要求",
+    "translated_sentence": "あなたはその要求を臨時に提出しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541793.536043
   }
 ]
