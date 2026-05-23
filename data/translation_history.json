@@ -2734,5 +2734,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529558.5865796
+  },
+  {
+    "id": "902847c032ad4b55a7876287cfda1ac8",
+    "original_text": "順道去考察",
+    "translated_sentence": "点検にお立ち寄りください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529578.4746313
   }
 ]
