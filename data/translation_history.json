@@ -4867,5 +4867,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546837.5655394
+  },
+  {
+    "id": "bf0d2ad5b177446080ebd066bab15e34",
+    "original_text": "我一直到小學高年級的時候",
+    "translated_sentence": "私は小学校の高学年になるまでずっと",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546857.5004778
   }
 ]
