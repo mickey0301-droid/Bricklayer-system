@@ -4318,5 +4318,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542037.6260908
+  },
+  {
+    "id": "8d14dcdf132b41cd997b688ca215c0b7",
+    "original_text": "接著，聽到有人敲車窗的聲音。",
+    "translated_sentence": "その後、誰かが車の窓を叩く音を聞いた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542057.4428155
   }
 ]
