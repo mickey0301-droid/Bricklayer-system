@@ -1717,5 +1717,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522871.4906273
+  },
+  {
+    "id": "a9594aa999e6474fb05042fb67c6dea8",
+    "original_text": "台灣人口約有兩百六十萬人",
+    "translated_sentence": "台湾の人口は約260万人",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522923.2447681
   }
 ]
