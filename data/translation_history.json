@@ -2320,5 +2320,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524883.4594862
+  },
+  {
+    "id": "592522721b1f4d12bc0700bd312adaa0",
+    "original_text": "他以生物學的觀點觀察事物",
+    "translated_sentence": "生物学的な観点から物事を観察する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524897.1040504
   }
 ]
