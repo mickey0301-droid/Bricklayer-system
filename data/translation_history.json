@@ -1942,5 +1942,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523718.6578841
+  },
+  {
+    "id": "019c4f96d70c41a294896f262b54a9cf",
+    "original_text": "在開發台灣之際",
+    "translated_sentence": "台湾の開発において",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523729.3149695
   }
 ]
