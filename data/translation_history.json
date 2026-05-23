@@ -3733,5 +3733,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534204.3615496
+  },
+  {
+    "id": "d62c60e6109941c68d025dd134b74dba",
+    "original_text": "我有時鬧脾氣",
+    "translated_sentence": "時々機嫌を損ねてしまう",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534249.113038
   }
 ]
