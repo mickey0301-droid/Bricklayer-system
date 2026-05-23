@@ -4939,5 +4939,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547023.912849
+  },
+  {
+    "id": "ebf050bd799e4cec9053d3c62b6ea356",
+    "original_text": "墮落",
+    "translated_sentence": "堕落",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547036.1772718
   }
 ]
