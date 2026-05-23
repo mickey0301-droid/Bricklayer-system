@@ -1744,5 +1744,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522958.5822484
+  },
+  {
+    "id": "7d9b27c1b37e411d8639abc66b9d8f6c",
+    "original_text": "社會治安紊亂",
+    "translated_sentence": "治安が乱れている",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522971.0092647
   }
 ]
