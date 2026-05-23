@@ -3868,5 +3868,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534545.2878501
+  },
+  {
+    "id": "39dc75888f6d4d6882a52d13eca3041f",
+    "original_text": "於是從小我就意識到",
+    "translated_sentence": "小さい頃から自分の意識があった。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534567.4673436
   }
 ]
