@@ -4912,5 +4912,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546942.7788932
+  },
+  {
+    "id": "748a4f35b9fd46dd8c8ad446167a61d4",
+    "original_text": "腦海裡會閃過一個念頭",
+    "translated_sentence": "ある考えが頭の中をよぎるでしょう",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546977.0298843
   }
 ]
