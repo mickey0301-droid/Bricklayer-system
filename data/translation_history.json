@@ -4984,5 +4984,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547137.2527852
+  },
+  {
+    "id": "7ccfe96f47b94bcdb30f893b222378ac",
+    "original_text": "我可能會失去自我",
+    "translated_sentence": "自分を見失ってしまうかもしれない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547164.0254858
   }
 ]
