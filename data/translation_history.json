@@ -2419,5 +2419,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525138.5159566
+  },
+  {
+    "id": "2f1fc19466124c20b130b1688e09c0b4",
+    "original_text": "他招聘了一位左右台灣發展的關鍵人物",
+    "translated_sentence": "彼は台湾の発展の中心人物を採用した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525189.5082834
   }
 ]
