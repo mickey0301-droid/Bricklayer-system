@@ -4075,5 +4075,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779535003.9018943
+  },
+  {
+    "id": "86d87387574c4dbf831fb504a50cc560",
+    "original_text": "我小心翼翼地告訴父親一個不敢開口的願望",
+    "translated_sentence": "私は、あえて言えなかった願いを、丁寧に父に伝えました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779535013.9118052
   }
 ]
