@@ -5299,5 +5299,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547864.7013626
+  },
+  {
+    "id": "8954fb08ab7a4e63b17a25596c69dea2",
+    "original_text": "我升學到高中就讀",
+    "translated_sentence": "私は高校に進学しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547877.1855526
   }
 ]
