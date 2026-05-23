@@ -1447,5 +1447,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511544.9876907
+  },
+  {
+    "id": "e2c45987fe6b43d1ba402f77688cfa3e",
+    "original_text": "只要一句話，就能夠回答這個問題。",
+    "translated_sentence": "たった一文でこの質問に答えることができます。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511609.596968
   }
 ]
