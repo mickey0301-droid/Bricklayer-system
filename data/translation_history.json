@@ -3949,5 +3949,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534698.9953334
+  },
+  {
+    "id": "5a322712b37d4ecd96eded5dc9bde22d",
+    "original_text": "少年時期發生的一件事",
+    "translated_sentence": "十代の頃に起きた出来事",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534786.00445
   }
 ]
