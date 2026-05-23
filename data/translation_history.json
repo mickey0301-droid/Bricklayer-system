@@ -4183,5 +4183,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541719.7643626
+  },
+  {
+    "id": "83cffab931bf41edab8828153f84f9e9",
+    "original_text": "這麼晚了，",
+    "translated_sentence": "とても遅いです、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541735.4636743
   }
 ]
