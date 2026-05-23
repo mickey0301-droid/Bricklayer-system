@@ -2122,5 +2122,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524191.9120698
+  },
+  {
+    "id": "a7c36dd9968e41f6b681a2a21167c48c",
+    "original_text": "排除這些人之後，",
+    "translated_sentence": "これらの人々を排除した後、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524207.9834824
   }
 ]
