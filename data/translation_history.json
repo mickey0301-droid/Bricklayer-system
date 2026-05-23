@@ -2446,5 +2446,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525251.0967767
+  },
+  {
+    "id": "d5fdb6ffc1da4ff3b075d806595924ec",
+    "original_text": "他同樣出身岩手縣",
+    "translated_sentence": "彼も岩手県出身です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525262.8039849
   }
 ]
