@@ -1933,5 +1933,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523677.0480392
+  },
+  {
+    "id": "f68d6a04a6a94c73be9d1a4fcd498272",
+    "original_text": "在開發台灣之際",
+    "translated_sentence": "台湾の発展を機に",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523718.6578841
   }
 ]
