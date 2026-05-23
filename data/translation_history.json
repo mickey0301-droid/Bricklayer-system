@@ -2617,5 +2617,14 @@
     "target_language": "English",
     "target_mode": "",
     "updated_at": 1779527190.1085882
+  },
+  {
+    "id": "b03413643f9042dd846193e3fecc1588",
+    "original_text": "他遍訪台灣各地",
+    "translated_sentence": "彼は台湾のさまざまな場所を訪れました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779527196.0398283
   }
 ]
