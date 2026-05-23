@@ -4273,5 +4273,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541926.5718381
+  },
+  {
+    "id": "12d6d9d8a83042babd522a2c2b3ccb01",
+    "original_text": "隔天，我坐在巴士上",
+    "translated_sentence": "次の日、私はバスに座っていました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541958.1567533
   }
 ]
