@@ -1807,5 +1807,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523114.1934803
+  },
+  {
+    "id": "6a302b698b8f4cdc811f263d754475d9",
+    "original_text": "歷任台灣總督一直忙於討伐抗日游擊隊",
+    "translated_sentence": "歴代の台湾総督は抗日ゲリラの撲滅に奔走してきた。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523192.8455317
   }
 ]
