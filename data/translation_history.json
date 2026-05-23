@@ -2167,5 +2167,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524300.1091368
+  },
+  {
+    "id": "921c7fd2d44849ae8250c6deb4820ba8",
+    "original_text": "他招募了無數這樣的人才",
+    "translated_sentence": "彼はそのような人材を数え切れないほど採用した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524340.034323
   }
 ]
