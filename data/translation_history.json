@@ -3031,5 +3031,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531184.1450243
+  },
+  {
+    "id": "78cedf7d0ac148e19ebbb1f1889adac1",
+    "original_text": "課稅問題",
+    "translated_sentence": "課税の問題",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531198.5513093
   }
 ]
