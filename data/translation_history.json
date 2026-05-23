@@ -5353,5 +5353,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547999.6397247
+  },
+  {
+    "id": "bea4c36c4de0457eb385da7f78c8945a",
+    "original_text": "被迫接受現實",
+    "translated_sentence": "現実を受け入れざるを得ない",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779548014.2207885
   }
 ]
