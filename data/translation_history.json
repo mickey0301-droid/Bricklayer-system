@@ -2581,5 +2581,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779526735.0386631
+  },
+  {
+    "id": "dbb3092a5b864f67b2b808b74eb29720",
+    "original_text": "39歲的他以技師身分抵達台灣",
+    "translated_sentence": "39歳の彼は技術者として台湾に来た",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779526763.8611643
   }
 ]
