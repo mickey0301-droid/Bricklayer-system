@@ -5083,5 +5083,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547436.7041342
+  },
+  {
+    "id": "cd67b6016bb246719f1ebbe33f46cbcf",
+    "original_text": "我請求父母",
+    "translated_sentence": "私は親に頼みます",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547450.0233912
   }
 ]
