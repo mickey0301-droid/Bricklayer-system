@@ -4669,5 +4669,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779543012.7608945
+  },
+  {
+    "id": "4108fc68c27c40c2aac7cf32a3f4a00e",
+    "original_text": "在課堂上，",
+    "translated_sentence": "授業中、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779543045.4315593
   }
 ]
