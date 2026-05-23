@@ -1987,5 +1987,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523816.171029
+  },
+  {
+    "id": "618b1f8c37ac4ec0b85c98633d18a072",
+    "original_text": "從此打造了好的環境",
+    "translated_sentence": "その後も良い環境が整いました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523858.9771433
   }
 ]
