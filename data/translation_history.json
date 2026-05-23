@@ -2365,5 +2365,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524995.248163
+  },
+  {
+    "id": "fe96379515144dddaebbfc602191e544",
+    "original_text": "他採取的方法是實地造訪、研究",
+    "translated_sentence": "彼がとった方法は、現地に行って勉強するというものでした。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525044.0266058
   }
 ]
