@@ -2041,5 +2041,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523946.1422553
+  },
+  {
+    "id": "979f980f30764a59bc3c2534bb5ab4d3",
+    "original_text": "立刻將許多官僚遣送回國。",
+    "translated_sentence": "多くの官僚を直ちに帰国させてください。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523995.0039508
   }
 ]
