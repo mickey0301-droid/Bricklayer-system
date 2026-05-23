@@ -3166,5 +3166,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531491.801135
+  },
+  {
+    "id": "8fb572fc48864bf5b1e2e54dca313ddc",
+    "original_text": "他設立臨時機構",
+    "translated_sentence": "彼は派遣会社を設立した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531514.007038
   }
 ]
