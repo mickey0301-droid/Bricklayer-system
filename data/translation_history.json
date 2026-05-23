@@ -1654,5 +1654,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522468.8027627
+  },
+  {
+    "id": "f59f47ed288f43f9aae328fbce828230",
+    "original_text": "因為殖民地人民教育程度提升之後",
+    "translated_sentence": "植民地の人々の教育水準が向上した後に",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522480.5607567
   }
 ]
