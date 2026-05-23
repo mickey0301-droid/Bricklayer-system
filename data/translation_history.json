@@ -3571,5 +3571,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533677.2160885
+  },
+  {
+    "id": "235d95f3357c4e94a09ff2d95c3cba3e",
+    "original_text": "自我意識很強的小孩",
+    "translated_sentence": "自意識の強い子",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533694.5527391
   }
 ]
