@@ -3832,5 +3832,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534445.9128876
+  },
+  {
+    "id": "a79ad95b40774399b1b2a181679e8ee3",
+    "original_text": "有些地方太固執",
+    "translated_sentence": "一部の場所はあまりにも頑固だ。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534461.4660425
   }
 ]
