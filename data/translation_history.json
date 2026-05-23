@@ -3085,5 +3085,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531284.5549746
+  },
+  {
+    "id": "a5cc772d11dc49e58e4310787d75bf07",
+    "original_text": "只要進行政策上的調整，",
+    "translated_sentence": "政策の調整を行えば、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531296.1268795
   }
 ]
