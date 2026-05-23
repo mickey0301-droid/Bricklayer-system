@@ -1222,5 +1222,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510825.2554238
+  },
+  {
+    "id": "b473f3aebeaf4c5bb31f5c59cc76a22c",
+    "original_text": "當我踏出電影院時",
+    "translated_sentence": "映画館を出たときに",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510834.3317716
   }
 ]
