@@ -3220,5 +3220,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531623.989371
+  },
+  {
+    "id": "5d4080cb3caa4c8b9040d3f33fba4457",
+    "original_text": "以意見書為本制訂的規則",
+    "translated_sentence": "意見書に基づいて制定された規則",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531635.590274
   }
 ]
