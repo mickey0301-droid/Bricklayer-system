@@ -1114,5 +1114,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510303.3580265
+  },
+  {
+    "id": "76233ed0019543ed8c80532464eb5dc3",
+    "original_text": "KANO在台灣很賣座",
+    "translated_sentence": "KANOは台湾で大ヒットしています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510316.3151894
   }
 ]
