@@ -1474,5 +1474,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511680.0774298
+  },
+  {
+    "id": "05ffb64b9f76447ea8dee0fc24252309",
+    "original_text": "是日本讓台灣完成近代化。",
+    "translated_sentence": "日本は台湾の近代化を実現させた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511691.9642832
   }
 ]
