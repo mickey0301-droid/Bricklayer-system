@@ -5245,5 +5245,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547770.190767
+  },
+  {
+    "id": "78e15fa9e46c495589dd01b905ef2689",
+    "original_text": "充實自我",
+    "translated_sentence": "自己を充実させる",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547783.7937222
   }
 ]
