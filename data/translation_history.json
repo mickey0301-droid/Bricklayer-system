@@ -1762,5 +1762,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523023.2058678
+  },
+  {
+    "id": "052d709b3fdb41cf96c25668167115e4",
+    "original_text": "吸食鴉片風氣盛行",
+    "translated_sentence": "アヘンを吸う風潮が盛んである。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523034.0071237
   }
 ]
