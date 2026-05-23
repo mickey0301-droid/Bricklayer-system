@@ -5515,5 +5515,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551817.5700724
+  },
+  {
+    "id": "107c34db1d7b4c4b91a374fa1ca6d351",
+    "original_text": "他加入地區的青年團",
+    "translated_sentence": "他の地域の青年団",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551844.1276884
   }
 ]
