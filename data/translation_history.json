@@ -1195,5 +1195,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510745.8051672
+  },
+  {
+    "id": "f5b58b720c2c4d98b641ec1a4b82052c",
+    "original_text": "建立民主社會",
+    "translated_sentence": "民主的な社会を築く",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510794.500627
   }
 ]
