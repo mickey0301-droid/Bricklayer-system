@@ -4714,5 +4714,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779543114.5376546
+  },
+  {
+    "id": "341c65573a42419688944d119fabe0ac",
+    "original_text": "在課堂上，我也會對老師說「老師，您講錯了」之類的話。",
+    "translated_sentence": "授業中、私は先生に「先生、間違えました」といったことを言います。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779543142.5390792
   }
 ]
