@@ -1861,5 +1861,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523327.9327347
+  },
+  {
+    "id": "dd82926899874f1b9eeeef3e344881c0",
+    "original_text": "後藤在台灣任職",
+    "translated_sentence": "後藤さんは台湾で働いています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523363.9398887
   }
 ]
