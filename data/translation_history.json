@@ -2203,5 +2203,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524421.5905585
+  },
+  {
+    "id": "17ae962aa2c84b42a757ae29e9c03de7",
+    "original_text": "成就了他在台灣的輝煌功績",
+    "translated_sentence": "台湾で輝かしい功績を残した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524489.7156582
   }
 ]
