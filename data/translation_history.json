@@ -1789,5 +1789,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523075.6249943
+  },
+  {
+    "id": "01370529e8e647ddb19728ab04602a6d",
+    "original_text": "台灣是一個極度落後的地方",
+    "translated_sentence": "台湾は非常に後進的な場所です",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523100.9912298
   }
 ]
