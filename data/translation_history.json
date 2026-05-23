@@ -2248,5 +2248,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524591.056377
+  },
+  {
+    "id": "ef73f6a5e7c74240861f1d887b565523",
+    "original_text": "有些人唸過一些法律",
+    "translated_sentence": "法律を学んだことがある人もいる。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524607.518162
   }
 ]
