@@ -5335,5 +5335,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547945.5705345
+  },
+  {
+    "id": "cc51a4c12aeb4c09ba601071b80da7af",
+    "original_text": "被迫休學半年",
+    "translated_sentence": "半年間の休学を余儀なくされた",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547961.1352494
   }
 ]
