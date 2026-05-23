@@ -5848,5 +5848,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557963.3575838
+  },
+  {
+    "id": "35955e5a50e8447a8216b4d24a5fbe1a",
+    "original_text": "把水倒在石頭上",
+    "translated_sentence": "石に水を注ぐ",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557995.017381
   }
 ]
