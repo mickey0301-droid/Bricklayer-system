@@ -3850,5 +3850,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534484.342694
+  },
+  {
+    "id": "c6933b9da82345a4992cb67990817592",
+    "original_text": "何不稍微理性一些？",
+    "translated_sentence": "もう少し理性的になったらどうですか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534496.617972
   }
 ]
