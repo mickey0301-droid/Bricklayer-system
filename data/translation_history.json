@@ -2788,5 +2788,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529706.8653767
+  },
+  {
+    "id": "938bdedc394d4e038c1191eb7a699dfd",
+    "original_text": "製糖業對台灣的發展會有很大助益",
+    "translated_sentence": "砂糖産業は台湾の発展に大きく貢献します",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529724.4262211
   }
 ]
