@@ -1240,5 +1240,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510858.7529562
+  },
+  {
+    "id": "59fd01901eeb4cbcb664f65816dfd16b",
+    "original_text": "我曾對記者們這麼說",
+    "translated_sentence": "私は記者たちにこう言ったことがあります。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510870.3112462
   }
 ]
