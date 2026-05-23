@@ -1960,5 +1960,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523762.357691
+  },
+  {
+    "id": "794eb1a5073246beaf3940b08886c0d0",
+    "original_text": "他率先實施了這項制度",
+    "translated_sentence": "彼はこの制度を率先して実施しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523776.5895889
   }
 ]
