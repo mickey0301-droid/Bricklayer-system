@@ -4111,5 +4111,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779535072.322389
+  },
+  {
+    "id": "d2e56110c9b54478ad2a6f9344e5fea3",
+    "original_text": "數學書籍",
+    "translated_sentence": "数学の本",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779535078.3777785
   }
 ]
