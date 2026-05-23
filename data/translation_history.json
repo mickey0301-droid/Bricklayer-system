@@ -3715,5 +3715,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534069.700167
+  },
+  {
+    "id": "4c5ea842d39944b096f6ff252f5be9c3",
+    "original_text": "他會責怪我的不是",
+    "translated_sentence": "彼は私を責めるのでしょうか？",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534189.59465
   }
 ]
