@@ -2977,5 +2977,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531082.3817549
+  },
+  {
+    "id": "3b8a040e769845029fca8eca4eeb7d02",
+    "original_text": "日漸衰退",
+    "translated_sentence": "日々衰退していく",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531094.040808
   }
 ]
