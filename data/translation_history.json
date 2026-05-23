@@ -2284,5 +2284,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524754.9613988
+  },
+  {
+    "id": "f50584771ea74d60bc50901afd8850b6",
+    "original_text": "就會認為是「違反法律」、「沒有前例」，",
+    "translated_sentence": "法律違反や前例がないと考えられることになる。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524769.1692057
   }
 ]
