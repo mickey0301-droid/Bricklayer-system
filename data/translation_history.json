@@ -5632,5 +5632,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552124.859042
+  },
+  {
+    "id": "9a86ee94534f4e1ea53546115eefd109",
+    "original_text": "我會去掃廁所",
+    "translated_sentence": "トイレ掃除をします",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552159.954221
   }
 ]
