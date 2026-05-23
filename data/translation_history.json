@@ -2599,5 +2599,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779526885.8158417
+  },
+  {
+    "id": "5c42d230876547a18290ce4753d89540",
+    "original_text": "一頭驢子與一隻狐狸結伴去覓食",
+    "translated_sentence": "ロバとキツネが一緒に食べ物を探しに行く",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779527087.9475803
   }
 ]
