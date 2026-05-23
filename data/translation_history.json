@@ -3112,5 +3112,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531349.2235508
+  },
+  {
+    "id": "84eaaa6f96e94b0f8e8049675f0d9096",
+    "original_text": "因此，他將相應對策寫進意見書",
+    "translated_sentence": "したがって、彼は意見書に相応の対策を書いた",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531392.6507556
   }
 ]
