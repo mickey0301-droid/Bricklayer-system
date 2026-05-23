@@ -2842,5 +2842,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529840.2650182
+  },
+  {
+    "id": "03729b421edf432d94176452af7fe5ba",
+    "original_text": "糖業改良意見書",
+    "translated_sentence": "製糖業改善に関する意見書",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529855.5276856
   }
 ]
