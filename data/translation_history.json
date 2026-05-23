@@ -2743,5 +2743,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529578.4746313
+  },
+  {
+    "id": "e0857ad202d24cd5a3741f6aa0b2cc6c",
+    "original_text": "順道去考察",
+    "translated_sentence": "順路を考察する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529597.4705393
   }
 ]
