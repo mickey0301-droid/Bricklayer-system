@@ -2095,5 +2095,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524096.379172
+  },
+  {
+    "id": "9f57422ce64447b39766c2f2160b68df",
+    "original_text": "來台灣撈一票",
+    "translated_sentence": "投票するために台湾に来てください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524128.7750285
   }
 ]
