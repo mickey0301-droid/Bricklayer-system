@@ -2257,5 +2257,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524609.8080544
+  },
+  {
+    "id": "c9bdca44d6f04358aabad624f4e38f69",
+    "original_text": "但碰到要推動新的事務時",
+    "translated_sentence": "しかし、新しいことを推進することになると、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524652.8688724
   }
 ]
