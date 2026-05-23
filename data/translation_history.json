@@ -2347,5 +2347,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524961.1308706
+  },
+  {
+    "id": "1b729a9e997746dc992c59fff318fce6",
+    "original_text": "人民要的是什麼",
+    "translated_sentence": "人々は何を望んでいますか？",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524981.098564
   }
 ]
