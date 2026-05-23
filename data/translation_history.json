@@ -4966,5 +4966,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547093.5785472
+  },
+  {
+    "id": "8d066688ab0e416d857590dd5b84a959",
+    "original_text": "再這樣繼續待在家裡",
+    "translated_sentence": "このまま家に居続けろよ",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547118.6837442
   }
 ]
