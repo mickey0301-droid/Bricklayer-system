@@ -1627,5 +1627,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522352.543414
+  },
+  {
+    "id": "e563c6df108945bc824df3ed8aa335c3",
+    "original_text": "在人類歷史中也是絕無僅有的",
+    "translated_sentence": "それは人類史上でもユニークです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522386.6140597
   }
 ]
