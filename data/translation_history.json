@@ -3697,5 +3697,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534039.426962
+  },
+  {
+    "id": "4c9573b4801e471194a480f1910f0a6d",
+    "original_text": "他反而會好言安慰對方",
+    "translated_sentence": "むしろ、優しい言葉で相手を慰めてくれます。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534050.4214153
   }
 ]
