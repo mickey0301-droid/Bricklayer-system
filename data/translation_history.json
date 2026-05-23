@@ -5173,5 +5173,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547604.2663655
+  },
+  {
+    "id": "d04b09ef4b204a7ebd780ab2fb7e29b7",
+    "original_text": "隨後我轉學到其他學校",
+    "translated_sentence": "その後、別の学校に転校しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547615.8557835
   }
 ]
