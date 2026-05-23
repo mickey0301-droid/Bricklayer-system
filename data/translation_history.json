@@ -1420,5 +1420,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511443.549635
+  },
+  {
+    "id": "41df76580f264d8d973d226009818680",
+    "original_text": "台灣接受日本統治期間共任命了19位總督",
+    "translated_sentence": "台湾が日本の統治下にあった期間に、合計19人の知事が任命されました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511460.1137714
   }
 ]
