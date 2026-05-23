@@ -3193,5 +3193,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531565.3274984
+  },
+  {
+    "id": "a01cf88ad0e647d2b08f8c16d64b63d5",
+    "original_text": "任命他為局長",
+    "translated_sentence": "彼を局長に任命しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531576.6136918
   }
 ]
