@@ -3130,5 +3130,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531407.64551
+  },
+  {
+    "id": "d3924c35f80849c2824e39daba323fd4",
+    "original_text": "上呈總督府。",
+    "translated_sentence": "総督官邸に提出してください。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531442.5035896
   }
 ]
