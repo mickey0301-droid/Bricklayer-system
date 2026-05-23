@@ -3148,5 +3148,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531460.38388
+  },
+  {
+    "id": "4640f82e5f8f49f79dfb637c480498ea",
+    "original_text": "收到意見書之後",
+    "translated_sentence": "提出物を受け取った後",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531476.452461
   }
 ]
