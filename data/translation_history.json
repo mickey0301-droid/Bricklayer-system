@@ -5731,5 +5731,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552353.0838
+  },
+  {
+    "id": "2611de2266284e0fa13c5c37cb223236",
+    "original_text": "中學的時候，我想成為畫家",
+    "translated_sentence": "中学の時、画家になりたいと思っていました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552369.5147064
   }
 ]
