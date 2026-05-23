@@ -3013,5 +3013,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531162.7362998
+  },
+  {
+    "id": "05cf0bd9275d4146842405452288b8ee",
+    "original_text": "勞動力的欠缺",
+    "translated_sentence": "労働力の不足",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531171.7416174
   }
 ]
