@@ -3886,5 +3886,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534590.5597878
+  },
+  {
+    "id": "7a27fb4ea847429b8d93553467c91f72",
+    "original_text": "更理性地處理",
+    "translated_sentence": "理性的に対処する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534601.52718
   }
 ]
