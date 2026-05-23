@@ -5155,5 +5155,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547566.2007952
+  },
+  {
+    "id": "93200fc3cc044405af60518def787df6",
+    "original_text": "我想要到鎮上讀書",
+    "translated_sentence": "町に行って勉強したいです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547579.9627779
   }
 ]
