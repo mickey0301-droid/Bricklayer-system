@@ -3742,5 +3742,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534249.113038
+  },
+  {
+    "id": "7658aaf472a84049970bb80edd5e15db",
+    "original_text": "我有時鬧脾氣",
+    "translated_sentence": "私は時々怒ります",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534262.622886
   }
 ]
