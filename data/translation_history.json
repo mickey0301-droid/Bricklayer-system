@@ -4507,5 +4507,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542522.3075674
+  },
+  {
+    "id": "ba5545f99a7d4792bd3a76cdc2f17a6f",
+    "original_text": "後來很多日本人寫信告訴我",
+    "translated_sentence": "その後、多くの日本人が私に手紙を書いてこう言いました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542547.7566056
   }
 ]
