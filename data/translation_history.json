@@ -3679,5 +3679,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533992.23582
+  },
+  {
+    "id": "a546ff36e2b543fdb8eec69e2fe6f96e",
+    "original_text": "安慰對方",
+    "translated_sentence": "お互いを慰め合う",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534019.4030006
   }
 ]
