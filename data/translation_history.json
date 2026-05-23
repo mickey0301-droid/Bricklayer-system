@@ -4237,5 +4237,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541827.441779
+  },
+  {
+    "id": "c072b0b53cc94a5a9a9e9e16aeb22fa5",
+    "original_text": "我無法準備那麼多錢",
+    "translated_sentence": "そんなにお金は用意できない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541838.298836
   }
 ]
