@@ -4003,5 +4003,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534869.047986
+  },
+  {
+    "id": "6c2900cd3d32435a91025307ff0fa45d",
+    "original_text": "有一次到台北教學旅行",
+    "translated_sentence": "台北への研修旅行がありました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534884.8288887
   }
 ]
