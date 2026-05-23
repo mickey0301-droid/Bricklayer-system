@@ -2518,5 +2518,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525516.1279764
+  },
+  {
+    "id": "fe842cc3d2f74472ba9f453e3366c226",
+    "original_text": "他在美國出版「武士道」一書",
+    "translated_sentence": "彼はアメリカで『武士道』という本を出版しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525529.6777716
   }
 ]
