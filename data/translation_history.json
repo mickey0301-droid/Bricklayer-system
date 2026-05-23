@@ -5029,5 +5029,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547294.5491235
+  },
+  {
+    "id": "5f5b764c954e4331aa13ee5bf43540e7",
+    "original_text": "我下定決心離家",
+    "translated_sentence": "家を離れる決心をしました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547322.2058194
   }
 ]
