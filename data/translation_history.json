@@ -5146,5 +5146,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547545.1358728
+  },
+  {
+    "id": "6ee723c4ed5b4a51aa312cd58d2ee036",
+    "original_text": "我想要到鎮上讀書",
+    "translated_sentence": "街中で勉強したい",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547566.2007952
   }
 ]
