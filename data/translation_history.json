@@ -3427,5 +3427,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533336.1377215
+  },
+  {
+    "id": "aa7214855630472fbaf7f4ad213d7e40",
+    "original_text": "父親擔任警察",
+    "translated_sentence": "父親は警察官です",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533375.102707
   }
 ]
