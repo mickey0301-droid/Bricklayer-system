@@ -1438,5 +1438,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511524.270792
+  },
+  {
+    "id": "5c1dc0a13afe4bddb0b7237082b815a4",
+    "original_text": "對於這50年，我們應該如何評價？",
+    "translated_sentence": "この50年をどう評価するべきでしょうか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511542.6592743
   }
 ]
