@@ -5470,5 +5470,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551702.142632
+  },
+  {
+    "id": "fd35cca7a1434b4f91e0eedfafb2c850",
+    "original_text": "許多疑問困擾着我",
+    "translated_sentence": "多くの質問が私を悩ませています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551739.3319652
   }
 ]
