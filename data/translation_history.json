@@ -4624,5 +4624,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542845.789474
+  },
+  {
+    "id": "2165ad25630c410bbdf0170f6a9b9a75",
+    "original_text": "內心產生了一種驕傲心態",
+    "translated_sentence": "内心に一種の誇りを感じた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542864.4789991
   }
 ]
