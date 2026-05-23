@@ -5839,5 +5839,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557947.379288
+  },
+  {
+    "id": "0154e0211c6846018adb9511d751b7df",
+    "original_text": "把石頭放進去",
+    "translated_sentence": "石を入れてください",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557958.0828917
   }
 ]
