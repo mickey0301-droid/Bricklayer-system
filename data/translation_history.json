@@ -4741,5 +4741,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546593.4695928
+  },
+  {
+    "id": "0f2a124aa7ea4bbcbbcce5e95257ae08",
+    "original_text": "累積了許多知識之後",
+    "translated_sentence": "たくさんの知識を蓄えた上で、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546598.0585167
   }
 ]
