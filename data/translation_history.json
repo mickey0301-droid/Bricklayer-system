@@ -1834,5 +1834,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523253.0066993
+  },
+  {
+    "id": "e04cbdca5d87428b965b7a67b4aace2a",
+    "original_text": "台灣的開發才開始有點頭緒",
+    "translated_sentence": "台湾の開発はようやく少しずつ進み始めました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523268.9318984
   }
 ]
