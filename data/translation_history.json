@@ -2680,5 +2680,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529414.0056934
+  },
+  {
+    "id": "f9842754bb104ce1b198a4b82491f41a",
+    "original_text": "法國巴黎舉行的萬國博覽會",
+    "translated_sentence": "フランス・パリで万博開催",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529468.0091448
   }
 ]
