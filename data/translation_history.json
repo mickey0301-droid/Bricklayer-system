@@ -1276,5 +1276,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510927.8556852
+  },
+  {
+    "id": "c368067cc9f24fa98ce0585eb4447ad4",
+    "original_text": "甲午戰爭之後",
+    "translated_sentence": "甲午戦争の後",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510937.8022144
   }
 ]
