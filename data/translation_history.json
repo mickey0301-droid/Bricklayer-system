@@ -5866,5 +5866,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779558010.5656662
+  },
+  {
+    "id": "4e268fa03dc44d03bfd078d8d475c83f",
+    "original_text": "看著如此雄偉的景色",
+    "translated_sentence": "こんな雄大な景色を見ながら",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779558181.7003117
   }
 ]
