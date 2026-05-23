@@ -2536,5 +2536,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525572.816682
+  },
+  {
+    "id": "753b776dfd924cca9a73f853624233d4",
+    "original_text": "不但得到美國總統的高度讚賞，",
+    "translated_sentence": "アメリカの大統領からの高い評価を得ただけでなく、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525586.2564576
   }
 ]
