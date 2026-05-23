@@ -4138,5 +4138,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541632.357404
+  },
+  {
+    "id": "307f4e5bd96443b8813c61376c3b0748",
+    "original_text": "若以當時的幣值計算，",
+    "translated_sentence": "当時の貨幣価値で計算すると、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541650.1379297
   }
 ]
