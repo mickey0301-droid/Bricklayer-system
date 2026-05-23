@@ -2824,5 +2824,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529777.619425
+  },
+  {
+    "id": "338c3956a0ca45c68133f7c4e6261429",
+    "original_text": "很快地",
+    "translated_sentence": "素早く",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529829.3009655
   }
 ]
