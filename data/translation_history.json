@@ -5911,5 +5911,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779558294.9150105
+  },
+  {
+    "id": "62edb334503649cbb9bac149d5ad36ba",
+    "original_text": "我們把這裡裝修得美輪美奐",
+    "translated_sentence": "私たちはここを美しく装飾しました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779558307.5295777
   }
 ]
