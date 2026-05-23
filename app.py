@@ -4102,22 +4102,14 @@ def _render_translation_audio(language: str, sentence: str, key: str, tts_text: 
     if not sentence:
         return
     speak_text = str(tts_text or "").strip() or sentence
-    play_key = f"{language}::{speak_text}"
     cached_audio = get_cached_tts(language, "translation", "sent", speak_text)
-    if cached_audio:
-        st.session_state.translation_tts_audio = cached_audio
-        st.session_state.translation_tts_for = play_key
     if st.button("播放語音", use_container_width=True, key=key):
         try:
             audio_bytes = cached_audio or generate_tts_audio(speak_text, language)
             set_cached_tts(language, "translation", "sent", audio_bytes, speak_text)
-            st.session_state.translation_tts_audio = audio_bytes
-            st.session_state.translation_tts_for = play_key
+            components.html(audio_player_autoplay_silent(audio_bytes), height=1)
         except Exception as e:
             st.error(f"語音產生失敗：{e}")
-    audio_bytes = st.session_state.get("translation_tts_audio")
-    if audio_bytes and st.session_state.get("translation_tts_for") == play_key:
-        components.html(audio_player_pausable(audio_bytes), height=70)
 
 
 def _render_translation_grammar(entry: dict, lang: dict, result: dict, key_prefix: str):
