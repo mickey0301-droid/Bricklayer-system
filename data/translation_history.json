@@ -1546,5 +1546,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779521958.082633
+  },
+  {
+    "id": "eae917914d7e492fad8fe75514e0d81d",
+    "original_text": "從來沒有讓殖民地近代化的打算",
+    "translated_sentence": "植民地を近代化するつもりはまったくなかった。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779521970.0450583
   }
 ]
