@@ -364,6 +364,7 @@ _defaults = {
     "home_ai_started_at": 0.0,
     "home_ai_pending_request": None,
     "home_ai_pending_step": 0,
+    "home_ai_pending_ready_at": 0.0,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -1230,6 +1231,7 @@ def home_page():
                             "japanese_mode": japanese_mode,
                         }
                         st.session_state.home_ai_pending_step = 1
+                        st.session_state.home_ai_pending_ready_at = time.time() + 0.8
                         upsert_translation_history_entry(
                             original_text=current_input_raw,
                             translated_sentence=g_translated,
@@ -1251,10 +1253,14 @@ def home_page():
 
         pending_req = st.session_state.get("home_ai_pending_request")
         pending_step = int(st.session_state.get("home_ai_pending_step", 0) or 0)
+        pending_ready_at = float(st.session_state.get("home_ai_pending_ready_at", 0.0) or 0.0)
         if isinstance(pending_req, dict) and pending_step == 1:
-            st.session_state.home_ai_pending_step = 2
-            st.rerun()
+            # Let this run render Google result first; switch to step-2 rerun later.
+            pass
         elif isinstance(pending_req, dict) and pending_step == 2:
+            if pending_ready_at > 0 and time.time() < pending_ready_at:
+                time.sleep(0.15)
+                st.rerun()
             try:
                 req_target = {
                     "key": str(pending_req.get("target_key", "") or ""),
@@ -1268,6 +1274,7 @@ def home_page():
             finally:
                 st.session_state.home_ai_pending_request = None
                 st.session_state.home_ai_pending_step = 0
+                st.session_state.home_ai_pending_ready_at = 0.0
 
         result = st.session_state.get("home_translation_result", {})
         google_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
@@ -1372,7 +1379,15 @@ def home_page():
             _render_grammar_box(grammar)
         else:
             st.caption("完成翻譯後會在這裡顯示文法解析。")
-        # one-shot direct translation: no polling rerun loop
+        # Two-step flow control:
+        # step 1 = show Google first in this run, then trigger step 2 once.
+        if (
+            isinstance(st.session_state.get("home_ai_pending_request"), dict)
+            and int(st.session_state.get("home_ai_pending_step", 0) or 0) == 1
+        ):
+            st.session_state.home_ai_pending_step = 2
+            time.sleep(0.1)
+            st.rerun()
 
     with left_col:
         st.caption(f"今日已翻譯句數：{st.session_state.get('home_translation_count_today', 0)}")
@@ -1433,6 +1448,7 @@ def home_page():
                             "japanese_mode": japanese_mode,
                         }
                         st.session_state.home_ai_pending_step = 1
+                        st.session_state.home_ai_pending_ready_at = time.time() + 0.8
                         upsert_translation_history_entry(
                             original_text=source_text_raw,
                             translated_sentence=g_translated,
