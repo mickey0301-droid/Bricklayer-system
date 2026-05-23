@@ -362,6 +362,8 @@ _defaults = {
     "home_ai_task_id": "",
     "home_ai_task_status": "",
     "home_ai_started_at": 0.0,
+    "home_ai_pending_request": None,
+    "home_ai_pending_step": 0,
     # AI 設定
     "ai_provider": "openai",
     "ai_model": "",
@@ -1221,7 +1223,13 @@ def home_page():
                         st.session_state.home_translation_source = ""
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
-                        _run_home_ai_direct(current_input_raw, selected_target, japanese_mode)
+                        st.session_state.home_ai_pending_request = {
+                            "source_text_raw": current_input_raw,
+                            "target_key": selected_target["key"],
+                            "target_label": selected_target["label"],
+                            "japanese_mode": japanese_mode,
+                        }
+                        st.session_state.home_ai_pending_step = 1
                         upsert_translation_history_entry(
                             original_text=current_input_raw,
                             translated_sentence=g_translated,
@@ -1240,6 +1248,26 @@ def home_page():
                 st.error(f"切換語言自動翻譯失敗：{e}")
         else:
             pass
+
+        pending_req = st.session_state.get("home_ai_pending_request")
+        pending_step = int(st.session_state.get("home_ai_pending_step", 0) or 0)
+        if isinstance(pending_req, dict) and pending_step == 1:
+            st.session_state.home_ai_pending_step = 2
+            st.rerun()
+        elif isinstance(pending_req, dict) and pending_step == 2:
+            try:
+                req_target = {
+                    "key": str(pending_req.get("target_key", "") or ""),
+                    "label": str(pending_req.get("target_label", "") or ""),
+                }
+                _run_home_ai_direct(
+                    str(pending_req.get("source_text_raw", "") or ""),
+                    req_target,
+                    str(pending_req.get("japanese_mode", "normal") or "normal"),
+                )
+            finally:
+                st.session_state.home_ai_pending_request = None
+                st.session_state.home_ai_pending_step = 0
 
         result = st.session_state.get("home_translation_result", {})
         google_result = str(st.session_state.get("home_google_translation_result", "") or "").strip()
@@ -1398,7 +1426,13 @@ def home_page():
                         st.session_state.home_google_translation_result = g_translated
                         st.session_state.home_google_translation_reading = g_reading
 
-                        _run_home_ai_direct(source_text_raw, selected_target, japanese_mode)
+                        st.session_state.home_ai_pending_request = {
+                            "source_text_raw": source_text_raw,
+                            "target_key": selected_target["key"],
+                            "target_label": selected_target["label"],
+                            "japanese_mode": japanese_mode,
+                        }
+                        st.session_state.home_ai_pending_step = 1
                         upsert_translation_history_entry(
                             original_text=source_text_raw,
                             translated_sentence=g_translated,
