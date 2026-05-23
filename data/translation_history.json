@@ -4777,5 +4777,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546660.2109954
+  },
+  {
+    "id": "5f655eef85ab4c02895f62d30a5ac1e0",
+    "original_text": "讓我吃了不少苦頭",
+    "translated_sentence": "それは私をとても苦しめました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546677.1130402
   }
 ]
