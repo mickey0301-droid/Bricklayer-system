@@ -2338,5 +2338,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524946.5310898
+  },
+  {
+    "id": "4675880f26f84fca84546d1be960adad",
+    "original_text": "應該如何開發國土",
+    "translated_sentence": "国土をどのように開発すべきか",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524958.9551277
   }
 ]
