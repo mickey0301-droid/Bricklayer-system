@@ -4435,5 +4435,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542362.9544418
+  },
+  {
+    "id": "c50ae2a35b3245288b9e180b57b9e0ce",
+    "original_text": "彷彿飛上天的喜悅",
+    "translated_sentence": "空へ飛び立つ喜び",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542371.7861319
   }
 ]
