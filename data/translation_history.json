@@ -1339,5 +1339,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511102.5119274
+  },
+  {
+    "id": "42b5606db11c4c22937eb0abaa733d08",
+    "original_text": "作為統治台灣的行政機關",
+    "translated_sentence": "台湾を統治する行政機関として",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511144.2699509
   }
 ]
