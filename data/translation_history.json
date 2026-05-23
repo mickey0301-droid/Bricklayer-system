@@ -4876,5 +4876,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546859.8823159
+  },
+  {
+    "id": "67eebe26ad2848d0984ab58f2fb359a9",
+    "original_text": "把我放在膝上",
+    "translated_sentence": "私をあなたの膝の上に置いてください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546876.530367
   }
 ]
