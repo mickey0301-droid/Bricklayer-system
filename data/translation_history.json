@@ -3589,5 +3589,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533714.0322452
+  },
+  {
+    "id": "5b5377444f5f4d138f6426cb7e73cb5d",
+    "original_text": "與朋友吵架",
+    "translated_sentence": "友達との喧嘩",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533803.5662615
   }
 ]
