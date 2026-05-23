@@ -1681,5 +1681,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522556.4349556
+  },
+  {
+    "id": "aeafee2a8d28492ea041652f6f544ac4",
+    "original_text": "教育工作無異是「自己掐住自己脖子」的做法",
+    "translated_sentence": "教育という仕事は「自分の首を絞める」ことでしかありません。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522614.0543091
   }
 ]
