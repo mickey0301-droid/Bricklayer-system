@@ -1052,28 +1052,7 @@ def home_page():
         def _has_kanji(text: str) -> bool:
             return bool(re.search(r"[\u4e00-\u9fff]", str(text or "")))
 
-        raw_ruby_html = str(ruby_html or "").strip()
         rendered = False
-        if raw_ruby_html:
-            # 只允許最小安全標記，避免任意 HTML 注入
-            safe_html = (
-                raw_ruby_html
-                .replace("&", "&amp;")
-                .replace("<ruby>", "__RUBY_OPEN__")
-                .replace("</ruby>", "__RUBY_CLOSE__")
-                .replace("<rt>", "__RT_OPEN__")
-                .replace("</rt>", "__RT_CLOSE__")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("__RUBY_OPEN__", "<ruby>")
-                .replace("__RUBY_CLOSE__", "</ruby>")
-                .replace("__RT_OPEN__", "<rt>")
-                .replace("__RT_CLOSE__", "</rt>")
-                .replace("\n", "<br>")
-            )
-            st.markdown(f'<div class="jp-kanji-line">{safe_html}</div>', unsafe_allow_html=True)
-            rendered = True
-            # 不 return，底下仍顯示整句平假名（使用者要求兩者都要）
 
         ruby_words = ruby_words if isinstance(ruby_words, list) else []
         sentence_text = str(sentence or "")
@@ -1126,7 +1105,17 @@ def home_page():
                 if _occupy(idx, end):
                     annotations.append((idx, end, base, rt))
 
-        if (not rendered) and annotations:
+        # 品質門檻：若對位比例太低，就不要硬顯示 ruby（避免錯位）
+        covered_kanji_chars = sum(1 for ch in sentence_text if _has_kanji(ch))
+        annotated_kanji_chars = sum(
+            1
+            for start, end, _, _ in annotations
+            for ch in sentence_text[start:end]
+            if _has_kanji(ch)
+        )
+        coverage = (annotated_kanji_chars / covered_kanji_chars) if covered_kanji_chars else 1.0
+
+        if (not rendered) and annotations and coverage >= 0.7:
             annotations.sort(key=lambda x: x[0])
             ruby_parts = []
             cursor = 0
