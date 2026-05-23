@@ -4048,5 +4048,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534945.5351226
+  },
+  {
+    "id": "0c38cd4166b2488b9c12d808d29045c8",
+    "original_text": "我小心翼翼地告訴父親",
+    "translated_sentence": "私は父に小心翼翼に伝えた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534958.0017877
   }
 ]
