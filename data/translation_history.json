@@ -3778,5 +3778,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534351.3001916
+  },
+  {
+    "id": "513ec41e1f874e8db5f4ec108c44823b",
+    "original_text": "對於我這種個性",
+    "translated_sentence": "私のような性格に対して",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534363.9845474
   }
 ]
