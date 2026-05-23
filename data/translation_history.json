@@ -5200,5 +5200,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547649.0479727
+  },
+  {
+    "id": "1f1b526ee20f4b99bb6bc72028516b1f",
+    "original_text": "寄人籬下",
+    "translated_sentence": "他人の屋根の下に住む",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547673.7252786
   }
 ]
