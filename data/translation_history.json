@@ -1384,5 +1384,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779511292.841427
+  },
+  {
+    "id": "fd638c1c7e4049d8a408103e08ab1d5a",
+    "original_text": "首任總督為樺山資紀",
+    "translated_sentence": "初代総督は樺山資紀です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779511304.033224
   }
 ]
