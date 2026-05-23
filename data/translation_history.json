@@ -4174,5 +4174,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541699.2590723
+  },
+  {
+    "id": "98568eb8021b4787b415f5e31845d148",
+    "original_text": "基層公務員的月薪",
+    "translated_sentence": "基層公務員の月給",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541717.3287642
   }
 ]
