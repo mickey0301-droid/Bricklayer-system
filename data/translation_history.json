@@ -5272,5 +5272,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547819.2616465
+  },
+  {
+    "id": "152cd63d3d7d481ca82bd83dfd864cec",
+    "original_text": "從學校畢業之後",
+    "translated_sentence": "学校を卒業した後",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547838.8407998
   }
 ]
