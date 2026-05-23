@@ -5677,5 +5677,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552241.3463295
+  },
+  {
+    "id": "a797d99a1d77406c9d50cacc0482b1a2",
+    "original_text": "求學時累積了這樣的修煉",
+    "translated_sentence": "学生時代にこのような修行を積みました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552257.833223
   }
 ]
