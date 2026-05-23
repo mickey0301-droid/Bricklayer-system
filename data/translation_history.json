@@ -5074,5 +5074,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547419.383084
+  },
+  {
+    "id": "d15d7250cc2849d18322bcddb5d8a885",
+    "original_text": "我請求父母",
+    "translated_sentence": "両親にお願いします",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547436.7041342
   }
 ]
