@@ -5758,5 +5758,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557175.2956603
+  },
+  {
+    "id": "dd227c82a841465a972770eb0b00b0ea",
+    "original_text": "我要告訴他這個壞消息",
+    "translated_sentence": "彼に悪い知らせを伝えるつもりです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557264.756243
   }
 ]
