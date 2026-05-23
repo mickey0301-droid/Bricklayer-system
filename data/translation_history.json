@@ -4633,5 +4633,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542866.7385836
+  },
+  {
+    "id": "1cf7e98c2ad843f7b54f1c4956c4ae70",
+    "original_text": "同學沒什麼了不起",
+    "translated_sentence": "クラスメイトは特別なものではない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542895.903842
   }
 ]
