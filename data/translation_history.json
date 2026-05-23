@@ -2923,5 +2923,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529979.179514
+  },
+  {
+    "id": "d71b4ae315544c6384eb92c0c704aff5",
+    "original_text": "從此確立了基本方針",
+    "translated_sentence": "基本方針が確立されました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529988.8014562
   }
 ]
