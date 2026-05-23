@@ -3562,5 +3562,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533666.0188935
+  },
+  {
+    "id": "0a77faf48ec34ef28bd04726d7379001",
+    "original_text": "非常內向",
+    "translated_sentence": "非常に内向的です",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533674.9997573
   }
 ]
