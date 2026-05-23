@@ -2779,5 +2779,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529690.8512204
+  },
+  {
+    "id": "76d0d6ba7f7d4c608415c8c33d6f6a46",
+    "original_text": "會有很大助益",
+    "translated_sentence": "大きな助けになるでしょう。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529704.603894
   }
 ]
