@@ -2815,5 +2815,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529761.6223454
+  },
+  {
+    "id": "c99cca74756a495280655894612de44a",
+    "original_text": "他得出「製糖業對台灣的發展會有很大助益」的結論",
+    "translated_sentence": "製糖業は台湾の発展に大いに貢献するという結論が導かれた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529775.3390384
   }
 ]
