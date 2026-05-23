@@ -3292,5 +3292,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531772.3566127
+  },
+  {
+    "id": "7d0315b0eaff4025aa1ec95a8a003e88",
+    "original_text": "糖業獎勵規則",
+    "translated_sentence": "糖業報奨規則",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531788.3187227
   }
 ]
