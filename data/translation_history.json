@@ -5551,5 +5551,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551895.3282406
+  },
+  {
+    "id": "73c3646ba0714334a9e8b4d017148081",
+    "original_text": "受到哥哥的影響",
+    "translated_sentence": "兄の影響を受けている",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551906.922394
   }
 ]
