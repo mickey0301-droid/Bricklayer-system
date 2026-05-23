@@ -3382,5 +3382,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533271.4328747
+  },
+  {
+    "id": "6ce97d2f9f4d4638bc1a9e4c62d8a065",
+    "original_text": "人生觀",
+    "translated_sentence": "人生観",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533281.4537241
   }
 ]
