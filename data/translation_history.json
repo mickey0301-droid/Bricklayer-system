@@ -3688,5 +3688,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534019.4030006
+  },
+  {
+    "id": "6d7e852c97854734a24bdb5798bf1dd5",
+    "original_text": "安慰對方",
+    "translated_sentence": "相手を慰める",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534033.8526254
   }
 ]
