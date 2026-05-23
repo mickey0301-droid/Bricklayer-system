@@ -5587,5 +5587,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551972.2715905
+  },
+  {
+    "id": "6fb9477f5ac04732a89f74be4baa004c",
+    "original_text": "我希望透過冥想來超越自我",
+    "translated_sentence": "私は瞑想を通じて自己を超えたいと思っています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551991.7046318
   }
 ]
