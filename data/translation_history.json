@@ -3328,5 +3328,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533179.0363324
+  },
+  {
+    "id": "3f0cda8a2f43424dbdb30ac2ddea591e",
+    "original_text": "正處於這樣的時代氣氛",
+    "translated_sentence": "このような時代の雰囲気にいる。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533195.7439718
   }
 ]
