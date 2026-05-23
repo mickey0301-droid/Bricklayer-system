@@ -3652,5 +3652,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533928.433678
+  },
+  {
+    "id": "131bee4df4bb4343928506241201e0b3",
+    "original_text": "哥哥不會袒護我",
+    "translated_sentence": "兄は私をかばってくれない",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533941.6785562
   }
 ]
