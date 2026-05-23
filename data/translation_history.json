@@ -1132,5 +1132,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510431.5548332
+  },
+  {
+    "id": "9e07d86a068c430f861d198e59dc9cd7",
+    "original_text": "不過也有人批評「過度美化日本統治時期」",
+    "translated_sentence": "しかし「日本統治時代を過度に美化する」という批判もある。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510447.0734453
   }
 ]
