@@ -5749,5 +5749,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557155.878938
+  },
+  {
+    "id": "a8e4f80786c445efb9c5840fc63b6f2f",
+    "original_text": "我想知道在這種氣候下適合種那種植物",
+    "translated_sentence": "この気候ではどの植物を育てるのが適しているか知りたいです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557172.968838
   }
 ]
