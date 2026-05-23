@@ -3625,5 +3625,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533849.4475343
+  },
+  {
+    "id": "92bf271957bd4f459e2e72a25d9c66de",
+    "original_text": "大我兩歲的哥哥",
+    "translated_sentence": "私より2歳年上の兄は",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533876.4492054
   }
 ]
