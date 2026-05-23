@@ -4264,5 +4264,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541909.349935
+  },
+  {
+    "id": "482fd0027870479aa10bfe2fa0ca404f",
+    "original_text": "我只好放棄買書的念頭",
+    "translated_sentence": "私は本を買うことをあきらめざるを得なかった。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541924.140979
   }
 ]
