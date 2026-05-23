@@ -2554,5 +2554,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779525650.5386138
+  },
+  {
+    "id": "5dc141b08c594f1a81b373b3112d2616",
+    "original_text": "這本書也被翻譯成多國語言",
+    "translated_sentence": "この本は多くの言語に翻訳されています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779525661.3773527
   }
 ]
