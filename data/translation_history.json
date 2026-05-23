@@ -3508,5 +3508,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533535.6637526
+  },
+  {
+    "id": "25fba9be4eaf44ff9b1dcb55e94453e1",
+    "original_text": "因此很難交到朋友",
+    "translated_sentence": "友達を作るのが難しい",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533547.3562307
   }
 ]
