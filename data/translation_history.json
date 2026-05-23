@@ -3976,5 +3976,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534818.0600848
+  },
+  {
+    "id": "de15d8bc07ff462a93f25ea8d009d71d",
+    "original_text": "少年時期發生的一件事，讓我難以忘懷",
+    "translated_sentence": "少年時代に起こった出来事が忘れられません。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534831.889788
   }
 ]
