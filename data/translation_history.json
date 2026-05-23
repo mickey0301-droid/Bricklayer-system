@@ -2032,5 +2032,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523930.8872619
+  },
+  {
+    "id": "3029b7a583c34d2383133ec822161f68",
+    "original_text": "他到任以後，",
+    "translated_sentence": "彼が到着した後、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523943.9233906
   }
 ]
