@@ -2140,5 +2140,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524241.2268405
+  },
+  {
+    "id": "736597e01541486484e21cb3009959df",
+    "original_text": "廣泛採用優秀人才",
+    "translated_sentence": "優秀な人材を広く採用する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524253.6191502
   }
 ]
