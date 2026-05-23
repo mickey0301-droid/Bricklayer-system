@@ -4399,5 +4399,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542268.0761013
+  },
+  {
+    "id": "ef60654dd3174c069aa80ae522d70efd",
+    "original_text": "湊足錢帶來給我。",
+    "translated_sentence": "十分なお金を集めて私に持ってきてください。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542285.6257064
   }
 ]
