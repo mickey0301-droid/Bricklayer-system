@@ -4201,5 +4201,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541752.8330357
+  },
+  {
+    "id": "4b64794ac50847899d6e30482df47ad4",
+    "original_text": "你臨時提出這要求",
+    "translated_sentence": "このリクエストは一時的に行われました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541772.0920222
   }
 ]
