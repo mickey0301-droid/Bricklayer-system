@@ -3634,5 +3634,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533876.4492054
+  },
+  {
+    "id": "29cb1a9a931d4c05945643616e64498a",
+    "original_text": "大我兩歲的哥哥",
+    "translated_sentence": "兄は私より大我が2歳上です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533888.4016118
   }
 ]
