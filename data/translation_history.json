@@ -5389,5 +5389,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551488.3364606
+  },
+  {
+    "id": "aa74f45d5a4b41c28b14b70b5dacfa7e",
+    "original_text": "他幫我辦好手續",
+    "translated_sentence": "他が手続きを済ませてくれました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551502.3037252
   }
 ]
