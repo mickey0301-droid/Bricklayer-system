@@ -5407,5 +5407,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551559.8366115
+  },
+  {
+    "id": "a0c2572768f74fb0a413b7be9b4864a1",
+    "original_text": "我很感謝日本的教育與學校制度",
+    "translated_sentence": "私は日本の教育と学校制度にとても感謝しています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551575.0551214
   }
 ]
