@@ -2176,5 +2176,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524340.034323
+  },
+  {
+    "id": "4da0d6c24c84482da24b98da11084b76",
+    "original_text": "他招募了無數這樣的人才",
+    "translated_sentence": "彼は数えきれないほどの才能を集めました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524352.6536667
   }
 ]
