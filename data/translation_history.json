@@ -1564,5 +1564,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522044.6628246
+  },
+  {
+    "id": "6f7eb0f1ab36452bb96a1b4e2781b4d1",
+    "original_text": "日本統治的方式可說是獨樹一格",
+    "translated_sentence": "日本の統治方式は独自のものである。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522059.3845174
   }
 ]
