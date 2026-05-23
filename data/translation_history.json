@@ -3814,5 +3814,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534409.9430895
+  },
+  {
+    "id": "d58d1404f9b145d8a6cba9766b30b374",
+    "original_text": "你的情感太豐富了",
+    "translated_sentence": "あなたの感情はとても豊かです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534422.0589828
   }
 ]
