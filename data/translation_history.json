@@ -5002,5 +5002,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547177.8552492
+  },
+  {
+    "id": "4e298214c11d44188f3c60ff51936315",
+    "original_text": "我就完蛋了",
+    "translated_sentence": "私は終わった",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547192.2517643
   }
 ]
