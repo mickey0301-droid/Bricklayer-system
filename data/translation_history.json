@@ -3670,5 +3670,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533974.0053563
+  },
+  {
+    "id": "d2941f31621d4b8ea97e34da6d89a65d",
+    "original_text": "哥哥不會因為是兄弟就袒護我",
+    "translated_sentence": "兄は兄弟だからといって僕をかばうことはない。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533989.978815
   }
 ]
