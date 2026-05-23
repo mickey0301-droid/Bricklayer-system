@@ -3463,5 +3463,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533415.5372643
+  },
+  {
+    "id": "3a3da6121e304a5db44279ba0be26bc2",
+    "original_text": "我讀小學期間",
+    "translated_sentence": "小学生の頃",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533441.082663
   }
 ]
