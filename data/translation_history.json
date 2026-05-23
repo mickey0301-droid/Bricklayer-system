@@ -5695,5 +5695,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779552283.5308638
+  },
+  {
+    "id": "e9fbce175e4046aa9abeddfe8c812a6d",
+    "original_text": "後來成為領導者後",
+    "translated_sentence": "後にリーダーになった後",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779552306.4908872
   }
 ]
