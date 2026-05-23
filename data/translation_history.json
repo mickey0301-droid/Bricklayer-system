@@ -4894,5 +4894,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546898.9552648
+  },
+  {
+    "id": "809d79becdf94ab0b5b5ab235f2273aa",
+    "original_text": "還是常常把我放在膝上和我聊天",
+    "translated_sentence": "彼は今でもよく私を膝の上に乗せて話しかけてくれます。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546920.9406614
   }
 ]
