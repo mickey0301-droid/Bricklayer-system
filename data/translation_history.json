@@ -1591,5 +1591,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779522193.255726
+  },
+  {
+    "id": "746f102611ae40289e7c3de43baca765",
+    "original_text": "台灣總督府就設立了教授日文的學校",
+    "translated_sentence": "台湾総督府は日本語を教える学校を設立した。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779522262.9330661
   }
 ]
