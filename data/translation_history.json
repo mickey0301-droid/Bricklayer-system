@@ -1978,5 +1978,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523810.6472297
+  },
+  {
+    "id": "6808c1bfec2f4fe0b9f6f8acd52f56eb",
+    "original_text": "錄用人才",
+    "translated_sentence": "人材を採用する",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523813.8326933
   }
 ]
