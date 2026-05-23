@@ -1780,5 +1780,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523061.460428
+  },
+  {
+    "id": "8f9dc7dc425843bdb03737ef4a5319fc",
+    "original_text": "傳染病蔓延",
+    "translated_sentence": "感染症の蔓延",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523073.3464406
   }
 ]
