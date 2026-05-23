@@ -5965,5 +5965,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779559467.23857
+  },
+  {
+    "id": "31f202a152ad4a61a9b385e054977ad7",
+    "original_text": "可以找到很多以前的朋友",
+    "translated_sentence": "昔の友達をたくさん見つけることができます。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779559482.4269185
   }
 ]
