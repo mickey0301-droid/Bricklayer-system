@@ -5227,5 +5227,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547722.5201108
+  },
+  {
+    "id": "f3d07a8ac9ba4a13a2a97c02ab968eaa",
+    "original_text": "嚐到寄人籬下的悲哀",
+    "translated_sentence": "人の家に寄生する悲しみを味わう",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547741.4227798
   }
 ]
