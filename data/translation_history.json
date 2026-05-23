@@ -3472,5 +3472,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779533441.082663
+  },
+  {
+    "id": "b92db33428304c2188b6367b5f53f247",
+    "original_text": "我讀小學期間",
+    "translated_sentence": "私の小学校時代",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779533455.057368
   }
 ]
