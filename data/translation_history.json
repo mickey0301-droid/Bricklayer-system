@@ -5416,5 +5416,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551577.3713326
+  },
+  {
+    "id": "9814188df61143d48c45ff4c2d6b8c09",
+    "original_text": "讓我有機會接觸到很多書",
+    "translated_sentence": "たくさんの本に触れる機会を与えてください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551600.0695462
   }
 ]
