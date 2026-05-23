@@ -4732,5 +4732,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779543164.541183
+  },
+  {
+    "id": "9c152fbb81ea4055b8d46366d73cd9a7",
+    "original_text": "我是一個很臭屁的小孩",
+    "translated_sentence": "私はとても自慢げな子供です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779543184.0101707
   }
 ]
