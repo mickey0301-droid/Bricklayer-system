@@ -5920,5 +5920,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779558313.5141838
+  },
+  {
+    "id": "0134c7dee1d64a12a840ce7a29996544",
+    "original_text": "那把陽傘好適合你",
+    "translated_sentence": "その日傘はあなたによく似合っています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779558364.602137
   }
 ]
