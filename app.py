@@ -1224,11 +1224,15 @@ def home_page():
                         st.session_state.home_translation_source = ""
                         st.session_state.home_translation_target_used = selected_target["key"]
                         st.session_state.home_translation_japanese_mode_used = japanese_mode
-                        # Auto input changes should only trigger Google.
-                        # AI translation is triggered only by button / Alt+Enter.
-                        st.session_state.home_ai_pending_request = None
-                        st.session_state.home_ai_pending_step = 0
-                        st.session_state.home_ai_pending_ready_at = 0.0
+                        # Auto input changes: Google first, then trigger AI second step.
+                        st.session_state.home_ai_pending_request = {
+                            "source_text_raw": current_input_raw,
+                            "target_key": selected_target["key"],
+                            "target_label": selected_target["label"],
+                            "japanese_mode": japanese_mode,
+                        }
+                        st.session_state.home_ai_pending_step = 1
+                        st.session_state.home_ai_pending_ready_at = time.time() + 0.8
                         upsert_translation_history_entry(
                             original_text=current_input_raw,
                             translated_sentence=g_translated,
