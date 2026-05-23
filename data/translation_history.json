@@ -2104,5 +2104,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524128.7750285
+  },
+  {
+    "id": "27cfd2fd6e9f4b21a80d3827938d9f3d",
+    "original_text": "來台灣撈一票",
+    "translated_sentence": "台湾で一攫千金を狙う",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524144.2156808
   }
 ]
