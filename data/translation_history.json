@@ -4525,5 +4525,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779542565.2300174
+  },
+  {
+    "id": "9ae9ebe9c6d1439b88693af7b662d993",
+    "original_text": "他們也有同樣的經歷",
+    "translated_sentence": "彼らも同じ経験をしています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779542600.4612074
   }
 ]
