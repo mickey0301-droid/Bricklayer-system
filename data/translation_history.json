@@ -5065,5 +5065,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779547401.5383234
+  },
+  {
+    "id": "f76bb88aab3f4a53bbaddb686768ae33",
+    "original_text": "我想到一個辦法",
+    "translated_sentence": "一つの方法を思いつきました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779547417.0603976
   }
 ]
