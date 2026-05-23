@@ -2932,5 +2932,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779530278.1287565
+  },
+  {
+    "id": "d2a7adeea70e43d5b32ed3fbe4b92ade",
+    "original_text": "台灣製糖業發展",
+    "translated_sentence": "台湾の砂糖産業の発展",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779530305.2345674
   }
 ]
