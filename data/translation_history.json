@@ -3967,5 +3967,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534798.5488567
+  },
+  {
+    "id": "66b029a1bb054edf91618a7fd3f18efc",
+    "original_text": "少年時期發生的一件事，讓我難以忘懷",
+    "translated_sentence": "10代の頃に起こった出来事は決して忘れられないものです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534818.0600848
   }
 ]
