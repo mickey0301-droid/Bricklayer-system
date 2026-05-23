@@ -5443,5 +5443,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779551643.271796
+  },
+  {
+    "id": "5b85f7f835bb4afca10b5288b4250400",
+    "original_text": "讓我在少年時代就有很多機會",
+    "translated_sentence": "少年の頃に多くの機会がありました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779551663.1364613
   }
 ]
