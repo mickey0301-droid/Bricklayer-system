@@ -3751,5 +3751,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779534265.0170689
+  },
+  {
+    "id": "587e07c788b44da8af4dab46db389c45",
+    "original_text": "讓母親感到很頭痛",
+    "translated_sentence": "お母さんに頭痛を与えてください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779534285.1074755
   }
 ]
