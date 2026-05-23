@@ -1996,5 +1996,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523858.9771433
+  },
+  {
+    "id": "7df4fa60235b4706a67d582344dead13",
+    "original_text": "從此打造了好的環境",
+    "translated_sentence": "ここから良い環境を作り出しました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523871.4140222
   }
 ]
