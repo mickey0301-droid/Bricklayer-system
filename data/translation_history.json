@@ -1843,5 +1843,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779523271.1118114
+  },
+  {
+    "id": "0e1fe501877240d1bdb29d5a718d328e",
+    "original_text": "台灣的開發才有了重大進展",
+    "translated_sentence": "台湾の発展は大きく前進しました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779523309.0596771
   }
 ]
