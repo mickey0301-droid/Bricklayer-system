@@ -2968,5 +2968,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779531030.9894543
+  },
+  {
+    "id": "bb30bb7e407741b8bc67e922e55d7bb6",
+    "original_text": "日漸衰退",
+    "translated_sentence": "日に日に減っていく",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779531082.3817549
   }
 ]
