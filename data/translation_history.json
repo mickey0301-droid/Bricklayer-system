@@ -2707,5 +2707,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779529502.798061
+  },
+  {
+    "id": "edd341e986d04c8cb97d6334f1a7685c",
+    "original_text": "他出席在法國巴黎舉行的萬國博覽會",
+    "translated_sentence": "フランスのパリで開催された万国博覧会に出席しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779529514.695049
   }
 ]
