@@ -4804,5 +4804,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779546711.1544268
+  },
+  {
+    "id": "ce90cd1f66434abd8c5676ddbfdb6aa5",
+    "original_text": "過度膨脹的自我意識讓我吃了不少苦頭",
+    "translated_sentence": "過剰な自意識が私に多くの苦しみを与えた。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779546729.0379813
   }
 ]
