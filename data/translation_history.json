@@ -1285,5 +1285,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510940.107207
+  },
+  {
+    "id": "848582dfcd1147a3a4c31baa9e12cc45",
+    "original_text": "日本與中國締結馬關條約",
+    "translated_sentence": "日中両国が下関条約を締結",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510958.9626892
   }
 ]
