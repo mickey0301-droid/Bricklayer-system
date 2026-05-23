@@ -2086,5 +2086,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779524083.8212514
+  },
+  {
+    "id": "1d1ec70fe2e1413885af8dcbee4da046",
+    "original_text": "能力不足的官僚",
+    "translated_sentence": "能力不足の官僚",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779524094.2372887
   }
 ]
