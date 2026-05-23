@@ -4300,5 +4300,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779541989.5477662
+  },
+  {
+    "id": "800f7c19cbeb4b3aa6e7e81e6d7b4a87",
+    "original_text": "靜靜地等待出發",
+    "translated_sentence": "出発を静かに待つ",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779541998.5310194
   }
 ]
