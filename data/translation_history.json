@@ -1186,5 +1186,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779510729.2949903
+  },
+  {
+    "id": "9d3d856e08e142608203cd67f96c3f36",
+    "original_text": "在能夠清楚區分「公」與「私」的武士道倫理基礎上",
+    "translated_sentence": "「公」と「私」を明確に区別できる武士道の倫理に基づいて",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779510743.7415822
   }
 ]
