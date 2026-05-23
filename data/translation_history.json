@@ -4696,5 +4696,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779543088.738668
+  },
+  {
+    "id": "f349091f705d49308da07b0b4d06e3d8",
+    "original_text": "我也會對老師說「老師，您講錯了」之類的話。",
+    "translated_sentence": "私も先生に「先生、間違っています」といったことを言うことがあります。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779543106.3567312
   }
 ]
