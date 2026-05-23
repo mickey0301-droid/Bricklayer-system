@@ -5803,5 +5803,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779557374.7627456
+  },
+  {
+    "id": "d4fc8e014883436696fd3449bb33f1a7",
+    "original_text": "我和他難得達成共識",
+    "translated_sentence": "彼と意見が合うことは滅多にない。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779557389.8267548
   }
 ]
