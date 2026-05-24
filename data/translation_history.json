@@ -6334,5 +6334,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779622922.7934651
+  },
+  {
+    "id": "e0830d5758104a1b9f721814031d8797",
+    "original_text": "日本竟然有這麼豪華的計程車。",
+    "translated_sentence": "実は日本にもこんな豪華なタクシーがあるのです。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623012.7204678
   }
 ]
