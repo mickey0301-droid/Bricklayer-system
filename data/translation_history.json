@@ -6712,5 +6712,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627206.2324524
+  },
+  {
+    "id": "19919ad9cef94bb3afb665cba44acb32",
+    "original_text": "我在筆記本上記錄讀了什麼領域的書",
+    "translated_sentence": "私は読んだ分野をノートに記録します",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627250.6087577
   }
 ]
