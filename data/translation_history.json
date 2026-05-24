@@ -6055,5 +6055,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618592.0177453
+  },
+  {
+    "id": "27b9369f43944df49510ee628798a271",
+    "original_text": "鼓勵考生的一段話",
+    "translated_sentence": "受験生を励ます言葉",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618605.6838236
   }
 ]
