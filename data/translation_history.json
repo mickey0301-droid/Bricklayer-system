@@ -6307,5 +6307,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779622814.8253224
+  },
+  {
+    "id": "6a6fffe339d24d0090311a6713094f7c",
+    "original_text": "發言與主題無關",
+    "translated_sentence": "発言はテーマと無関係です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779622826.1354635
   }
 ]
