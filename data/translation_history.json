@@ -6694,5 +6694,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627172.434664
+  },
+  {
+    "id": "7909eb3f917d428cbf0384726e6f187f",
+    "original_text": "讀書需要時間",
+    "translated_sentence": "読むのに時間がかかる",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627190.480506
   }
 ]
