@@ -6091,5 +6091,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618655.4257944
+  },
+  {
+    "id": "bf77c4792a8e4f0ab2538f0b5403f858",
+    "original_text": "想要好好讀書的話，",
+    "translated_sentence": "しっかり勉強したいなら、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618667.5541458
   }
 ]
