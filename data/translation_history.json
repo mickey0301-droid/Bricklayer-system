@@ -6505,5 +6505,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623801.2687242
+  },
+  {
+    "id": "087beb39db0645e38d73830e8cee26e1",
+    "original_text": "原來有許多人為此受苦",
+    "translated_sentence": "実際には多くの人々がこれによって苦しんでいました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623812.1041698
   }
 ]
