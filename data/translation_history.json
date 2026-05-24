@@ -6136,5 +6136,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618726.9434195
+  },
+  {
+    "id": "c3f620936fa64b6886034da6d0245ebd",
+    "original_text": "我報考了高中",
+    "translated_sentence": "高校に出願しました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618764.9086673
   }
 ]
