@@ -6433,5 +6433,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623461.7421744
+  },
+  {
+    "id": "ac15c19b0a6f49e79c119d7ffc2d7a48",
+    "original_text": "秘密消息曝光",
+    "translated_sentence": "秘密のメッセージが流出しました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623474.6250618
   }
 ]
