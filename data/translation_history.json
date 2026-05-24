@@ -6667,5 +6667,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627081.750838
+  },
+  {
+    "id": "cde3d4833bd941359dabf76e6f4e6f51",
+    "original_text": "就連法文書和德文書也都是要求讀原著",
+    "translated_sentence": "法律文書やドイツ語文書も原著を読むことが求められています。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627095.2664568
   }
 ]
