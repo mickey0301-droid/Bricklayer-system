@@ -6541,5 +6541,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779626738.1683497
+  },
+  {
+    "id": "7cc73e6e99664360a1503d3b8d5c4ae1",
+    "original_text": "我並不覺得曾遭受什麼歧視",
+    "translated_sentence": "私は何の差別を受けたとは思いません。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779626754.6620643
   }
 ]
