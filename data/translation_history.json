@@ -6154,5 +6154,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618776.8810885
+  },
+  {
+    "id": "7afc022ad012456eb672914e0581df0c",
+    "original_text": "考試當然是以日文問答",
+    "translated_sentence": "もちろん試験は日本語で行われ、質疑応答も行われます。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618821.488162
   }
 ]
