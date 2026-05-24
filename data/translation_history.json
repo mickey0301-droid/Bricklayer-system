@@ -6757,5 +6757,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627315.6608477
+  },
+  {
+    "id": "1f2bd57d449244dc8ee3fe23f41852c9",
+    "original_text": "花了多少時間",
+    "translated_sentence": "どれだけの時間がかかりましたか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627325.32502
   }
 ]
