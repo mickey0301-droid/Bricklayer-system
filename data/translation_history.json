@@ -6784,5 +6784,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627360.8953996
+  },
+  {
+    "id": "5d558f1b7fad4cd1bd294de25a96c3a1",
+    "original_text": "真的是這樣",
+    "translated_sentence": "本当にそれだけです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627380.2590485
   }
 ]
