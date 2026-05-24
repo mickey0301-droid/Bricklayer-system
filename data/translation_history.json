@@ -6478,5 +6478,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623666.7854748
+  },
+  {
+    "id": "209f42f455784dcd89f4457cbb4cf06a",
+    "original_text": "病情受到了控制",
+    "translated_sentence": "状態はコントロールされています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623752.6259246
   }
 ]
