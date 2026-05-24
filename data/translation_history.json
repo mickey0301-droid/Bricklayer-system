@@ -6451,5 +6451,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623504.4236948
+  },
+  {
+    "id": "ca7b648fafe14cf894b54e25707564a3",
+    "original_text": "機密文件解密",
+    "translated_sentence": "機密文書の解読",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623515.0211198
   }
 ]
