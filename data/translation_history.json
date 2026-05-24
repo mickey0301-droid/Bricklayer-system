@@ -6379,5 +6379,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623208.5485227
+  },
+  {
+    "id": "8e819da99f0848399f5fd00adcaf168d",
+    "original_text": "你來跟我坐同一桌",
+    "translated_sentence": "一緒に座りませんか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623222.726083
   }
 ]
