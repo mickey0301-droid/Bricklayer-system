@@ -6424,5 +6424,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623408.2703695
+  },
+  {
+    "id": "d23d000521764605a534f0f8cf57bd2e",
+    "original_text": "秘密消息曝光",
+    "translated_sentence": "機密情報が暴露される",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623461.7421744
   }
 ]
