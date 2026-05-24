@@ -6397,5 +6397,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623285.4627943
+  },
+  {
+    "id": "695fb818a5ab4dcf8309897bc86794d4",
+    "original_text": "比過去更難控制的疫情",
+    "translated_sentence": "より過去に比べて制御が難しいパンデミック",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623299.197807
   }
 ]
