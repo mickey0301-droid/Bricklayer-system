@@ -6163,5 +6163,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618821.488162
+  },
+  {
+    "id": "c4a57d6f0ceb4c01b57f84c3e2810c5a",
+    "original_text": "考試當然是以日文問答",
+    "translated_sentence": "試験はもちろん日本語で行われます。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618832.9051976
   }
 ]
