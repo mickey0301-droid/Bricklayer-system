@@ -6496,5 +6496,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623769.2200303
+  },
+  {
+    "id": "c1bd4699195148d69a403eb6aa692ea2",
+    "original_text": "原來有許多人為此受苦",
+    "translated_sentence": "多くの人が被害に遭っていることが分かりました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623801.2687242
   }
 ]
