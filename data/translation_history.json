@@ -6316,5 +6316,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779622828.496571
+  },
+  {
+    "id": "cc4ff7c78a2e411397d3fa8c18dbde43",
+    "original_text": "能力愈強，責任愈大。",
+    "translated_sentence": "能力が大きければ大きいほど、責任も大きくなります。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779622902.8153121
   }
 ]
