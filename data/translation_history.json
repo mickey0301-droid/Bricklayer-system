@@ -6460,5 +6460,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623517.425969
+  },
+  {
+    "id": "6f296fda5c5148ef8a0fe6da3d9a6a49",
+    "original_text": "我的免疫系統問題變得非常嚴重",
+    "translated_sentence": "私の免疫系の問題は非常に深刻になっています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623651.9837854
   }
 ]
