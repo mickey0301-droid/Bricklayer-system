@@ -6640,5 +6640,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627021.307029
+  },
+  {
+    "id": "28ac74885cb748fd83afb6054d739fc5",
+    "original_text": "英文書不用提了",
+    "translated_sentence": "英語の本について言及する必要はありません",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627034.3929727
   }
 ]
