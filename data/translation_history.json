@@ -6037,5 +6037,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618554.9532063
+  },
+  {
+    "id": "b4fce26cf0524290bbd7ac7aff7ac4c2",
+    "original_text": "後來我在一本書裡看到一句話",
+    "translated_sentence": "後に私はある本で一句を見ました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618569.0837212
   }
 ]
