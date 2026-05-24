@@ -6298,5 +6298,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779622775.564824
+  },
+  {
+    "id": "544445aa993f43f1b159daaa76ec2253",
+    "original_text": "發言與主題無關",
+    "translated_sentence": "そのスピーチは主題とは何の関係もありません",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779622814.8253224
   }
 ]
