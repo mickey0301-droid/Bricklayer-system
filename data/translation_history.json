@@ -6766,5 +6766,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627327.696784
+  },
+  {
+    "id": "ac7f910d7e19434c9f9526a8613b2c68",
+    "original_text": "有哲學、歷史、倫理學、生物學、科學",
+    "translated_sentence": "哲学、歴史、倫理、生物学、科学があります",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627344.6503077
   }
 ]
