@@ -5974,5 +5974,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618309.9564815
+  },
+  {
+    "id": "d67354d020ed417abc859f50b95cf24a",
+    "original_text": "後來我將此事告訴那位歌手。",
+    "translated_sentence": "後で歌手にこのことを話しました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618346.9481523
   }
 ]
