@@ -6244,5 +6244,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779619091.4354799
+  },
+  {
+    "id": "336a4409f16d4b5480fd2e8e1afe6a41",
+    "original_text": "老師們似乎都非常驚訝。",
+    "translated_sentence": "先生たちはとても驚いたようでした。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779619128.9137142
   }
 ]
