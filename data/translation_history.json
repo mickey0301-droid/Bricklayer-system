@@ -6685,5 +6685,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627146.4654539
+  },
+  {
+    "id": "20356b0c50db472588e7fa251d9bc7d5",
+    "original_text": "文法課什麼的根本沒開",
+    "translated_sentence": "文法の授業は全然開かれていない。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627170.1484177
   }
 ]
