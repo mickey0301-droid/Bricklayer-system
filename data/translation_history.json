@@ -6127,5 +6127,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618713.6191099
+  },
+  {
+    "id": "5aff77923a194876a13a0094f8ca1c81",
+    "original_text": "坦然接受這句話之後，",
+    "translated_sentence": "この言葉を素直に受け入れた後、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618724.4349682
   }
 ]
