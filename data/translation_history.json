@@ -6226,5 +6226,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779619005.3440328
+  },
+  {
+    "id": "00db637f904f4a60a8fc4ec7dba5a2c8",
+    "original_text": "我一個台灣人把這兩個科目考到滿分，",
+    "translated_sentence": "台湾人である私はこの２科目で満点をとりました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779619073.7625334
   }
 ]
