@@ -6595,5 +6595,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779626936.0239365
+  },
+  {
+    "id": "07676db8b5fd457283cb2d9b7b54c7d6",
+    "original_text": "在自由的校風下，",
+    "translated_sentence": "自由な校風のもとで、",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779626946.7897036
   }
 ]
