@@ -6271,5 +6271,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779622685.4451401
+  },
+  {
+    "id": "e29db88ebeeb4f8a83a616217b489f73",
+    "original_text": "請勿攜帶外食",
+    "translated_sentence": "飲食物の持ち込みはご遠慮ください。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779622709.4647357
   }
 ]
