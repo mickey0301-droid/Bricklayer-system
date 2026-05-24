@@ -6199,5 +6199,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618929.6611974
+  },
+  {
+    "id": "3e4f0f2bad54482e87219c13aaccc0e5",
+    "original_text": "中學時我讀了各種經典作品",
+    "translated_sentence": "中学の時に様々な古典作品を読みました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618944.9106927
   }
 ]
