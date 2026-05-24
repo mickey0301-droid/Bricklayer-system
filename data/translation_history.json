@@ -6649,5 +6649,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627034.3929727
+  },
+  {
+    "id": "9559bd008c8b4e32a55733d05d1aa517",
+    "original_text": "英文書不用提了",
+    "translated_sentence": "英語の文書は必要ありません。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627047.9786813
   }
 ]
