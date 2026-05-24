@@ -6523,5 +6523,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779626682.0621893
+  },
+  {
+    "id": "8646c00f7dd44b5b86f127142599ea75",
+    "original_text": "記憶中台灣人只有三到四位",
+    "translated_sentence": "記憶している台湾人は三人から四人です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779626692.326824
   }
 ]
