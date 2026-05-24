@@ -6793,5 +6793,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627380.2590485
+  },
+  {
+    "id": "63bac53444924ebf943f1ad9270493e9",
+    "original_text": "真的是這樣",
+    "translated_sentence": "本当にそうです",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627392.953954
   }
 ]
