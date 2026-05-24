@@ -6352,5 +6352,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623026.346231
+  },
+  {
+    "id": "9af4f0ac06df47baa27e12fbf8207aba",
+    "original_text": "他根本就希望你不要想到他",
+    "translated_sentence": "彼はあなたが彼のことを考えないことを望んでいます",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623116.01331
   }
 ]
