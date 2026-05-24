@@ -6559,5 +6559,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779626818.235761
+  },
+  {
+    "id": "b81ec80354a7487ba009c178bd860c29",
+    "original_text": "我反而感覺老師比較疼我",
+    "translated_sentence": "私はむしろ先生が私を大切にしてくれていると感じます。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779626834.5973969
   }
 ]
