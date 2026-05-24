@@ -6118,5 +6118,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618702.2828872
+  },
+  {
+    "id": "341be416ff1d4a2a9875cf2af0c095c9",
+    "original_text": "坦然接受這句話之後，",
+    "translated_sentence": "この言葉を冷静に受け止めた上で、",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618713.6191099
   }
 ]
