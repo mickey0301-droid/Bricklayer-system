@@ -6568,5 +6568,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779626839.474099
+  },
+  {
+    "id": "fbef9d17948f4b72a9b483bada66002e",
+    "original_text": "同學中也沒有人公開對我說過什麼奇怪的話",
+    "translated_sentence": "私のクラスメートの中で、公の場で私におかしなことを言った人は一人もいません。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779626896.8935506
   }
 ]
