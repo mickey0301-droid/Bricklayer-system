@@ -6730,5 +6730,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627267.3528645
+  },
+  {
+    "id": "704074703f424562ba1d23bc50630180",
+    "original_text": "逐一記錄",
+    "translated_sentence": "一つ一つ記録していきます",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627291.2855363
   }
 ]
