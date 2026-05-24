@@ -6001,5 +6001,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618397.5132759
+  },
+  {
+    "id": "1d1bd8bfac7e4c87a7e56391726c562f",
+    "original_text": "他把他製作的一幅畫送給我",
+    "translated_sentence": "彼は自分が作った絵を私に贈ってくれました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618412.286991
   }
 ]
