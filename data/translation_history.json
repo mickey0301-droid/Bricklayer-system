@@ -6172,5 +6172,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618835.4646966
+  },
+  {
+    "id": "e01d7800184b43ef858da9353390e7a1",
+    "original_text": "在小學時我就熟悉日文百科事典",
+    "translated_sentence": "小学生の頃、日本百科事典に親しんでいました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618882.339309
   }
 ]
