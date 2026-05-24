@@ -6613,5 +6613,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779626974.2375872
+  },
+  {
+    "id": "91175700b1674b0bb2f20ab3c14ef78d",
+    "original_text": "我樂於和同學討論",
+    "translated_sentence": "クラスメートと話し合うのが好きです。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779626985.1485326
   }
 ]
