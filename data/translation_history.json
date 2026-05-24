@@ -6217,5 +6217,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618991.0321803
+  },
+  {
+    "id": "f957b220a71547dcbcb3b77a4e489f55",
+    "original_text": "對我來說，國語和漢文的考試完全不是問題。",
+    "translated_sentence": "私にとって、国語と漢文の試験は全く問題ではありません。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779619003.0671597
   }
 ]
