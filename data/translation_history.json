@@ -6442,5 +6442,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623477.1786368
+  },
+  {
+    "id": "e012ca19c79746f4af0dcc3e7d70ba22",
+    "original_text": "機密文件解密",
+    "translated_sentence": "機密文書の復号化",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623504.4236948
   }
 ]
