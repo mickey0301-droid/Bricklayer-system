@@ -6406,5 +6406,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779623301.4349284
+  },
+  {
+    "id": "0d9cf6a32a10423585fcd95bbad9534e",
+    "original_text": "美國將宣布重大消息",
+    "translated_sentence": "米国が大きなニュースを発表するだろう",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779623392.757991
   }
 ]
