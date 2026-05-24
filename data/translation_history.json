@@ -6100,5 +6100,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779618669.9146516
+  },
+  {
+    "id": "ae43f1a2cdd04c0fb9d688e0d0aac49b",
+    "original_text": "請從高中考進大學",
+    "translated_sentence": "高校から大学に進学してください",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779618687.2517335
   }
 ]
