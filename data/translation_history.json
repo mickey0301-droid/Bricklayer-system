@@ -6289,5 +6289,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779622756.3547904
+  },
+  {
+    "id": "4928ecaec38847c2a9a7fe6983c37384",
+    "original_text": "判斷基本正確",
+    "translated_sentence": "判断が基本的に正確です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779622769.969458
   }
 ]
