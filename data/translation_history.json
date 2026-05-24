@@ -6703,5 +6703,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779627190.480506
+  },
+  {
+    "id": "de6e557309e74760be4606ae4171fbf4",
+    "original_text": "讀書需要時間",
+    "translated_sentence": "勉強には時間が必要です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779627203.6082158
   }
 ]
