@@ -6883,5 +6883,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779669855.9883046
+  },
+  {
+    "id": "36d5dc78eb4145aca9ce5adeb05bd260",
+    "original_text": "人被國家與法律看見",
+    "translated_sentence": "人は国家や法律によって見られている。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779669866.6137493
   }
 ]
