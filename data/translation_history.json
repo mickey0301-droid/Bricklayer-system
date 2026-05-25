@@ -6937,5 +6937,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779670238.0462868
+  },
+  {
+    "id": "f3920e0bd7f04d85bc2f7f298ddca31d",
+    "original_text": "這場會議對台灣的影響為何",
+    "translated_sentence": "この会議が台湾に与える影響は何ですか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779670249.4537683
   }
 ]
