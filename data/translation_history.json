@@ -6991,5 +6991,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704268.3121302
+  },
+  {
+    "id": "8144d5c41f7e4964a14b169b61db0581",
+    "original_text": "之後問題更大",
+    "translated_sentence": "その後、問題はさらに大きくなります。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704282.7311692
   }
 ]
