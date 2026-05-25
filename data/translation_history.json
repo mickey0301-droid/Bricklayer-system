@@ -7027,5 +7027,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704454.1854284
+  },
+  {
+    "id": "87311db0799c4fbf99584638253c73ea",
+    "original_text": "都是為了轉移焦點",
+    "translated_sentence": "ただ焦点を逸らすためのものだ",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704475.3395748
   }
 ]
