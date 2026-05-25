@@ -7090,5 +7090,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704681.800802
+  },
+  {
+    "id": "a6473f5e1c164f19ab2ded07da2c676a",
+    "original_text": "不能不管他",
+    "translated_sentence": "彼を無視することはできない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704802.7208588
   }
 ]
