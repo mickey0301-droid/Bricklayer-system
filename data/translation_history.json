@@ -6811,5 +6811,14 @@
     "target_language": "English",
     "target_mode": "",
     "updated_at": 1779669677.2277825
+  },
+  {
+    "id": "593bcc4f79a0439886acf3034c8e85c0",
+    "original_text": "今天第一天上班",
+    "translated_sentence": "Today is the first day of work.",
+    "translation_source": "AI",
+    "target_language": "English",
+    "target_mode": "",
+    "updated_at": 1779669688.031832
   }
 ]
