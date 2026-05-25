@@ -6910,5 +6910,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779669939.4787395
+  },
+  {
+    "id": "7c495201a53141eda4d9e64fd491581d",
+    "original_text": "國中的時候，我很認真踢足球。",
+    "translated_sentence": "中学時代はサッカーを本格的にやっていました。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779670016.7766602
   }
 ]
