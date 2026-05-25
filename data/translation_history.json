@@ -6973,5 +6973,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779670381.1381536
+  },
+  {
+    "id": "524ddd1dc7044e588e52b0b1fb6eedee",
+    "original_text": "活動以英語進行",
+    "translated_sentence": "英語で活動を行います。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779670396.1140587
   }
 ]
