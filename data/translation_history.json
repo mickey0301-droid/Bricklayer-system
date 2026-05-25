@@ -6865,5 +6865,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779669802.5634296
+  },
+  {
+    "id": "735a02f1efb148758b0513a7dd0d8152",
+    "original_text": "為台灣而生",
+    "translated_sentence": "台湾のために生まれる",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779669812.3899908
   }
 ]
