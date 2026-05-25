@@ -7126,5 +7126,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779705664.737774
+  },
+  {
+    "id": "93efaabac3a54a53a0f07929fc66cff8",
+    "original_text": "晚霞很美",
+    "translated_sentence": "夕日が美しいです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779705672.478365
   }
 ]
