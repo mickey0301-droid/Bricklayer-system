@@ -6820,5 +6820,14 @@
     "target_language": "English",
     "target_mode": "",
     "updated_at": 1779669690.4624894
+  },
+  {
+    "id": "298bcf72f0b646e3b0c839528da5f7d3",
+    "original_text": "今天第一天上班",
+    "translated_sentence": "今日は出勤初日",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779669701.7907307
   }
 ]
