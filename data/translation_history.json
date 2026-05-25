@@ -7108,5 +7108,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704816.3389273
+  },
+  {
+    "id": "bb4879bf339f46beb85590db6995b124",
+    "original_text": "不小心寫錯一個字",
+    "translated_sentence": "うっかり間違った言葉を書いてしまいました",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704864.4558911
   }
 ]
