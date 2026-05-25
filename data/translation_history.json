@@ -6847,5 +6847,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779669756.3417907
+  },
+  {
+    "id": "f895d2a77d464a39ad9f3c4fbbf3b6f2",
+    "original_text": "車門即將關閉",
+    "translated_sentence": "ドアが閉まります",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779669768.5926
   }
 ]
