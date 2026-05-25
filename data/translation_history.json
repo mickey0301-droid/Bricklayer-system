@@ -7018,5 +7018,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704434.2387214
+  },
+  {
+    "id": "ffdbe3a27a634ad190f648df00bb3f2a",
+    "original_text": "都是為了轉移焦點",
+    "translated_sentence": "すべては焦点を変えるため",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704454.1854284
   }
 ]
