@@ -7009,5 +7009,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704314.3885944
+  },
+  {
+    "id": "8267cd8f38814d73bde41da69e1b74b2",
+    "original_text": "他更糟糕",
+    "translated_sentence": "彼はもっとひどい",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704334.676114
   }
 ]
