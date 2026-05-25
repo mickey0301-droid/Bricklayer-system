@@ -7045,5 +7045,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704563.021233
+  },
+  {
+    "id": "feeffc0316534e8fae0a201b778b1a78",
+    "original_text": "出示證明",
+    "translated_sentence": "証明書を提示してください。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704576.8691604
   }
 ]
