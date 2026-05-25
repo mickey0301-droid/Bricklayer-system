@@ -7063,5 +7063,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704616.195712
+  },
+  {
+    "id": "466ef660b2534ad7b1d801176120315b",
+    "original_text": "賣武器給台灣",
+    "translated_sentence": "台湾に武器を売る",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704634.0179813
   }
 ]
