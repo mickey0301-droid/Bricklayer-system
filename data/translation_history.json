@@ -7081,5 +7081,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704666.7691123
+  },
+  {
+    "id": "919cd54db9664267a35d74a8e8874d14",
+    "original_text": "年輕人失業率高",
+    "translated_sentence": "若者の失業率が高い",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704679.1718245
   }
 ]
