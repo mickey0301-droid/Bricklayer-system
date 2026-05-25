@@ -7099,5 +7099,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779704802.7208588
+  },
+  {
+    "id": "dc94d559fd2d4985b650bca7e7aa4049",
+    "original_text": "不能不管他",
+    "translated_sentence": "彼を無視するわけにはいかない。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1779704813.8153794
   }
 ]
