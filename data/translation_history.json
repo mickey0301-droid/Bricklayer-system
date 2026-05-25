@@ -6802,5 +6802,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1779669656.452478
+  },
+  {
+    "id": "9a7e210fcd8245e18cb7c2153814ecdb",
+    "original_text": "今天第一天上班",
+    "translated_sentence": "First day at work today",
+    "translation_source": "Google",
+    "target_language": "English",
+    "target_mode": "",
+    "updated_at": 1779669677.2277825
   }
 ]
