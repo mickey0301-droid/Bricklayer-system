@@ -7153,5 +7153,14 @@
     "target_language": "English",
     "target_mode": "",
     "updated_at": 1780242409.9479527
+  },
+  {
+    "id": "9f6fbb57eb4e44509897bd255c66fdd0",
+    "original_text": "不過如果大家都知道要見台積電了，還算是密訪嗎？",
+    "translated_sentence": "ただし、みんなが台積電に会うことを知っているなら、それは密訪と言えるのでしょうか？",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780242427.5938544
   }
 ]
