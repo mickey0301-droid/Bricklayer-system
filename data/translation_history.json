@@ -7162,5 +7162,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780242432.0650945
+  },
+  {
+    "id": "509e136fba644c1795fef1edcc263cf8",
+    "original_text": "不過如果大家都知道要見台積電了，還算是密訪嗎？",
+    "translated_sentence": "しかし、TSMCと会うことを誰もが知っていたとしても、それはやはり秘密訪問とみなされますか?",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780242439.2333806
   }
 ]
