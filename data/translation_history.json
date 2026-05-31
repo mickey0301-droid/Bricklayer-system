@@ -7144,5 +7144,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780242400.0128224
+  },
+  {
+    "id": "b4d4a74f1bcd4da5b6a0156dc08ed901",
+    "original_text": "不過如果大家都知道要見台積電了，還算是密訪嗎？",
+    "translated_sentence": "But if everyone knows that they are going to meet with TSMC, is it still considered a secret visit?",
+    "translation_source": "Google",
+    "target_language": "English",
+    "target_mode": "",
+    "updated_at": 1780242409.9479527
   }
 ]
