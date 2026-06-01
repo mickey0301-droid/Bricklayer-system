@@ -7216,5 +7216,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780272017.2967892
+  },
+  {
+    "id": "9ab1d8f204254840a94128d1e64ac815",
+    "original_text": "玻璃上有霉菌",
+    "translated_sentence": "ガラスにカビがあります。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780272028.389903
   }
 ]
