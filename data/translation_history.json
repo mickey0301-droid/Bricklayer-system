@@ -7243,5 +7243,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780276387.5450065
+  },
+  {
+    "id": "e06998e8243647298500e5e2c36585a0",
+    "original_text": "這樣的翻譯其實差不多了",
+    "translated_sentence": "この種の翻訳は実際にはほぼ同じです",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780276419.4560983
   }
 ]
