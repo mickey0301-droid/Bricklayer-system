@@ -7225,5 +7225,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780276356.2083442
+  },
+  {
+    "id": "7196573fc76746a69052f07204761b6a",
+    "original_text": "用酒精為手部消毒",
+    "translated_sentence": "アルコールで手を消毒する",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780276364.1546478
   }
 ]
