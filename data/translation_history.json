@@ -7252,5 +7252,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780276419.4560983
+  },
+  {
+    "id": "0d4c20e4449042779b775ff441804b32",
+    "original_text": "這樣的翻譯其實差不多了",
+    "translated_sentence": "この翻訳はほぼ大丈夫です。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780276432.7013006
   }
 ]
