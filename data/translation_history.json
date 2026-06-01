@@ -7207,5 +7207,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780272008.2481792
+  },
+  {
+    "id": "6909ccaef344478e8646c91694ceb247",
+    "original_text": "玻璃上有霉菌",
+    "translated_sentence": "ガラスにカビが生えている",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780272017.2967892
   }
 ]
