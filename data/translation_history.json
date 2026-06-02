@@ -7333,5 +7333,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415718.3286245
+  },
+  {
+    "id": "2803846b5c264660a6cb19c4e1367801",
+    "original_text": "這個學校沒有校隊。",
+    "translated_sentence": "この学校には代表チームがありません。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415737.1431248
   }
 ]
