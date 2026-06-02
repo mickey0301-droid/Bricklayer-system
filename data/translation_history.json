@@ -7360,5 +7360,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415778.1149354
+  },
+  {
+    "id": "3db154f49f6c4bd2ac7b25a05a0354a9",
+    "original_text": "不同年級的學生一起打球",
+    "translated_sentence": "異なる学年の学生が一緒にスポーツをしています",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415799.802414
   }
 ]
