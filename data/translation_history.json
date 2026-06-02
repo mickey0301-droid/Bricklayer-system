@@ -7279,5 +7279,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415578.6383102
+  },
+  {
+    "id": "35847a15136d41ddae4d8c5af9c3ebce",
+    "original_text": "這是個勵志的故事",
+    "translated_sentence": "これは励ましの物語です",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415602.2255068
   }
 ]
