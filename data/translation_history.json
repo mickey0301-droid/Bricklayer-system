@@ -7540,5 +7540,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417214.220909
+  },
+  {
+    "id": "134a515ddd9e46458c4a369535c65838",
+    "original_text": "We had a very productive discussion",
+    "translated_sentence": "とても生産的な議論をしました",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417229.4534357
   }
 ]
