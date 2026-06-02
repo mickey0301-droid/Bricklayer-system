@@ -7315,5 +7315,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415673.9539206
+  },
+  {
+    "id": "3fae0763764143dfb50570a96adfa7ea",
+    "original_text": "這是個沒有操場的學校",
+    "translated_sentence": "ここは遊び場のない学校です",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415701.4404833
   }
 ]
