@@ -7603,5 +7603,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417401.7531576
+  },
+  {
+    "id": "68275e4b1a674bd6bf92465486675e2e",
+    "original_text": "We have the most formidable and powerful military",
+    "translated_sentence": "私たちは最も恐るべき強力な軍隊を持っています",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417444.3142183
   }
 ]
