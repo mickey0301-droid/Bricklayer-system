@@ -7378,5 +7378,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415844.353654
+  },
+  {
+    "id": "bb56ec801ba84a52af9402262b3cb32c",
+    "original_text": "不同想法的人一起工作",
+    "translated_sentence": "異なる考えを持つ人々が一緒に働く",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415862.1340458
   }
 ]
