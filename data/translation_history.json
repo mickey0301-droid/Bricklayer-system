@@ -7405,5 +7405,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415979.5719209
+  },
+  {
+    "id": "3bf7dea43a414ede96db3a25450261f7",
+    "original_text": "沒有資源的團隊",
+    "translated_sentence": "リソースのないチーム",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415993.3354785
   }
 ]
