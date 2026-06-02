@@ -7270,5 +7270,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415545.657726
+  },
+  {
+    "id": "06ceb6ad9520454db22cd36689ff50a9",
+    "original_text": "第11次月圓",
+    "translated_sentence": "第11次満月",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415568.512391
   }
 ]
