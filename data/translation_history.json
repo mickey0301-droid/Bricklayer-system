@@ -7666,5 +7666,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417853.2017963
+  },
+  {
+    "id": "5946e429f1974d948819ab43c3cb5dff",
+    "original_text": "當時對這句話並沒有那麼重視",
+    "translated_sentence": "当時はこの言葉をそれほど重視していなかった。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417866.4455178
   }
 ]
