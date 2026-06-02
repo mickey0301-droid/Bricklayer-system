@@ -7657,5 +7657,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417823.2459702
+  },
+  {
+    "id": "ae738c4d89e343c88eb1e247179bfb0a",
+    "original_text": "當時對這句話並沒有那麼重視",
+    "translated_sentence": "当時、私はこの文にあまり注目していませんでした。",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417853.2017963
   }
 ]
