@@ -7675,5 +7675,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417869.4122908
+  },
+  {
+    "id": "e234986ab4014586b914f08d09cb3842",
+    "original_text": "不知道要如何推動政策",
+    "translated_sentence": "政策をどう推進すればよいかわからない",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417902.8195348
   }
 ]
