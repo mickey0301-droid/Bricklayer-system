@@ -7459,5 +7459,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780416176.8085606
+  },
+  {
+    "id": "b87850cb908a4395ba90d94f95c53d8b",
+    "original_text": "繁花盛開",
+    "translated_sentence": "花が咲く",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780416885.2124643
   }
 ]
