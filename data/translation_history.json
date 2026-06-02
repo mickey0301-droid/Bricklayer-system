@@ -7342,5 +7342,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415737.1431248
+  },
+  {
+    "id": "fd829fb8cdd847a8a1d28e763284e25d",
+    "original_text": "這個學校沒有校隊。",
+    "translated_sentence": "この学校には校隊がありません。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415754.0711684
   }
 ]
