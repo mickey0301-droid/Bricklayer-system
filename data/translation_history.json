@@ -7513,5 +7513,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417088.3383627
+  },
+  {
+    "id": "1245c7e4283c4d9cb17f8345daf386f2",
+    "original_text": "球員遭到驅逐",
+    "translated_sentence": "選手が退場した",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417112.4416006
   }
 ]
