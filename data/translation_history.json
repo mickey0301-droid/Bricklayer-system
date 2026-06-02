@@ -7423,5 +7423,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780416007.6868722
+  },
+  {
+    "id": "109feed5d47c4af8b46ba878b0c9c099",
+    "original_text": "他忙着到處演講",
+    "translated_sentence": "彼はあちこちでスピーチをするのに忙しい",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780416087.3727484
   }
 ]
