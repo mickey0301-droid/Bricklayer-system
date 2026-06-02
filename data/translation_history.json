@@ -7486,5 +7486,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780416963.7610857
+  },
+  {
+    "id": "c5a8aadf27074342aa8ed869e341cfa0",
+    "original_text": "一點幽默感都沒有",
+    "translated_sentence": "ユーモアのセンスが全くない",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780416975.6908524
   }
 ]
