@@ -7396,5 +7396,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780415959.6529257
+  },
+  {
+    "id": "d613ae33f17049bda5e66e4adea51e26",
+    "original_text": "自己畫海報",
+    "translated_sentence": "自己のポスターを描く",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780415976.5588076
   }
 ]
