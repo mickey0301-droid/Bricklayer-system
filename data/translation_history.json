@@ -7504,5 +7504,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780417071.5582669
+  },
+  {
+    "id": "db41ce5cd6ee4bd79e83d0836d951118",
+    "original_text": "記者遭到驅逐",
+    "translated_sentence": "記者が追放されました。",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780417085.1396945
   }
 ]
