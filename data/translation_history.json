@@ -7693,5 +7693,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780453657.092532
+  },
+  {
+    "id": "45d94e359c7144ed99d0abd08c6f08f9",
+    "original_text": "搭電扶梯",
+    "translated_sentence": "エスカレーターに乗ります",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780453674.477153
   }
 ]
