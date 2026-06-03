@@ -7702,5 +7702,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780453674.477153
+  },
+  {
+    "id": "8dc85d8221aa41c2abba2eeee4311b03",
+    "original_text": "搭電扶梯",
+    "translated_sentence": "エスカレーター",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780453685.1834857
   }
 ]
