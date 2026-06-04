@@ -7720,5 +7720,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780585824.27732
+  },
+  {
+    "id": "f331444d002b4795af0a4616a8bfd791",
+    "original_text": "蝸牛的速度",
+    "translated_sentence": "蝸牛の速度",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780585839.8327134
   }
 ]
