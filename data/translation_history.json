@@ -7729,5 +7729,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780585842.698574
+  },
+  {
+    "id": "e480e0d99b254954b4888d6f1a335b08",
+    "original_text": "枕頭山",
+    "translated_sentence": "枕山",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780585897.3294966
   }
 ]
