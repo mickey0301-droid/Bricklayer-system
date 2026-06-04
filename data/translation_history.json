@@ -7711,5 +7711,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780585810.976192
+  },
+  {
+    "id": "1d41703cfd8f4f08953ad8f36fb0ffa1",
+    "original_text": "蝸牛的速度",
+    "translated_sentence": "カタツムリのスピード",
+    "translation_source": "Google",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780585824.27732
   }
 ]
