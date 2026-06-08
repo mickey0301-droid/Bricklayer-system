@@ -7783,5 +7783,14 @@
     "target_language": "Japanese",
     "target_mode": "normal",
     "updated_at": 1780914408.9478056
+  },
+  {
+    "id": "4726be95ec6f42939aeab661431f2667",
+    "original_text": "Calm down",
+    "translated_sentence": "落ち着いてください",
+    "translation_source": "AI",
+    "target_language": "Japanese",
+    "target_mode": "normal",
+    "updated_at": 1780914421.5353713
   }
 ]
